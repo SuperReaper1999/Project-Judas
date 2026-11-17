@@ -6,7 +6,7 @@ Deliver one coherent engine/editor/SDK development platform. Independently verif
 source/runtime evidence governs decisions; older reports are not instructions.
 Stage B's bounded collision/UI/coverage/docs/rendering programme was explicitly
 approved on2026-11-17. It is implemented with native Linux integration evidence in
-[RECONCILIATION](RECONCILIATION.md). Stage E is not declared complete.
+[RECONCILIATION](RECONCILIATION.md). Stage E final checkpoint qualification is in progress; see the current state below.
 
 No physics-core replacement, major restructuring, main promotion, selected external
 SDK replacement or further broad cleanup is authorized. Ordinary validated work
@@ -95,7 +95,27 @@ group termination, no automatic deletion. 14GiB build allowance reflects measure
 See docs/WORKSPACE_STORAGE.md. Never raise limits to conceal growth or delete
 unknown artifacts. Only concise evidence belongs in accepted documentation.
 
-## Checkpoint and next work
+## Accepted checkpoint and next bounded stage (2026-11-17)
+
+The operator accepted ad41f73f as a completed bounded checkpoint after all three
+CI workflows passed. Primary remains clean Experimental at the start of this
+next stage; no main promotion or experiment merge is authorized.
+
+Next defined question: how much remaining animation/IK submission time is material
+binding versus elapsed GL primitive draw calls, and what dominates exceptional
+hitch frames? Existing state/pose/bounds caches remain authoritative. Opt-in
+JUDAS_PROFILE_RENDER_DETAIL aggregates timings without per-primitive trace events;
+GL elapsed includes driver waits, never report it as GPU duration. Use depth4
+for complete IK frame-level attribution; preserve profiler-off controls and
+simulation-loss observations. No optimization selected until this measurement. The operator clarified that
+development readiness means reliable integration within explicit supported
+boundaries, not universal perfection or meeting every stretch target. This probe
+must support one retain/repair/defer decision, followed by the finite qualification
+matrix and readiness verdict, rather than an indefinite optimization programme.
+Native target qualification and remaining integration gaps follow this bounded
+rendering/hitch increment. No substantial replacement is authorized.
+
+## Prior checkpoint procedure (completed for ad41f73f)
 
 Finish explicit source/docs staging, commit on Experimental after the above checks,
 then reconfigure/relink identities and verify the exact committed SDK candidate.
@@ -112,3 +132,39 @@ workloads. Next rendering priority is measured actual shadow submission, not
 assuming cache-key planning dominates. Any major replacement or promotion still
 requires separate approval. Preserve failed evidence and fidelity; do not merge
 isolated experiments on their proof tests alone.
+
+
+### Stage E continuation — current verified state
+
+Retain the bounded opaque shadow coalescing change. Matched whole-application
+captures passed all18 trials: median p99 animation11.302→9.747ms,
+IK14.569→12.134ms, combined6.553→6.267ms; worst candidate
+13.452/33.142/8.568ms. No clipping, backlog discard or catch-up caps.
+28 shadow-depth fidelity cases passed under each modern/portable NVIDIA policy.
+The complete5154-frame shallow trace did not reproduce/attribute the earlier
+incomplete78ms hitch; the33ms lean hitch remains explicit. Investigation is bounded
+and complete for this increment; no further optimization is required for its exit.
+
+Expanded208CTest cases passed428.76s. A new registered fresh-process animation/IK
+continuation gate also passed, checking uninterrupted/restored hand, motion, phase,
+events and4targets through StepAuthoritativeWorld. Registered suite now209.
+Source-hidden real desktop SDK authoring/39tool operations, town layout, animation
+export and moved IK export/cold restore passed. The latter restores tick142 with
+16enabled IK actors and64targets after a real resumed fixed solve. Its initial
+observer incorrectly demanded residuals before the solver ran; observer corrected,
+engine ordering unchanged. ikStatus.ready denotes asset availability.
+
+See docs/DEVELOPMENT_READINESS.md and evidence/stage-e-{rendering,qualification}.json.
+Raw bounded output is .cache/v2-rendering-next; SDK disposable workspace is
+/tmp/judas-platform-audit-20261116. These are reproducible outputs, not source.
+Original physics preservation refs above remain unchanged and unmerged.
+
+Remaining checkpoint procedure: finish final209suite/tooling and exact clean-head
+identity/SDK checks; commit/push Experimental; run existing never-publishes candidate
+workflow on that exact SHA for both Ubuntu24.04 and native Windows builds/contracts.
+That workflow does not certify Windows graphical workflows. No local Android device,
+complete JDK/emulator or Emscripten toolchain is available; record these runtime gaps
+rather than install/reconfigure or silently inherit historical acceptance.
+The scoped native-Linux readiness verdict does not depend on universal platform or
+stretch performance qualification. Final hosted results belong in the checkpoint
+receipt; no main promotion or selected consumer SDK replacement is authorized.

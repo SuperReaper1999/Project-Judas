@@ -945,10 +945,13 @@ declare module "judas" {
     actualPosition: Vec3; actualOrientation: Quat;
   }
   export interface FullBodyIKStatus {
+    /** Skeletal asset availability; does not mean an IK solve has run this tick. */
     ready: boolean; enabled: boolean; diagnostic: string;
     converged: boolean; iterations: number; solveMicroseconds: number;
     /** Detached snapshot objects; convert explicitly to tuples when resubmitting configuration. */
-    rootCorrection: Vec3; targets: FullBodyIKResidual[];
+    rootCorrection: Vec3;
+    /** Last actual solve residuals. May be empty after configuration/cold restore until a fixed solve publishes them. */
+    targets: FullBodyIKResidual[];
   }
   export interface AnimationMarker {id:string;name:string;time:number;data:string}
   export interface AnimationMarkerHit extends AnimationMarker {clip:string;source:string;weight:number;reverse:boolean}

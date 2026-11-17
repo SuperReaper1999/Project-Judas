@@ -67,7 +67,7 @@ int RunWholeEngineBenchmark(int argc,char** argv){try{
 #endif
  };
  control.worldReady=[&](EngineHost& h,RuntimeWorld& world,InteractivePlay& play){if(pairProfile){world.Physics().SetCollisionSearchObserver([&](const auto& sample){searchTrace.Observe(sample);});tracedPhysics=&world.Physics();}play.SetPointerCaptureAllowed(false);first=h.Jobs().Stats();};
- control.beforeFrame=[&](EngineHost& h,RuntimeWorld& world,InteractivePlay&){const auto now=p.Now();if(!begin){begin=now;std::ofstream(std::filesystem::path(out)/"startup.json")<<Json{{"loading_frames",loadingFrames},{"preparation_display_seconds",loadingBegin?double(now-loadingBegin)/1e9:0.},{"simulation_started_after_loading",true}}.dump(2);}
+ control.beforeFrame=[&](EngineHost& h,RuntimeWorld& world,InteractivePlay&){JUDAS_PROFILE_SCOPE("Benchmark observation");const auto now=p.Now();if(!begin){begin=now;std::ofstream(std::filesystem::path(out)/"startup.json")<<Json{{"loading_frames",loadingFrames},{"preparation_display_seconds",loadingBegin?double(now-loadingBegin)/1e9:0.},{"simulation_started_after_loading",true}}.dump(2);}
   // A genuine cold load publishes a different world. Observe its physics,
   // rather than silently continuing to profile the destroyed startup world.
   if(pairProfile&&tracedPhysics!=&world.Physics()){world.Physics().SetCollisionSearchObserver([&](const auto& sample){searchTrace.Observe(sample);});tracedPhysics=&world.Physics();searchTrace.Clear();}

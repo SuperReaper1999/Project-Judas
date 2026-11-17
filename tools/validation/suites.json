@@ -1917,6 +1917,27 @@
         "animation"
       ],
       "args": []
+    },
+    {
+      "name": "shadow-primitive-range",
+      "target": "judas_shadow_primitive_range_tests",
+      "groups": [
+        "rendering",
+        "animation"
+      ],
+      "args": []
+    },
+    {
+      "name": "animation-ik-cold-continuation",
+      "target": "judas_animation_cold_save_tests",
+      "groups": [
+        "animation",
+        "persistence",
+        "lifecycle"
+      ],
+      "args": [
+        "{output}/animation-ik-slots"
+      ]
     }
   ],
   "known_findings": [

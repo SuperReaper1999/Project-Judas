@@ -1,0 +1,274 @@
+{
+  "status": "native Linux integration passes; final source checkpoint/hosted target qualification pending",
+  "scope": "real NVIDIA desktop, source-hidden native SDK, no human acceptance",
+  "full_ctest": {
+    "passed": 208,
+    "total": 208,
+    "seconds": 428.76
+  },
+  "additional_permanent_cold_contract": {
+    "passed": true,
+    "fresh_processes": 2,
+    "uninterrupted_and_restored_hand_motion_phase_events_targets_verified": true,
+    "gate_registered": true
+  },
+  "sdk": {
+    "passed": true,
+    "build": {
+      "architecture": "x86_64",
+      "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-ef4ba2973545-u37da1657ae42",
+      "channel": "Experimental",
+      "compiler": "GNU",
+      "compiler_version": "15.2.0",
+      "configuration": "Release",
+      "maturity": "alpha",
+      "platform": "Linux",
+      "release_name": "Judas Engine Alpha v2.0.0",
+      "schema": 1,
+      "source_dirty": true,
+      "source_fingerprint": "ef4ba2973545138866346b43c5d8012cc30c05cd9ceb3a6a25acd4794e3c7db5",
+      "source_origin": "git",
+      "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+      "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+      "source_untracked_count": 2,
+      "source_untracked_fingerprint": "37da1657ae42ffbc0aa99a83453175776c3dbc09b8cdb451d615f727f786604c",
+      "version": "2.0.0-alpha.1"
+    },
+    "sourceOnlyMounted": false,
+    "packageOnlyNamespaces": false,
+    "softwareGraphics": false,
+    "hardwareAcceptance": false,
+    "operations": 8
+  },
+  "application_attempts": [
+    {
+      "label": "sdk-complete",
+      "exit": 0,
+      "seconds": 11.285695188999853
+    },
+    {
+      "label": "town-editor",
+      "exit": 0,
+      "seconds": 2.61799650499961
+    },
+    {
+      "label": "town-layout",
+      "exit": 0,
+      "seconds": 1.2662252389991409
+    },
+    {
+      "label": "animation-export",
+      "exit": 0,
+      "seconds": 0.26419974800046475
+    },
+    {
+      "label": "animation-relocated",
+      "exit": 0,
+      "seconds": 0.9656392369997775
+    },
+    {
+      "label": "ik-editor",
+      "exit": 0,
+      "seconds": 2.969556919999377
+    },
+    {
+      "label": "ik-write",
+      "exit": 0,
+      "seconds": 2.3673436830003993
+    },
+    {
+      "label": "ik-cold",
+      "exit": 1,
+      "seconds": 1.2156923490001645
+    }
+  ],
+  "ik_boundary_result": {
+    "passed": true,
+    "observations": [
+      {
+        "ready": 16,
+        "targets": 64,
+        "restoredTicks": 142
+      }
+    ],
+    "operations": [
+      {
+        "name": "ik-boundary-export",
+        "exit": 0
+      },
+      {
+        "name": "ik-boundary-write",
+        "exit": 0
+      },
+      {
+        "name": "ik-boundary-cold",
+        "exit": 0
+      },
+      {
+        "name": "sdk-verified-after",
+        "exit": 0
+      }
+    ],
+    "sourceHidden": true,
+    "reason": "Status residuals are observed after one actual resumed fixed solver boundary, not in the preceding fixed script callback."
+  },
+  "native_shadow_depth_cases_per_policy": 28,
+  "policies": [
+    "modern NVIDIA",
+    "portable on same NVIDIA"
+  ],
+  "observer_correction": "Initial SDK probe inspected derived IK residuals before its first resumed solver boundary. Source defines ready as skeletal asset presence and clears derived result during restore. After an actual boundary the unchanged 64-target requirement passed. API comment clarified; no engine restore policy changed.",
+  "fixture_correction": "Old animation-only cold fixture stepped pieces of the world manually. Extended IK contract now uses StepAuthoritativeWorld, the production fixed-step owner; all pose/settings/residual assertions retained.",
+  "platform_environment": {
+    "adb_default_socket": "ConnectionRefusedError: [Errno 111] Connection refused",
+    "adb_server_started_by_audit": false,
+    "JDK_compiler_present": false,
+    "emulator_binary_present": false,
+    "EMSDK_present": false,
+    "firefox_present": true
+  },
+  "accepted_ubuntu_ci": {
+    "conclusion": "success",
+    "headSha": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+    "jobs": [
+      {
+        "completedAt": "2026-11-17T02:24:23Z",
+        "conclusion": "success",
+        "databaseId": 133766048420,
+        "name": "linux",
+        "startedAt": "2026-11-17T02:13:34Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v7",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v7",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Native and optional verification prerequisites",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Identify compiler and runner",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Restore compiler objects",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Reuse immutable ICU build",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Tooling positive and negative controls",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Configure an explicitly identified build",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Build focused dependencies and public SDK",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Focused native gates",
+            "number": 11,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Qualify SDK on its declared Linux baseline",
+            "number": 12,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Compiler cache statistics",
+            "number": 13,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Preserve diagnostics even on failure",
+            "number": 14,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Reuse immutable ICU build",
+            "number": 25,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Restore compiler objects",
+            "number": 26,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v7",
+            "number": 27,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v7",
+            "number": 28,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 29,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/44001388269/job/133766048420"
+      },
+      {
+        "completedAt": "2026-11-17T02:13:32Z",
+        "conclusion": "skipped",
+        "databaseId": 133766049854,
+        "name": "promotion",
+        "startedAt": "2026-11-17T02:13:32Z",
+        "status": "completed",
+        "steps": [],
+        "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/44001388269/job/133766049854"
+      }
+    ],
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/44001388269"
+  },
+  "windows_candidate_workflow": "available, owner authenticated, final exact candidate run pending; never publishes and explicitly excludes GUI/hardware certification"
+}

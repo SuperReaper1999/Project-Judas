@@ -145,7 +145,7 @@ def main():
                              'sequence_sha256': hashlib.sha256(args.sequence.read_bytes()).hexdigest() if args.sequence else None,
                              'environment': {name: value for name, value in sorted(env.items())
                                              if name.startswith('JUDAS_MK2_') or name in
-                                             ['JUDAS_ANIMATION_LANES', 'JUDAS_MATERIAL_LANES', 'JUDAS_PROFILE_DEPTH', 'JUDAS_CCD_PAIR_PROFILE', 'JUDAS_LIGHT_LISTS', 'JUDAS_SHADOW_REUSE']}},
+                                             ['JUDAS_ANIMATION_LANES', 'JUDAS_MATERIAL_LANES', 'JUDAS_PROFILE_DEPTH', 'JUDAS_PROFILE_RENDER_DETAIL', 'JUDAS_SHADOW_COALESCE', 'JUDAS_CCD_PAIR_PROFILE', 'JUDAS_LIGHT_LISTS', 'JUDAS_SHADOW_REUSE']}},
                 'cpu_model': next((line.split(':', 1)[1].strip() for line in Path('/proc/cpuinfo').read_text().splitlines() if line.startswith('model name')), 'unknown'),
                 'memory_total': Path('/proc/meminfo').read_text().splitlines()[0],
                 'binary_sha256': hashlib.sha256(args.binary.read_bytes()).hexdigest(),

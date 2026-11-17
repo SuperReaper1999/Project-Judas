@@ -954,3 +954,55 @@ runs instead use the explicit production source boundary in
 [SOURCE_SELECTION](audits/platform-20261116/SOURCE_SELECTION.md); the experiments
 remain on separate unmerged branches. Final SDK/application qualification is a
 separate gate from these timing comparisons.
+
+
+## Stage E opaque-shadow submission increment (2026-11-17)
+
+The accepted ad41f73f boundary remains the source baseline. One opt-in diagnostic
+separates aggregate material-binding and GL draw-call CPU elapsed time, avoiding
+per-primitive profiler records. GL elapsed includes driver waiting, not GPU time.
+The untruncated populated-animation probe measured about2007shadow draws/frame,
+1.607ms in GL draw calls and0.950ms in material binding. Complete opaque parts of
+one mesh use the same depth shader when culling and per-part winding agree.
+
+The renderer now coalesces only contiguous complete opaque triangle ranges with
+common cull/winding state, within signed GL draw-count limits. The merged draw
+replaces those part submissions. Gaps, overlaps, incomplete triangles, masks,
+blends, hidden parts, structural filtering or different raster states retain the
+original path. Main colour rendering, index/vertex coverage, LOD, poses, lights,
+cascades, simulation chronology and time-loss policy are unchanged. The diagnostic
+negative control JUDAS_SHADOW_COALESCE=0 is sampled at BeginShadowPass and recorded
+in capture invocation identity; it is not a lower-quality mode.
+
+Native modern/portable-policy tests compare full shadow-depth readback and actual
+triangle/draw counts against the retained path for indexed/nonindexed/static/skinned
+and incompatible-state cases. Same-driver portable evidence is not GLES/device
+qualification. See the registered ShadowPrimitiveRangeTests contract.
+
+Three interleaved profiler-off trials per side used the same frozen inputs and
+1280×720 modern GL/VSync0/uncapped policy,20s animation/combined and45s IK:
+
+| Workload | Unchanged renderer median p99 | Candidate median p99 | Change | Candidate worst |
+| --- | ---: | ---: | ---: | ---: |
+| Animation |11.302ms |9.747ms |−13.8% |13.452ms |
+| Independent IK |14.569ms |12.134ms |−16.7% |33.142ms |
+| Combined gameplay |6.553ms |6.267ms |−4.4% |8.568ms |
+
+All18trials report zero clipping/discarded backlog/caps, with actual populated
+content and required combined contacts. They pass the matched relative gate.
+Animation/IK still miss the120FPS stretch target; IK exceptional jitter remains
+explicit. This bounded improvement does not promise arbitrary-scene budgets.
+
+A final depth3 aggregate IK capture completed5154frames with zero truncated/lost
+records or simulation loss. Shadow draws averaged332.5/frame; shadow GL CPU elapsed
+averaged0.518ms and material binding0.177ms. Benchmark observation averaged0.104ms
+and peaked0.411ms. Its worst frame14.977ms does not erase the33.142ms lean-trial
+hitch. An earlier depth4 diagnostic had a78ms outer frame with incomplete records
+and only30.6ms of recorded Play work; remaining time was not attributed. It did not
+recur in the complete capture. No solver/driver/OS cause is asserted from that gap.
+
+Detailed current trial identities, distributions, RSS, device telemetry and complete
+profile are in [Stage E receipts](audits/platform-20261116/evidence/stage-e-rendering.json).
+Do not add nested scopes, CPU/GPU intervals or callback costs to derive throughput.
+Development readiness uses explicit supported boundaries and reliable integration,
+not universal perfection or indefinite pursuit of the stretch target.

@@ -41,6 +41,9 @@ Try [Terrain Workshop](projects/terrain_v2_workshop/README.md),
 [Willow Town](projects/willow_town/README.md). The complete curated list is in the
 [purge report](docs/ARCHITECTURAL_PURGE.md).
 
+Current V2 development scope and platform limits are recorded in the
+[development-readiness verdict](docs/DEVELOPMENT_READINESS.md).
+
 ## Build and qualify
 
 Follow [installation/distribution](docs/DISTRIBUTION.md) for dependencies,

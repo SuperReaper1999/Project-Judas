@@ -159,3 +159,17 @@ meaningful tests, matched SDK identities, demonstrated integrated workflows,
 bounded output ownership and an honest qualification matrix. No universal
 performance or human acceptance claim. Release promotion is a separate operator
 decision about the exact candidate.
+
+
+## Current Stage E bounded continuation (operator clarification2026-11-17)
+
+The accepted ad41f73f checkpoint and all three CI passes are complete. Continue
+with one evidence-led animation/IK rendering increment and exceptional-hitch
+attribution, then available native target checks and the explicit capability/
+qualification matrix in ../../DEVELOPMENT_READINESS.md. Do not turn stretch FPS
+misses or unavailable preview targets into an indefinite investigation. The
+readiness decision concerns a reliable supported platform, not universal perfection.
+No experimental physics merge, major replacement, main promotion or selected SDK
+replacement is authorized. Existing qualified behavior may be reused when unchanged;
+rerun affected applications, fidelity controls, lifecycle and SDK paths for actual
+changes. Genuine architectural or environment blockers are reported explicitly.

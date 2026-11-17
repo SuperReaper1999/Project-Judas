@@ -1,0 +1,2210 @@
+{
+  "question": "One bounded opaque-shadow draw reduction and exceptional hitch attribution",
+  "comparison": {
+    "schema": 1,
+    "cases": [
+      "animation",
+      "animation-ik",
+      "combined"
+    ],
+    "results": {
+      "animation": {
+        "baseline_p99_ms": 11.302243,
+        "candidate_p99_ms": 9.747295,
+        "p99_change_fraction": -0.13757870893414703,
+        "regression_pass": true,
+        "candidate_p99_120fps": false,
+        "candidate_p99_60fps": true,
+        "exceptional_worst_ms": 13.452166,
+        "candidate_discarded_seconds": 0.0,
+        "candidate_incoming_clipped_seconds": 0.0,
+        "candidate_simulation_time_lost_seconds": 0.0,
+        "human_accepted": false,
+        "candidate_worst_within_60fps": true
+      },
+      "animation-ik": {
+        "baseline_p99_ms": 14.56925,
+        "candidate_p99_ms": 12.133961,
+        "p99_change_fraction": -0.16715266743312118,
+        "regression_pass": true,
+        "candidate_p99_120fps": false,
+        "candidate_p99_60fps": true,
+        "exceptional_worst_ms": 33.141877,
+        "candidate_discarded_seconds": 0.0,
+        "candidate_incoming_clipped_seconds": 0.0,
+        "candidate_simulation_time_lost_seconds": 0.0,
+        "human_accepted": false,
+        "candidate_worst_within_60fps": false
+      },
+      "combined": {
+        "baseline_p99_ms": 6.553166,
+        "candidate_p99_ms": 6.266876,
+        "p99_change_fraction": -0.0436872803161098,
+        "regression_pass": true,
+        "candidate_p99_120fps": true,
+        "candidate_p99_60fps": true,
+        "exceptional_worst_ms": 8.567895,
+        "candidate_discarded_seconds": 0.0,
+        "candidate_incoming_clipped_seconds": 0.0,
+        "candidate_simulation_time_lost_seconds": 0.0,
+        "human_accepted": false,
+        "candidate_worst_within_60fps": true
+      }
+    },
+    "binaries": {
+      "baseline": {
+        "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/v2-rendering-next/whole-comparison/baseline",
+        "sha256": "5967d2b5c09c131eee53c41b430cea60c2258307bbdf45e2b732a8f62bcec008"
+      },
+      "candidate": {
+        "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/v2-rendering-next/whole-comparison/candidate",
+        "sha256": "15d89f2abeb64c205abf78b80790dac25da5e8a96dbfe767a6daf8f45a76e6f8"
+      }
+    },
+    "scope": "Relative p99 regression gate. Not human acceptance or an absolute frame-budget certification."
+  },
+  "trials": [
+    {
+      "name": "animation-0-baseline",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-897f3e571096",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "897f3e571096f23e95e2d555c32fdb6288265b35faf09be6ba94e858cec2e30f",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 2167,
+        "average_fps": 108.30819833712818,
+        "p50_ms": 9.963323,
+        "p95_ms": 11.418466,
+        "p99_ms": 13.98266,
+        "worst_ms": 23.810216,
+        "one_percent_low_fps": 59.774995180505165,
+        "point_one_percent_low_fps": 45.07085589254868,
+        "hitches": {
+          "8.333333333": {
+            "frames": 1254,
+            "longest_sequence_frames": 22,
+            "longest_sequence_ms": 257.991308
+          },
+          "16.666666667": {
+            "frames": 8,
+            "longest_sequence_frames": 4,
+            "longest_sequence_ms": 74.358087
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": false,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.03389311581850052,
+        "peak_post_step_accumulator_seconds": 0.016662340611219406,
+        "maximum_fixed_steps_per_frame": 2,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 163393536,
+      "cpu_cores": 0.9865856324935038,
+      "other_host_cores": 1.1225264805697293,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 95.03571428571429,
+          "p95": 100.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 4.330357142857143,
+          "p95": 5.0,
+          "maximum": 17.0
+        },
+        "memory.used [MiB]": {
+          "mean": 332.4732142857143,
+          "p95": 363.0,
+          "maximum": 368.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1365.625,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 89.28883928571429,
+          "p95": 93.1,
+          "maximum": 93.58
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "animation-0-candidate",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-7157eea483f6-ua4d437010b35",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7157eea483f6388b70decfb32d4df8142146b56b8b7244eac950986c767b2eca",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 2,
+        "source_untracked_fingerprint": "a4d437010b3566f25f3c6d562d82b5873ddf22014b95992daec71edb405a1963",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 2275,
+        "average_fps": 113.70653407408805,
+        "p50_ms": 8.704009,
+        "p95_ms": 9.44218,
+        "p99_ms": 9.756483,
+        "worst_ms": 11.785167,
+        "one_percent_low_fps": 99.94300250567102,
+        "point_one_percent_low_fps": 92.95863154978771,
+        "hitches": {
+          "8.333333333": {
+            "frames": 2126,
+            "longest_sequence_frames": 323,
+            "longest_sequence_ms": 2892.315520999999
+          },
+          "16.666666667": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": false,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.026155760511755943,
+        "peak_post_step_accumulator_seconds": 0.016660846769809723,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 167608320,
+      "cpu_cores": 0.7610643563910987,
+      "other_host_cores": 0.24962910889628043,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 96.72321428571429,
+          "p95": 100.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 4.035714285714286,
+          "p95": 5.0,
+          "maximum": 5.0
+        },
+        "memory.used [MiB]": {
+          "mean": 326.36607142857144,
+          "p95": 339.0,
+          "maximum": 348.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1379.0,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 93.83357142857143,
+          "p95": 95.88,
+          "maximum": 96.75
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "animation-1-baseline",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-897f3e571096",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "897f3e571096f23e95e2d555c32fdb6288265b35faf09be6ba94e858cec2e30f",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 2227,
+        "average_fps": 111.32322355306049,
+        "p50_ms": 9.90543,
+        "p95_ms": 10.756073,
+        "p99_ms": 11.302243,
+        "worst_ms": 13.22667,
+        "one_percent_low_fps": 84.97243529296406,
+        "point_one_percent_low_fps": 77.8567227645116,
+        "hitches": {
+          "8.333333333": {
+            "frames": 1260,
+            "longest_sequence_frames": 6,
+            "longest_sequence_ms": 59.388519
+          },
+          "16.666666667": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": false,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.0251576229929924,
+        "peak_post_step_accumulator_seconds": 0.01665237918496132,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 165580800,
+      "cpu_cores": 0.9796590377892171,
+      "other_host_cores": 0.26178356473290343,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 97.14285714285714,
+          "p95": 100.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 4.142857142857143,
+          "p95": 5.0,
+          "maximum": 5.0
+        },
+        "memory.used [MiB]": {
+          "mean": 334.82142857142856,
+          "p95": 346.0,
+          "maximum": 352.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1379.0,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 97.48598214285714,
+          "p95": 98.83,
+          "maximum": 99.11
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "animation-1-candidate",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-7157eea483f6-ua4d437010b35",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7157eea483f6388b70decfb32d4df8142146b56b8b7244eac950986c767b2eca",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 2,
+        "source_untracked_fingerprint": "a4d437010b3566f25f3c6d562d82b5873ddf22014b95992daec71edb405a1963",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 2275,
+        "average_fps": 113.74067879782261,
+        "p50_ms": 8.695883,
+        "p95_ms": 9.522121,
+        "p99_ms": 9.747295,
+        "worst_ms": 12.302483,
+        "one_percent_low_fps": 100.13524876216724,
+        "point_one_percent_low_fps": 90.64777534798095,
+        "hitches": {
+          "8.333333333": {
+            "frames": 2100,
+            "longest_sequence_frames": 291,
+            "longest_sequence_ms": 2677.066398999999
+          },
+          "16.666666667": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": false,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.026215005666017532,
+        "peak_post_step_accumulator_seconds": 0.01666143909096718,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 163467264,
+      "cpu_cores": 0.767595179342687,
+      "other_host_cores": 0.2475786169988312,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 97.44642857142857,
+          "p95": 100.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 3.9910714285714284,
+          "p95": 5.0,
+          "maximum": 5.0
+        },
+        "memory.used [MiB]": {
+          "mean": 336.85714285714283,
+          "p95": 339.0,
+          "maximum": 348.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1379.0,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 96.56857142857143,
+          "p95": 98.82,
+          "maximum": 99.9
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "animation-2-baseline",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-897f3e571096",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "897f3e571096f23e95e2d555c32fdb6288265b35faf09be6ba94e858cec2e30f",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 2232,
+        "average_fps": 111.57268908654225,
+        "p50_ms": 9.832473,
+        "p95_ms": 10.301126,
+        "p99_ms": 10.53694,
+        "worst_ms": 11.406139,
+        "one_percent_low_fps": 92.12845249022426,
+        "point_one_percent_low_fps": 87.93005527547065,
+        "hitches": {
+          "8.333333333": {
+            "frames": 1335,
+            "longest_sequence_frames": 11,
+            "longest_sequence_ms": 106.80817699999997
+          },
+          "16.666666667": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": false,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.025400307029485703,
+        "peak_post_step_accumulator_seconds": 0.016666561365127563,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 166088704,
+      "cpu_cores": 0.9681889068462338,
+      "other_host_cores": 0.21667540001223384,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 97.27678571428571,
+          "p95": 100.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 4.1875,
+          "p95": 5.0,
+          "maximum": 5.0
+        },
+        "memory.used [MiB]": {
+          "mean": 331.6875,
+          "p95": 346.0,
+          "maximum": 350.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1379.0,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 97.32473214285714,
+          "p95": 98.64,
+          "maximum": 99.23
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "animation-2-candidate",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-7157eea483f6-ua4d437010b35",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7157eea483f6388b70decfb32d4df8142146b56b8b7244eac950986c767b2eca",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 2,
+        "source_untracked_fingerprint": "a4d437010b3566f25f3c6d562d82b5873ddf22014b95992daec71edb405a1963",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 2274,
+        "average_fps": 113.67226967823007,
+        "p50_ms": 8.696251,
+        "p95_ms": 9.449591,
+        "p99_ms": 9.716565,
+        "worst_ms": 13.452166,
+        "one_percent_low_fps": 100.17277669864839,
+        "point_one_percent_low_fps": 87.75705944113263,
+        "hitches": {
+          "8.333333333": {
+            "frames": 2140,
+            "longest_sequence_frames": 851,
+            "longest_sequence_ms": 7648.664421999998
+          },
+          "16.666666667": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": false,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.026195693761110306,
+        "peak_post_step_accumulator_seconds": 0.016665330156683922,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 167612416,
+      "cpu_cores": 0.7549703583515072,
+      "other_host_cores": 0.23998721740609064,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 97.20535714285714,
+          "p95": 100.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 4.017857142857143,
+          "p95": 5.0,
+          "maximum": 5.0
+        },
+        "memory.used [MiB]": {
+          "mean": 327.69642857142856,
+          "p95": 339.0,
+          "maximum": 347.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1379.0,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 97.208125,
+          "p95": 98.57,
+          "maximum": 98.78
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "animation-ik-0-baseline",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-897f3e571096",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "897f3e571096f23e95e2d555c32fdb6288265b35faf09be6ba94e858cec2e30f",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 4009,
+        "average_fps": 89.06669394575924,
+        "p50_ms": 12.751274,
+        "p95_ms": 13.920438,
+        "p99_ms": 14.56925,
+        "worst_ms": 19.38606,
+        "one_percent_low_fps": 66.43412939001082,
+        "point_one_percent_low_fps": 60.65215477333307,
+        "hitches": {
+          "8.333333333": {
+            "frames": 2715,
+            "longest_sequence_frames": 11,
+            "longest_sequence_ms": 141.127423
+          },
+          "16.666666667": {
+            "frames": 1,
+            "longest_sequence_frames": 1,
+            "longest_sequence_ms": 19.38606
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": false,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.02524757757782936,
+        "peak_post_step_accumulator_seconds": 0.016666457056999207,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 149602304,
+      "cpu_cores": 1.4267746234706684,
+      "other_host_cores": 0.24905567345159185,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 79.08510638297872,
+          "p95": 83.0,
+          "maximum": 86.0
+        },
+        "utilization.memory [%]": {
+          "mean": 4.1063829787234045,
+          "p95": 5.0,
+          "maximum": 5.0
+        },
+        "memory.used [MiB]": {
+          "mean": 327.7659574468085,
+          "p95": 339.0,
+          "maximum": 347.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1379.0,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 93.26787234042553,
+          "p95": 94.66,
+          "maximum": 95.21
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "animation-ik-0-candidate",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-7157eea483f6-ua4d437010b35",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7157eea483f6388b70decfb32d4df8142146b56b8b7244eac950986c767b2eca",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 2,
+        "source_untracked_fingerprint": "a4d437010b3566f25f3c6d562d82b5873ddf22014b95992daec71edb405a1963",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 5085,
+        "average_fps": 112.99986461360665,
+        "p50_ms": 10.593307,
+        "p95_ms": 12.225804,
+        "p99_ms": 13.589865,
+        "worst_ms": 33.141877,
+        "one_percent_low_fps": 61.517476043816224,
+        "point_one_percent_low_fps": 41.2995560600587,
+        "hitches": {
+          "8.333333333": {
+            "frames": 2744,
+            "longest_sequence_frames": 15,
+            "longest_sequence_ms": 243.93265499999995
+          },
+          "16.666666667": {
+            "frames": 17,
+            "longest_sequence_frames": 4,
+            "longest_sequence_ms": 82.662677
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": false,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.03360467776656151,
+        "peak_post_step_accumulator_seconds": 0.016665112227201462,
+        "maximum_fixed_steps_per_frame": 2,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 162418688,
+      "cpu_cores": 1.3960330883423346,
+      "other_host_cores": 0.676837504983604,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 97.60425531914893,
+          "p95": 100.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 4.089361702127659,
+          "p95": 5.0,
+          "maximum": 5.0
+        },
+        "memory.used [MiB]": {
+          "mean": 339.9659574468085,
+          "p95": 346.0,
+          "maximum": 349.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1379.0,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 97.76548936170212,
+          "p95": 99.04,
+          "maximum": 99.42
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "animation-ik-1-baseline",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-897f3e571096",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "897f3e571096f23e95e2d555c32fdb6288265b35faf09be6ba94e858cec2e30f",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 4103,
+        "average_fps": 91.15643627140619,
+        "p50_ms": 12.625908,
+        "p95_ms": 13.490046,
+        "p99_ms": 14.105768,
+        "worst_ms": 23.492369,
+        "one_percent_low_fps": 67.23069775173167,
+        "point_one_percent_low_fps": 56.73149866692324,
+        "hitches": {
+          "8.333333333": {
+            "frames": 2703,
+            "longest_sequence_frames": 7,
+            "longest_sequence_ms": 92.69939400000001
+          },
+          "16.666666667": {
+            "frames": 1,
+            "longest_sequence_frames": 1,
+            "longest_sequence_ms": 23.492369
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": false,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.027525272220373154,
+        "peak_post_step_accumulator_seconds": 0.01666523888707161,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 151617536,
+      "cpu_cores": 1.428235821632052,
+      "other_host_cores": 0.2341370199396804,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 80.76595744680851,
+          "p95": 85.0,
+          "maximum": 87.0
+        },
+        "utilization.memory [%]": {
+          "mean": 4.1063829787234045,
+          "p95": 5.0,
+          "maximum": 5.0
+        },
+        "memory.used [MiB]": {
+          "mean": 332.1446808510638,
+          "p95": 345.0,
+          "maximum": 347.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1379.0,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 94.55655319148936,
+          "p95": 96.0,
+          "maximum": 96.68
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "animation-ik-1-candidate",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-7157eea483f6-ua4d437010b35",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7157eea483f6388b70decfb32d4df8142146b56b8b7244eac950986c767b2eca",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 2,
+        "source_untracked_fingerprint": "a4d437010b3566f25f3c6d562d82b5873ddf22014b95992daec71edb405a1963",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 5151,
+        "average_fps": 114.44395446025314,
+        "p50_ms": 10.535929,
+        "p95_ms": 11.532657,
+        "p99_ms": 12.120185,
+        "worst_ms": 18.642659,
+        "one_percent_low_fps": 79.75134769003496,
+        "point_one_percent_low_fps": 70.18763154258832,
+        "hitches": {
+          "8.333333333": {
+            "frames": 2756,
+            "longest_sequence_frames": 3,
+            "longest_sequence_ms": 42.232631999999995
+          },
+          "16.666666667": {
+            "frames": 1,
+            "longest_sequence_frames": 1,
+            "longest_sequence_ms": 18.642659
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": false,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.026097383350133896,
+        "peak_post_step_accumulator_seconds": 0.016664253547787666,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 162557952,
+      "cpu_cores": 1.3767364842137428,
+      "other_host_cores": 0.23859864562823185,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 98.82978723404256,
+          "p95": 100.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 4.080851063829787,
+          "p95": 5.0,
+          "maximum": 5.0
+        },
+        "memory.used [MiB]": {
+          "mean": 325.92340425531916,
+          "p95": 327.0,
+          "maximum": 364.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1379.0,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 98.50085106382978,
+          "p95": 99.5,
+          "maximum": 100.0
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "animation-ik-2-baseline",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-897f3e571096",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "897f3e571096f23e95e2d555c32fdb6288265b35faf09be6ba94e858cec2e30f",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 3949,
+        "average_fps": 87.7348277501778,
+        "p50_ms": 12.849469,
+        "p95_ms": 14.046495,
+        "p99_ms": 14.757766,
+        "worst_ms": 17.207684,
+        "one_percent_low_fps": 65.5569236520691,
+        "point_one_percent_low_fps": 61.01374427635785,
+        "hitches": {
+          "8.333333333": {
+            "frames": 2732,
+            "longest_sequence_frames": 11,
+            "longest_sequence_ms": 142.28673899999998
+          },
+          "16.666666667": {
+            "frames": 1,
+            "longest_sequence_frames": 1,
+            "longest_sequence_ms": 17.207684
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": false,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.024991219863295555,
+        "peak_post_step_accumulator_seconds": 0.016665704548358917,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 148393984,
+      "cpu_cores": 1.4278389790266866,
+      "other_host_cores": 0.23366259369456066,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 78.13617021276596,
+          "p95": 82.0,
+          "maximum": 83.0
+        },
+        "utilization.memory [%]": {
+          "mean": 4.089361702127659,
+          "p95": 5.0,
+          "maximum": 5.0
+        },
+        "memory.used [MiB]": {
+          "mean": 329.54893617021276,
+          "p95": 331.0,
+          "maximum": 369.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1379.0,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 93.89782978723404,
+          "p95": 95.22,
+          "maximum": 95.73
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "animation-ik-2-candidate",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-7157eea483f6-ua4d437010b35",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7157eea483f6388b70decfb32d4df8142146b56b8b7244eac950986c767b2eca",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 2,
+        "source_untracked_fingerprint": "a4d437010b3566f25f3c6d562d82b5873ddf22014b95992daec71edb405a1963",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 5145,
+        "average_fps": 114.31945703948416,
+        "p50_ms": 10.477678,
+        "p95_ms": 11.523621,
+        "p99_ms": 12.133961,
+        "worst_ms": 14.119804,
+        "one_percent_low_fps": 80.06529139747407,
+        "point_one_percent_low_fps": 75.23339279279145,
+        "hitches": {
+          "8.333333333": {
+            "frames": 2773,
+            "longest_sequence_frames": 4,
+            "longest_sequence_ms": 42.044748
+          },
+          "16.666666667": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": false,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.025772154331207275,
+        "peak_post_step_accumulator_seconds": 0.016664616763591766,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 164413440,
+      "cpu_cores": 1.3679260874149497,
+      "other_host_cores": 0.24660574615826159,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 98.8,
+          "p95": 100.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 4.080851063829787,
+          "p95": 5.0,
+          "maximum": 5.0
+        },
+        "memory.used [MiB]": {
+          "mean": 329.41702127659573,
+          "p95": 345.0,
+          "maximum": 348.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1378.9446808510638,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 98.90748936170213,
+          "p95": 100.0,
+          "maximum": 100.27
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "combined-0-baseline",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-897f3e571096",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "897f3e571096f23e95e2d555c32fdb6288265b35faf09be6ba94e858cec2e30f",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 5992,
+        "average_fps": 299.5105696631478,
+        "p50_ms": 2.556609,
+        "p95_ms": 6.404361,
+        "p99_ms": 6.508557,
+        "worst_ms": 7.436115,
+        "one_percent_low_fps": 147.5046454744284,
+        "point_one_percent_low_fps": 135.53282017595774,
+        "hitches": {
+          "8.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "16.666666667": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": true,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.01983531564474106,
+        "peak_post_step_accumulator_seconds": 0.01666664332151413,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 185688064,
+      "cpu_cores": 0.9990452113752373,
+      "other_host_cores": 0.2536935529139759,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 94.5625,
+          "p95": 99.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 6.1875,
+          "p95": 7.0,
+          "maximum": 8.0
+        },
+        "memory.used [MiB]": {
+          "mean": 344.7857142857143,
+          "p95": 376.0,
+          "maximum": 378.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1375.4017857142858,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 107.82125,
+          "p95": 111.44,
+          "maximum": 111.76
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "combined-0-candidate",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-7157eea483f6-ua4d437010b35",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7157eea483f6388b70decfb32d4df8142146b56b8b7244eac950986c767b2eca",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 2,
+        "source_untracked_fingerprint": "a4d437010b3566f25f3c6d562d82b5873ddf22014b95992daec71edb405a1963",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 6218,
+        "average_fps": 310.8264480652431,
+        "p50_ms": 2.956204,
+        "p95_ms": 6.008468,
+        "p99_ms": 6.266876,
+        "worst_ms": 7.925142,
+        "one_percent_low_fps": 149.40658195756154,
+        "point_one_percent_low_fps": 132.7839190024164,
+        "hitches": {
+          "8.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "16.666666667": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": true,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.020427148789167404,
+        "peak_post_step_accumulator_seconds": 0.016662683337926865,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 183308288,
+      "cpu_cores": 0.8584352202342241,
+      "other_host_cores": 0.26128495178523947,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 96.6875,
+          "p95": 100.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 6.142857142857143,
+          "p95": 7.0,
+          "maximum": 8.0
+        },
+        "memory.used [MiB]": {
+          "mean": 343.1517857142857,
+          "p95": 357.0,
+          "maximum": 358.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1367.857142857143,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 105.31160714285714,
+          "p95": 111.53,
+          "maximum": 112.02
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "combined-1-baseline",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-897f3e571096",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "897f3e571096f23e95e2d555c32fdb6288265b35faf09be6ba94e858cec2e30f",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 5871,
+        "average_fps": 293.530042026529,
+        "p50_ms": 2.622584,
+        "p95_ms": 6.445503,
+        "p99_ms": 6.553166,
+        "worst_ms": 7.434327,
+        "one_percent_low_fps": 148.16699632944395,
+        "point_one_percent_low_fps": 135.83560324059377,
+        "hitches": {
+          "8.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "16.666666667": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": true,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.020026957616209984,
+        "peak_post_step_accumulator_seconds": 0.016666121780872345,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 183791616,
+      "cpu_cores": 0.9995535181153206,
+      "other_host_cores": 0.25623072418692217,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 92.46428571428571,
+          "p95": 98.0,
+          "maximum": 99.0
+        },
+        "utilization.memory [%]": {
+          "mean": 6.116071428571429,
+          "p95": 7.0,
+          "maximum": 8.0
+        },
+        "memory.used [MiB]": {
+          "mean": 342.6517857142857,
+          "p95": 345.0,
+          "maximum": 356.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1369.7142857142858,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 104.8225,
+          "p95": 110.79,
+          "maximum": 111.65
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "combined-1-candidate",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-7157eea483f6-ua4d437010b35",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7157eea483f6388b70decfb32d4df8142146b56b8b7244eac950986c767b2eca",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 2,
+        "source_untracked_fingerprint": "a4d437010b3566f25f3c6d562d82b5873ddf22014b95992daec71edb405a1963",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 6218,
+        "average_fps": 310.86809910425507,
+        "p50_ms": 2.961945,
+        "p95_ms": 5.935711,
+        "p99_ms": 6.291853,
+        "worst_ms": 8.567895,
+        "one_percent_low_fps": 147.55292260767234,
+        "point_one_percent_low_fps": 128.09344526626555,
+        "hitches": {
+          "8.333333333": {
+            "frames": 1,
+            "longest_sequence_frames": 1,
+            "longest_sequence_ms": 8.567895
+          },
+          "16.666666667": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": true,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.020346345379948616,
+        "peak_post_step_accumulator_seconds": 0.01666560396552086,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 183926784,
+      "cpu_cores": 0.8516926872977514,
+      "other_host_cores": 0.26225438912027255,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 96.71428571428571,
+          "p95": 100.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 6.142857142857143,
+          "p95": 7.0,
+          "maximum": 7.0
+        },
+        "memory.used [MiB]": {
+          "mean": 342.7857142857143,
+          "p95": 345.0,
+          "maximum": 357.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1367.2767857142858,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 105.055625,
+          "p95": 111.4,
+          "maximum": 112.21
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "combined-2-baseline",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-897f3e571096",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "897f3e571096f23e95e2d555c32fdb6288265b35faf09be6ba94e858cec2e30f",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 6020,
+        "average_fps": 300.9056191170397,
+        "p50_ms": 2.515182,
+        "p95_ms": 6.485989,
+        "p99_ms": 6.666249,
+        "worst_ms": 9.565666,
+        "one_percent_low_fps": 137.75807761990174,
+        "point_one_percent_low_fps": 120.60735105250588,
+        "hitches": {
+          "8.333333333": {
+            "frames": 2,
+            "longest_sequence_frames": 1,
+            "longest_sequence_ms": 9.565666
+          },
+          "16.666666667": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": true,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.020194653421640396,
+        "peak_post_step_accumulator_seconds": 0.016665786504745483,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 184180736,
+      "cpu_cores": 0.9990815113852234,
+      "other_host_cores": 0.28465450883042664,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 94.76785714285714,
+          "p95": 99.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 6.133928571428571,
+          "p95": 7.0,
+          "maximum": 8.0
+        },
+        "memory.used [MiB]": {
+          "mean": 341.07142857142856,
+          "p95": 355.0,
+          "maximum": 356.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1367.857142857143,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 104.6925,
+          "p95": 110.38,
+          "maximum": 112.12
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    },
+    {
+      "name": "combined-2-candidate",
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "2.0.0-alpha.1-Experimental-ad41f73-dirty-7157eea483f6-ua4d437010b35",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v2.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "7157eea483f6388b70decfb32d4df8142146b56b8b7244eac950986c767b2eca",
+        "source_origin": "git",
+        "source_revision": "ad41f73ff2ef9dc67078114b194b519fe3391d31",
+        "source_tree": "92e698e7d2478bf89a002ec2fe04d0c8ffb0199c",
+        "source_untracked_count": 2,
+        "source_untracked_fingerprint": "a4d437010b3566f25f3c6d562d82b5873ddf22014b95992daec71edb405a1963",
+        "version": "2.0.0-alpha.1"
+      },
+      "summary": {
+        "samples": 6241,
+        "average_fps": 311.9758903924168,
+        "p50_ms": 2.956444,
+        "p95_ms": 5.932676,
+        "p99_ms": 6.183259,
+        "worst_ms": 7.636117,
+        "one_percent_low_fps": 154.06972199299867,
+        "point_one_percent_low_fps": 138.3422120706268,
+        "hitches": {
+          "8.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "16.666666667": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "33.333333333": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "50": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          },
+          "100": {
+            "frames": 0,
+            "longest_sequence_frames": 0,
+            "longest_sequence_ms": 0
+          }
+        },
+        "p99_120fps": true,
+        "p99_60fps": true,
+        "peak_pending_simulation_seconds": 0.020299425348639488,
+        "peak_post_step_accumulator_seconds": 0.01666557788848877,
+        "maximum_fixed_steps_per_frame": 1,
+        "physics_discarded_seconds": 0.0,
+        "physics_cap_frames": 0,
+        "incoming_delta_clipped_seconds": 0.0,
+        "total_simulation_time_lost_seconds": 0.0
+      },
+      "rss_peak_bytes": 184004608,
+      "cpu_cores": 0.8452312542953034,
+      "other_host_cores": 0.24961211111241843,
+      "device_telemetry": {
+        "utilization.gpu [%]": {
+          "mean": 97.375,
+          "p95": 100.0,
+          "maximum": 100.0
+        },
+        "utilization.memory [%]": {
+          "mean": 6.160714285714286,
+          "p95": 7.0,
+          "maximum": 7.0
+        },
+        "memory.used [MiB]": {
+          "mean": 340.99107142857144,
+          "p95": 355.0,
+          "maximum": 357.0
+        },
+        "clocks.current.graphics [MHz]": {
+          "mean": 1367.5089285714287,
+          "p95": 1379.0,
+          "maximum": 1379.0
+        },
+        "power.draw [W]": {
+          "mean": 105.52125,
+          "p95": 112.31,
+          "maximum": 112.6
+        }
+      },
+      "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+      "script_fault": false,
+      "resource_failures": 0,
+      "inactive_sample_frames": 0
+    }
+  ],
+  "native_depth_contracts": {
+    "modern": "passed22cases",
+    "portable_on_same_NVIDIA": "passed22cases"
+  },
+  "complete_ik_profile": {
+    "elapsed_seconds": 45.000982938,
+    "frames": 5154,
+    "frame_summary": {
+      "samples": 5154,
+      "average_fps": 114.53083162874269,
+      "p50_ms": 10.808408,
+      "p95_ms": 11.872414,
+      "p99_ms": 12.46392,
+      "worst_ms": 14.977426,
+      "one_percent_low_fps": 77.39660526850034,
+      "point_one_percent_low_fps": 70.06333316615444,
+      "hitches": {
+        "8.333333333": {
+          "frames": 2719,
+          "longest_sequence_frames": 4,
+          "longest_sequence_ms": 44.901332
+        },
+        "16.666666667": {
+          "frames": 0,
+          "longest_sequence_frames": 0,
+          "longest_sequence_ms": 0
+        },
+        "33.333333333": {
+          "frames": 0,
+          "longest_sequence_frames": 0,
+          "longest_sequence_ms": 0
+        },
+        "50": {
+          "frames": 0,
+          "longest_sequence_frames": 0,
+          "longest_sequence_ms": 0
+        },
+        "100": {
+          "frames": 0,
+          "longest_sequence_frames": 0,
+          "longest_sequence_ms": 0
+        }
+      },
+      "p99_120fps": false,
+      "p99_60fps": true,
+      "peak_pending_simulation_seconds": 0.026013245806097984,
+      "peak_post_step_accumulator_seconds": 0.016661548987030983,
+      "maximum_fixed_steps_per_frame": 1,
+      "physics_discarded_seconds": 0.0,
+      "physics_cap_frames": 0,
+      "incoming_delta_clipped_seconds": 0.0,
+      "total_simulation_time_lost_seconds": 0.0,
+      "diagnostic_dropped_events": 0,
+      "diagnostic_truncated_records": 0
+    },
+    "threads": [
+      {
+        "name": "judas_whole_eng",
+        "tid": 11007,
+        "percent_one_core": 94.67324326181796
+      },
+      {
+        "name": "JudasWorker3",
+        "tid": 11026,
+        "percent_one_core": 4.21414106841347
+      },
+      {
+        "name": "JudasWorker5",
+        "tid": 11028,
+        "percent_one_core": 4.1918440257234515
+      },
+      {
+        "name": "JudasWorker4",
+        "tid": 11027,
+        "percent_one_core": 4.169546983033433
+      },
+      {
+        "name": "JudasWorker1",
+        "tid": 11024,
+        "percent_one_core": 4.147249940343415
+      },
+      {
+        "name": "JudasWorker7",
+        "tid": 11030,
+        "percent_one_core": 4.147249940343415
+      },
+      {
+        "name": "JudasWorker8",
+        "tid": 11031,
+        "percent_one_core": 4.147249940343415
+      },
+      {
+        "name": "JudasWorker9",
+        "tid": 11032,
+        "percent_one_core": 4.1249528976533965
+      },
+      {
+        "name": "JudasWorker10",
+        "tid": 11033,
+        "percent_one_core": 4.1249528976533965
+      },
+      {
+        "name": "JudasWorker6",
+        "tid": 11029,
+        "percent_one_core": 4.08035881227336
+      },
+      {
+        "name": "JudasWorker0",
+        "tid": 11023,
+        "percent_one_core": 4.058061769583341
+      },
+      {
+        "name": "JudasWorker2",
+        "tid": 11025,
+        "percent_one_core": 4.058061769583341
+      }
+    ],
+    "cpu_core_equivalents": 1.4013691330676539,
+    "estimated_other_host_core_equivalents": 0.24615935129780264,
+    "phases": {
+      "Audio control and retirement": {
+        "mean_ms_per_rendered_frame": 0.00047065424912689173,
+        "p99_when_present_ms": 0.000681
+      },
+      "Audio main update": {
+        "mean_ms_per_rendered_frame": 0.0005654794334497478,
+        "p99_when_present_ms": 0.000901
+      },
+      "Benchmark observation": {
+        "mean_ms_per_rendered_frame": 0.10358318975552969,
+        "p99_when_present_ms": 0.161725
+      },
+      "Fixed simulation step": {
+        "mean_ms_per_rendered_frame": 3.017323558983314,
+        "p99_when_present_ms": 6.657964
+      },
+      "Input events": {
+        "mean_ms_per_rendered_frame": 0.01176578230500582,
+        "p99_when_present_ms": 0.017814
+      },
+      "JavaScript UI events": {
+        "mean_ms_per_rendered_frame": 0.00011740531625921615,
+        "p99_when_present_ms": 0.00021
+      },
+      "JavaScript UI update": {
+        "mean_ms_per_rendered_frame": 0.00790498098564222,
+        "p99_when_present_ms": 0.012384
+      },
+      "JavaScript presentation": {
+        "mean_ms_per_rendered_frame": 0.020509414823438106,
+        "p99_when_present_ms": 0.030568
+      },
+      "JavaScript update": {
+        "mean_ms_per_rendered_frame": 0.012749630772215755,
+        "p99_when_present_ms": 0.019357
+      },
+      "Lighting caster snapshot": {
+        "mean_ms_per_rendered_frame": 0.20620177260380287,
+        "p99_when_present_ms": 0.287301
+      },
+      "Main camera": {
+        "mean_ms_per_rendered_frame": 4.825873325572371,
+        "p99_when_present_ms": 5.753861
+      },
+      "Play frame": {
+        "mean_ms_per_rendered_frame": 8.256543784633296,
+        "p99_when_present_ms": 12.201015
+      },
+      "Resource completion and budget": {
+        "mean_ms_per_rendered_frame": 0.0012424703143189757,
+        "p99_when_present_ms": 0.001723
+      },
+      "Resource pump": {
+        "mean_ms_per_rendered_frame": 0.001734198098564222,
+        "p99_when_present_ms": 0.002435
+      },
+      "Runtime UI drawing": {
+        "mean_ms_per_rendered_frame": 0.07113531528909585,
+        "p99_when_present_ms": 0.098085
+      },
+      "Runtime UI input": {
+        "mean_ms_per_rendered_frame": 0.0012025428793170352,
+        "p99_when_present_ms": 0.001543
+      },
+      "Runtime UI layout": {
+        "mean_ms_per_rendered_frame": 0.0042407021730694605,
+        "p99_when_present_ms": 0.005531
+      },
+      "Script lifecycle callback": {
+        "mean_ms_per_rendered_frame": 0.03941291715172682,
+        "p99_when_present_ms": 0.052668000000000006
+      },
+      "Script synchronization": {
+        "mean_ms_per_rendered_frame": 0.0009885737291424137,
+        "p99_when_present_ms": 0.0013930000000000001
+      },
+      "Shaped text submission": {
+        "mean_ms_per_rendered_frame": 0.05479856169965076,
+        "p99_when_present_ms": 0.079179
+      },
+      "Simulation systems": {
+        "mean_ms_per_rendered_frame": 3.0174284105549085,
+        "p99_when_present_ms": 6.658104
+      },
+      "Swap present wait": {
+        "mean_ms_per_rendered_frame": 0.3166118447807528,
+        "p99_when_present_ms": 2.266113
+      },
+      "Text layout": {
+        "mean_ms_per_rendered_frame": 0.0011935997283663174,
+        "p99_when_present_ms": 0.001653
+      },
+      "World render submission": {
+        "mean_ms_per_rendered_frame": 5.089500469344198,
+        "p99_when_present_ms": 6.027896
+      }
+    },
+    "gpu_command_intervals": {
+      "Whole runtime frame": {
+        "mean_ms": 8.731831611951883,
+        "p99_ms": 9.652896
+      },
+      "Main camera": {
+        "mean_ms": 8.64678175863407,
+        "p99_ms": 9.54464
+      },
+      "Shadow": {
+        "mean_ms": 1.5307387711809597,
+        "p99_ms": 2.049728
+      },
+      "Opaque instances": {
+        "mean_ms": 0.09340011331005045,
+        "p99_ms": 0.357984
+      },
+      "Runtime UI": {
+        "mean_ms": 0.009234967792006209,
+        "p99_ms": 0.018816
+      }
+    },
+    "process_rss_peak_bytes": 214720512,
+    "process_lifetime_high_water_bytes": 214720512,
+    "device_telemetry_including_warmup": {
+      "utilization.gpu [%]": {
+        "mean": 98.97872340425532,
+        "p95": 100.0,
+        "maximum": 100.0
+      },
+      "utilization.memory [%]": {
+        "mean": 4.140425531914894,
+        "p95": 5.0,
+        "maximum": 17.0
+      },
+      "memory.used [MiB]": {
+        "mean": 324.74893617021274,
+        "p95": 337.0,
+        "maximum": 364.0
+      },
+      "clocks.current.graphics [MHz]": {
+        "mean": 1371.6212765957446,
+        "p95": 1379.0,
+        "maximum": 1379.0
+      },
+      "power.draw [W]": {
+        "mean": 95.32795744680851,
+        "p95": 99.02,
+        "maximum": 100.87
+      }
+    },
+    "device_telemetry_scope": "Whole device including desktop, startup, warmup and shutdown; not per-process steady-state attribution",
+    "worker_pool_capacity_seconds": 495.0120442299999,
+    "worker_pool_busy_fraction": 0.041439710318379445,
+    "worker_busy_seconds": 20.51315571700003,
+    "note": "Scopes nest; GPU intervals overlap CPU work and may include command gaps. Neither list is additive. CPU samples exclude threads absent at an endpoint. Frame intervals are the actual whole-application throughput measurement.",
+    "retained_gameplay_spikes": [],
+    "same_frame_completion": {
+      "matched_frames": 5147,
+      "total_frames": 5154,
+      "mean_ms": 23.918227785081875,
+      "p50_ms": 23.830212869628905,
+      "p95_ms": 26.70560250830078,
+      "p99_ms": 27.522617774902344,
+      "worst_ms": 28.867152751464843,
+      "p99_completion_within_5ms": false,
+      "gpu_start_queue_lead_median_ms": 15.087635252441407,
+      "calibration_half_bracket_ns": 12068.0,
+      "note": "max(CPU end, calibrated GPU end) minus CPU frame start. Includes queueing and diagnostics; excludes compositor/scanout. Latency is not inverted to report FPS."
+    }
+  }
+}

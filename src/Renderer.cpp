@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "render/ShaderLibrary.h"
 #include "render/StructuralSkinState.h"
+#include "render/ShadowPrimitiveRange.h"
 #include "SkeletalAnimation.h"
 #include "Weather.h"
 #include "BasicWater.h"
@@ -596,6 +597,7 @@ void Renderer::DrawDebugLines(const std::vector<DebugLine>& lines, bool depthTes
 
 void Renderer::BeginFrame(int windowWidth, int windowHeight) {
     m_render->skinnedBounds.Clear();
+    m_render->submissionTimings.Begin();
     InvalidateMaterialUniformState();
     PollProfileGPU();
     glViewport(0, 0, windowWidth, windowHeight);
@@ -660,6 +662,8 @@ void Renderer::BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProject
     glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&m_shadowSavedFramebuffer);glGetIntegerv(GL_VIEWPORT,&m_shadowSavedViewport.x);
     m_profileShadow=BeginProfilePass("Shadow",std::uint64_t(shadowSlot));
     m_shadowLightSpaceMatrix[shadowSlot] = lightViewProjection;
+    const auto* coalesce=std::getenv("JUDAS_SHADOW_COALESCE");
+    m_render->coalesceOpaqueShadow=!coalesce||std::strcmp(coalesce,"0");
     m_shadowPassActive = true;
     m_currentShadowSlot = shadowSlot;
     m_frustum=Frustum(lightViewProjection);
@@ -1091,7 +1095,28 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     auto alphaAt=[&](size_t slot,const GpuMaterial* material){auto binding=bindingAt(slot);return binding.overrides.alpha.value_or(material?material->definition.alpha:MaterialAlpha::Opaque);};
     const glm::mat4 model = glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation) * glm::scale(glm::mat4(1.0f), scale);
     const auto* palette=skin&&!skin->empty()?skin:&gpuMesh->restSkin;
-    auto submit=[&](bool shadow){for(size_t i=0;i<parts;++i){if(hiddenParts&&!primitives.empty()&&std::find(hiddenParts->begin(),hiddenParts->end(),primitives[i].part)!=hiddenParts->end())continue;if(!gpuMesh->structuralSections.empty()&&i<gpuMesh->structuralOrientations.size()&&std::none_of(gpuMesh->structuralOrientations[i].begin(),gpuMesh->structuralOrientations[i].end(),[&](const auto& v){return gpuMesh->structuralSections[v.joints1.x]>=0;}))continue;auto* m=materialAt(i);bool isBlend=alphaAt(i,m)==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;BindMaterial(m,bindingAt(i),texture,tintColor,alpha,shadow);if(!shadow)BindTerrainMaterial();BindTerrainGeometry(shadow);glm::mat4 orientation(1);if(i<gpuMesh->partOrientation.size()&&!palette->empty()){orientation=glm::mat4(0);auto w=gpuMesh->partOrientation[i];if(!gpuMesh->structuralSections.empty()){if(i<gpuMesh->structuralOrientations.size())for(const auto& candidate:gpuMesh->structuralOrientations[i])if(gpuMesh->structuralSections[candidate.joints1.x]>=0){w=candidate;break;}w=JudasRender::ResolveStructuralWeights(w,gpuMesh->structuralSections);}for(int k=0;k<4;++k)orientation+=palette->at(w.joints[k])*w.weights[k]+palette->at(w.joints1[k])*w.weights1[k];}glFrontFace((m_submittingBatch?m_activeBatchReversed:glm::determinant(glm::mat3(model*orientation))<0)?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!primitives.empty()){first=primitives[i].first;count=primitives[i].count;}glBindVertexArray(gpuMesh->vao);if(m_submittingBatch){if(gpuMesh->ebo)glDrawElementsInstanced(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4),GLsizei(m_activeInstances));else glDrawArraysInstanced(GL_TRIANGLES,GLint(first),GLsizei(count),GLsizei(m_activeInstances));++m_stats.instancedDraws;m_stats.instances+=m_activeInstances;}else {if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));}if(lod)m_stats.lodReducedInstances+=(m_submittingBatch?m_activeInstances:1);++m_stats.drawCalls;m_stats.triangles+=count/3*(m_submittingBatch?m_activeInstances:1);}glFrontFace(GL_CCW);};
+    auto orientationAt=[&](size_t i){
+        glm::mat4 orientation(1);
+        if(i<gpuMesh->partOrientation.size()&&!palette->empty()){
+            orientation=glm::mat4(0);auto w=gpuMesh->partOrientation[i];
+            if(!gpuMesh->structuralSections.empty()){
+                if(i<gpuMesh->structuralOrientations.size())for(const auto& candidate:gpuMesh->structuralOrientations[i])if(gpuMesh->structuralSections[candidate.joints1.x]>=0){w=candidate;break;}
+                w=JudasRender::ResolveStructuralWeights(w,gpuMesh->structuralSections);
+            }
+            for(int k=0;k<4;++k)orientation+=palette->at(w.joints[k])*w.weights[k]+palette->at(w.joints1[k])*w.weights1[k];
+        }
+        return orientation;
+    };
+    auto reversedAt=[&](size_t i){return m_submittingBatch?m_activeBatchReversed:glm::determinant(glm::mat3(model*orientationAt(i)))<0;};
+    auto submit=[&](bool shadow){
+        std::optional<JudasRender::ShadowPrimitiveRange> merged;
+        if(shadow&&m_render->coalesceOpaqueShadow&&(!hiddenParts||hiddenParts->empty())&&gpuMesh->structuralSections.empty())
+            merged=JudasRender::CoalesceOpaqueShadowRange(primitives.size(),[&](size_t i){
+                const auto* material=materialAt(i);const auto binding=bindingAt(i);
+                const bool cull=material&&material->definition.model!=MaterialModel::Legacy&&!binding.overrides.doubleSided.value_or(material->definition.doubleSided);
+                return JudasRender::ShadowPrimitiveState{primitives[i].first,primitives[i].count,alphaAt(i,material)==MaterialAlpha::Opaque,cull,reversedAt(i)};
+            });
+        for(size_t i=0;i<(merged?1:parts);++i){if(hiddenParts&&!primitives.empty()&&std::find(hiddenParts->begin(),hiddenParts->end(),primitives[i].part)!=hiddenParts->end())continue;if(!gpuMesh->structuralSections.empty()&&i<gpuMesh->structuralOrientations.size()&&std::none_of(gpuMesh->structuralOrientations[i].begin(),gpuMesh->structuralOrientations[i].end(),[&](const auto& v){return gpuMesh->structuralSections[v.joints1.x]>=0;}))continue;auto* m=materialAt(i);bool isBlend=alphaAt(i,m)==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;const auto materialStarted=m_render->submissionTimings.Start();BindMaterial(m,bindingAt(i),texture,tintColor,alpha,shadow);m_render->submissionTimings.Material(materialStarted,shadow);if(!shadow)BindTerrainMaterial();BindTerrainGeometry(shadow);glFrontFace(reversedAt(i)?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!primitives.empty()){first=primitives[i].first;count=primitives[i].count;}if(merged){first=merged->first;count=merged->count;}glBindVertexArray(gpuMesh->vao);const auto drawStarted=m_render->submissionTimings.Start();if(m_submittingBatch){if(gpuMesh->ebo)glDrawElementsInstanced(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4),GLsizei(m_activeInstances));else glDrawArraysInstanced(GL_TRIANGLES,GLint(first),GLsizei(count),GLsizei(m_activeInstances));++m_stats.instancedDraws;m_stats.instances+=m_activeInstances;}else {if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));}m_render->submissionTimings.Draw(drawStarted,shadow);if(lod)m_stats.lodReducedInstances+=(m_submittingBatch?m_activeInstances:1);++m_stats.drawCalls;m_stats.triangles+=count/3*(m_submittingBatch?m_activeInstances:1);}glFrontFace(GL_CCW);};
     if(palette->size()>kModelPaletteLimit||palette->size()!=gpuMesh->restSkin.size())return;
     VisualBounds bounds=gpuMesh->bounds;
     if(!palette->empty()){
@@ -1223,6 +1248,7 @@ void Renderer::EndFrame() {
     FlushMaterialBlends();FinishGridWater();const bool background=m_environmentBackground;
     if(m_weather.enabled)m_environmentBackground=false;
     ResolveLinearPass();m_environmentBackground=background;
+    m_render->submissionTimings.Publish();
 }
 
 bool Renderer::LoadFont(const char* path,float pixels,std::string& error){
