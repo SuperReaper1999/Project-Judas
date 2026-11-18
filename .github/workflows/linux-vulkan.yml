@@ -25,15 +25,17 @@ jobs:
       VK_DRIVER_FILES: /usr/share/vulkan/icd.d/lvp_icd.x86_64.json
       PYTHONDONTWRITEBYTECODE: '1'
       CCACHE_MAXSIZE: 1G
-      XDG_CACHE_HOME: ${{ runner.temp }}/judas-cache
-      XDG_CONFIG_HOME: ${{ runner.temp }}/judas-config
-      XDG_DATA_HOME: ${{ runner.temp }}/judas-data
     steps:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Install Ubuntu development and software graphics packages
         run: |
+          {
+            echo "XDG_CACHE_HOME=$RUNNER_TEMP/judas-cache"
+            echo "XDG_CONFIG_HOME=$RUNNER_TEMP/judas-config"
+            echo "XDG_DATA_HOME=$RUNNER_TEMP/judas-data"
+          } >> "$GITHUB_ENV"
           sudo apt-get update
           sudo apt-get install -y cmake ninja-build g++ ccache libsdl2-dev libglm-dev xvfb xauth libgl1-mesa-dri mesa-vulkan-drivers libvulkan-dev glslang-dev glslang-tools spirv-tools vulkan-validationlayers
           test -f "$VK_DRIVER_FILES"
