@@ -270,6 +270,10 @@ ShapeSweepHit PhysicsWorld::SweepCapsuleMotion(
         result.hitBody = m_impl->MakeHandle(static_cast<unsigned int>(startResult.bodyIndex));
         return result;
     }
+    // Penetration recovery probes a stationary capsule against the previous
+    // body poses. Every sweep sample would evaluate the same geometry.
+    if (bodyMotionStart == 0.0f && bodyMotionEnd == 0.0f && displacement == glm::vec3(0))
+        return result;
 
     // March forward in substeps looking for the first t where the capsule
     // starts overlapping something, then refine that bracket by bisection.

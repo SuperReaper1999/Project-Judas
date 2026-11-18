@@ -17,6 +17,28 @@ bool Near(glm::vec3 a,glm::vec3 b,float eps=.02f){return glm::length(a-b)<eps;}
 void Tick(CharacterMotor& m,PhysicsWorld& p,const GravityField& g,int n){for(int i=0;i<n;++i){p.Step(1.f/60);m.Step(p,g,1.f/60);}}
 
 namespace {
+void StationaryCapsuleProbe() {
+    PhysicsWorld world;
+    world.Init();
+    const auto wall = world.CreateDynamicBox({-2, 0, 0}, {.25f, 2, 2}, 10, 0, 0);
+    world.SetLinearVelocity(wall, {240, 0, 0});
+    world.Step(1.f / 60);
+
+    const auto probe = [&](glm::vec3 center, float end) {
+        return world.SweepCapsuleMotion(.25f, .5f, center, {1, 0, 0, 0}, {0, 0, 0},
+                                        true, 0, end);
+    };
+    Check(!probe({0, 0, 0}, 0).hit, "stationary probe misses pinned previous geometry");
+    const auto overlap = probe({-1.65f, 0, 0}, 0);
+    Check(overlap.hit && overlap.hitBody.id == wall.id && overlap.distance == 0 &&
+              std::abs(overlap.penetration - .15f) < .001f && overlap.normal.x > .99f,
+          "stationary probe keeps signed penetration against the pinned previous pose");
+    const auto crossing = probe({0, 0, 0}, 1);
+    Check(crossing.hit && crossing.hitBody.id == wall.id && crossing.distance == 0 &&
+              crossing.normal.x > .99f && world.GetTransform(wall).position.x > .5f,
+          "a moving wall can still hit a stationary capsule between two clear poses");
+}
+
 void RegisterObserver(CharacterMotor& motor,PhysicsWorld& physics){
  motor.observationBody=physics.CreateQueryCapsule(motor.settings.radius,motor.settings.halfHeight,
      {motor.position+motor.orientation*motor.settings.offset,motor.orientation});
@@ -241,6 +263,7 @@ void QuerySensorPaths(){
 }
 
 int main(){
+ StationaryCapsuleProbe();
  QuerySensorPaths();
  UniformGravity g({0,-9.81f,0}),zero({0,0,0});PhysicsWorld p;p.Init();auto floor=p.CreateStaticBox({0,-.5,0},{20,.5,20},.6,0);
  CharacterMotor m;m.Reset({0,.92,0},{1,0,0,0});Tick(m,p,g,3);Check(m.result.supported&&m.result.support.id==floor.id&&Near(m.result.supportNormal,{0,1,0}),"flat support / true geometry normal");
