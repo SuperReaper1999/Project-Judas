@@ -416,6 +416,7 @@ public:
     bool SetNavigationLinkSettings(EntityId,const NavigationLinkSettings&);
     bool SetNavigationAgentSettings(EntityId id,const NavigationAgentSettings& settings);
     void UpdateNavigation(float dt){if(m_navigation&&m_hasNavigation)m_navigation->Update(*this,dt);}
+    void PrepareStartupNavigation(){if(m_navigation&&m_hasNavigation)m_navigation->PrepareStartup(*this);}
     bool SetCharacterSettings(EntityId,const CharacterMotorSettings&);
     void ClearCharacters();
     struct CharacterInstance {CharacterMotor motor;SceneTransform previous;};

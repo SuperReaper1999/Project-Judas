@@ -36,6 +36,9 @@ public:
  void RegisterAgent(SceneObjectId id);
  NavigationAgentState* Agent(SceneObjectId);const NavigationAgentState* Agent(SceneObjectId)const;
  bool CompleteLink(SceneObjectId);
+ // Prepare private baked surfaces while the startup screen is visible.
+ // The first navigation update checks current inputs before publishing.
+ void PrepareStartup(RuntimeWorld&);
  void Update(RuntimeWorld&,float);
  bool CanCarveObstacle(const SceneTransform&,const NavigationObstacleSettings&) const;
  void RequestEditedRouteRefresh(bool waitForCarving);

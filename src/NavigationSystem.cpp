@@ -4,6 +4,7 @@
 #include "RuntimeWorld.h"
 #include "Prefab.h"
 #include "ResourceManager.h"
+#include "SceneFingerprint.h"
 #include "OriginTranslation.h"
 #include <DetourNavMesh.h>
 #include <DetourNavMeshQuery.h>
@@ -18,6 +19,54 @@
 #include <cmath>
 #include <cstring>
 namespace {
+struct StartupNavigation {
+    std::string sceneSignature;
+    NavigationSourceFiles sourceFiles;
+    std::map<SceneObjectId,std::shared_ptr<PreparedNavigationSurface>> surfaces;
+};
+
+bool StartupSceneSignature(const Scene& scene, std::string& signature) {
+    // Keep the full inputs of the geometry collector and ignore presentation
+    // state. The canonical scene writer compares transforms and body fields
+    // without an epsilon. An unrepresentable input disables the fast path.
+    Scene inputs;
+    SceneObjectId highestId = 0;
+    for (const auto& o : scene.Objects()) {
+        // Native landscapes have a separate owner and validation lifecycle.
+        if (o.landscape) return false;
+        if (!o.body && !o.navigationModifier && !o.navigationSurface) continue;
+        highestId = std::max(highestId,o.id);
+        auto& source = inputs.Objects().emplace_back();
+        source.id = o.id;
+        source.transform = o.transform;
+        source.body = o.body;
+        source.navigationObstacle = o.navigationObstacle;
+        source.navigationModifier = o.navigationModifier;
+        source.navigationSurface = o.navigationSurface;
+        if (o.navigationSurface) {
+            source.navigationLink = o.navigationLink;
+            source.navigationAgent = o.navigationAgent;
+        }
+    }
+    inputs.SetNextId(highestId+1);
+    std::string error;
+    return ComputeSceneFingerprint(inputs,signature,error);
+}
+
+bool ValidateBakedSurface(const Scene& scene,const SceneObject& surface,const ProjectNavigation& config,
+                         const NavigationData& data,const AssetDatabase* assets,std::string& error,
+                         NavigationSourceFiles* inputs = nullptr) {
+    NavigationGeometry geometry;
+    if (!CollectNavigationGeometry(scene,surface,config,geometry,error,assets,inputs)) {
+        error = "stale navigation bake: " + error;
+        return false;
+    }
+    if (geometry.fingerprint == data.fingerprint) return true;
+    error = "stale navigation bake: source geometry differs from the baked asset " +
+            surface.navigationSurface->asset;
+    return false;
+}
+
 struct Filter:dtQueryFilter {CategoryMask mask;Filter(const NavigationFilter& f):mask(f.include&~f.exclude){for(auto [id,c]:f.costs)if(id<62&&std::isfinite(c)&&c>=1)setAreaCost(id+1,c);}bool passFilter(dtPolyRef,const dtMeshTile*,const dtPoly* p)const override{return p->getArea()>0&&(mask&CategoryBit(p->getArea()-1));}};
 struct MeshProcess:dtTileCacheMeshProcess {void process(dtNavMeshCreateParams* p,unsigned char* a,unsigned short* f)override{for(int i=0;i<p->polyCount;++i){if(a[i]==63)a[i]=1;f[i]=1;}}};
 struct Surface {
@@ -64,7 +113,7 @@ struct Surface {
  NavigationPath path(glm::vec3 start,glm::vec3 end,const NavigationFilter& options)const{NavigationPath out;Filter f(options);dtPolyRef a=0,b=0;glm::vec3 p,q;if(!nearest(start,2,f,a,p)||!nearest(end,2,f,b,q))return out;dtPolyRef corridor[512];int n=0;auto status=query->findPath(a,b,&p.x,&q.x,&f,corridor,&n,512);if(dtStatusFailed(status)||!n)return out;out.status=(corridor[n-1]==b&&!dtStatusDetail(status,DT_BUFFER_TOO_SMALL))?NavigationPath::Status::Complete:NavigationPath::Status::Partial;if(corridor[n-1]!=b)query->closestPointOnPoly(corridor[n-1],&q.x,&q.x,nullptr);float points[512*3];unsigned char flags[512];dtPolyRef refs[512];int count=0;auto straight=query->findStraightPath(&p.x,&q.x,corridor,n,points,flags,refs,&count,512,DT_STRAIGHTPATH_ALL_CROSSINGS);if(dtStatusFailed(straight))return {};if(dtStatusDetail(straight,DT_BUFFER_TOO_SMALL))out.status=NavigationPath::Status::Partial;for(int i=0;i<count;++i){NavigationCorner c;c.position=world(glm::vec3(points[i*3],points[i*3+1],points[i*3+2]));if(i){float distance=glm::distance(out.corners.back().position,c.position);out.distance+=distance;const dtMeshTile* tile=nullptr;const dtPoly* poly=nullptr;out.cost+=distance*(refs[i-1]&&dtStatusSucceed(mesh->getTileAndPolyByRef(refs[i-1],&tile,&poly))?f.getAreaCost(poly->getArea()):1);}out.corners.push_back(c);}for(int i=0;i<n;++i){const dtMeshTile* t;const dtPoly* poly;if(dtStatusSucceed(mesh->getTileAndPolyByRef(corridor[i],&t,&poly))){unsigned area=poly->getArea()-1;if(std::find(out.areas.begin(),out.areas.end(),area)==out.areas.end())out.areas.push_back(area);}}return out;}
 };
 }
-struct NavigationSystem::Impl {ProjectNavigation config;std::map<SceneObjectId,std::unique_ptr<Surface>> surfaces,staged;std::map<SceneObjectId,std::string> errors;std::map<SceneObjectId,NavigationAgentState> agents;std::map<SceneObjectId,SceneObject> links;std::set<SceneObjectId> pending;bool refreshLinks=false,refreshObstacles=false;unsigned revision=1;dtObstacleAvoidanceQuery* avoidance=dtAllocObstacleAvoidanceQuery();Impl(ProjectNavigation p):config(std::move(p)){if(avoidance)avoidance->init(32,32);}~Impl(){dtFreeObstacleAvoidanceQuery(avoidance);}};
+struct NavigationSystem::Impl {ProjectNavigation config;std::unique_ptr<StartupNavigation> startup;std::map<SceneObjectId,std::unique_ptr<Surface>> surfaces,staged;std::map<SceneObjectId,std::string> errors;std::map<SceneObjectId,NavigationAgentState> agents;std::map<SceneObjectId,SceneObject> links;std::set<SceneObjectId> pending;bool refreshLinks=false,refreshObstacles=false;unsigned revision=1;dtObstacleAvoidanceQuery* avoidance=dtAllocObstacleAvoidanceQuery();Impl(ProjectNavigation p):config(std::move(p)){if(avoidance)avoidance->init(32,32);}~Impl(){dtFreeObstacleAvoidanceQuery(avoidance);}};
 NavigationSystem::NavigationSystem(ProjectNavigation p):m(std::make_unique<Impl>(std::move(p))){}NavigationSystem::~NavigationSystem()=default;
 const ProjectNavigation& NavigationSystem::Configuration()const{return m->config;}unsigned NavigationSystem::Revision()const{return m->revision;}const std::map<SceneObjectId,std::string>& NavigationSystem::Errors()const{return m->errors;}
 // The opaque product contains the same runtime cache used by ordinary surfaces.
@@ -204,10 +253,55 @@ void NavigationSystem::RequestEditedRouteRefresh(bool waitForCarving){
     if(waitForCarving)m->refreshObstacles=true;
     else m->refreshLinks=true;
 }
+void NavigationSystem::PrepareStartup(RuntimeWorld& world) {
+    JUDAS_PROFILE_SCOPE("Navigation startup preparation");
+    auto* resources = world.Resources();
+    if (!resources || !resources->Assets() || world.NetworkClient() || world.HasRuntimeLandscapes()) return;
+    Scene geometry;
+    geometry.Objects() = world.ScriptObjects();
+    auto startup = std::make_unique<StartupNavigation>();
+    for (const auto& o : geometry.Objects()) {
+        if (!o.navigationSurface || !o.navigationSurface->enabled || o.landscape ||
+            m->surfaces.count(o.id) || m->errors.count(o.id)) continue;
+        std::string error;
+        auto data = resources->GetNavigation(o.navigationSurface->asset,error);
+        if (!data || !ValidateBakedSurface(geometry,o,m->config,*data,resources->Assets(),error,&startup->sourceFiles))
+            continue; // Preserve ordinary first-tick validation and diagnostics.
+        if (auto surface = PrepareSurface(data,error))
+            startup->surfaces.emplace(o.id,std::move(surface));
+    }
+    if (!startup->surfaces.empty() && StartupSceneSignature(geometry,startup->sceneSignature))
+        m->startup = std::move(startup);
+}
+
 void NavigationSystem::Update(RuntimeWorld& world,float dt){
-    JUDAS_PROFILE_SCOPE("Navigation update");auto objects=world.ScriptObjects();std::set<SceneObjectId> liveSurfaces,liveAgents,liveLinks;Scene geometry;geometry.Objects()=objects;
+    JUDAS_PROFILE_SCOPE("Navigation update");
+    Scene geometry;
+    geometry.Objects()=world.ScriptObjects();
+    const auto& objects=geometry.Objects();
+    std::set<SceneObjectId> liveSurfaces,liveAgents,liveLinks;
+    auto startup = std::move(m->startup);
+    if (startup) {
+        JUDAS_PROFILE_SCOPE("Recheck prepared navigation inputs");
+        auto* resources = world.Resources();
+        std::string signature;
+        if (!resources || !resources->Assets() || !StartupSceneSignature(geometry,signature) ||
+            signature != startup->sceneSignature || !startup->sourceFiles.Matches(*resources->Assets()))
+            startup.reset();
+    }
  for(auto& o:objects){if(o.navigationLink&&o.navigationLink->enabled){auto existing=m->links.find(o.id);if(existing==m->links.end()||NavigationProperties(existing->second)!=NavigationProperties(o)||existing->second.transform.position!=o.transform.position||existing->second.transform.rotation!=o.transform.rotation)++m->revision;m->links[o.id]=o;liveLinks.insert(o.id);}if(o.navigationAgent&&o.navigationAgent->enabled){m->agents.try_emplace(o.id);liveAgents.insert(o.id);}if(o.navigationSurface&&o.navigationSurface->enabled){liveSurfaces.insert(o.id);if(!o.landscape&&!m->surfaces.count(o.id)&&!m->errors.count(o.id)&&world.Resources()){
-  std::string error;auto data=world.Resources()->GetNavigation(o.navigationSurface->asset,error);if(data){NavigationGeometry source;if(!CollectNavigationGeometry(geometry,o,m->config,source,error,world.Resources()->Assets())||source.fingerprint!=data->fingerprint){m->errors[o.id]="stale navigation bake: "+error;continue;}if(!LoadSurface(o.id,o.transform,data,error))m->errors[o.id]=error;}else if(error!="loading")m->errors[o.id]=error;
+  std::string error;
+  auto data=world.Resources()->GetNavigation(o.navigationSurface->asset,error);
+  if(data){
+   PreparedNavigationSurface* prepared=nullptr;
+   if(startup){
+    const auto found=startup->surfaces.find(o.id);
+    if(found!=startup->surfaces.end()&&found->second->surface->data==data)
+        prepared=found->second.get();
+   }
+   if((!prepared&&!ValidateBakedSurface(geometry,o,m->config,*data,world.Resources()->Assets(),error))||
+      !LoadSurface(o.id,o.transform,data,error,true,prepared))m->errors[o.id]=error;
+  }else if(error!="loading")m->errors[o.id]=error;
  }}}
  for(auto it=m->surfaces.begin();it!=m->surfaces.end();)if(!liveSurfaces.count(it->first)&&!world.HasRuntimeTerrain(it->first)){it=m->surfaces.erase(it);++m->revision;}else ++it;
  for(auto it=m->agents.begin();it!=m->agents.end();)if(!liveAgents.count(it->first))it=m->agents.erase(it);else ++it;

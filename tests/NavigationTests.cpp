@@ -45,7 +45,55 @@ int main(){std::string error;auto scene=fixture();auto* source=scene.Find(2);Pro
  auto disabledModifier=fixture();disabledModifier.Find(1)->navigationModifier=NavigationModifierSettings{};disabledModifier.Find(1)->navigationModifier->enabled=false;disabledModifier.Find(1)->navigationModifier->excludeSource=true;NavigationGeometry disabledGeometry;check(CollectNavigationGeometry(disabledModifier,*disabledModifier.Find(2),ProjectNavigation{},disabledGeometry,error)&&disabledGeometry.fingerprint==original.fingerprint,"disabled modifier cannot exclude physical source");
  auto blocked=fixture();SceneObject wall;wall.id=3;wall.navigationModifier=NavigationModifierSettings{};wall.navigationModifier->halfExtents={.5f,2,3};wall.navigationModifier->blocked=true;blocked.Objects().push_back(wall);NavigationData block;check(BakeNavigation(blocked,*blocked.Find(2),ProjectNavigation{},block,error),"blocked modifier bake");NavigationSystem detour;detour.LoadSurface(2,{},std::make_shared<NavigationData>(block),error);auto around=detour.FindPath({-5,0,0},{5,0,0});check(around.status==NavigationPath::Status::Complete&&around.distance>10.5f,"route around nonwalkable volume");check(!detour.Sample({0,0,0},.2f),"blocked region not sampleable");
  auto costScene=fixture();ProjectNavigation costConfig;costConfig.areas.Add("Expensive",area);wall.navigationModifier->blocked=false;wall.navigationModifier->area=area;costScene.Objects().push_back(wall);NavigationData costs;check(BakeNavigation(costScene,*costScene.Find(2),costConfig,costs,error),"area modifier bake");NavigationSystem costsSystem(costConfig);costsSystem.LoadSurface(2,{},std::make_shared<NavigationData>(costs),error);auto cheap=costsSystem.FindPath({-5,0,0},{5,0,0});NavigationFilter expensive;expensive.costs[area]=30;auto avoid=costsSystem.FindPath({-5,0,0},{5,0,0},expensive);check(cheap.status==NavigationPath::Status::Complete&&avoid.distance>cheap.distance+.2f,"per-area cost chooses alternate route");expensive.exclude=CategoryBit(area);check(costsSystem.FindPath({-5,0,0},{5,0,0},expensive).status==NavigationPath::Status::Complete,"area exclusion still finds alternate");
- Project project;std::filesystem::remove_all("/tmp/judas-m53-project");check(Project::CreateNew("/tmp/judas-m53-project","Navigation",project,error),"create navigation project");project.Settings().navigation=costConfig;check(project.Save(error),"save project navigation registries");Project reloaded;check(reloaded.Load(project.ProjectFile(),error)&&reloaded.Settings().navigation.Serialize()==costConfig.Serialize(),"project reload retains profile and area IDs");AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());auto navPath=std::filesystem::path(project.AssetsDir())/"test.judasnav";SaveNavigation(navPath.string(),data,error);AssetRecord record;check(assets.Track(navPath.string(),record,error),"normal nav asset tracking");ResourceManager resources(nullptr,&assets);auto runtimeScene=fixture();runtimeScene.Find(2)->navigationSurface->asset=record.id;RuntimeWorld world;check(world.Build(runtimeScene,&resources,error),"ordinary world builds");if(!world.IsBuilt()){std::puts(error.c_str());return 1;}resources.WaitForAll();world.UpdateNavigation(.02f);check(world.Navigation().Statistics().surfaces==1&&world.Navigation().Errors().empty(),"async CPU navigation resource installs in world");auto invalid=runtimeScene;invalid.Find(2)->navigationSurface->asset="missing";RuntimeWorld missing;check(!missing.Build(invalid,&resources,error)&&!missing.IsBuilt(),"missing surface asset fails safely");auto staleScene=runtimeScene;staleScene.Find(1)->body->halfExtents.x=7;RuntimeWorld stale;check(stale.Build(staleScene,&resources,error),"stale asset world reports query-time error");resources.WaitForAll();stale.UpdateNavigation(.02f);check(!stale.Navigation().Errors().empty()&&!stale.Navigation().Sample({0,0,0},1),"stale source rejected instead of silently used");stale.Destroy();auto editPath=std::filesystem::path(project.AssetsDir())/"nav-edit.js";
+ Project project;std::filesystem::remove_all("/tmp/judas-m53-project");check(Project::CreateNew("/tmp/judas-m53-project","Navigation",project,error),"create navigation project");project.Settings().navigation=costConfig;check(project.Save(error),"save project navigation registries");Project reloaded;check(reloaded.Load(project.ProjectFile(),error)&&reloaded.Settings().navigation.Serialize()==costConfig.Serialize(),"project reload retains profile and area IDs");AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());auto navPath=std::filesystem::path(project.AssetsDir())/"test.judasnav";SaveNavigation(navPath.string(),data,error);AssetRecord record;check(assets.Track(navPath.string(),record,error),"normal nav asset tracking");ResourceManager resources(nullptr,&assets);auto runtimeScene=fixture();runtimeScene.Find(2)->navigationSurface->asset=record.id;RuntimeWorld world;check(world.Build(runtimeScene,&resources,error),"ordinary world builds");if(!world.IsBuilt()){std::puts(error.c_str());return 1;}resources.WaitForAll();world.UpdateNavigation(.02f);check(world.Navigation().Statistics().surfaces==1&&world.Navigation().Errors().empty(),"async CPU navigation resource installs in world");auto invalid=runtimeScene;invalid.Find(2)->navigationSurface->asset="missing";RuntimeWorld missing;check(!missing.Build(invalid,&resources,error)&&!missing.IsBuilt(),"missing surface asset fails safely");auto staleScene=runtimeScene;staleScene.Find(1)->body->halfExtents.x=7;RuntimeWorld stale;check(stale.Build(staleScene,&resources,error),"stale asset world reports query-time error");resources.WaitForAll();stale.UpdateNavigation(.02f);check(!stale.Navigation().Errors().empty()&&!stale.Navigation().Sample({0,0,0},1),"stale source rejected instead of silently used");stale.Destroy();
+ {
+  RuntimeWorld warm;
+  check(warm.Build(runtimeScene,&resources,error),"world for startup navigation builds");
+  resources.WaitForAll();
+  const auto revision=warm.Navigation().Revision();
+  warm.Navigation().PrepareStartup(warm);
+  check(warm.Navigation().Statistics().surfaces==0&&warm.Navigation().Revision()==revision&&
+        !warm.Navigation().Sample({0,0,0},1),"startup preparation leaves navigation unpublished");
+  warm.UpdateNavigation(.02f);
+  const auto live=warm.Navigation().FindPath({-5,0,0},{5,0,0});
+  const auto normal=world.Navigation().FindPath({-5,0,0},{5,0,0});
+  check(warm.Navigation().Statistics().surfaces==1&&warm.Navigation().Errors().empty()&&
+        live.status==NavigationPath::Status::Complete&&live.distance==normal.distance,
+        "prepared and ordinary first-step publication give the same path");
+ }
+ {
+  RuntimeWorld changed;
+  check(changed.Build(runtimeScene,&resources,error),"world for startup navigation invalidation builds");
+  resources.WaitForAll();
+  changed.Navigation().PrepareStartup(changed);
+  auto transform=changed.RuntimeDefinition(1)->transform;
+  transform.position.y+=2;
+  check(changed.SetRuntimeTransform(1,transform),"collision geometry can change before first navigation tick");
+  changed.UpdateNavigation(.02f);
+  const auto& errors=changed.Navigation().Errors();
+  check(changed.Navigation().Statistics().surfaces==0&&errors.count(2)&&
+        errors.at(2).find("source geometry differs")!=std::string::npos,
+        "first-step change discards prepared geometry and reports the stale bake");
+ }
+ {
+  const auto editedPath=std::filesystem::path(project.AssetsDir())/"startup-source.judasnav";
+  AssetRecord edited;
+  check(SaveNavigation(editedPath.string(),data,error)&&assets.Track(editedPath.string(),edited,error),
+        "register a startup dependency file");
+  std::string digest;
+  check(SceneFingerprintSha256File(edited.path,digest,error),"fingerprint original dependency");
+  NavigationSourceFiles files;
+  files.files.emplace(edited.id,NavigationSourceFiles::File{edited.path,digest,edited.type});
+  check(files.Matches(assets),"unchanged dependency can be reused");
+  const auto time=std::filesystem::last_write_time(editedPath);
+  {
+   std::fstream editedStream(editedPath,std::ios::in|std::ios::out|std::ios::binary);
+   editedStream.put('X');
+  }
+  std::filesystem::last_write_time(editedPath,time);
+  check(!files.Matches(assets),"same-length external edit with restored mtime invalidates preparation");
+ }
+ auto editPath=std::filesystem::path(project.AssetsDir())/"nav-edit.js";
  std::ofstream(editPath)<<R"JS(export default class {
   constructor({entity}) {this.entity=entity;this.state={};}
   start() {

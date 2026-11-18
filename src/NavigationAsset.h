@@ -3,8 +3,19 @@
 #include "Scene.h"
 #include <memory>
 #include <functional>
+#include <map>
 // Immutable CPU resource. Runtime worlds build independent mutable Detour caches.
 class AssetDatabase;
+enum class AssetType;
+struct NavigationSourceFiles {
+    struct File {
+        std::string path;
+        std::string digest;
+        AssetType type;
+    };
+    std::map<std::string, File> files;
+    bool Matches(const AssetDatabase&) const;
+};
 struct NavigationData {
     NavigationSurfaceSettings settings;
     NavigationProfile profile;
@@ -38,6 +49,9 @@ struct NavigationBakeUpdate {
 bool CollectNavigationGeometry(const Scene &, const SceneObject &, const ProjectNavigation &,
                                NavigationGeometry &, std::string &,
                                const AssetDatabase *assets = nullptr);
+bool CollectNavigationGeometry(const Scene &, const SceneObject &, const ProjectNavigation &,
+                               NavigationGeometry &, std::string &, const AssetDatabase *,
+                               NavigationSourceFiles *);
 bool DecodeNavigation(const std::vector<unsigned char> &, NavigationData &, std::string &);
 bool LoadNavigation(const std::string &, NavigationData &, std::string &);
 bool SaveNavigation(const std::string &, const NavigationData &, std::string &);
