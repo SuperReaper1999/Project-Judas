@@ -178,6 +178,20 @@ enclosed air pockets and concave shoreline details can remain unresolved.
 Advanced Fluids are still unavailable in Alpha builds pending qualification;
 this repair does not change that lock or Basic Water.
 
+## Shadows on render-target cameras
+
+Render-target cameras default to shadows enabled. For a view such as a minimap,
+clear **Shadows** in its Render Camera inspector or call
+`camera.setCameraPresentation({shadows: false})` on the camera entity.
+`camera.camera.shadows` reads the current boolean setting. Omitting the property
+keeps its current value. The scene field is `camera.shadows`, and world saves
+capture the runtime value.
+
+An unshadowed view skips shadow-map draws and does not sample directional or
+local shadows. It keeps direct lighting, render layers, target size and refresh
+cadence. The main camera and other views retain their own settings. A runtime
+change takes effect on the target's next scheduled refresh.
+
 ## Portal views: off-axis frustum and oblique clip plane
 
 `entity.setCameraProjection({near, far, frustum, clipPlane})` also accepts two optional

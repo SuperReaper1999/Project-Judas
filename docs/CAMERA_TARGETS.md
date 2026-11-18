@@ -8,8 +8,8 @@ is supplied by this camera component. See [renderer ownership](RENDERER_V2.md).
 
 An optional `SceneRenderCameraComponent` belongs to an ordinary stable scene
 object. Its object transform defines local **-Z forward / +Y up**. Perspective
-settings are vertical FOV, near/far planes, width/height (1–4096), enabled state
-and an integer rendered-frame cadence. A camera may share a rigid-body object;
+settings are vertical FOV, near/far planes, width/height (1–4096), enabled state,
+an integer rendered-frame cadence and a shadow setting. A camera may share a rigid-body object;
 presentation reads that body's resolved/presented pose, not a second simulation.
 
 `RuntimeWorld` owns transient camera presentation records and borrows the host's
@@ -26,12 +26,14 @@ and retried after a resolution change or world rebuild. Opaque table entries fol
 the existing append-only texture-handle convention; deleted GPU objects are not
 kept alive. Raw OpenGL remains in Renderer.
 
-`RenderWorldFrame` builds the ordinary world shadow maps once, then schedules the
-secondary colour/transparency passes, then renders the unchanged main-camera
-pass. All views use the same interpolation alpha, geometry, lights and RuntimeWorld.
-There are no extra physics/gameplay/animation ticks. Shadow maps are shared with
-the main view; this milestone does not extend their coverage or redesign shadows.
-The target pass restores the draw/read framebuffer, viewport and camera matrices.
+`RenderWorldFrame` renders scheduled secondary targets before the main camera.
+All views use the same interpolation sample and scene lighting. Each shadowed
+view selects its own lights and cascade coverage. Clear **Shadows** on a render
+camera to skip shadow-map draws and shadow sampling for that target while keeping
+direct lighting, render layers and cadence. The main camera retains its own shadow
+policy. See [JudasJS camera controls](judasjs/effects-camera.md#shadows-on-render-target-cameras)
+for the equivalent runtime setting. The target pass restores the draw/read
+framebuffer, viewport and camera matrices.
 
 ## Ordinary material consumption
 
@@ -75,7 +77,9 @@ independent. The automated fixture separately verifies the safe white self-feedb
 ## Serialization and compatibility
 
 Scene format 3 gains optional `render-camera` / `camera.*` fields and
-`render.texture-camera`. Existing scenes remain readable. Invalid settings and
+`render.texture-camera`. Existing scenes remain readable and default to shadows
+enabled. The optional `camera.shadows` field records an authored opt-out; world
+snapshots store the current runtime setting. Invalid settings and
 missing/conflicting camera references fail rather than silently selecting an asset.
 Camera settings and stable material references enter canonical fingerprint
 **schema 3**. Under the existing strict FTFT1 policy, schema-2 saves are rejected;

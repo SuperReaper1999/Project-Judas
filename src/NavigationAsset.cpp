@@ -3,6 +3,7 @@
 #include "CollisionAsset.h"
 #include "AssetDatabase.h"
 #include "SceneFingerprint.h"
+#include "PerformanceProfiler.h"
 #include "RadialTerrain.h"
 #include "terrain/TerrainAsset.h"
 #include "terrain/TerrainComponent.h"
@@ -15,6 +16,7 @@
 #include <cstring>
 #include <cmath>
 #include <algorithm>
+#include <charconv>
 namespace {
 bool staleCollision(const CollisionAsset& cooked,const AssetDatabase& assets,std::string& error){
  if(cooked.sourceAsset.empty())return false;
@@ -26,6 +28,7 @@ void triangle(NavigationGeometry& g,glm::vec3 a,glm::vec3 b,glm::vec3 c){int bas
 void box(NavigationGeometry& g,glm::vec3 h,const SceneTransform& t,glm::vec3 offset,const SceneTransform& frame){glm::vec3 v[8];for(int i=0;i<8;++i)v[i]=glm::inverse(frame.rotation)*(t.position+t.rotation*(offset+glm::vec3((i&1)?h.x:-h.x,(i&2)?h.y:-h.y,(i&4)?h.z:-h.z))-frame.position);int faces[][4]={{0,4,6,2},{1,3,7,5},{0,1,5,4},{2,6,7,3},{0,2,3,1},{4,5,7,6}};for(auto& f:faces){triangle(g,v[f[0]],v[f[1]],v[f[2]]);triangle(g,v[f[0]],v[f[2]],v[f[3]]);}}
 }
 bool CollectNavigationGeometry(const Scene& scene,const SceneObject& surface,const ProjectNavigation& project,NavigationGeometry& out,std::string& error,const AssetDatabase* assets){
+ JUDAS_PROFILE_SCOPE("Navigation source validation");
  if(!surface.navigationSurface||!ValidateNavigationComponents(surface,error)||!project.Validate(error)){error="invalid navigation surface/configuration: "+error;return false;}auto settings=*surface.navigationSurface;auto found=project.profiles.find(settings.profile);if(found==project.profiles.end()){error="unknown navigation agent profile";return false;}
  NavigationGeometry g;
  auto ordered=scene.Objects();std::sort(ordered.begin(),ordered.end(),[](const auto& a,const auto& b){return a.id<b.id;});
@@ -58,7 +61,46 @@ bool CollectNavigationGeometry(const Scene& scene,const SceneObject& surface,con
   }else{error="unsupported authoritative navigation collider shape";return false;}
  }
  if(g.triangles.empty()){error="navigation surface has no included physical geometry";return false;}
- std::ostringstream canonical;canonical.imbue(std::locale::classic());canonical<<std::setprecision(9)<<"JudasNavBake1 "<<project.Serialize()<<' ';SceneObject config=surface;config.navigationSurface->asset.clear();for(auto [k,v]:NavigationProperties(config))canonical<<k<<' '<<std::quoted(v)<<' ';for(auto v:g.vertices){if(!std::isfinite(v)){error="nonfinite navigation source";return false;}canonical<<(v==0?0:v)<<' ';}for(auto i:g.triangles)canonical<<i<<' ';for(auto v:g.modifiers){canonical<<v.area<<' '<<v.blocked<<' '<<v.bottom<<' '<<v.top<<' ';for(auto f:v.polygon)canonical<<f<<' ';}g.fingerprint=SceneFingerprintSha256(canonical.str());out=std::move(g);return true;
+ JUDAS_PROFILE_SCOPE("Navigation geometry fingerprint");
+ std::ostringstream header;
+ header.imbue(std::locale::classic());
+ header<<"JudasNavBake1 "<<project.Serialize()<<' ';
+ SceneObject config=surface;
+ config.navigationSurface->asset.clear();
+ for(const auto& [key,value]:NavigationProperties(config))header<<key<<' '<<std::quoted(value)<<' ';
+
+ // Keep the existing classic-locale, nine-significant-digit fingerprint
+ // text so previously cooked navigation stays valid. Most of the input is
+ // numeric geometry. Append it without constructing a stream sentry and
+ // using locale facets for every coordinate and index.
+ std::string canonical=header.str();
+ canonical.reserve(canonical.size()+g.vertices.size()*8+g.triangles.size()*5);
+ char number[32]; // Finite float with nine significant digits, or a decimal int.
+ for(float coordinate:g.vertices){
+     if(!std::isfinite(coordinate)){error="nonfinite navigation source";return false;}
+     const auto converted=std::to_chars(number,number+sizeof(number),coordinate==0?0.f:coordinate,
+                                        std::chars_format::general,9);
+     canonical.append(number,converted.ptr);
+     canonical.push_back(' ');
+ }
+ for(int index:g.triangles){
+     const auto converted=std::to_chars(number,number+sizeof(number),index);
+     canonical.append(number,converted.ptr);
+     canonical.push_back(' ');
+ }
+ if(!g.modifiers.empty()){
+     std::ostringstream modifiers;
+     modifiers.imbue(std::locale::classic());
+     modifiers<<std::setprecision(9);
+     for(const auto& volume:g.modifiers){
+         modifiers<<volume.area<<' '<<volume.blocked<<' '<<volume.bottom<<' '<<volume.top<<' ';
+         for(float coordinate:volume.polygon)modifiers<<coordinate<<' ';
+     }
+     canonical+=modifiers.str();
+ }
+ g.fingerprint=SceneFingerprintSha256(canonical);
+ out=std::move(g);
+ return true;
 }
 namespace {
 void u32(std::vector<unsigned char>& out,unsigned n){for(int i=0;i<4;++i)out.push_back((n>>(i*8))&255);}

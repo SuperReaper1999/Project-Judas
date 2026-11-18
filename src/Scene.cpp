@@ -216,7 +216,8 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
     if (!OptEq(a.renderCamera, b.renderCamera, [](const SceneRenderCameraComponent& x, const SceneRenderCameraComponent& y) {
         return x.enabled == y.enabled && x.width == y.width && x.height == y.height &&
             x.updateEveryFrames == y.updateEveryFrames && x.verticalFovDegrees == y.verticalFovDegrees &&
-            x.nearPlane == y.nearPlane && x.farPlane == y.farPlane && x.renderMask == y.renderMask && x.lens==y.lens;
+            x.nearPlane == y.nearPlane && x.farPlane == y.farPlane && x.renderMask == y.renderMask &&
+            x.lens == y.lens && x.shadows == y.shadows;
     })) return false;
     return true;
 }

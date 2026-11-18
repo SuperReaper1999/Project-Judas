@@ -668,7 +668,7 @@ private:
 // Coarse timestamp intervals may nest; Renderer owns every GL query.
 class RendererProfileScope {
 public:
-    RendererProfileScope(Renderer& r,const char* pass,std::uint64_t camera=0):renderer(r),token(r.BeginProfilePass(pass,camera)){}
+    RendererProfileScope(Renderer& r,const char* pass,std::uint64_t camera=0):renderer(r),token(pass ? r.BeginProfilePass(pass,camera) : 0){}
     ~RendererProfileScope(){End();}
     void End(){if(token){renderer.EndProfilePass(token);token=0;}}
 private:Renderer& renderer;unsigned token;

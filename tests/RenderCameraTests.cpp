@@ -118,6 +118,14 @@ int main(int argc,char**argv){
  SaveSceneToString(authored,text);Check(LoadSceneFromString(text,round,error)&&ScenesEqual(authored,round),"camera configuration and stable texture reference round-trip");
  std::string a,b;ComputeSceneFingerprint(authored,a,error);round.Objects()[2].renderCamera->updateEveryFrames=4;
  ComputeSceneFingerprint(round,b,error);Check(a!=b,"authored cadence enters save compatibility fingerprint");
+ round=authored;
+ round.Objects()[2].renderCamera->shadows=false;
+ ComputeSceneFingerprint(round,b,error);Check(a!=b,"authored shadow policy enters save compatibility fingerprint");
+ std::string shadowScene;
+ Scene reloaded;
+ Check(SaveSceneToString(round,shadowScene)&&LoadSceneFromString(shadowScene,reloaded,error)&&
+       ScenesEqual(round,reloaded)&&!reloaded.Objects()[2].renderCamera->shadows&&
+       reloaded.Objects()[3].renderCamera->shadows,"scene round trip preserves per-camera shadow policy and default");
  Scene bad=authored;bad.Objects()[4].render->textureCamera=999;
  SaveSceneToString(bad,text);Scene unchanged=authored;
  Check(!LoadSceneFromString(text,unchanged,error)&&ScenesEqual(unchanged,authored),"missing camera reference rejected without replacing scene");

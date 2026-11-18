@@ -464,6 +464,7 @@ void DrawRenderCamera(EditorDocument& doc, SceneObject& o, EditorPanelState& sta
     auto& c = *o.renderCamera;
     if(state.project)DrawCategoryMask(doc,"Render mask",c.renderMask,state.project->Settings().classification.render);
     Checkbox(doc, "Enabled", c.enabled);
+    Checkbox(doc, "Shadows", c.shadows);
     DragInt(doc, "Target width", c.width, 1, 4096);
     DragInt(doc, "Target height", c.height, 1, 4096);
     DragInt(doc, "Every N rendered frames", c.updateEveryFrames, 1, 100000);

@@ -312,6 +312,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("render-camera", "");
         if(c.renderMask!=kAllCategories) w.Line("camera.render-mask",std::to_string(c.renderMask));
         w.Line("camera.enabled", c.enabled ? "true" : "false");
+        if (!c.shadows) w.Line("camera.shadows", "false");
         w.Line("camera.width", std::to_string(c.width));
         w.Line("camera.height", std::to_string(c.height));
         w.Line("camera.cadence", std::to_string(c.updateEveryFrames));
@@ -997,6 +998,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
                !p.Float("camera.pixels-per-unit",c.lens.pixelsPerUnit)||!ValidCameraLens(c.lens))return reader.Fail("invalid camera projection/pixel settings");
         }
         if(p.Has("camera.render-mask")&&!p.Mask("camera.render-mask",c.renderMask))return false;
+        if (p.Has("camera.shadows") && !p.Bool("camera.shadows", c.shadows)) return false;
         if (!p.Header("render-camera", 0, 0) || !p.Bool("camera.enabled", c.enabled) ||
             !p.Int("camera.width", c.width) || !p.Int("camera.height", c.height) ||
             !p.Int("camera.cadence", c.updateEveryFrames) || !p.Float("camera.fov", c.verticalFovDegrees) ||

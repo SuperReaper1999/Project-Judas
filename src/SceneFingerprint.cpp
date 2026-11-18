@@ -133,6 +133,7 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
         w.Number(c.verticalFovDegrees); w.Number(c.nearPlane); w.Number(c.farPlane);
         if(!ValidCameraLens(c.lens))w.Fail("invalid camera projection");
         if(c.lens!=CameraLens{}){w.Text("CameraLens.1");w.Enum(c.lens.projection,1,"camera projection");w.Number(c.lens.height);w.Boolean(c.lens.pixelPerfect);w.U64(c.lens.referenceWidth);w.U64(c.lens.referenceHeight);w.Number(c.lens.pixelsPerUnit);}
+        if (!c.shadows) w.Text("CameraWithoutShadows.1");
         if (c.width < 1 || c.width > 4096 || c.height < 1 || c.height > 4096 ||
             c.updateEveryFrames < 1 || !(c.verticalFovDegrees > 0 && c.verticalFovDegrees < 179) ||
             !(c.nearPlane > 0 && c.farPlane > c.nearPlane)) w.Fail("invalid render camera");

@@ -277,7 +277,11 @@ vec3 BRDF(vec3 base,float metal,float rough,vec3 n,vec3 v,vec3 l){
  return ((vec3(1.0)-f)*(1.0-metal)*base/PI+D*visibility*f)*nl;
 }
 vec3 pbrLight(vec3 base,float metal,float rough,vec3 n,vec3 v,vec2 uv){
- vec3 result=BRDF(base,metal,rough,n,v,uLightDirection)*uLightColor*SunShadow(vWorldPos,max(dot(n,uLightDirection),0.0));
+ // BRDF returns zero here. Avoid projecting and filtering the shadow when
+ // sunlight cannot contribute. The receiver derivatives are captured in main.
+ float sunDiffuse=max(dot(n,uLightDirection),0.0);
+ vec3 result=sunDiffuse==0.0?vec3(0.0):
+     BRDF(base,metal,rough,n,v,uLightDirection)*uLightColor*SunShadow(vWorldPos,sunDiffuse);
  ivec2 tileInfo=uHasDynamicLights?lightTile():ivec2(0);vec4 tileHeader=uHasDynamicLights?lightTexel(1+tileInfo.x):vec4(0);
  for(int item=0;item<int(tileHeader.y);++item){int record=tileInfo.y+int(lightTexel(int(tileHeader.x)+item).x)*4;
  vec4 lp=lightTexel(record),lc=lightTexel(record+1),ld=lightTexel(record+2),ls=lightTexel(record+3);
@@ -310,7 +314,7 @@ void main() {
     // loop below; Unlit needs neither light loop. Geometric derivatives above
     // remain outside all branches, and weather still uses diffuseFactor.
     if (uMaterialModel == 0) {
-    float dirShadow = SunShadow(vWorldPos, diffuseFactor);
+    float dirShadow = diffuseFactor == 0.0 ? 1.0 : SunShadow(vWorldPos, diffuseFactor);
     lighting = uAmbientColor + uLightColor * diffuseFactor * dirShadow;
 
     ivec2 tileInfo=uHasDynamicLights?lightTile():ivec2(0);vec4 tileHeader=uHasDynamicLights?lightTexel(1+tileInfo.x):vec4(0);

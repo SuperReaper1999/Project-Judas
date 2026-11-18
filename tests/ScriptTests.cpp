@@ -91,7 +91,8 @@ export default class {
     try { e.setCollisionFilter({mask:['Default','missing-layer']}); }
     catch { this.state.invalidFilter=true; }
     e.applyForceAtPoint({x:8,y:0,z:0},{x:2,y:1,z:0});
-    this.state.camera=e.setCameraPresentation({fov:42,updateEveryFrames:3,renderLayers:[]});
+    this.state.camera=e.camera.shadows===true &&
+      e.setCameraPresentation({fov:42,updateEveryFrames:3,renderLayers:[],shadows:false});
     this.state.particles=e.setParticles({rate:0,size:0.4,velocity:{x:2,y:0,z:0},
       loop:false,localSpace:true,useGravity:true,lifetime:0.5,burst:2,maxParticles:2,seed:99,
       color:{r:1,g:0,b:0,a:1},endColor:{r:0,g:1,b:0,a:0}});
@@ -99,6 +100,8 @@ export default class {
     catch {this.state.invalidTexture=true;}
     try { e.setCameraPresentation({fov:70,renderLayers:['missing-layer']}); }
     catch { this.state.invalidCamera=true; }
+    try { e.setCameraPresentation({fov:70,shadows:1}); }
+    catch { this.state.invalidCameraShadows=true; }
     try { e.setParticles({rate:33,spread:{x:-1,y:0,z:0}}); }
     catch { this.state.invalidParticles=true; }
     const snapshot=e.particles;
@@ -109,7 +112,7 @@ export default class {
     this.state.cameraReadback=e.camera.fov===42&&e.camera.updateEveryFrames===3&&
       Array.isArray(e.camera.renderLayers)&&e.camera.renderLayers.length===0;
     e.setCameraPresentation({renderLayers:null});
-    this.state.allLayers=e.camera.renderLayers===null;
+    this.state.allLayers=e.camera.renderLayers===null&&e.camera.shadows===false;
     e.setCameraPresentation({renderLayers:['Default']});
     this.state.namedLayers=e.camera.renderLayers.join(',')==='Default';
     e.setCameraPresentation({renderLayers:[]});
@@ -142,10 +145,12 @@ export default class {
     Check(observed.find("\"invalidWater\":true")!=std::string::npos&&
           observed.find("\"invalidFilter\":true")!=std::string::npos&&
           observed.find("\"invalidCamera\":true")!=std::string::npos&&
+          observed.find("\"invalidCameraShadows\":true")!=std::string::npos&&
           observed.find("\"invalidParticles\":true")!=std::string::npos&&
           observed.find("\"invalidTexture\":true")!=std::string::npos,
           "invalid control patches throw through the public API");
-    Check(observed.find("\"particleReadback\":true")!=std::string::npos&&
+    Check(observed.find("\"camera\":true")!=std::string::npos&&
+          observed.find("\"particleReadback\":true")!=std::string::npos&&
           observed.find("\"cameraReadback\":true")!=std::string::npos&&
           observed.find("\"allLayers\":true")!=std::string::npos&&
           observed.find("\"namedLayers\":true")!=std::string::npos,

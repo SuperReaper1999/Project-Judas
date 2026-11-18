@@ -1150,6 +1150,8 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
         return;
     }
 
+    RendererProfileScope skinGPU(*this, m_render->submissionTimings.enabled &&
+        !palette->empty() && !m_flushingBlends ? "Skinned opaque mesh" : nullptr);
     // Standard correction for non-uniform scale — see the vertex shader's
     // own comment. glm::inverseTranspose is glm's dedicated helper for
     // exactly this (normal-matrix) computation.

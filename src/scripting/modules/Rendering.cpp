@@ -717,11 +717,18 @@ JSValue HandleRendering(BindingContext &context, const std::string &op, int argc
 
     if (op == "cameraPresentation") {
         auto options = arg(2);
-        if (!KnownOptions(c, options, {"fov", "updateEveryFrames", "renderLayers"}))
+        if (!KnownOptions(c, options, {"fov", "updateEveryFrames", "renderLayers", "shadows"}))
             return JS_ThrowTypeError(c, "unknown camera presentation setting");
         for (auto &camera : world.PresentationCameras())
             if (camera.id == id) {
                 auto settings = camera.settings;
+                auto shadows = JS_GetPropertyStr(c, options, "shadows");
+                const bool validShadows = JS_IsUndefined(shadows) || JS_IsBool(shadows);
+                if (JS_IsBool(shadows))
+                    settings.shadows = JS_ToBool(c, shadows);
+                JS_FreeValue(c, shadows);
+                if (!validShadows)
+                    return JS_ThrowTypeError(c, "camera shadows must be a boolean");
                 for (const char *key : {"fov", "updateEveryFrames"}) {
                     auto property = JS_GetPropertyStr(c, options, key);
                     const bool present = !JS_IsUndefined(property);
@@ -842,6 +849,7 @@ JSValue HandleRendering(BindingContext &context, const std::string &op, int argc
                 auto o = JS_NewObject(c);
                 JS_SetPropertyStr(c, o, "lens", CameraLensValue(c, camera.settings.lens));
                 JS_SetPropertyStr(c, o, "enabled", JS_NewBool(c, camera.settings.enabled));
+                JS_SetPropertyStr(c, o, "shadows", JS_NewBool(c, camera.settings.shadows));
                 JS_SetPropertyStr(c, o, "width", JS_NewInt32(c, camera.settings.width));
                 JS_SetPropertyStr(c, o, "height", JS_NewInt32(c, camera.settings.height));
                 JS_SetPropertyStr(c, o, "near", JS_NewFloat64(c, camera.settings.nearPlane));

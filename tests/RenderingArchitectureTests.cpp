@@ -19,6 +19,25 @@ static unsigned checks=0,failures=0;
 static void Check(bool yes,const char* what){++checks;failures+=!yes;std::printf("%s %s\n",yes?"PASS":"FAIL",what);}
 using Pixels=std::vector<unsigned char>;
 static double Diff(const Pixels& a,const Pixels& b){if(a.size()!=b.size()||a.empty())return 1e9;double sum=0;for(size_t i=0;i<a.size();++i)sum+=std::abs(int(a[i])-int(b[i]));return sum/a.size();}
+static std::vector<float> DirectionalDepth(){
+ GLint activeTexture=0,texture=0,readFramebuffer=0;
+ glGetIntegerv(GL_ACTIVE_TEXTURE,&activeTexture);
+ glActiveTexture(GL_TEXTURE1);glGetIntegerv(GL_TEXTURE_BINDING_2D_ARRAY,&texture);
+ glActiveTexture(GLenum(activeTexture));
+ if(!texture)return {};
+ glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING,&readFramebuffer);
+ GLuint framebuffer=0;
+ glGenFramebuffers(1,&framebuffer);glBindFramebuffer(GL_READ_FRAMEBUFFER,framebuffer);
+ glReadBuffer(GL_NONE);
+ constexpr auto size=kDefaultShadowResolution;
+ std::vector<float> depth(3*size*size);
+ for(int cascade=0;cascade<3;++cascade){
+  glFramebufferTextureLayer(GL_READ_FRAMEBUFFER,GL_DEPTH_ATTACHMENT,GLuint(texture),0,cascade);
+  glReadPixels(0,0,size,size,GL_DEPTH_COMPONENT,GL_FLOAT,depth.data()+cascade*size*size);
+ }
+ glBindFramebuffer(GL_READ_FRAMEBUFFER,GLuint(readFramebuffer));glDeleteFramebuffers(1,&framebuffer);
+ return depth;
+}
 int main(int argc,char**argv){std::setvbuf(stdout,nullptr,_IOLBF,0);std::filesystem::path out=argc>1?argv[1]:".cache/m92/architecture";std::filesystem::create_directories(out);std::string error;
  const auto view=glm::lookAt(glm::vec3(0,4,12),glm::vec3(0,0,0),glm::vec3(0,1,0));const auto projection=glm::perspective(glm::radians(65.f),640.f/360,.1f,100.f);
  std::vector<DynamicLight> lights;for(int i=0;i<140;++i){DynamicLight l;l.position={float(i%14-7)*2,3,float(i/14-5)*2};l.range=3;l.color={5,4,3};lights.push_back(l);}RenderLightGrid grid;grid.Build(lights,view,projection,640,360);Check(grid.visible>5&&grid.maxPerTile<128,"screen bins retain many visible lights beyond five with local lists");
@@ -64,6 +83,54 @@ int main(int argc,char**argv){std::setvbuf(stdout,nullptr,_IOLBF,0);std::filesys
  Scene s;s.Settings().sunEnabled=false;s.Settings().ambientColor={.05f,.05f,.05f};auto& geometry=s.CreateObject("Visible cube");geometry.render=SceneRenderComponent{};auto& lamp=s.CreateObject("Spot");lamp.light=SceneLightComponent{};lamp.light->kind=SceneLightKind::Spot;lamp.light->castsShadow=true;lamp.light->color={6,6,6};lamp.transform.position={0,3,3};lamp.transform.rotation=glm::quatLookAt(glm::normalize(glm::vec3(0,-3,-3)),glm::vec3(0,1,0));auto& camera=s.CreateObject("Independent view");camera.transform.position={0,3,6};camera.renderCamera=SceneRenderCameraComponent{};camera.renderCamera->width=128;camera.renderCamera->height=96;RuntimeWorld rendered;Check(rendered.Build(s,nullptr,error),"ordinary multi-view shadow world builds");RenderWorldFrame(r,640,360,rendered,view,projection,{0,0,0},1);Check(r.Stats().shadowPasses>=2&&rendered.PresentationCameras()[0].updates==1,"each independent camera gets its own selected shadow pass");rendered.Destroy();
  Scene cast;cast.Settings().sunEnabled=false;cast.Settings().ambientColor={.02f,.02f,.02f};auto& floor=cast.CreateObject("Receiver");floor.render=SceneRenderComponent{};floor.render->halfExtents={6,.1f,6};auto& blocker=cast.CreateObject("Occluder");blocker.transform.position={0,1,0};blocker.render=SceneRenderComponent{};blocker.render->halfExtents={.6f,1,.6f};auto& sun=cast.CreateObject("Generic spot");sun.light=SceneLightComponent{};sun.light->kind=SceneLightKind::Spot;sun.light->castsShadow=true;sun.light->range=20;sun.light->outerConeDegrees=55;sun.light->color={40,40,40};sun.transform.position={-2,6,0};sun.transform.rotation=glm::quatLookAt(glm::normalize(glm::vec3(2,-6,0)),glm::vec3(0,0,-1));auto sunId=sun.id;
  RuntimeWorld shadows;Check(shadows.Build(cast,nullptr,error),"ordinary authored spot/receiver/occluder fixture builds");RenderWorldFrame(r,640,360,shadows,view,projection,{0,0,0},1);Pixels withShadow;r.CaptureFrame(640,360,withShadow);auto config=*shadows.RuntimeDefinition(sunId)->light;config.castsShadow=false;shadows.SetLight(sunId,config);RenderWorldFrame(r,640,360,shadows,view,projection,{0,0,0},1);Pixels withoutShadow;r.CaptureFrame(640,360,withoutShadow);Check(Diff(withShadow,withoutShadow)>.15,"selected authored spotlight actually shadows receiver pixels; disabling request removes shadow");WriteRgbPng((out/"spot-shadow.png").string(),640,360,withShadow);shadows.Destroy();
+ cast.Settings().sunEnabled=true;
+ cast.Settings().sunDirection=glm::normalize(glm::vec3(1,4,1));
+ const auto casterId=cast.Objects()[1].id;
+ auto& optionalView=cast.CreateObject("Optional shadow view");
+ optionalView.renderCamera=SceneRenderCameraComponent{};
+ optionalView.transform.position={0,4,12};
+ optionalView.transform.rotation=glm::quat_cast(glm::transpose(glm::mat3(view)));
+ RuntimeWorld cameraPolicy;
+ Check(cameraPolicy.Build(cast,nullptr,error),"per-camera shadow fixture builds with sun and local light");
+ auto& optionalCamera=cameraPolicy.PresentationCameras().front();
+ std::vector<float> previousDepth;
+ for(int tick=0;tick<2;++tick){
+  if(tick){
+   auto moved=cameraPolicy.RuntimeDefinition(casterId)->transform;
+   moved.position.x+=2;
+   Check(cameraPolicy.SetRuntimeTransform(casterId,moved),"move a presented caster");
+  }
+  optionalCamera.settings.shadows=true;
+  r.ResetStats();
+  RenderWorldFrame(r,640,360,cameraPolicy,view,projection,{0,0,0},1);
+  Pixels mainShadowed;r.CaptureFrame(640,360,mainShadowed);
+  const auto depth=DirectionalDepth();
+  TextureData secondaryShadowed,secondaryUnshadowed;
+  const bool readShadowed=r.ReadTextureForDiagnostics(cameraPolicy.CameraTexture(optionalCamera.id),secondaryShadowed);
+  const auto shadowed=r.Stats().shadowPasses+r.Stats().reusedShadowPasses;
+  const auto updates=optionalCamera.updates;
+  optionalCamera.settings.shadows=false;
+  r.ResetStats();
+  RenderWorldFrame(r,640,360,cameraPolicy,view,projection,{0,0,0},1);
+  Pixels mainUnchanged;r.CaptureFrame(640,360,mainUnchanged);
+  Check(r.Stats().shadowPasses+r.Stats().reusedShadowPasses==4&&shadowed==8,
+        "secondary opt-out skips its sun and local shadow charts only");
+  Check(optionalCamera.updates==updates+1&&readShadowed&&
+        r.ReadTextureForDiagnostics(cameraPolicy.CameraTexture(optionalCamera.id),secondaryUnshadowed)&&
+        Diff(secondaryShadowed.pixels,secondaryUnshadowed.pixels)>.05,
+        "secondary target refreshes without sampling sun or local shadow charts");
+  Check(mainShadowed==mainUnchanged&&!depth.empty()&&depth==DirectionalDepth(),
+        "main colour and directional depth exactly match with secondary shadows disabled");
+  if(tick)Check(depth!=previousDepth,"main cascade depth still updates after caster movement");
+  previousDepth=depth;
+ }
+ std::map<std::string,SaveChunk> cameraSave;
+ Scene restoredCamera;
+ Check(WorldPersistence::Capture(cameraPolicy,cameraSave,error)&&
+       WorldPersistence::SceneFrom(cameraSave,restoredCamera,error)&&
+       !restoredCamera.Find(optionalCamera.id)->renderCamera->shadows,
+       "world snapshot stores the runtime camera shadow setting");
+ cameraPolicy.Destroy();
  Scene planetary;planetary.Settings().worldOrigin={0,1000,0};planetary.Settings().sunEnabled=false;planetary.Settings().ambientColor={1,1,1};auto& surface=planetary.CreateObject("Shared terrain");surface.planet=ps;auto planetId=surface.id;
  auto& opposite=planetary.CreateObject("Opposite hemisphere camera");opposite.transform.position={0,-2003,0};opposite.transform.rotation=glm::quatLookAt(glm::vec3(0,1,0),glm::vec3(0,0,-1));opposite.renderCamera=SceneRenderCameraComponent{};opposite.renderCamera->width=128;opposite.renderCamera->height=96;opposite.renderCamera->farPlane=10000;
  auto& unrelated=planetary.CreateObject("Offscreen material owner");unrelated.transform.position={100000,0,0};unrelated.render=SceneRenderComponent{};unrelated.render->instanceOverrides.baseColor=glm::vec4(1,0,0,1);auto unrelatedId=unrelated.id;

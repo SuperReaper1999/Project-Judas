@@ -165,6 +165,7 @@ PresentedObject SampleObject(const RuntimeWorld& world, SceneObjectId id, float 
 
 static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world,                               float alpha, const WorldDrawOptions& options, PresentedObjects* objects) {
     JUDAS_PROFILE_SCOPE("World culling and opaque submission");
+    RendererProfileScope opaqueGPU(r, r.IsShadowPass() ? nullptr : "World opaque geometry");
     r.BeginMeshBatch();
     const auto& statics = world.StaticRenderables();
     for (std::size_t i = 0; i < statics.size(); ++i) {
@@ -176,9 +177,15 @@ static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world,           
         });
         DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f, world.CameraTexture(s.render.textureCamera),skin,s.id);
     }
-    if(options.includeTerrain)world.DrawPlanets(r);
+    if (options.includeTerrain && world.HasPlanets()) {
+        RendererProfileScope terrainGPU(r, r.IsShadowPass() ? nullptr : "Planet terrain");
+        world.DrawPlanets(r);
+    }
     world.DrawDeformables(r,alpha);
-    world.DrawRuntimeTerrain(r);
+    if (world.HasRuntimeLandscapes()) {
+        RendererProfileScope terrainGPU(r, r.IsShadowPass() ? nullptr : "Landscape terrain");
+        world.DrawRuntimeTerrain(r);
+    }
     world.DrawPhysicalBalances(r);
     r.SetMaterialBindings({});
 
@@ -227,6 +234,7 @@ void DrawWorldGeometry(Renderer& renderer, const RuntimeWorld& world,           
 
 void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, float alpha) {
     JUDAS_PROFILE_SCOPE("Particles and water presentation");
+    RendererProfileScope transparentGPU(r, "World transparent geometry");
     r.FlushMaterialBlends();r.FlushSprites();r.SetMaterialBindings({});
     const std::vector<DynamicBody>& bodies = world.DynamicBodies();
     const std::vector<RuntimeWorld::DynamicVisual>& visuals = world.DynamicVisuals();
@@ -312,6 +320,7 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, float alpha) 
     }
 
     // Runtime visual state is updated once in Simulation, never per camera.
+    RendererProfileScope particleGPU(r, world.VisualEmitters().empty() ? nullptr : "Visual particles");
     for(auto& emitter:world.VisualEmitters()){
         if(!world.IsPublished(emitter.id)||!EntityRenderVisible(world,emitter.id))continue;
         r.SetRenderLayer(world.RenderLayerOf(emitter.id));
@@ -422,14 +431,15 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     PresentedObjects presentedObjects;
     presentedObjects.statics.resize(world.StaticRenderables().size());
     presentedObjects.dynamics.resize(world.DynamicBodies().size());
-    const auto shadowScene=JudasLighting::RuntimeShadowScene(world,alpha);
+    std::optional<JudasLighting::ShadowScene> shadowScene;
     auto lightPass = [&]() {
-        JudasLighting::PrepareShadows(renderer,settings,lights,shadowScene,[&]{
+        if (!shadowScene) shadowScene.emplace(JudasLighting::RuntimeShadowScene(world,alpha));
+        JudasLighting::PrepareShadows(renderer,settings,lights,*shadowScene,[&]{
             DrawWorldGeometry(renderer,world,alpha,WorldDrawOptions{},&presentedObjects);
         });
     };
     (void)shadowFocus;
-    // Secondary views are presentation passes only; shadow maps above are shared.
+    // Secondary views are presentation passes only.
     if (advancePresentation && !world.PresentationCameras().empty()) {
         world.BindCameraRenderer(renderer);
         const auto frame = world.NextCameraFrame();
@@ -471,7 +481,14 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             renderer.SetCameraFrame(frame);
             world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(position),camera.id);
             renderer.SetRenderMask(c.renderMask);
-            lightPass();
+            if (c.shadows) {
+                lightPass();
+            } else {
+                renderer.SetDirectionalCascadeCount(0);
+                // The world light list has no slots assigned. Keep its direct
+                // lighting without publishing this view's shadow assignments.
+                renderer.SetDynamicLights(lights);
+            }
             renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha,false));
             DrawWorldGeometry(renderer, world, alpha, WorldDrawOptions{}, &presentedObjects);
             DrawWorldTransparents(renderer, world, alpha);

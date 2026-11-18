@@ -247,6 +247,7 @@ struct SceneRenderCameraComponent {
     float verticalFovDegrees = 60.0f;
     float nearPlane = 0.1f;
     float farPlane = 1000.0f;
+    bool shadows = true;
 };
 
 struct SceneAudioEmitterComponent : AudioSettings {

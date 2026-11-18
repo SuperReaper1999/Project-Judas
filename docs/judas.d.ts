@@ -187,7 +187,7 @@ declare module "judas" {
   export interface CameraClipPlane {normal:Vec3;point:Vec3}
   /** Render-target camera projection: near/far plus optional frustum/clipPlane (omitted keeps, null clears). */
   export interface CameraProjection extends CameraRange {frustum?:CameraFrustum|null;clipPlane?:CameraClipPlane|null}
-  export interface CameraInfo { lens:CameraLens; near:number;far:number; enabled: boolean; width: number; height: number; targetWidth:number; targetHeight:number; targetError:string|null; fov:number; updateEveryFrames:number; renderLayers:string[]|null; frustum: CameraFrustum|null; clipPlane: CameraClipPlane|null }
+  export interface CameraInfo { lens:CameraLens; near:number;far:number; enabled: boolean; shadows:boolean; width: number; height: number; targetWidth:number; targetHeight:number; targetError:string|null; fov:number; updateEveryFrames:number; renderLayers:string[]|null; frustum: CameraFrustum|null; clipPlane: CameraClipPlane|null }
   export interface AudioInfo {
     enabled:boolean;playing:boolean;requested:boolean;ready:boolean;streamed:boolean;loop:boolean;starved:boolean;
     state:"loading"|"seeking"|"ready"|"playing"|"paused"|"ended"|"starved"|"failed";
@@ -501,7 +501,7 @@ declare module "judas" {
     setCameraTargetSize(width:number,height:number):boolean;
     setCameraProjection(range:CameraProjection):boolean;
     /** Secondary-camera settings. Null renderLayers restores all layers. */
-    setCameraPresentation(settings:{fov?:number;updateEveryFrames?:number;renderLayers?:string[]|null}):boolean;
+    setCameraPresentation(settings:{fov?:number;updateEveryFrames?:number;renderLayers?:string[]|null;shadows?:boolean}):boolean;
   }
   /** Does not check existence; null for absent/falsy input or string "0". Use .valid. */
   export function entity(id: string | number | bigint | null | undefined): Entity | null;
