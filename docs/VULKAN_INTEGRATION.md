@@ -65,6 +65,11 @@ identifies the device, driver and validation state. During an active Vulkan
 session a device loss ends the process with an operation-specific diagnostic.
 Restart the application to create a new device. The editor's Vulkan
 presentation contract uses one window, with detached viewports disabled.
+The GTX 970 with NVIDIA 580.178.04 intermittently returned
+`VK_ERROR_DEVICE_LOST` during device creation in local trials. The bounded
+startup retry recovered and the affected programs completed. The cause on
+this host is unresolved. Device-loss recovery during an active session is
+outside the supported lifecycle.
 
 The linked glslang and SPIR-V Tools compiler translates engine shaders on the
 target system. The SDK and exports made from it carry the compiler notices
