@@ -108,7 +108,7 @@ Script Load(const std::string& path,const InputMap& map){
 }
 int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const std::string& path,const std::function<void()>& beforeFrame,const std::function<void()>& afterFrame,const std::function<bool(const std::string&)>& servicesReady,const std::function<void(bool)>& debugSave){
  try{
-  const auto script=Load(path,window.Input().Map());window.SetTestInputMode(true);SDL_GL_SetSwapInterval(0);
+  const auto script=Load(path,window.Input().Map());window.SetTestInputMode(true);GraphicsSetSwapInterval(0);
   std::shared_ptr<PhysicsEventDebugger> physicsDebug;
   struct DebugSessionGuard {
    InteractivePlay& play;std::shared_ptr<PhysicsEventDebugger> previous;

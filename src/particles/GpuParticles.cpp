@@ -286,6 +286,7 @@ bool GpuParticles::PrepareView(const glm::mat4& view,const glm::mat4& projection
  if(!s.Dispatch(s.gather,s.diagnostics.sortCapacity,256,error)||!s.device.Barrier(ComputeBarrier::Vertex|ComputeBarrier::Indirect,error))return false;
  s.viewReady=true;return true;
 }
+bool GpuParticles::BindDrawStorage(unsigned binding,std::string& error){auto& s=*storage;if(!s.viewReady){error="GPU particle rendering requires preparation for this view.";return false;}return s.device.BindGraphicsStorage(s.records,binding,error)&&s.device.BindIndirect(s.commands,error);}
 bool GpuParticles::BindDrawBuffers(std::string& error){auto& s=*storage;if(!s.viewReady){error="GPU particle rendering requires preparation for this view.";return false;}return s.device.BindVertex(s.records,error)&&s.device.BindIndirect(s.commands,error);}
 void GpuParticles::RecordDraw(){++storage->diagnostics.draws;}
 bool GpuParticles::CanMutate(std::string& error)const{return storage->device.ValidateOwner(error);}

@@ -16,5 +16,6 @@
   "architecture": "@JUDAS_ID_architecture@",
   "configuration": "$<CONFIG>",
   "compiler": "@JUDAS_ID_compiler@",
-  "compiler_version": "@JUDAS_ID_compiler_version@"
+  "compiler_version": "@JUDAS_ID_compiler_version@",
+  "vulkan": $<IF:$<BOOL:$<TARGET_PROPERTY:judas_build_identity,JUDAS_VULKAN_BUILD>>,true,false>
 }

@@ -61,6 +61,7 @@ bool LightLists::Upload(const RenderLightGrid& grid,bool gpuBins,const GraphicsC
     }else if(!s.device.UpdateBuffer(s.output[slot],0,grid.texels.data(),s.used*sizeof(glm::vec4),error))return false;
     s.ready=true;return Bind(error);
 }
+unsigned LightLists::GraphicsBuffer(){auto& s=*state;return s.ready?s.device.NativeName(s.output[s.current]):0;}
 bool LightLists::Bind(std::string& error){auto& s=*state;return s.ready&&s.device.BindGraphicsStorage(s.output[s.current],6,error);}
 bool LightLists::ReadForDiagnostics(std::vector<glm::vec4>& out,std::string& error){auto& s=*state;if(!s.ready)return false;out.resize(s.used);return s.device.ReadForDiagnostics(s.output[s.current],0,out.data(),out.size()*sizeof(glm::vec4),error);}
 bool LightLists::Shutdown(std::string& error){state->ready=false;const bool ok=!state->initialized||state->device.Shutdown(error);if(ok)state=std::make_unique<Storage>();return ok;}

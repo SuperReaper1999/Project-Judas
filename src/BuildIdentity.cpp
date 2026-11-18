@@ -18,6 +18,11 @@ const BuildIdentity& GetBuildIdentity() {
 
 std::string BuildIdentityJson() {
     const auto& i = GetBuildIdentity();
+#ifdef JUDAS_VULKAN
+    constexpr bool vulkan = true;
+#else
+    constexpr bool vulkan = false;
+#endif
     return nlohmann::json{{"schema", 1}, {"version", i.version}, {"maturity", i.maturity},
         {"release_name", i.releaseName}, {"channel", i.channel}, {"build_id", i.buildId}, {"source_revision", i.sourceRevision},
         {"source_tree", i.sourceTree}, {"source_dirty", i.sourceDirty},
@@ -26,7 +31,7 @@ std::string BuildIdentityJson() {
         {"source_untracked_fingerprint", i.sourceUntrackedFingerprint},
         {"platform", i.platform}, {"architecture", i.architecture},
         {"configuration", i.configuration}, {"compiler", i.compiler},
-        {"compiler_version", i.compilerVersion}}.dump(2);
+        {"compiler_version", i.compilerVersion}, {"vulkan", vulkan}}.dump(2);
 }
 
 std::string BuildIdentitySummary(const char* product) {
@@ -106,6 +111,11 @@ bool ValidateRuntimeBuildIdentity(const std::string& response, std::string& reas
             reason = std::string("Runtime/exporter build mismatch in ") + field + "; rebuild or select the matching runtime";
             return false;
         }
+    }
+    if ((runtime.contains("vulkan") && !runtime["vulkan"].is_boolean()) ||
+        runtime.value("vulkan", false) != ours["vulkan"].get<bool>()) {
+        reason = "Runtime/exporter build mismatch in Vulkan capability; select a matching runtime";
+        return false;
     }
     if (!runtime.contains("configuration") || runtime["configuration"] != "Release" ||
         !runtime.contains("source_origin") ||

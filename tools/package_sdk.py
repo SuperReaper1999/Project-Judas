@@ -50,6 +50,8 @@ def validate_identity(value, release=False, origin="build identity"):
         raise ValueError(f"Invalid build identity {origin}; missing {sorted(missing)}")
     if any(not isinstance(value[field], str) for field in IDENTITY_FIELDS if field not in ("schema", "source_dirty", "source_untracked_count")):
         raise ValueError("Build identity fields must use their declared string/Boolean types")
+    if "vulkan" in value and not isinstance(value["vulkan"], bool):
+        raise ValueError("Build identity vulkan must be Boolean")
     if value["channel"] not in ("Alpha", "Beta", "Experimental", "Stable", "Local"):
         raise ValueError("Unknown build channel")
     if not isinstance(value["source_dirty"], bool):

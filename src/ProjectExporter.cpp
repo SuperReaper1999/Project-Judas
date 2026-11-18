@@ -370,7 +370,20 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
 #ifdef _WIN32
         write("RUNTIME_REQUIREMENTS.txt", "Judas Windows x64 Release package — UNVALIDATED candidate. Run judas.exe.\nRequires Windows 10/11 x64 and an OpenGL 3.3 graphics driver.\nRequired non-system runtime DLLs are bundled according to this build's windows-runtime manifest. ICU and compiler-runtime linkage depend on the selected Windows toolchain; consult BUILD_PROVENANCE.json and engine/licenses. SDL2 is statically linked.\nNo editor, source tree or build directory is required. Saves use LocalAppData/judas/games/<save-id>/Saves.\nAsset policy/inclusion: DEPENDENCIES.json. Licenses: engine/licenses and engine/third_party/RUNTIME_NOTICES.txt.\n");
 #else
-        write("RUNTIME_REQUIREMENTS.txt", "Judas Linux desktop Release package. Run ./judas (no arguments).\nRequires compatible glibc/libstdc++, SDL2 and its system dependencies, OpenGL 3.3 drivers.\nNo editor or development tree is required. Platform libraries are system provided; not bundled.\nUnicode text libraries and ICU locale/boundary data are statically linked.\nProject fonts/catalogs are packaged assets; no desktop font or ICU_DATA lookup.\nAsset policy and inclusion reasons: DEPENDENCIES.json. All is conservative; closure requires explicit dynamic/runtime roots. Scenes follow project inclusion/exclusion policy.\nSaves: $XDG_DATA_HOME/judas/games/<save-id>/Saves, otherwise $HOME/.local/share/...\nThird-party notices: engine/third_party/RUNTIME_NOTICES.txt and engine/licenses.\n");
+        const auto graphicsRequirements = runtimeIdentity.value("vulkan", false)
+            ? "Requires the system Vulkan loader (libvulkan.so.1). Default graphics: OpenGL 3.3 or later. "
+              "Set JUDAS_GRAPHICS=vulkan to select a Vulkan 1.3 or later driver.\n"
+            : "Requires an OpenGL 3.3 or later graphics driver.\n";
+        write("RUNTIME_REQUIREMENTS.txt",
+              std::string("Judas Linux desktop Release package. Run ./judas (no arguments).\n"
+                          "Requires compatible glibc/libstdc++, SDL2 and its system dependencies.\n") +
+              graphicsRequirements +
+              "No editor or development tree is required. Platform libraries are system provided; not bundled.\n"
+              "Unicode text libraries and ICU locale/boundary data are statically linked.\n"
+              "Project fonts/catalogs are packaged assets; no desktop font or ICU_DATA lookup.\n"
+              "Asset policy and inclusion reasons: DEPENDENCIES.json. All is conservative; closure requires explicit dynamic/runtime roots. Scenes follow project inclusion/exclusion policy.\n"
+              "Saves: $XDG_DATA_HOME/judas/games/<save-id>/Saves, otherwise $HOME/.local/share/...\n"
+              "Third-party notices: engine/third_party/RUNTIME_NOTICES.txt and engine/licenses.\n");
 #endif
         ProjectExportResult completed; completed.packageDirectory = destination.string();
         completed.assetCount = included.size();completed.assetBytes=assetBytes;completed.deduplicatedBytes=deduplicated;completed.excludedAssetBytes=excluded; completed.sceneCount = scenes.size();

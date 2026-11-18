@@ -36,7 +36,11 @@ if(WIN32)
     set(judas_sdk_directory windows-sdk)
 else()
     set(judas_sdk_target judas_linux_sdk)
-    set(judas_sdk_directory linux-sdk)
+    if(JUDAS_VULKAN_ENABLED)
+        set(judas_sdk_directory linux-vulkan-sdk)
+    else()
+        set(judas_sdk_directory linux-sdk)
+    endif()
 endif()
 add_custom_target(${judas_sdk_target}
     COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/tools/package_sdk.py" stage

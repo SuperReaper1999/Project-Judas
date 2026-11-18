@@ -4,6 +4,7 @@
 #include "WholeEngineBenchmark.h"
 #include "BuildIdentity.h"
 #include "EngineHost.h"
+#include "GraphicsApi.h"
 #include "InteractivePlay.h"
 #include "SimulationTiming.h"
 #include "PerformanceProfiler.h"
@@ -50,7 +51,7 @@ int RunWholeEngineBenchmark(int argc,char** argv){try{
 #endif
  if(!std::getenv("JUDAS_PROFILE_DEPTH"))SDL_setenv("JUDAS_PROFILE_DEPTH","4",1);
  auto& p=PerformanceProfiler::Get();std::ofstream data(std::filesystem::path(out)/"frames.jsonl"),gpuData(std::filesystem::path(out)/"gpu.jsonl");unsigned samples=0;
- unsigned count=0;uint64_t previous=0,begin=0;JobStats first,last;int swapResult=0,swapInterval=0,drawableWidth=0,drawableHeight=0;std::string graphics,graphicsVersion;bool fault=false,pulsed=false;uint64_t sampleStart=0,lastResourceCheck=0,quietSince=0;std::size_t resourceFailures=0,inactiveSampleFrames=0;bool completedGameplayFrame=false;bool resourcesReady=false,screenshotDone=false,endScreenshotDone=false;Json calibration,finalCalibration;
+ unsigned count=0;uint64_t previous=0,begin=0;JobStats first,last;int swapResult=0,swapInterval=0,drawableWidth=0,drawableHeight=0;bool vulkanBackend=false;std::string graphics,graphicsVersion;bool fault=false,pulsed=false;uint64_t sampleStart=0,lastResourceCheck=0,quietSince=0;std::size_t resourceFailures=0,inactiveSampleFrames=0;bool completedGameplayFrame=false;bool resourcesReady=false,screenshotDone=false,endScreenshotDone=false;Json calibration,finalCalibration;
  CrashCollisionSearchTrace searchTrace;const bool pairProfile=profile&&std::getenv("JUDAS_CCD_PAIR_PROFILE");PhysicsWorld* tracedPhysics=nullptr;
  std::ofstream pairData;if(pairProfile)pairData.open(std::filesystem::path(out)/"collision-spikes.jsonl");
  unsigned loadingFrames=0;uint64_t loadingBegin=0;bool loadingScreenshot=false;
@@ -61,7 +62,7 @@ int RunWholeEngineBenchmark(int argc,char** argv){try{
   if(!loadingScreenshot&&now-loadingBegin>=1500000000){std::vector<unsigned char> image;h.GetRenderer().CaptureFrame(h.GetWindow().Width(),h.GetWindow().Height(),image);loadingScreenshot=WriteRgbPng((std::filesystem::path(out)/"startup.png").string(),h.GetWindow().Width(),h.GetWindow().Height(),image);}
  };
 
- control.hostReady=[&](EngineHost& h){h.GetRenderer().SetShadowBudget(shadowBudget);swapResult=SDL_GL_SetSwapInterval(0);swapInterval=SDL_GL_GetSwapInterval();graphics=(const char*)glGetString(GL_RENDERER);graphicsVersion=(const char*)glGetString(GL_VERSION);SDL_GL_GetDrawableSize(h.GetWindow().NativeWindow(),&drawableWidth,&drawableHeight);h.GetWindow().SetTestInputMode(true);
+ control.hostReady=[&](EngineHost& h){h.GetRenderer().SetShadowBudget(shadowBudget);vulkanBackend=h.GetWindow().UsesVulkan();if(vulkanBackend)GraphicsSetSwapInterval(0);else swapResult=SDL_GL_SetSwapInterval(0);swapInterval=GraphicsGetSwapInterval();graphics=(const char*)glGetString(GL_RENDERER);graphicsVersion=(const char*)glGetString(GL_VERSION);if(vulkanBackend)JudasVulkan::DrawableSize(drawableWidth,drawableHeight);else SDL_GL_GetDrawableSize(h.GetWindow().NativeWindow(),&drawableWidth,&drawableHeight);h.GetWindow().SetTestInputMode(true);
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
  if(profile&&glGetInteger64v){GLint64 stamp=0;const auto a=p.Now();glGetInteger64v(GL_TIMESTAMP,&stamp);const auto z=p.Now();calibration={{"cpu_before_ns",a},{"gpu_ns",stamp},{"cpu_after_ns",z}};}
 #endif
@@ -107,7 +108,7 @@ int RunWholeEngineBenchmark(int argc,char** argv){try{
  };
  control.afterFrame=[&](EngineHost& h,RuntimeWorld&,InteractivePlay& play){clockState=play.LastClockState();clockSteps=play.LastFixedStepsThisFrame();completedGameplayFrame=true;if(!screenshotDone&&resourcesReady){std::vector<unsigned char> pixels;h.GetRenderer().CaptureFrame(h.GetWindow().Width(),h.GetWindow().Height(),pixels);if(!WriteRgbPng((std::filesystem::path(out)/"workload.png").string(),h.GetWindow().Width(),h.GetWindow().Height(),pixels))throw std::runtime_error("workload preview capture failed");screenshotDone=true;}if(cap>0){JUDAS_PROFILE_WAIT("Benchmark FPS cap");const auto elapsed=p.Now()-previous;const auto budget=std::uint64_t(1e9/cap);if(elapsed<budget)std::this_thread::sleep_for(std::chrono::nanoseconds(budget-elapsed));}};
  control.beforeShutdown=[&](EngineHost& h,RuntimeWorld&,InteractivePlay&){
-  last=h.Jobs().Stats();resourceFailures=h.Resources().Stats().failed;
+  last=h.Jobs().Stats();resourceFailures=h.Resources().Stats().failed;swapInterval=GraphicsGetSwapInterval();
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
   // Measurement has ended. Read the presented front buffer rather than the
   // undefined post-swap back buffer, preserving the caller's read state.
@@ -133,7 +134,7 @@ int RunWholeEngineBenchmark(int argc,char** argv){try{
  };
 
  std::vector<std::string> args={"whole-engine-benchmark",project};std::vector<char*> av;for(auto& a:args)av.push_back(a.data());int result=Application{}.Run(int(av.size()),av.data(),&control);
- std::ofstream meta(std::filesystem::path(out)/"run.json");meta<<Json({{"schema",3},{"clock_telemetry",1},{"input_sequence",sequence},{"input_sequence_events",sequenceIndex},{"project",project},{"frames",samples},{"requested_seconds",seconds},{"cap_hz",cap},{"shadow_budget",shadowBudget},{"cap_policy",cap>0?"steady-clock-sleep":"none"},{"gpu_clock_calibration",calibration},{"gpu_clock_calibration_end",finalCalibration},{"build_identity",Json::parse(BuildIdentityJson())},{"sample_start_steady_ns",sampleStart},{"sample_end_steady_ns",previous},{"warmup_wall_seconds",double(sampleStart-begin)/1e9},{"warmup_frames",warmup},{"profile",profile},{"wall_seconds",double(p.Now()-begin)/1e9},{"swap_set_result",swapResult},{"swap_interval",swapInterval},{"renderer",graphics},{"graphics_version",graphicsVersion},{"drawable_width",drawableWidth},{"drawable_height",drawableHeight},{"end_capture",endScreenshotDone},{"resource_failures",resourceFailures},{"inactive_sample_frames",inactiveSampleFrames},{"exit",result},{"script_fault",fault},{"resource_workers",last.workers},{"resource_worker_busy_seconds",last.workerBusySeconds-first.workerBusySeconds},{"resource_workers_elapsed_seconds",last.elapsedSeconds-first.elapsedSeconds},{"resource_jobs",last.submitted-first.submitted},{"resource_jobs_completed",last.completed-first.completed}}).dump(2);
+ std::ofstream meta(std::filesystem::path(out)/"run.json");meta<<Json({{"schema",3},{"clock_telemetry",1},{"input_sequence",sequence},{"input_sequence_events",sequenceIndex},{"project",project},{"frames",samples},{"requested_seconds",seconds},{"cap_hz",cap},{"shadow_budget",shadowBudget},{"cap_policy",cap>0?"steady-clock-sleep":"none"},{"gpu_clock_calibration",calibration},{"gpu_clock_calibration_end",finalCalibration},{"build_identity",Json::parse(BuildIdentityJson())},{"sample_start_steady_ns",sampleStart},{"sample_end_steady_ns",previous},{"warmup_wall_seconds",double(sampleStart-begin)/1e9},{"warmup_frames",warmup},{"profile",profile},{"wall_seconds",double(p.Now()-begin)/1e9},{"swap_set_result",swapResult},{"swap_interval",swapInterval},{"renderer",graphics},{"graphics_backend",vulkanBackend?"vulkan":"opengl"},{"graphics_version",graphicsVersion},{"drawable_width",drawableWidth},{"drawable_height",drawableHeight},{"end_capture",endScreenshotDone},{"resource_failures",resourceFailures},{"inactive_sample_frames",inactiveSampleFrames},{"exit",result},{"script_fault",fault},{"resource_workers",last.workers},{"resource_worker_busy_seconds",last.workerBusySeconds-first.workerBusySeconds},{"resource_workers_elapsed_seconds",last.elapsedSeconds-first.elapsedSeconds},{"resource_jobs",last.submitted-first.submitted},{"resource_jobs_completed",last.completed-first.completed}}).dump(2);
  std::string error;if(profile&&!p.Export((std::filesystem::path(out)/"timeline-last120.json").string(),error))throw std::runtime_error(error);
  bool requireUncappedSwap=true;
 #ifdef __ANDROID__

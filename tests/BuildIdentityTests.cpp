@@ -82,6 +82,12 @@ int main(int argc, char** argv) {
     auto runtime = json;
     runtime["configuration"] = "Release";
     check(ValidateRuntimeBuildIdentity(runtime.dump(), reason), "matching runtime export identity accepted");
+    runtime["vulkan"] = !json["vulkan"].get<bool>();
+    check(!ValidateRuntimeBuildIdentity(runtime.dump(), reason), "different Vulkan capability rejected for export");
+    runtime = json;
+    runtime["vulkan"] = "enabled";
+    check(!ValidateRuntimeBuildIdentity(runtime.dump(), reason), "invalid Vulkan capability type rejected for export");
+    runtime = json;
     runtime["source_fingerprint"] = "not the selected candidate";
     check(!ValidateRuntimeBuildIdentity(runtime.dump(), reason), "stale runtime fingerprint rejected");
     runtime = json; runtime["channel"] = json["channel"] == "main" ? "Experimental" : "main";

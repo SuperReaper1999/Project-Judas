@@ -41,6 +41,8 @@ owns tested configurations; guide contents alone do not certify every platform.
 
 ## Rendering and water
 
+- [Linux Vulkan integration branch](VULKAN_INTEGRATION.md).
+
 - [Renderer ownership/policy](RENDERER_V2.md), [lighting/shadows/exposure](LUCIFER_V2.md), [runtime appearance/visibility](RUNTIME_RENDERING.md), [materials](MATERIALS.md), [camera targets](CAMERA_TARGETS.md), [particles](PARTICLES_V2.md).
 - [Basic versus advanced water](PROJECT_SETTINGS_AND_WATER.md), [conservative grid water](ADVANCED_FLUIDS_V2.md), [playable water workflow](GAME_WATER_PREVIEW.md), [water presentation](WATER_V2_PRESENTATION.md).
 

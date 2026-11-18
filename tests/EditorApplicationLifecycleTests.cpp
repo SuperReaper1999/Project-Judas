@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "editor/EditorApplication.h"
 #include "editor/EditorPanels.h"
 #include "editor/EditorPreferences.h"
@@ -121,14 +122,16 @@ void ProjectFailure(const fs::path &project, const fs::path &preferences,
             Check(io.BackendPlatformUserData && io.BackendRendererUserData,
                   "project failure exercises both initialized native UI backends");
         }
-        SDL_Window *window = SDL_GL_GetCurrentWindow();
-        windowId = window ? SDL_GetWindowID(window) : 0;
-        Check(windowId != 0 && SDL_GL_GetCurrentContext() != nullptr,
-              "project failure exercises a real native window and GL context");
+        if (ImGui::GetCurrentContext())
+            windowId = Uint32(reinterpret_cast<std::uintptr_t>(ImGui::GetMainViewport()->PlatformHandle));
+        Check(windowId != 0 && SDL_GetWindowFromID(windowId) && GraphicsContextCurrent(),
+              "project failure exercises a real native window and graphics context");
+        Check(JudasVulkan::Requested() == JudasVulkan::Active(),
+              "the editor initializes the requested backend");
     }
     Check(ImGui::GetCurrentContext() == nullptr, "application destruction retires ImGui context");
-    Check(SDL_GL_GetCurrentContext() == nullptr && SDL_GL_GetCurrentWindow() == nullptr,
-          "application destruction retires current GL context and window");
+    Check(!GraphicsContextCurrent() && SDL_GL_GetCurrentWindow() == nullptr,
+          "application destruction retires the current graphics context and window");
     Check(windowId != 0 && SDL_GetWindowFromID(windowId) == nullptr,
           "application destruction removes its native SDL window");
     Check(ReadFiles(preferences) == originalPreferences,

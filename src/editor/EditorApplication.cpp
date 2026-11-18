@@ -249,7 +249,10 @@ int EditorApplication::Run(int argc, char **argv) {
     LoadEditorPreferences();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     const char *driver = SDL_GetCurrentVideoDriver();
-    if (driver && (std::string(driver) == "x11" || std::string(driver) == "windows"))
+    // Detached editor windows are additional OpenGL contexts; the experimental
+    // Vulkan backend presents to the main window only.
+    if (driver && (std::string(driver) == "x11" || std::string(driver) == "windows") &&
+        !host.GetWindow().UsesVulkan())
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
     m_shell.RegisterPanels(m_sceneViewport, m_playSession,
@@ -270,7 +273,9 @@ int EditorApplication::Run(int argc, char **argv) {
     m_preferences.ApplyPending(m_panels);
     if (m_preferences.automaticUpdates && !std::getenv("JUDAS_EDITOR_AUTOTEST"))
         m_milestoneNotice.Check(false, m_preferences.updateChannel);
-    m_guiPlatformReady = ImGui_ImplSDL2_InitForOpenGL(window.NativeWindow(), window.NativeGLContext());
+    m_guiPlatformReady = window.UsesVulkan()
+        ? ImGui_ImplSDL2_InitForVulkan(window.NativeWindow())
+        : ImGui_ImplSDL2_InitForOpenGL(window.NativeWindow(), window.NativeGLContext());
     m_guiRendererReady = m_guiPlatformReady && ImGui_ImplOpenGL3_Init("#version 330 core");
     if (!m_guiRendererReady) {
         std::fprintf(stderr, "Editor UI backend initialization failed: %s\n", SDL_GetError());
@@ -480,7 +485,7 @@ void EditorApplication::Shutdown(bool savePreferences) {
     auto &host = *m_host;
     auto &window = host.GetWindow();
     auto &renderer = host.GetRenderer();
-    SDL_GL_MakeCurrent(window.NativeWindow(), window.NativeGLContext());
+    if (!window.UsesVulkan()) SDL_GL_MakeCurrent(window.NativeWindow(), window.NativeGLContext());
     if (m_playSession.world)
         StopPlay();
     else

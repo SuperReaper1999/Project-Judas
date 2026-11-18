@@ -27,6 +27,14 @@ public:
         }
         return true;
     }
+    // Visits every write as (name, kind, integer value, float values). Used by
+    // backends that address shader parameters by index instead of GL location.
+    template<class Visit> void ForEach(Visit&& visit) const {
+        for (unsigned i = 0; i < m_count; ++i) {
+            const auto& write = m_writes[i];
+            visit(write.name.data(), write.kind, write.integer, m_data.data() + write.offset);
+        }
+    }
     template<class Resolve> void Publish(Resolve&& location) const {
         for (unsigned i = 0; i < m_count; ++i) {
             const auto& write = m_writes[i];

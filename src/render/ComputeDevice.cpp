@@ -63,7 +63,7 @@ void RetireGeneration(unsigned &generation) { generation = NextGeneration(genera
 struct ComputeDevice::State {
     GraphicsCapabilities caps;
     ComputeBudget budget;
-    SDL_GLContext context = nullptr;
+    std::uintptr_t context = 0;
     std::thread::id thread;
     std::uint64_t owner = 0;
     std::vector<BufferSlot> buffers;
@@ -142,7 +142,7 @@ bool ComputeDevice::Initialize(const GraphicsCapabilities &caps, ComputeBudget b
     auto candidate = std::make_unique<State>();
     candidate->caps = actual;
     candidate->budget = budget;
-    candidate->context = SDL_GL_GetCurrentContext();
+    candidate->context = GraphicsContextIdentity();
     candidate->thread = std::this_thread::get_id();
     candidate->owner = nextOwner.fetch_add(1, std::memory_order_relaxed);
     candidate->bindings.resize(unsigned(actual.limits.storageBufferBindings));
@@ -157,7 +157,7 @@ bool ComputeDevice::Current(std::string &error) const {
         error = diagnostic.empty() ? "compute device is not initialized" : diagnostic;
         return false;
     }
-    if (std::this_thread::get_id() != state->thread || SDL_GL_GetCurrentContext() != state->context)
+    if (std::this_thread::get_id() != state->thread || GraphicsContextIdentity() != state->context)
         return Fail(error, "compute operation requires its owning graphics context and thread");
     return true;
 }
@@ -289,6 +289,7 @@ bool ComputeDevice::BindStorage(ComputeBuffer handle, unsigned binding, ComputeA
     return true;
 }
 
+unsigned ComputeDevice::NativeName(ComputeBuffer handle){std::string ignored;if(!Current(ignored))return 0;auto* entry=state->Buffer(handle,ignored);return entry?entry->name:0;}
 bool ComputeDevice::BindGraphicsStorage(ComputeBuffer handle,unsigned binding,std::string& error){
     if(!Current(error))return false;
     auto* entry=state->Buffer(handle,error);if(!entry)return false;
@@ -653,6 +654,7 @@ bool ComputeDevice::BindStorage(ComputeBuffer, unsigned, ComputeAccess, std::str
     return Current(e);
 }
 bool ComputeDevice::BindGraphicsStorage(ComputeBuffer,unsigned,std::string& e){return Current(e);}
+unsigned ComputeDevice::NativeName(ComputeBuffer){return 0;}
 bool ComputeDevice::BindVertex(ComputeBuffer, std::string &e) { return Current(e); }
 bool ComputeDevice::BindIndirect(ComputeBuffer, std::string &e) { return Current(e); }
 ComputeKernel ComputeDevice::CreateKernel(const char *, const char *, std::string &e) {

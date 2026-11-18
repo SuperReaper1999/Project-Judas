@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
 #include "Project.h"
@@ -124,7 +125,7 @@ int main(int argc, char **argv) try {
     }
     const std::string driver = SDL_GetCurrentVideoDriver() ? SDL_GetCurrentVideoDriver() : "unknown";
     std::printf("VIDEO_DRIVER %s\n", driver.c_str());
-    if (detached && driver != "x11" && driver != "windows") {
+    if (detached && (host.GetWindow().UsesVulkan() || (driver != "x11" && driver != "windows"))) {
         std::puts("UNAVAILABLE detached native windows require the qualified desktop backend");
         return 77;
     }
@@ -138,7 +139,10 @@ int main(int argc, char **argv) try {
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     if (detached)
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-    ImGui_ImplSDL2_InitForOpenGL(window.NativeWindow(), window.NativeGLContext());
+    if (window.UsesVulkan())
+        ImGui_ImplSDL2_InitForVulkan(window.NativeWindow());
+    else
+        ImGui_ImplSDL2_InitForOpenGL(window.NativeWindow(), window.NativeGLContext());
     ImGui_ImplOpenGL3_Init("#version 330 core");
     window.SetEventHook([](const SDL_Event &event) { ImGui_ImplSDL2_ProcessEvent(&event); });
     EditorDocument document;
@@ -258,12 +262,13 @@ int main(int argc, char **argv) try {
             views.EndGameTarget(renderer);
         }
         ImGui::Render();
-        SDL_GL_MakeCurrent(window.NativeWindow(), window.NativeGLContext());
+        if (!window.UsesVulkan()) SDL_GL_MakeCurrent(window.NativeWindow(), window.NativeGLContext());
         renderer.BeginFrame(window.Width(), window.Height());
         renderer.EndFrame();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         int width = 0, height = 0;
-        SDL_GL_GetDrawableSize(window.NativeWindow(), &width, &height);
+        if (window.UsesVulkan()) JudasVulkan::DrawableSize(width, height);
+        else SDL_GL_GetDrawableSize(window.NativeWindow(), &width, &height);
         std::vector<unsigned char> pixels;
         renderer.CaptureFrame(width, height, pixels);
         const auto inspectMain = [&](const EditorViewSurface &surface, unsigned r, unsigned g, unsigned b) {

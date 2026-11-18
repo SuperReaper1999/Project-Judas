@@ -19,10 +19,19 @@ using namespace JudasParticles;
 namespace {
 unsigned checks=0,failures=0;
 class GraphicsTestHost {
- SDL_Window* window=nullptr;SDL_GLContext context=nullptr;GraphicsCapabilities caps;
+ SDL_Window* window=nullptr;SDL_GLContext context=nullptr;GraphicsCapabilities caps;bool vulkan=false;
 public:
  bool Init(const char* title,int width,int height,bool,std::string& error){
   if(SDL_Init(SDL_INIT_VIDEO)!=0){error=SDL_GetError();return false;}
+  if(JudasVulkan::Requested()){
+   // JUDAS_GRAPHICS=vulkan: the same production particle owners on the experimental Vulkan device.
+   window=SDL_CreateWindow(title,SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,width,height,JudasVulkan::WindowFlag()|SDL_WINDOW_HIDDEN);
+   if(!window){error=SDL_GetError();Shutdown();return false;}
+   if(!JudasVulkan::Init(window,4,6,error)){Shutdown();return false;}
+   vulkan=true;
+   if(!gladLoadGL(&JudasVulkan::ProcAddress)){error="Cannot load Vulkan backend entry points";Shutdown();return false;}
+   caps=QueryGraphicsCapabilities();if(!ValidateGraphicsCapabilities(caps,error)){Shutdown();return false;}return true;
+  }
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION,4);SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION,5);SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,SDL_GL_CONTEXT_PROFILE_CORE);
   window=SDL_CreateWindow(title,SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,width,height,SDL_WINDOW_OPENGL|SDL_WINDOW_HIDDEN);
   if(!window){error=SDL_GetError();Shutdown();return false;}
@@ -31,7 +40,7 @@ public:
   caps=QueryGraphicsCapabilities();if(!ValidateGraphicsCapabilities(caps,error)){Shutdown();return false;}return true;
  }
  const GraphicsCapabilities& GraphicsCaps()const{return caps;}
- void Shutdown(){if(context)SDL_GL_DeleteContext(context);if(window)SDL_DestroyWindow(window);context=nullptr;window=nullptr;SDL_QuitSubSystem(SDL_INIT_VIDEO);}
+ void Shutdown(){if(vulkan)JudasVulkan::Shutdown();vulkan=false;if(context)SDL_GL_DeleteContext(context);if(window)SDL_DestroyWindow(window);context=nullptr;window=nullptr;SDL_QuitSubSystem(SDL_INIT_VIDEO);}
  ~GraphicsTestHost(){Shutdown();}
 };
 void Check(bool pass,const char* name){++checks;failures+=!pass;std::printf("%s %s\n",pass?"PASS":"FAIL",name);std::fflush(stdout);}

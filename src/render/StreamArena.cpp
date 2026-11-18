@@ -11,11 +11,7 @@
 namespace JudasRender {
 namespace {
 std::uintptr_t CurrentContext() {
-#ifdef __EMSCRIPTEN__
-    return std::uintptr_t(emscripten_webgl_get_current_context());
-#else
-    return reinterpret_cast<std::uintptr_t>(SDL_GL_GetCurrentContext());
-#endif
+    return GraphicsContextIdentity();
 }
 } // namespace
 

@@ -50,6 +50,8 @@ public:
               const CollisionSnapshot*, std::string& error, GpuParticles *geometryPeer=nullptr);
     bool PrepareView(const glm::mat4& view,const glm::mat4& projection,bool sorted,std::string& error);
     bool BindDrawBuffers(std::string& error);
+    // Presentation records as shader storage, for draws that fetch them by index.
+    bool BindDrawStorage(unsigned binding,std::string& error);
     bool CanMutate(std::string& error) const;
     bool CanShiftOrigin(glm::dvec3 delta,std::string& error) const;
     bool Clear(std::string& error);

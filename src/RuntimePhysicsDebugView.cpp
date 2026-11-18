@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "RuntimePhysicsDebugView.h"
 #include "Window.h"
 #include "Renderer.h"
@@ -44,7 +45,9 @@ Command RuntimePhysicsDebugView::Inspect(const PhysicsEventDebugger::Snapshot& s
 Command RuntimePhysicsDebugView::Paint(const PhysicsEventDebugger::Snapshot& snapshot){
     const auto* keys=SDL_GetKeyboardState(nullptr);
     const auto pressed=[&](SDL_Scancode key){return keys[key]&&!m_keys[unsigned(key)];};
-    int drawableWidth=0,drawableHeight=0;SDL_GL_GetDrawableSize(m_window.NativeWindow(),&drawableWidth,&drawableHeight);
+    int drawableWidth=0,drawableHeight=0;
+    if(m_window.UsesVulkan())JudasVulkan::DrawableSize(drawableWidth,drawableHeight);
+    else SDL_GL_GetDrawableSize(m_window.NativeWindow(),&drawableWidth,&drawableHeight);
     const unsigned width=std::max(320,drawableWidth),height=std::max(240,drawableHeight);
     int mouseX=0,mouseY=0;const auto buttons=SDL_GetMouseState(&mouseX,&mouseY);const bool click=(buttons&SDL_BUTTON_LMASK)&&!m_mouse;
     const int rootDx=mouseX-m_previousMouseX,rootDy=mouseY-m_previousMouseY;
