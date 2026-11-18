@@ -68,9 +68,46 @@ void RenderContract(Renderer& r,bool indexed,bool skinned,int variant){
  Check((variant==0||variant==8)?(originalDraws>0&&originalDraws==mergedDraws*2):originalDraws==mergedDraws,"only compatible opaque parts reduce draw work");
  r.DestroyMesh(mesh);r.DestroyMaterial(first);r.DestroyMaterial(second);
 }
+void OpaqueAndMaskedDepth(Renderer& renderer) {
+    TextureData image;
+    image.width = image.height = 1;
+    image.pixels = {255, 255, 255, 0};
+    const auto texture = renderer.CreateTexture(image);
+    Check(texture.IsValid(), "transparent alpha test texture uploads");
+    MaterialDefinition definition;
+    definition.model = MaterialModel::Unlit;
+    MaterialBinding opaque;
+    opaque.handle = renderer.CreateMaterial(definition);
+    MaterialBinding mask = opaque;
+    mask.overrides.alpha = MaterialAlpha::Mask;
+    mask.overrides.alphaCutoff = .5f;
+
+    renderer.BeginFrame(128, 128);
+    renderer.BeginShadowPass(0, glm::ortho(-2.f, 2.f, -2.f, 2.f, .1f, 10.f) *
+                                    glm::lookAt(glm::vec3(0, 0, 3), glm::vec3(0), glm::vec3(0, 1, 0)));
+    for (int x : {-1, 0, 1}) {
+        renderer.SetMaterialBindings({x == 0 ? mask : opaque});
+        renderer.DrawBox({float(x), 0, 0}, {1, 0, 0, 0}, {.25f, .25f, .1f},
+                         {1, 1, 1}, 1, texture);
+    }
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+    float depths[3]{};
+    for (int i = 0; i < 3; ++i)
+        glReadPixels(viewport[2] * (i + 1) / 4, viewport[3] / 2, 1, 1,
+                     GL_DEPTH_COMPONENT, GL_FLOAT, &depths[i]);
+    renderer.EndShadowPass();
+    renderer.EndFrame();
+    Check(glGetError() == GL_NO_ERROR && depths[0] < .99f && depths[1] == 1.f && depths[2] < .99f,
+          "opaque-mask-opaque draws preserve depth and only the mask samples transparent alpha");
+    renderer.SetMaterialBindings({});
+    renderer.DestroyMaterial(opaque.handle);
+    renderer.DestroyTexture(texture);
+}
 }
 int main(){
  RangeContracts();EngineHost host;std::string error;if(!host.Init("Opaque shadow range fidelity",128,128,false,error)){std::puts(error.c_str());return 1;}
  for(bool indexed:{false,true})for(bool skinned:{false,true})for(int variant=0;variant<9;++variant){if((variant>=4&&variant<=6&&!skinned)||(variant==8&&skinned))continue;RenderContract(host.GetRenderer(),indexed,skinned,variant);}
+ OpaqueAndMaskedDepth(host.GetRenderer());
  host.Shutdown();return failures?1:0;
 }

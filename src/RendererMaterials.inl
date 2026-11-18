@@ -78,9 +78,31 @@ void Renderer::SetSceneAppearance(bool linear,float exposure,EnvironmentHandle e
 void Renderer::BindMaterial(const GpuMaterial* gpu, const MaterialBinding& binding,
                             TextureHandle generated, const glm::vec3&, float alpha, bool shadow) {
  ++m_stats.materialApplications;
+ const auto program=shadow?m_shadowShaderProgram:m_shaderProgram;
+ const auto publish=[&](const JudasRender::MaterialUniformBatch& uniforms,
+                        MaterialModel model,bool doubleSided){
+  // Other writers (notably terrain) invalidate the material-owned uniforms.
+  const auto location=[&](const char* name){return shadow?glGetUniformLocation(program,name):MaterialUniform(name);};
+  if(m_materialUniformState[shadow?1:0].Publish(uniforms,program,location))++m_stats.materialUniformPublishes;
+  else ++m_stats.materialUniformReuses;
+  if(model==MaterialModel::Legacy||doubleSided)glDisable(GL_CULL_FACE);
+  else {glEnable(GL_CULL_FACE);glCullFace(GL_BACK);}
+  glActiveTexture(GL_TEXTURE0);
+ };
+ if(shadow&&binding.overrides.alpha.value_or(gpu?gpu->definition.alpha:MaterialAlpha::Opaque)==MaterialAlpha::Opaque){
+  // Opaque depth samples never read the base texture or cutout uniforms.
+  // Publish the mode so a preceding masked draw cannot discard this caster.
+  static const auto opaque=[]{
+   JudasRender::MaterialUniformBatch uniforms;
+   uniforms.Int("uAlphaMode",int(MaterialAlpha::Opaque));
+   return uniforms;
+  }();
+  publish(opaque,gpu?gpu->definition.model:MaterialModel::Legacy,
+          binding.overrides.doubleSided.value_or(gpu&&gpu->definition.doubleSided));
+  return;
+ }
  MaterialDefinition legacy; legacy.model=MaterialModel::Legacy;
  auto m=ApplyMaterialOverride(gpu?gpu->definition:legacy,binding.overrides);
- const auto program=shadow?m_shadowShaderProgram:m_shaderProgram;
  JudasRender::MaterialUniformBatch uniforms;
  uniforms.Int("uAlphaMode",int(m.alpha));
  uniforms.Float("uAlphaCutoff",m.alphaCutoff);
@@ -140,14 +162,7 @@ void Renderer::BindMaterial(const GpuMaterial* gpu, const MaterialBinding& bindi
    uniforms.Int(envNames[i],int(9+i));
   }
  }
- // Only material-owned uniforms are reused. Other writers (notably terrain)
- // explicitly invalidate this small per-program state before changing them.
- const auto location=[&](const char* name){return shadow?glGetUniformLocation(program,name):MaterialUniform(name);};
- if(m_materialUniformState[shadow?1:0].Publish(uniforms,program,location))++m_stats.materialUniformPublishes;
- else ++m_stats.materialUniformReuses;
- if(m.model==MaterialModel::Legacy||m.doubleSided)glDisable(GL_CULL_FACE);
- else {glEnable(GL_CULL_FACE);glCullFace(GL_BACK);}
- glActiveTexture(GL_TEXTURE0);
+ publish(uniforms,m.model,m.doubleSided);
 }
 void Renderer::FlushMaterialBlends(){
  if(m_blendDraws.empty())return;
