@@ -18,18 +18,23 @@ void Grid::ClassifyAir() {
         }
         return i;
     };
-    auto gas = [&](int i) { return std::max(0., double(cells_[i].capacity) - cells_[i].water); };
-    auto resolved = [&](int i) {
-        bool retained = cells_[i].air >= 0 && cells_[i].air < int(previous.size()) &&
-                        !previous[cells_[i].air].atmosphere && cells_[i].airMass > 0;
-        return gas(i) > voxel * 1e-12 &&
-               (gas(i) > settings_.minimumAirFraction * cells_[i].capacity || retained);
-    };
+    // Capacity and water stay fixed throughout this classification. Cache
+    // the eligible gas volume once before the face and reservoir passes.
+    std::vector<double> gas(count);
+    for (int i = 0; i < count; ++i) {
+        const auto &cell = cells_[i];
+        const double volume = std::max(0., double(cell.capacity) - cell.water);
+        const bool retained = cell.air >= 0 && cell.air < int(previous.size()) &&
+                              !previous[cell.air].atmosphere && cell.airMass > 0;
+        if (volume > voxel * 1e-12 &&
+            (volume > settings_.minimumAirFraction * cell.capacity || retained))
+            gas[i] = volume;
+    }
     for (std::size_t f = 0; f < faces_.size(); ++f) {
         const auto &face = faces_[f];
         // Only resolved, wide dry connections share reservoir pressure.
         // Narrow links remain finite resistors in the projection.
-        if (resolved(face.a) && resolved(face.b) && DryArea(f) > .5f) {
+        if (gas[face.a] > 0 && gas[face.b] > 0 && DryArea(f) > .5f) {
             int l = root(face.a), r = root(face.b);
             if (l != r)
                 parent[std::max(l, r)] = std::min(l, r);
@@ -40,13 +45,13 @@ void Grid::ClassifyAir() {
     // topology work by game resolution rather than interface fragmentation.
     std::vector<double> componentVolume(count);
     for (int i = 0; i < count; ++i)
-        if (resolved(i))
-            componentVolume[root(i)] += gas(i);
+        if (gas[i] > 0)
+            componentVolume[root(i)] += gas[i];
     const double minimumVolume = voxel * settings_.minimumReservoirCells;
     std::vector<std::map<int, double>> children(previous.size());
     for (int i = 0; i < count; ++i)
-        if (resolved(i) && cells_[i].air >= 0)
-            children[cells_[i].air][root(i)] += gas(i);
+        if (gas[i] > 0 && cells_[i].air >= 0)
+            children[cells_[i].air][root(i)] += gas[i];
     for (int k = 0; k < int(previous.size()); ++k)
         if (!previous[k].atmosphere && !children[k].empty()) {
             int anchor = children[k].begin()->first;
@@ -66,7 +71,7 @@ void Grid::ClassifyAir() {
     // finite resistor; no large chambers are unioned through a narrow vent.
     std::vector<double> componentMass(count);
     for (int i = 0; i < count; ++i)
-        if (resolved(i))
+        if (gas[i] > 0)
             componentMass[root(i)] += cells_[i].airMass;
     auto large = [&](int i) {
         return componentVolume[i] >= minimumVolume || componentMass[i] >= 1.2 * minimumVolume;
@@ -75,10 +80,10 @@ void Grid::ClassifyAir() {
         bool changed = false;
         for (std::size_t f = 0; f < faces_.size(); ++f) {
             const auto &face = faces_[f];
-            if (!resolved(face.a) || !resolved(face.b) || DryArea(f) <= 0)
+            if (gas[face.a] == 0 || gas[face.b] == 0)
                 continue;
             int a = root(face.a), b = root(face.b);
-            if (a == b || large(a) == large(b))
+            if (a == b || large(a) == large(b) || DryArea(f) <= 0)
                 continue;
             if (large(b))
                 std::swap(a, b);
@@ -92,7 +97,7 @@ void Grid::ClassifyAir() {
     }
     std::vector<bool> atmosphericAncestor(count), sealedAncestor(count);
     for (int i = 0; i < count; ++i)
-        if (resolved(i) && cells_[i].air >= 0) {
+        if (gas[i] > 0 && cells_[i].air >= 0) {
             if (previous[cells_[i].air].atmosphere)
                 atmosphericAncestor[root(i)] = true;
             else
@@ -111,9 +116,8 @@ void Grid::ClassifyAir() {
     std::vector<int> index(count, -1);
     for (int i = 0; i < count; ++i) {
         auto &cell = cells_[i];
-        const bool active = resolved(i);
         cell.air = -1;
-        if (!active)
+        if (gas[i] == 0)
             continue;
         int r = root(i);
         if (index[r] < 0) {
@@ -122,7 +126,7 @@ void Grid::ClassifyAir() {
         }
         cell.air = index[r];
         auto &pocket = air_[cell.air];
-        pocket.volume += gas(i);
+        pocket.volume += gas[i];
         pocket.atmosphere |= Coordinates(i).y == settings_.cells.y - 1;
         pocket.atmosphere |=
             componentVolume[r] < minimumVolume && atmosphericAncestor[r] && !sealedAncestor[r];
@@ -135,7 +139,7 @@ void Grid::ClassifyAir() {
         std::vector<std::map<int, double>> overlap(previous.size());
         for (int i = 0; i < count; ++i)
             if (previousOwner[i] >= 0 && cells_[i].air >= 0)
-                overlap[previousOwner[i]][cells_[i].air] += gas(i);
+                overlap[previousOwner[i]][cells_[i].air] += gas[i];
         for (int k = 0; k < int(previous.size()); ++k) {
             double volume = 0;
             for (auto entry : overlap[k])
@@ -184,7 +188,7 @@ void Grid::ClassifyAir() {
     for (int i = 0; i < count; ++i)
         if (cells_[i].air >= 0) {
             const auto &pocket = air_[cells_[i].air];
-            cells_[i].airMass = pocket.mass * gas(i) / pocket.volume;
+            cells_[i].airMass = pocket.mass * gas[i] / pocket.volume;
         }
 }
 } // namespace JudasWater

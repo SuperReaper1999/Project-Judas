@@ -217,6 +217,45 @@ void CompletedPublication(){
  boot.world.SetPairCollisionEnabled(boot.floor,boot.body,false);auto suppressed=boot.Save();Contacts filtered;filtered.Match(boot);filtered.world.SetPairCollisionEnabled(filtered.floor,filtered.body,false);filtered.Restore(suppressed);actual.clear();
  Check(filtered.world.ReadBodyContactSample(filtered.body,actual)&&actual.empty(),"captured observations respect changed bilateral pair filtering");
 }
+void PhasedContactPublication() {
+    PhysicsWorld world;
+    world.Init();
+    const auto floor = world.CreateStaticBox({0, -.5f, 0}, {8, .5f, 3}, .5f, 0);
+    const BodyHandle bodies[] = {
+        world.CreateDynamicSphere({-3, .25f, 0}, .25f, 1, .5f, 0),
+        world.CreateDynamicSphere({0, .25f, 0}, .25f, 2, .5f, 0),
+        world.CreateDynamicSphere({3, .25f, 0}, .25f, 4, .5f, 0),
+    };
+    // The new lower key has to be merged before the two already observed
+    // pairs. All three must still match their own row in the last interval.
+    world.SetPairCollisionEnabled(floor, bodies[0], false);
+    float intervalLoad[3][3]{};
+    std::vector<PhysicsWorld::BodyContactSample> rows;
+    world.StepCoupled(dt, 3, [&](float h, unsigned interval) {
+        if (interval == 1) {
+            world.ResetBody(bodies[0], {-3, .25f, 0}, {1, 0, 0, 0});
+            world.SetPairCollisionEnabled(floor, bodies[0], true);
+        }
+        for (const auto body : bodies)
+            world.ApplyLinearAcceleration(body, {0, -9.81f, 0}, h);
+    }, [&](float, unsigned interval) {
+        for (unsigned i = 0; i < 3; ++i) {
+            const bool active = i != 0 || interval != 0;
+            Check(world.ReadBodyContactSample(bodies[i], rows) &&
+                      rows.size() == (active ? 1u : 0u),
+                  "phased fixture exposes the expected interval contact rows");
+            if (rows.size() == 1)
+                intervalLoad[i][interval] = rows.front().normalImpulse;
+        }
+    });
+    for (unsigned i = 0; i < 3; ++i) {
+        const float expected = intervalLoad[i][0] + intervalLoad[i][1] + intervalLoad[i][2];
+        Check(expected > 0 && world.ReadBodyContactSample(bodies[i], rows) &&
+                  rows.size() == 1 && rows.front().other.id == floor.id &&
+                  rows.front().normalImpulse == expected,
+              "phased publication finds each ordered key and accumulates its own loads once");
+    }
+}
 void IndependentQueryPublication(){
  Contacts source;
  for(int i=0;i<4;++i){source.world.ApplyLinearAcceleration(source.body,{0,-9.81f,0},dt);source.world.Step(dt);}
@@ -383,4 +422,4 @@ void PhysicalEntityPersistence(){
  }
 }
 }
-int main(){try{JointContinuation();SignedZeroContinuation();CompletedPublication();IndependentQueryPublication();WorldParticipant();MassFieldValidation();DurableMassProperties();PhysicalEntityPersistence();}catch(const std::exception& e){Check(false,e.what());}std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;}
+int main(){try{JointContinuation();SignedZeroContinuation();CompletedPublication();PhasedContactPublication();IndependentQueryPublication();WorldParticipant();MassFieldValidation();DurableMassProperties();PhysicalEntityPersistence();}catch(const std::exception& e){Check(false,e.what());}std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;}

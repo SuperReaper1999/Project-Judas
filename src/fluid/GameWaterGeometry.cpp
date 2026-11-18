@@ -285,9 +285,6 @@ void Grid::UpdateHeights() {
 }
 float Grid::DryArea(std::size_t index) const {
     const auto &face = faces_[index];
-    const float level = std::max(waterHeight_[face.a], waterHeight_[face.b]),
-                h = settings_.cellSize;
-    const auto center = .5f * (Center(face.a) + Center(face.b));
     // Faces are stored from the lower to the upper grid coordinate. An
     // air-filled upper cell exposes its bottom opening. Compare material
     // occupancy directly, avoiding separately rounded world-plane positions.
@@ -295,14 +292,25 @@ float Grid::DryArea(std::size_t index) const {
         return cells_[face.b].water <= settings_.minimumMobileFraction * cells_[face.b].capacity
                    ? face.open
                    : 0;
-    unsigned open = 0, bit = 0;
-    const int a = (face.axis + 1) % 3;
-    for (int u = 0; u < 4; ++u)
-        for (int v = 0; v < 4; ++v, ++bit)
-            if ((faceSamples_[index] & (std::uint16_t(1) << bit)) &&
-                center.y + h * (((a == 1 ? u : v) + .5f) / 4 - .5f) >= level)
-                ++open;
-    return open / 16.f;
+
+    const auto samples = faceSamples_[index];
+    if (samples == 0)
+        return 0;
+    const float level = std::max(waterHeight_[face.a], waterHeight_[face.b]);
+    const float h = settings_.cellSize;
+    // Both horizontal neighbours have the same chart Y centre. The four
+    // samples at each elevation share the same wet/dry comparison. In the
+    // (u, v) mask, Y is u on X faces and v on Z faces.
+    const float centerY = ((face.a / settings_.cells.x) % settings_.cells.y + .5f) * h;
+    const unsigned firstRow = face.axis == 0 ? 0x000f : 0x1111;
+    const unsigned rowStride = face.axis == 0 ? 4 : 1;
+    unsigned dry = 0;
+    for (int y = 3; y >= 0; --y) {
+        if (!(centerY + h * ((y + .5f) / 4 - .5f) >= level))
+            break;
+        dry |= firstRow << (y * rowStride);
+    }
+    return std::bitset<16>(samples & dry).count() / 16.f;
 }
 void Grid::ReleaseDisplacement() {
     // Explicit unresolved storage is quantity, not extra collision geometry.
