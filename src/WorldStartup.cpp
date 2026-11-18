@@ -27,7 +27,9 @@ bool RuntimeWorld::PrepareStartup(Renderer& renderer,int width,int height,bool& 
         pose.position+pose.rotation*glm::vec3(0,0,-1),pose.rotation*glm::vec3(0,1,0));}
     const auto camera=BuildCameraFrame(glm::vec3(0),glm::quat(1,0,0,0),60,.1f,1000,CameraLens{},width,height);
     RenderWorldFrame(renderer,width,height,*this,view,camera.projection,glm::vec3(glm::inverse(view)[3]),1,0);
-    if(!m_assets){ready=true;return true;}
+    bool uiReady=true;
+    if(m_ui&&!m_ui->PrepareStartup(width,height,uiReady,error))return false;
+    if(!m_assets){ready=uiReady;return true;}
     const auto required=[&](const AssetId& id){
         const auto state=m_assets->StateOf(id);
         const auto* record=m_assets->Assets()?m_assets->Assets()->Find(id):nullptr;
@@ -43,6 +45,6 @@ bool RuntimeWorld::PrepareStartup(Renderer& renderer,int width,int height,bool& 
     for(const auto& id:m_referencedAssets)complete=required(id)&&complete;
     for(const auto& entry:m_renderAssetDemand)for(const auto& id:entry.second)complete=required(id)&&complete;
     if(!error.empty())return false;
-    ready=complete&&m_assets->Stats().loading==0;
+    ready=complete&&uiReady&&m_assets->Stats().loading==0;
     return true;
 }

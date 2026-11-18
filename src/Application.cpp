@@ -197,6 +197,11 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
         play.SetPhysicsDebugger(physicsDebugger);
     }
 
+    if(splash&&(!options.project.Settings().startupUIAssets.empty()&&
+                !world.UI().RequestStartupAssets(options.project.Settings().startupUIAssets,error))){
+        std::fprintf(stderr,"Startup preparation: %s\n",error.c_str());
+        return 1;
+    }
     if(splash&&!PrepareFirstFrame(host,world,*splash,control,error)){
         if(!error.empty())std::fprintf(stderr,"Startup preparation: %s\n",error.c_str());
         return window.ShouldClose()?0:1;

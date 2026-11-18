@@ -50,13 +50,13 @@ ShadowCaster Caster(SceneObjectId id,const SceneRenderComponent& render,const Sc
 }
 ShadowScene RuntimeShadowScene(const RuntimeWorld& world,float alpha) {
     JUDAS_PROFILE_SCOPE("Lighting caster snapshot");ShadowScene result;
-    result.volatileContent=world.HasPlanets()||world.HasRuntimeLandscapes()||world.NetworkIfLoaded();
+    result.volatileContent=world.HasPlanets()||world.HasRuntimeLandscapes()||world.NetworkIfLoaded()||world.HasActiveRagdolls();
     // These draw owners already require every chart to be redrawn.
     if(result.volatileContent)return result;
     for(const auto& s:world.StaticRenderables()){
         const auto* def=world.RuntimeDefinition(s.id);
         if(!def||!world.IsPublished(s.id)||!world.RenderVisible(s.id)||!s.render.visible)continue;
-        if(def->deformable||world.PhysicalBalanceSnapshot(s.id))result.volatileContent=true;
+        if(def->deformable)result.volatileContent=true;
         if(s.render.textureCamera)result.volatileContent=true;
         if(s.render.shape==SceneShape::Sprite||s.render.shape==SceneShape::Planar)continue;
         result.casters.push_back(Caster(s.id,s.render,world.PresentedTransform(s.id,{s.position,s.rotation,s.scale},alpha),world.Resources(),world.AnimationSkin(s.id,alpha)));
@@ -70,8 +70,11 @@ ShadowScene RuntimeShadowScene(const RuntimeWorld& world,float alpha) {
         if(v.render.textureCamera)result.volatileContent=true;
         result.casters.push_back(std::move(caster));
     }
-    // Specialized physical presentations may have no ordinary render component.
-    for(const auto& e:world.Entities())if(world.IsPublished(e.id)&&(e.definition.deformable||e.definition.ragdoll))result.volatileContent=true;
+    // Inactive rigs have no physics presentation. Their ordinary skinned
+    // draws are already keyed by the presented pose and complete GPU palette.
+    // Keep active physics rigs and deformables on the conservative redraw path.
+    for(const auto& e:world.Entities())
+        if(world.IsPublished(e.id)&&e.definition.deformable)result.volatileContent=true;
     return result;
 }
 ShadowScene AuthoredShadowScene(const Scene& scene,ResourceManager& resources){
@@ -115,9 +118,24 @@ void PrepareShadows(Renderer& renderer,const SceneSettings& settings,const std::
             if(key.viewDependentLod){key.cameraView=view;key.cameraProjection=projection;key.viewport=renderer.RenderTargetDiagnostics().viewport;}
             key.resourceRevision=renderer.ShadowResourceRevision();
             const Frustum frustum(matrix);
-            for(const auto& c:scene.casters)if(frustum.IsVisible(c.bounds)){Append(key.content,c.content);}
-            if(renderer.ShadowCache().Matches(key)&&renderer.ReuseShadowChart(slot,matrix))return;
+            for(const auto& c:scene.casters)if(frustum.IsVisible(c.bounds)){
+                Append(key.content,c.content);
+                if(key.content.size()>JudasRender::ShadowPassCache::MaxContentBytes)break;
+            }
+            using Match=JudasRender::ShadowPassCache::Match;
+            switch(renderer.ShadowCache().Inspect(key)){
+            case Match::Hit:
+                if(renderer.ReuseShadowChart(slot,matrix))return;
+                JUDAS_PROFILE_COUNTER("Shadow miss depth allocation",1,ProfileCounterMode::Sum);break;
+            case Match::Chart: JUDAS_PROFILE_COUNTER("Shadow miss light-space matrix",1,ProfileCounterMode::Sum);break;
+            case Match::View: JUDAS_PROFILE_COUNTER("Shadow miss camera LOD view",1,ProfileCounterMode::Sum);break;
+            case Match::Resources: JUDAS_PROFILE_COUNTER("Shadow miss resource revision",1,ProfileCounterMode::Sum);break;
+            case Match::Casters: JUDAS_PROFILE_COUNTER("Shadow miss caster content",1,ProfileCounterMode::Sum);break;
+            case Match::TooLarge: JUDAS_PROFILE_COUNTER("Shadow miss key size",1,ProfileCounterMode::Sum);break;
+            default: JUDAS_PROFILE_COUNTER("Shadow miss no matching slot",1,ProfileCounterMode::Sum);break;
+            }
         }
+        if(scene.volatileContent)JUDAS_PROFILE_COUNTER("Shadow redraw conservative owner",1,ProfileCounterMode::Sum);
         {
         JUDAS_PROFILE_SCOPE("Shadow draw submission");
         renderer.BeginShadowPass(slot,matrix);draw();renderer.EndShadowPass();

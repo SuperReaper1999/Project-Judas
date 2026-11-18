@@ -1,4 +1,6 @@
 #include "WorldPersistence.h"
+#include "lighting/ShadowSystem.h"
+#include "WorldPresentation.h"
 #include "EngineHost.h"
 #include "RuntimeWorld.h"
 #include "Simulation.h"
@@ -24,7 +26,49 @@ int main(int argc,char** argv){
  RuntimeWorld world;Check(world.Build(scene,&resources,error),"normal runtime builds shared animation and ragdoll authoring");world.UpdateAnimations(0);
  auto* a=world.RuntimeAnimation(10);a->playback.Seek(*a->asset,.5);world.ResolveAnimationPose(*a,0);auto entryPose=a->finalPose;
  auto globals=PoseGlobalMatrices(a->asset->skeleton,entryPose);auto transform=world.PresentedTransform(10,scene.Find(10)->transform,1);auto model=glm::translate(glm::mat4(1),transform.position)*glm::mat4_cast(transform.rotation);
+ Check(!JudasLighting::RuntimeShadowScene(world,1.f).volatileContent,"inactive authored rigs permit exact per-chart reuse");
+
+ auto shadowFrame=[&](bool reuse){
+#if defined(_WIN32)
+     _putenv_s("JUDAS_SHADOW_REUSE",reuse?"1":"0");
+#else
+     setenv("JUDAS_SHADOW_REUSE",reuse?"1":"0",1);
+#endif
+     auto& renderer=host.GetRenderer();
+     renderer.ResetStats();
+     const glm::vec3 eye{0,4,12};
+     RenderWorldFrame(renderer,320,240,world,glm::lookAt(eye,glm::vec3(0,1,0),glm::vec3(0,1,0)),
+                      glm::perspective(glm::radians(60.f),320.f/240,.1f,100.f),eye,1.f);
+     GLint unit=0,width=0,height=0,layers=0;
+     glGetIntegerv(GL_ACTIVE_TEXTURE,&unit);
+     glActiveTexture(GL_TEXTURE1);
+     glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY,0,GL_TEXTURE_WIDTH,&width);
+     glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY,0,GL_TEXTURE_HEIGHT,&height);
+     glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY,0,GL_TEXTURE_DEPTH,&layers);
+     std::vector<float> depth;
+     if(width>0&&height>0&&layers==3){
+         depth.resize(std::size_t(width)*std::size_t(height)*3);
+         glGetTexImage(GL_TEXTURE_2D_ARRAY,0,GL_DEPTH_COMPONENT,GL_FLOAT,depth.data());
+         if(glGetError()!=GL_NO_ERROR)depth.clear();
+     }
+     glActiveTexture(GLenum(unit));
+     return depth;
+ };
+ const auto stationaryDepth=shadowFrame(false);
+ shadowFrame(true);
+ const auto reusedDepth=shadowFrame(true);
+ Check(!stationaryDepth.empty()&&stationaryDepth==reusedDepth&&host.GetRenderer().Stats().reusedShadowPasses==3,
+       "all cached directional cascade depths equal forced redraw for a stationary rig");
+ a->playback.Seek(*a->asset,.75f);world.ResolveAnimationPose(*a,0);
+ const auto movedDepth=shadowFrame(true);
+ Check(movedDepth!=stationaryDepth&&movedDepth==shadowFrame(false),
+       "animation invalidates changed depth even though the physical rig is inactive");
+ a->playback.Seek(*a->asset,.5f);world.ResolveAnimationPose(*a,0);
  size_t baseline=world.Physics().AliveBodyCount();Check(world.EnterRagdoll(10,error),"enter from current mid-Wave pose");if(!world.RagdollActive(10)){std::puts(error.c_str());return 1;}
+ Check(JudasLighting::RuntimeShadowScene(world,1.f).volatileContent,"active physical rig uses conservative chart redraw");
+ const auto activeDepth=shadowFrame(true);
+ Check(host.GetRenderer().Stats().shadowPasses==3&&!activeDepth.empty()&&activeDepth==shadowFrame(false),
+       "active physical rig redraws all cascades with depth equal to the forced control");
  auto rootId=world.RagdollBody(10,"Root"),elbowId=world.RagdollBody(10,"Elbow"),tipId=world.RagdollBody(10,"Tip");auto root=world.RuntimeBody(rootId),elbow=world.RuntimeBody(elbowId),tip=world.RuntimeBody(tipId);
  bool positions=true;for(int i=0;i<3;++i){const char* keys[]={"Root","Elbow","Tip"};auto body=world.RuntimeBody(world.RagdollBody(10,keys[i]));auto expected=model*globals[i]*glm::vec4(0,.5,0,1);positions&=Near(world.Physics().GetTransform(body).position,glm::vec3(expected));}
  Check(positions&&world.Physics().AliveBodyCount()==baseline+3,"bone/body offsets produce current resolved world transforms");
@@ -48,6 +92,7 @@ int main(int argc,char** argv){
  auto captured=a->finalPose;Check(world.LeaveRagdoll(10,.4,error)&&!world.RagdollActive(10)&&world.Physics().AliveBodyCount()==baseline,"leave releases bodies/constraints immediately");
  Check(std::abs(glm::dot(a->finalPose.local[1].rotation,captured.local[1].rotation))>1-1e-5f,"return contribution captures physical pose without one-frame reset");
  for(int i=0;i<30;++i)StepPlayedWorld(world,host.GetWindow(),1.f/60);Check(!a->external.count("ragdollReturn"),"visual return retires cleanly through M47");
+ Check(!JudasLighting::RuntimeShadowScene(world,1.f).volatileContent,"released rig returns to ordinary caster tracking");
  Check(!world.Physics().IsDynamicBody(root),"retired generation handle is invalid");
  Check(world.EnterRagdoll(11,error),"oblique instance maps through arbitrary reference basis");auto rotatedRoot=world.RuntimeBody(world.RagdollBody(11,"Root"));Check(rotatedRoot.id!=root.id&&!world.Physics().SetPairCollisionEnabled(root,rotatedRoot,false),"slot reuse does not resurrect old handles or exclusions");
  auto dead=world.RagdollBody(11,"Tip");world.DestroyEntity(dead);world.UpdateRagdolls(0);Check(!world.RagdollActive(11)&&world.Physics().AliveBodyCount()==baseline,"mapped body destruction tears down remaining articulation");

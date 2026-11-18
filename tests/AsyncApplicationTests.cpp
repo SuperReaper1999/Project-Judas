@@ -22,6 +22,7 @@
 #include "Application.h"
 #include "AssetDatabase.h"
 #include "EngineHost.h"
+#include "EnginePaths.h"
 #include "InteractivePlay.h"
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
@@ -340,6 +341,85 @@ int RunCase(const std::string& name,const fs::path& output) {
     std::printf("CASE %s %s frames=%d seconds=%.6f\n",name.c_str(),failures==before?"PASS":"FAIL",frames,seconds);
     return failures==before?0:1;
 }
+void StartupUI(const fs::path& output) {
+    Fixture fixture("startup-ui");
+    std::string error;
+    const auto project=(fixture.a/"main.judasproj").string();
+    for(int n:{21,22,23}){
+        const auto path=fixture.a/"Assets"/(std::to_string(n)+".png");
+        Texture(path);
+        Check(AssetDatabase::WriteMeta(path.string()+".judasmeta",Id(n),AssetType::Texture,"startup UI fixture",error),"register real UI texture "+std::to_string(n));
+    }
+    const auto font=fixture.a/"Assets/24.ttf";
+    fs::copy_file(ResolveEngineDataPath("assets/fonts/DejaVuSans.ttf"),font);
+    Check(AssetDatabase::WriteMeta(font.string()+".judasmeta",Id(24),AssetType::Font,"startup UI fixture",error),"register actual font fixture");
+    std::ofstream(project,std::ios::app)<<"startup-ui-assets \""<<Id(22)<<"\"\n";
+    auto journal=std::make_shared<Journal>(output/"startup-ui.events.tsv");
+    // Hold an explicit image at its read boundary while the real splash pumps.
+    const auto gate=journal->Hold(22,Point::FileReadChunk,true);
+    ApplicationControl control;
+    control.hidden=true;
+    control.resourceTrace=[journal](const auto& event){journal->Observe(event);};
+    std::uint32_t menu=0;
+    int splashFrames=0,gameFrames=0;
+    control.worldReady=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay&){
+        Check(!host.Resources().BlockingMode(),"startup UI uses async application resources");
+        UIDocument hud;
+        UIElement canvas;canvas.id="root";canvas.kind=UIKind::Canvas;
+        UIElement image;image.id="hudImage";image.parent="root";image.kind=UIKind::Image;image.texture=Id(21);
+        UIElement text;text.id="hudFont";text.parent="root";text.kind=UIKind::Text;text.text="Ready";text.font=Id(24);
+        hud.elements={canvas,image,text};
+        Check(world.UI().Add(hud,"HUD",0,error)!=0,"install visible HUD document");
+        UIDocument inventory;inventory.visible=false;
+        image.texture=Id(22);
+        auto optional=image;optional.id="optional";optional.texture=Id(23);
+        inventory.elements={canvas,image,optional};
+        menu=world.UI().Add(inventory,"Inventory",0,error);
+        Check(menu!=0,"install hidden menu document");
+    };
+    control.loadingFrame=[&](EngineHost& host,RuntimeWorld&){
+        if(++splashFrames!=5)return;
+        try{
+            gate->Wait();
+            Check(!Ready(host.Resources(),22)&&host.GetRenderer().Stats().drawCalls>0,
+                  "real splash is presented while declared inventory art is pending");
+            Check(host.Resources().StateOf(Id(23))==ResourceState::Unloaded,
+                  "undeclared hidden art is untouched during the splash");
+        }catch(...){gate->Open();throw;}
+        gate->Open();
+    };
+    control.beforeFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay&){
+        if(++gameFrames==1){
+            Check(splashFrames>=5&&Ready(host.Resources(),21)&&Ready(host.Resources(),22),
+                  "visible HUD and declared menu PNGs uploaded before gameplay");
+            Check(host.Resources().TryGetFont(Id(24))!=nullptr,"first-frame HUD font was decoded");
+            VerifyTexture(host,21);
+            VerifyTexture(host,22);
+            Check(host.Resources().StateOf(Id(23))==ResourceState::Unloaded,"optional art still unloaded at splash exit");
+        }else if(gameFrames==2){
+            world.UI().Document(menu)->visible=true;
+            world.UI().InvalidateLayout();
+        }
+    };
+    control.afterFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay&){
+        if(gameFrames==1)Check(world.UI().Stats().draws>=2,"first visible frame submits HUD image and text");
+        if(gameFrames==2){
+            Check(Ready(host.Resources(),22)&&host.Resources().StateOf(Id(23))!=ResourceState::Unloaded,
+                  "first menu frame uses preloaded art and queues the optional texture normally");
+            Quit();
+        }
+    };
+    std::string program="judas",path=project;
+    char* argv[]={program.data(),path.data()};
+    Check(Application{}.Run(2,argv,&control)==0&&gameFrames>=2,"normal startup UI application completed");
+
+    // A corrupt registered asset fails at the async decode boundary.
+    std::ofstream(fixture.a/"Assets/22.png")<<"invalid PNG";
+    ApplicationControl invalid;invalid.hidden=true;
+    invalid.beforeFrame=[](EngineHost&,RuntimeWorld&,InteractivePlay&){Quit();};
+    Check(Application{}.Run(2,argv,&invalid)==1,"corrupt required UI art fails startup instead of hanging");
+}
+
 }
 int main(int argc,char** argv) {
     std::string selected="all";fs::path output="build/ftft2-application";
@@ -347,7 +427,7 @@ int main(int argc,char** argv) {
     fs::create_directories(output);
     if(std::getenv("JUDAS_TEST_SCRIPT")||std::getenv("JUDAS_RESOURCE_MODE")){std::fprintf(stderr,"Unset scripted/blocking overrides for async integration\n");return 2;}
     const std::vector<std::string> cases={"shared-progress","queued-cancel","read-cancel","cpu-ready-cancel","stale-generation","project-switch","project-close","missing-recovery","corrupt-recovery","residency","upload-budget","shutdown-outstanding"};
-    bool ran=false;for(const auto& name:cases)if(selected=="all"||selected==name){ran=true;RunCase(name,output);}
+    bool ran=selected=="all"||selected=="startup-ui";if(ran)StartupUI(output);for(const auto& name:cases)if(selected=="all"||selected==name){ran=true;RunCase(name,output);}
     if(!ran)return 2;
     std::printf("FTFT2 integration: %d checks, %d failures\n",checks,failures);return failures?1:0;
 }

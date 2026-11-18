@@ -62,6 +62,8 @@ public:
     void InvalidateLayout(){++m_layoutRevision;}
     void Input(InputSystem& input,glm::vec2 pointer,bool pointerAvailable,int width,int height,std::uint64_t player=0);
     void Draw(Renderer& renderer,int width,int height,const RuntimeWorld* world=nullptr);
+    bool RequestStartupAssets(const std::vector<std::string>& assets,std::string& error);
+    bool PrepareStartup(int width,int height,bool& ready,std::string& error);
     bool BeginDrag(std::uint32_t handle,const std::string& id);
     void CancelDrag(std::uint32_t handle);
     std::optional<UIDragState> Drag(std::uint32_t handle)const;
@@ -95,6 +97,7 @@ private:
     struct Instance {glm::vec2 dragStart{0},dragScroll{0};std::string dragging;bool dragged=false;float scale=1;std::map<std::string,WidgetState> widgets;UIDocument doc;std::string name,focus,pressed;std::uint64_t owner=0,slot=0,player=0,inputRevision=~std::uint64_t(0);glm::vec4 viewport{0,0,1,1};glm::vec2 lastPointer{-1};std::map<std::string,UILayout> layout;std::vector<std::string> refs;std::map<std::string,std::uint64_t> previews;};
     std::map<std::uint32_t,Instance> m_documents;std::uint32_t m_next=1;
     ResourceManager* m_resources=nullptr;std::vector<UIEvent> m_events;
+    std::map<std::string,bool> m_startupAssets; // explicit world-owned references, true for fonts
     LocalizationSession* m_localization=nullptr;
     std::map<std::pair<uint32_t,std::string>,std::pair<uint64_t,std::string>> m_localizedText;
     uint64_t m_layoutRevision=1,m_computedRevision=0,m_localeRevision=0;int m_layoutWidth=0,m_layoutHeight=0;

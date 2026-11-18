@@ -82,7 +82,7 @@ std::uint32_t RuntimeUI::Add(const UIDocument& d,const std::string& name,std::ui
     if (!m_next) { error="UI handle space exhausted"; return 0; }
     InvalidateLayout();auto id=m_next++;Instance instance;instance.doc=d;instance.name=name;instance.owner=owner;instance.slot=slot;m_documents.emplace(id,std::move(instance));return id;}
 bool RuntimeUI::Unload(std::uint32_t h){if(m_textDocument==h){m_textDocument=0;m_textElement.clear();}InvalidateLayout();auto it=m_documents.find(h);if(it==m_documents.end())return false;CancelDrag(h);const auto name=it->second.name;for(auto i=m_localizedText.begin();i!=m_localizedText.end();)if(i->first.first==h)i=m_localizedText.erase(i);else ++i;if(m_resources)for(const auto& ref:it->second.refs)m_resources->ReleaseRef(ref);m_documents.erase(it);m_events.erase(std::remove_if(m_events.begin(),m_events.end(),[&](const auto& e){return e.document==name||e.sourceDocument==name;}),m_events.end());return true;}
-void RuntimeUI::Clear(){while(!m_documents.empty())Unload(m_documents.begin()->first);m_events.clear();m_drags.clear();m_localizedText.clear();m_quit=false;}
+void RuntimeUI::Clear(){while(!m_documents.empty())Unload(m_documents.begin()->first);m_events.clear();m_drags.clear();m_localizedText.clear();if(m_resources)for(const auto& [id,font]:m_startupAssets)m_resources->ReleaseRef(id);m_startupAssets.clear();m_quit=false;}
 void RuntimeUI::RemoveOwner(std::uint64_t id){std::vector<uint32_t> remove;for(auto& p:m_documents)if(p.second.owner==id)remove.push_back(p.first);for(auto h:remove)Unload(h);}
 std::uint32_t RuntimeUI::Find(const std::string& n)const{for(const auto& p:m_documents)if(p.second.name==n)return p.first;return 0;}
 UIDocument* RuntimeUI::Document(uint32_t h){InvalidateLayout();auto it=m_documents.find(h);return it==m_documents.end()?nullptr:&it->second.doc;}
@@ -176,6 +176,58 @@ void RuntimeUI::Input(InputSystem& input,glm::vec2 pointer,bool available,int w,
     input.ConsumeText();
 }
 std::vector<UIEvent> RuntimeUI::TakeEvents(){auto events=std::move(m_events);m_events.clear();return events;}
+bool RuntimeUI::RequestStartupAssets(const std::vector<std::string>& assets,std::string& error){
+    for(const auto& id:assets){
+        const auto* record=m_resources&&m_resources->Assets()?m_resources->Assets()->Find(id):nullptr;
+        if(!record||record->missing||(record->type!=AssetType::Font&&record->type!=AssetType::Texture)){
+            error="Startup UI asset "+id+" requires a registered texture or font";
+            if(record)error+=" ("+record->relativePath+")";
+            return false;
+        }
+        const bool font=record->type==AssetType::Font;
+        if(m_startupAssets.emplace(id,font).second)m_resources->AddRef(id);
+        if(font)m_resources->RequestFont(id,JobPriority::High);
+        else m_resources->RequestTexture(id,JobPriority::High);
+    }
+    return true;
+}
+
+bool RuntimeUI::PrepareStartup(int w,int h,bool& ready,std::string& error){
+    ready=true;
+    if(!m_resources)return true;
+    auto require=[&](const std::string& id,bool font){
+        const auto state=font?m_resources->RequestFont(id,JobPriority::High):
+                              m_resources->RequestTexture(id,JobPriority::High);
+        if(state==ResourceState::Failed||state==ResourceState::Cancelled){
+            const auto* record=m_resources->Assets()?m_resources->Assets()->Find(id):nullptr;
+            error="Startup UI could not load "+(record?record->relativePath:id);
+            const auto detail=m_resources->ErrorOf(id);
+            if(!detail.empty())error+=": "+detail;
+            return false;
+        }
+        ready&=state==ResourceState::Ready;
+        return true;
+    };
+    for(const auto& [id,font]:m_startupAssets)if(!require(id,font))return false;
+    Layout(w,h);
+    for(auto& [handle,in]:m_documents)for(const auto& e:in.doc.elements){
+        const auto& layout=in.layout.at(e.id);
+        const auto visible=Intersect(layout.rect,layout.clip);
+        if(!layout.visible||visible.size.x<=0||visible.size.y<=0)continue;
+        const bool image=e.kind==UIKind::Image&&!e.texture.empty()&&!in.previews.count(e.id);
+        const bool text=!e.font.empty()&&(!e.text.empty()||!e.textKey.empty()||e.kind==UIKind::TextInput||e.kind==UIKind::List);
+        for(const auto& [id,font]:{std::pair{image?&e.texture:nullptr,false},std::pair{text?&e.font:nullptr,true}}){
+            if(!id)continue;
+            if(std::find(in.refs.begin(),in.refs.end(),*id)==in.refs.end()){
+                m_resources->AddRef(*id);
+                in.refs.push_back(*id);
+            }
+            if(!require(*id,font))return false;
+        }
+    }
+    return true;
+}
+
 void RuntimeUI::Draw(Renderer& r,int w,int h,const RuntimeWorld* world){
     JUDAS_PROFILE_SCOPE("Runtime UI drawing");auto start=Clock::now();Layout(w,h);m_stats.draws=0;m_stats.listRows=0;unsigned before=r.UIDrawCalls();
     for(auto& p:m_documents){auto& in=p.second;

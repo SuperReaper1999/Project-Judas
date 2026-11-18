@@ -216,6 +216,29 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
         ImGui::TextWrapped("All registered assets is the safe default. Closure keeps selected scene dependencies, script/UI/localization compatibility roots and the runtime IDs below. Declare dynamically loaded prefabs/audio/materials and save-only assets.");
         for(size_t i=0;i<s.runtimeAssets.size();){ImGui::PushID(int(i));ImGui::TextUnformatted(s.runtimeAssets[i].c_str());ImGui::SameLine();if(ImGui::SmallButton("Remove root"))s.runtimeAssets.erase(s.runtimeAssets.begin()+i);else ++i;ImGui::PopID();}
         if(state.assets)for(const auto& [id,asset]:state.assets->Records())if(std::find(s.runtimeAssets.begin(),s.runtimeAssets.end(),id)==s.runtimeAssets.end()){ImGui::PushID(id.c_str());if(ImGui::Selectable(("Include runtime: "+asset.relativePath).c_str()))s.runtimeAssets.push_back(id);ImGui::PopID();}
+        if(ImGui::TreeNode("Startup UI resources")){
+            ImGui::TextWrapped("Required textures and fonts load before standalone Play. Declare hidden first-use menu artwork here.");
+            for(auto it=s.startupUIAssets.begin();it!=s.startupUIAssets.end();){
+                ImGui::PushID(it->c_str());
+                const auto* record=state.assets?state.assets->Find(*it):nullptr;
+                ImGui::TextUnformatted(record?record->relativePath.c_str():it->c_str());
+                ImGui::SameLine();
+                if(ImGui::SmallButton("Remove"))it=s.startupUIAssets.erase(it);
+                else ++it;
+                ImGui::PopID();
+            }
+            if(state.assets&&ImGui::BeginCombo("Require texture or font","Select an asset")){
+                for(const auto& [id,asset]:state.assets->Records()){
+                    if(asset.missing||(asset.type!=AssetType::Texture&&asset.type!=AssetType::Font)||
+                       std::find(s.startupUIAssets.begin(),s.startupUIAssets.end(),id)!=s.startupUIAssets.end())continue;
+                    ImGui::PushID(id.c_str());
+                    if(ImGui::Selectable(asset.relativePath.c_str()))s.startupUIAssets.push_back(id);
+                    ImGui::PopID();
+                }
+                ImGui::EndCombo();
+            }
+            ImGui::TreePop();
+        }
         bool explicitSet=!s.exportScenes.empty();if(ImGui::Checkbox("Explicit inclusion list",&explicitSet)){if(explicitSet)s.exportScenes=state.sceneFiles;else s.exportScenes.clear();}
         for(const auto& scene:state.sceneFiles){ImGui::PushID(scene.c_str());bool included=s.exportScenes.empty()||std::find(s.exportScenes.begin(),s.exportScenes.end(),scene)!=s.exportScenes.end();bool excluded=std::find(s.excludeScenes.begin(),s.excludeScenes.end(),scene)!=s.excludeScenes.end();ImGui::TextUnformatted(scene.c_str());if(!s.exportScenes.empty()&&ImGui::Checkbox("Include",&included)){s.exportScenes.erase(std::remove(s.exportScenes.begin(),s.exportScenes.end(),scene),s.exportScenes.end());if(included)s.exportScenes.push_back(scene);}ImGui::SameLine();if(ImGui::Checkbox("Exclude",&excluded)){s.excludeScenes.erase(std::remove(s.excludeScenes.begin(),s.excludeScenes.end(),scene),s.excludeScenes.end());if(excluded)s.excludeScenes.push_back(scene);}ImGui::PopID();}
         ImGui::TextWrapped("Startup and world-manifest regions must be included. Registered assets stay available for dynamic ID loading. Save project before export.");

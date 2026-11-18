@@ -5,6 +5,31 @@ layout, rendering, text editing, focus and routed input. These are native contro
 not a browser DOM or game-specific menu framework. Use the matching SDK's
 [exact UI API](judasjs/ui.md) and [Unicode/localization](LOCALIZATION.md) contracts.
 
+## Ready before standalone gameplay
+
+The standalone startup splash discovers textures and fonts on visible,
+unclipped elements in the runtime UI layout after startup callbacks and the
+initial presentation pass. Texture readiness includes upload to the render
+context. Fonts are decoded before play. Text shaping and glyph-atlas population
+still follow the text actually drawn.
+
+Declare additional registered Texture or Font asset IDs in the project settings
+under **Project Settings → Export → Startup UI resources**. A named JSON project uses the
+optional `data.startupUIAssets` array of unique IDs. Text-format projects use the
+`startup-ui-assets` key with a quoted, space-separated list of IDs. Add only
+first-use artwork or fonts that must be ready, such as the initial inventory
+panel. Export includes these IDs under both asset policies. The initial
+runtime world holds references to the declared assets until it is destroyed.
+The list changes residency policy without changing save compatibility.
+
+A missing, mistyped, or failed required asset stops startup with its path or
+ID and the available load error. Hidden undeclared art continues to load on
+demand. UI constructed only after gameplay begins is outside automatic startup
+discovery. Declare its critical assets explicitly. Runtime-generated camera
+targets still depend on their cameras and view cadence. The standalone splash
+contract applies to the normal asynchronous application loop. The deterministic
+`JUDAS_TEST_SCRIPT` mode uses its separate blocking resource policy.
+
 ## Create a document
 
 In Edit, Asset Browser **Create UI document** makes a registered asset. Select it

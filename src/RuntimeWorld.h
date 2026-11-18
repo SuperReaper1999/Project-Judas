@@ -493,6 +493,7 @@ public:
     bool SetRagdollEnabled(EntityId,bool enabled,std::string& error);
     bool SetRagdollContactEvents(EntityId,bool enabled);
     bool RagdollActive(EntityId)const;
+    bool HasActiveRagdolls()const{return !m_ragdolls.empty();}
     EntityId RagdollBody(EntityId,const std::string& key)const;
     void UpdateRagdolls(float dt);
     bool ConfigurePhysicalAnimation(EntityId,const std::optional<PhysicalAnimationSettings>&,std::string&);

@@ -73,6 +73,7 @@ std::string Project::SerializeToString(const ProjectSettings& s) {
     if(!s.worldManifest.empty()) out += "world-manifest " + Quote(s.worldManifest) + "\n";
     if(s.exportAssetPolicy!="all")out+="export-asset-policy "+Quote(s.exportAssetPolicy)+"\n";
     if(!s.runtimeAssets.empty()){std::ostringstream roots;for(const auto& id:s.runtimeAssets)roots<<std::quoted(id)<<' ';out+="runtime-assets "+Quote(roots.str())+"\n";}
+    if(!s.startupUIAssets.empty()){std::ostringstream roots;for(const auto& id:s.startupUIAssets)roots<<std::quoted(id)<<' ';out+="startup-ui-assets "+Quote(roots.str())+"\n";}
     auto sceneList=[&](const char* key,const std::vector<std::string>& paths){if(paths.empty())return;std::ostringstream list;for(const auto& path:paths)list<<std::quoted(path)<<' ';out+=std::string(key)+" "+Quote(list.str())+"\n";};sceneList("export-scenes",s.exportScenes);sceneList("exclude-scenes",s.excludeScenes);
     out += "startup-scene " + Quote(s.startupScene) + "\n";
     out += "assets-dir " + Quote(s.assetsDir) + "\n";
@@ -155,6 +156,18 @@ bool Project::ParseFromString(const std::string& text, ProjectSettings& outSetti
         else if(key=="visual-budget-mib"){try{size_t n=0;auto x=std::stoul(value,&n);if(n!=value.size()||x>65536)throw std::runtime_error("range");s.visualBudgetMiB=unsigned(x);}catch(...){outError="visual-budget-mib requires 0..65536";return false;}}
         else if(key=="export-asset-policy"){if(value!="all"&&value!="closure"){outError="export asset policy must be all or closure";return false;}s.exportAssetPolicy=value;}
         else if(key=="runtime-assets"){std::istringstream list(value);std::string id;std::set<std::string> seen;while(list>>std::quoted(id)){if(!IsValidAssetId(id)||!seen.insert(id).second){outError="invalid/duplicate runtime asset root";return false;}s.runtimeAssets.push_back(id);}if(!list.eof()){outError="invalid runtime asset list";return false;}}
+        else if(key=="startup-ui-assets"){
+            std::istringstream list(value);
+            std::string id;
+            std::set<std::string> seen;
+            while(list>>std::quoted(id)){
+                if(!IsValidAssetId(id)||!seen.insert(id).second||seen.size()>2048){
+                    outError="startup-ui-assets requires up to 2048 unique asset IDs";return false;
+                }
+                s.startupUIAssets.push_back(id);
+            }
+            if(!list.eof()){outError="invalid startup-ui-assets list";return false;}
+        }
         else if(key=="export-scenes"||key=="exclude-scenes"){std::istringstream list(value);std::string path;std::set<std::string> seen;auto& paths=key=="export-scenes"?s.exportScenes:s.excludeScenes;while(list>>std::quoted(path)){if(path.empty()||std::filesystem::path(path).is_absolute()||std::filesystem::path(path).lexically_normal().generic_string()!=path||path.find("..")!=std::string::npos||!seen.insert(path).second){outError="invalid/duplicate export scene path";return false;}paths.push_back(path);}if(!list.eof()){outError="invalid export scene list";return false;}}
         else if (key == "startup-scene") s.startupScene = value;
         else if (key == "assets-dir") s.assetsDir = value;

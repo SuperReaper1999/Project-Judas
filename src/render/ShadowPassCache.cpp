@@ -22,23 +22,26 @@ bool Valid(const ShadowPassKey &key) {
            (!key.viewDependentLod || (Finite(key.cameraView) && Finite(key.cameraProjection) &&
                                       key.viewport.z > 0 && key.viewport.w > 0));
 }
-bool Equal(const ShadowPassKey &a, const ShadowPassKey &b) {
-    return a.resourceRevision == b.resourceRevision && a.content == b.content &&
-           a.slot == b.slot && a.source == b.source &&
-           a.viewDependentLod == b.viewDependentLod &&
-           Equal(a.lightViewProjection, b.lightViewProjection) &&
-           (!a.viewDependentLod ||
-            (Equal(a.cameraView, b.cameraView) && Equal(a.cameraProjection, b.cameraProjection) &&
-             a.viewport == b.viewport));
-}
 } // namespace
-bool ShadowPassCache::Matches(const ShadowPassKey &key) const {
-    return key.content.size()<=256*1024 && Valid(key) && slots[unsigned(key.slot)] && Equal(*slots[unsigned(key.slot)], key);
+ShadowPassCache::Match ShadowPassCache::Inspect(const ShadowPassKey& key) const {
+    if(key.content.size()>MaxContentBytes)return Match::TooLarge;
+    if(!Valid(key))return Match::Invalid;
+    const auto& existing=slots[unsigned(key.slot)];
+    if(!existing)return Match::Empty;
+    const auto& before=*existing;
+    if(before.source!=key.source)return Match::Source;
+    if(!Equal(before.lightViewProjection,key.lightViewProjection))return Match::Chart;
+    if(before.viewDependentLod!=key.viewDependentLod||
+       (key.viewDependentLod&&(!Equal(before.cameraView,key.cameraView)||
+                              !Equal(before.cameraProjection,key.cameraProjection)||before.viewport!=key.viewport)))return Match::View;
+    if(before.resourceRevision!=key.resourceRevision)return Match::Resources;
+    if(before.content!=key.content)return Match::Casters;
+    return Match::Hit;
 }
 bool ShadowPassCache::Remember(const ShadowPassKey &key) {
     if (!Valid(key))
         return false;
-    if(key.content.size()>256*1024){Forget(unsigned(key.slot));return false;}
+    if(key.content.size()>MaxContentBytes){Forget(unsigned(key.slot));return false;}
     slots[unsigned(key.slot)] = key;
     return true;
 }

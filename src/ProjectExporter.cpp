@@ -210,6 +210,12 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         if(project.Settings().exportAssetPolicy=="all")for(const auto& [id,_]:assets.Records())include(id,"conservative registered asset policy");
         if(hasModContract&&modContract.enabled){for(auto& [_,r]:modContract.published)if(r.kind!="scene")include(r.value,"published mod contract reference");for(auto& [_,r]:modContract.replacements)if(r.target.kind!="scene")include(r.target.value,"explicit mod replacement target");}
         for(const auto& id:project.Settings().runtimeAssets)include(id,"explicit runtime/save root");
+        for(const auto& id:project.Settings().startupUIAssets){
+            const auto* asset=assets.Find(id);
+            Require(asset&&!asset->missing&&(asset->type==AssetType::Texture||asset->type==AssetType::Font),
+                    "Startup UI requires a registered texture or font: "+id);
+            include(id,"required startup UI resource");
+        }
         include(project.Settings().iconAsset,"project icon");include(project.Settings().worldManifest,"composed world manifest");
         for(const auto& id:project.Settings().localization.fonts)include(id,"project localization");
         for(const auto& [_,locale]:project.Settings().localization.locales){include(locale.catalog,"project localization");for(const auto& id:locale.fonts)include(id,"project localization");}

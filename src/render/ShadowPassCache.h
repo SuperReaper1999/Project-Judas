@@ -3,6 +3,7 @@
 #include "../Light.h"
 #include <array>
 #include <cstdint>
+#include <cstddef>
 #include <optional>
 #include <string>
 #include <vector>
@@ -24,7 +25,10 @@ struct ShadowPassKey {
 // the owning depth allocation. A dirty chart is never reused by age alone.
 class ShadowPassCache {
   public:
-    bool Matches(const ShadowPassKey &) const;
+    static constexpr std::size_t MaxContentBytes=256*1024;
+    enum class Match { Hit, Empty, Invalid, TooLarge, Source, Chart, View, Resources, Casters };
+    Match Inspect(const ShadowPassKey &) const;
+    bool Matches(const ShadowPassKey &key) const { return Inspect(key)==Match::Hit; }
     // Publish only after a real completed shadow pass, never after a cache hit.
     bool Remember(const ShadowPassKey &);
     void Clear();
