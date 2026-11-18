@@ -785,10 +785,20 @@ void PhysicsWorld::StepCoupledImpl(float dt,unsigned intervals,
             contacts.insert(contacts.end(), w.lastStepContacts.begin(), w.lastStepContacts.end());
             const size_t oldRows = observations.size();
             std::vector<bool> matched(oldRows, false);
+            // The retained prefix and the interval's published rows are
+            // already ordered by ContactKey. Within a key, preserve the
+            // original row order so strict distance ties pick the same row.
+            // Appended rows cannot match until the following interval.
+            size_t first = 0, last = 0;
             for (const auto &c : w.completedContactObservations) {
+                while (first < oldRows && observations[first].key < c.key)
+                    ++first;
+                last = std::max(first, last);
+                while (last < oldRows && !(c.key < observations[last].key))
+                    ++last;
                 size_t best = oldRows;
                 double distance = kWarmStartAnchorDistance;
-                for (size_t i = 0; i < oldRows; ++i) {
+                for (size_t i = first; i < last; ++i) {
                     const auto &prior = observations[i];
                     if (matched[i] || !prior.key.SameBodies(c.key) ||
                         glm::dot(prior.normal, c.normal) < kWarmStartNormalDot)
@@ -811,6 +821,10 @@ void PhysicsWorld::StepCoupledImpl(float dt,unsigned intervals,
                     prior.tangentImpulse = tangent;
                 }
             }
+            if (oldRows != 0 && oldRows != observations.size())
+                std::inplace_merge(observations.begin(), observations.begin() + oldRows,
+                                   observations.end(),
+                                   [](const auto &a, const auto &b) { return a.key < b.key; });
             for (auto &[_, s] : saved)
                 if (auto *b = w.Get(s.handle))
                     for (auto segment : b->motion.Segments()) {
@@ -829,8 +843,6 @@ void PhysicsWorld::StepCoupledImpl(float dt,unsigned intervals,
     }
     w.coupledStep = enclosingCoupledStep;
     w.lastStepContacts = std::move(contacts);
-    std::stable_sort(observations.begin(), observations.end(),
-                     [](const auto &a, const auto &b) { return a.key < b.key; });
     w.completedContactObservations = std::move(observations);
     w.completedObservationEpoch = epoch + 1;
     w.completedObservationDt = dt;
