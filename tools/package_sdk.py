@@ -22,6 +22,7 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = "SDK_MANIFEST.json"
 CHECKSUMS = "SHA256SUMS"
+VULKAN_NOTICES = Path("third_party/vulkan")
 IDENTITY_FIELDS = (
     "schema", "version", "maturity", "channel", "build_id", "source_revision",
     "source_tree", "source_dirty", "source_fingerprint", "source_origin",
@@ -144,6 +145,21 @@ def file_records(directory):
     return records
 
 
+def vulkan_notices(directory):
+    provenance = read_json(directory / "PROVENANCE.json")
+    components = provenance.get("components", {})
+    required = {"glslang", "spirv-tools"}
+    if provenance.get("schema") != 1 or not isinstance(components, dict) or set(components) != required:
+        raise ValueError("Vulkan compiler provenance must identify glslang and SPIR-V Tools")
+    for name, record in components.items():
+        if not isinstance(record, dict) or not all(isinstance(record.get(key), str) and record[key].strip()
+                   for key in ("version", "source", "licence")):
+            raise ValueError(f"Incomplete Vulkan compiler provenance: {name}")
+        licence = relative_path(record["licence"])
+        if not (directory / licence).is_file() or not (directory / licence).stat().st_size:
+            raise ValueError(f"Missing Vulkan compiler licence: {name}")
+
+
 def verify(directory):
     manifest = read_json(directory / MANIFEST)
     if manifest.get("schema") != 1 or manifest.get("kind") != "judas-native-sdk":
@@ -165,6 +181,8 @@ def verify(directory):
              spec["tools"] + (spec["windows_tools"] if windows else [])]
     if manifest["tools"] != tools or not set(tools) <= names:
         raise ValueError("SDK manifest omits a required tool")
+    if build.get("vulkan"):
+        vulkan_notices(directory / VULKAN_NOTICES)
     checksums = "".join(f"{entry['sha256']}  {entry['path']}\n" for entry in expected)
     checksums += f"{digest(directory / MANIFEST)}  {MANIFEST}\n"
     if (directory / CHECKSUMS).read_text(encoding="utf-8") != checksums:
@@ -183,6 +201,11 @@ def stage(args):
     spec = inventory(args.inventory)
     release = getattr(args, "release", False)
     build = identity(args.build_info, release=release)
+    if build.get("vulkan"):
+        notices = getattr(args, "vulkan_notices", None)
+        if notices is None:
+            raise ValueError("Vulkan SDK staging requires --vulkan-notices (CMake: JUDAS_VULKAN_PACKAGE_METADATA)")
+        vulkan_notices(notices)
     suffix = ".exe" if build["platform"].lower() == "windows" else ""
     tools = spec["tools"] + (spec["windows_tools"] if suffix else [])
     for name in tools:
@@ -217,6 +240,8 @@ def stage(args):
                 copy(path, name)
         copy(source / "tools/package_sdk.py", "tools/package_sdk.py")
         copy(args.inventory, "packaging/sdk-inventory.json")
+        if build.get("vulkan"):
+            shutil.copytree(notices, prepared / VULKAN_NOTICES, symlinks=True)
         # Existing Windows exporter expects this layout alongside each tool.
         if suffix:
             shutil.copytree(binaries / "windows-licenses", prepared / "windows-licenses")
@@ -264,6 +289,7 @@ def main():
     package.add_argument("--bin-dir", type=Path, required=True)
     package.add_argument("--build-info", type=Path, required=True)
     package.add_argument("--output", type=Path, required=True)
+    package.add_argument("--vulkan-notices", type=Path, help="Vulkan shader compiler provenance and licence directory")
     package.add_argument("--replace", action="store_true")
     package.add_argument("--probe-tools", action="store_true", help="Execute each public tool's bounded identity query before publication")
     package.add_argument("--release", action="store_true", help="Require clean known source provenance and Release configuration before publication")

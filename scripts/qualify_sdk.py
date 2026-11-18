@@ -24,9 +24,12 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--sdk',type=Path,required=True);p.add_argument('--work',type=Path,required=True)
     p.add_argument('--rootfs',type=Path);p.add_argument('--mesa',type=Path)
+    p.add_argument('--vulkan', action='store_true', help='Exercise the native Linux Vulkan SDK with validation enabled')
     a=p.parse_args();sdk=a.sdk.resolve();work=a.work.resolve();work.mkdir(exist_ok=False,parents=True)
     windows=os.name=='nt';ext='.exe' if windows else '';rows=[]
     identity=json.loads((sdk/'BUILD_INFO.json').read_text())
+    if a.vulkan and (windows or a.rootfs or not identity.get('vulkan')):
+        p.error('--vulkan requires a Vulkan-enabled SDK on a native Linux host')
     spec=importlib.util.spec_from_file_location('baseline',ROOT/'tools/build_linux_baseline.py');baseline=importlib.util.module_from_spec(spec);spec.loader.exec_module(baseline)
     shutil.copytree(ROOT/'tests/fixtures/rendering',work/'fixtures')
     shutil.copyfile(ROOT/'scripts/qualify_sdk_workflows.py',work/'tool-workflows.py')
@@ -42,13 +45,21 @@ def main():
     inner_work=Path('/build') if a.rootfs else work
     base_env={k:v for k,v in os.environ.items() if not k.startswith('JUDAS_')}
     base_env.update(SDL_AUDIODRIVER='dummy',PYTHONUTF8='1')
-    def run(name,command,env=None,expected=0):
+    graphics_env=dict(base_env)
+    if a.vulkan:
+        graphics_env.update(JUDAS_GRAPHICS='vulkan', JUDAS_VULKAN_VALIDATION='1')
+    def run(name,command,env=None,expected=0,vulkan_graphics=False):
         start=time.monotonic()
         with (work/(name+'.log')).open('w',encoding='utf-8') as f:
             result=subprocess.run(list(map(str,command)),cwd=work,env=env or base_env,stdout=f,stderr=subprocess.STDOUT,timeout=240)
         rows.append(dict(name=name,command=list(map(str,command)),exit=result.returncode,expected=expected,seconds=time.monotonic()-start))
         (work/'RESULTS.json').write_text(json.dumps(rows,indent=2)+'\n')
         if result.returncode!=expected:raise RuntimeError(name+' failed; inspect '+str(work/(name+'.log')))
+        if vulkan_graphics:
+            log=(work/(name+'.log')).read_text(errors='replace')
+            if not any(line.startswith('[Graphics] Vulkan backend:') and 'validation on' in line
+                       for line in log.splitlines()) or '[Vulkan validation]' in log:
+                raise RuntimeError(name+' did not complete Vulkan validation cleanly')
     py='python3' if a.rootfs else sys.executable
     run('sdk-verify',prefix()+[py,inner_sdk/'tools/package_sdk.py','verify',inner_sdk])
     inspect=[py,inner_sdk/'tools/inspect_sdk.py',inner_sdk,'--host-check','--output',inner_work/'SDK_QUALIFICATION.json']
@@ -56,7 +67,7 @@ def main():
     if windows:inspect+=['--system-directory',os.environ.get('SystemRoot','C:/Windows')+'/System32']
     run('sdk-inspect',prefix()+inspect)
     for mode in ['create','play']:
-        env=dict(base_env,XDG_CONFIG_HOME=str(work/('editor-config-'+mode)),JUDAS_EDITOR_AUTOTEST=str(work/('editor-'+mode)))
+        env=dict(graphics_env,XDG_CONFIG_HOME=str(work/('editor-config-'+mode)),JUDAS_EDITOR_AUTOTEST=str(work/('editor-'+mode)))
         command=[active/('judas_editor'+ext)]
         if mode=='create':env.update(JUDAS_EDITOR_AUTOTEST_POLISH='1',JUDAS_EDITOR_AUTOTEST_NEW_PROJECT=str(work/'game'),JUDAS_EDITOR_AUTOTEST_EXPORT=str(work/'editor-export'))
         else:command+=[work/'game/SDK_First_Game.judasproj']
@@ -67,7 +78,7 @@ def main():
             script+='cd /tmp\nexec xvfb-run -a /source/judas_editor'+(' /build/game/SDK_First_Game.judasproj' if mode=='play' else '')+'\n'
             (work/(mode+'.sh')).write_text(script)
             run('editor-'+mode,prefix()+['/bin/sh',inner_work/(mode+'.sh')])
-        else:run('editor-'+mode,command,env)
+        else:run('editor-'+mode,command,env,vulkan_graphics=a.vulkan)
     run('tool-operations',prefix()+[py,inner_work/'tool-workflows.py','--sdk',inner_sdk,'--work',inner_work])
     # SDK-only operations must not create caches, alter binaries or add content.
     run('sdk-verify-after',prefix()+[py,inner_sdk/'tools/package_sdk.py','verify',inner_sdk])
@@ -75,6 +86,13 @@ def main():
         source=work/name;moved=work/('moved-'+name);shutil.move(str(source),moved)
         expected=hashlib.sha256((sdk/('judas'+ext)).read_bytes()).hexdigest()
         if hashlib.sha256((moved/('judas'+ext)).read_bytes()).hexdigest()!=expected:raise ValueError('Export runtime differs from SDK')
+        if identity.get('vulkan'):
+            compiler_notices='third_party/vulkan'
+            for notice in (sdk/compiler_notices).rglob('*'):
+                if notice.is_file():
+                    relative=notice.relative_to(sdk)
+                    if (moved/'engine'/relative).read_bytes()!=notice.read_bytes():
+                        raise ValueError('Export compiler notice differs from SDK: '+str(relative))
         driver=work/('driver-'+name);driver.mkdir()
         (driver/'smoke.test').write_text('STEPS 90\nLOG_EVERY 30\nSCREENSHOT 89 '+('/build/moved.png' if a.rootfs else str(driver/'moved.png'))+'\n')
         if a.rootfs:
@@ -85,7 +103,8 @@ def main():
             if a.mesa:
                 launch=work/('software-'+name);shutil.copytree(moved,launch)
                 for dll in a.mesa.glob('*.dll'):shutil.copyfile(dll,launch/dll.name)
-            run('relocated-'+name,[launch/('judas'+ext),launch/'game.judasproj'],dict(base_env,JUDAS_TEST_SCRIPT=str(driver/'smoke.test')))
+            run('relocated-'+name,[launch/('judas'+ext),launch/'game.judasproj'],
+                dict(graphics_env,JUDAS_TEST_SCRIPT=str(driver/'smoke.test')),vulkan_graphics=a.vulkan)
         if not (driver/'moved.png').is_file():raise ValueError('Relocated game did not render a frame')
     (work/'COMPLETE.json').write_text(json.dumps({'passed':True,'build':identity,'sourceOnlyMounted':False,'packageOnlyNamespaces':bool(a.rootfs),'softwareGraphics':bool(a.rootfs or a.mesa),'hardwareAcceptance':False,'operations':len(rows)},indent=2)+'\n')
     print('SDK workflows passed:',work)

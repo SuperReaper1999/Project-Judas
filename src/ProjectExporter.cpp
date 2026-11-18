@@ -366,6 +366,9 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         Copy(engineRoot / "assets/fonts/DejaVuSans.ttf", staging / "engine/assets/fonts/DejaVuSans.ttf");
         Copy(engineRoot / "assets/fonts/DejaVuSans-LICENSE.txt", staging / "engine/licenses/DejaVuSans.txt");
         Copy(engineRoot / "third_party/RUNTIME_NOTICES.txt", staging / "engine/third_party/RUNTIME_NOTICES.txt");
+        const auto vulkanNotices = engineRoot / "third_party/vulkan";
+        if (runtimeIdentity.value("vulkan", false) && fs::is_regular_file(vulkanNotices / "PROVENANCE.json"))
+            fs::copy(vulkanNotices, staging / "engine/third_party/vulkan", fs::copy_options::recursive);
         Copy(engineRoot / "LICENSE", staging / "engine/licenses/Judas.txt");
 #ifdef _WIN32
         write("RUNTIME_REQUIREMENTS.txt", "Judas Windows x64 Release package — UNVALIDATED candidate. Run judas.exe.\nRequires Windows 10/11 x64 and an OpenGL 3.3 graphics driver.\nRequired non-system runtime DLLs are bundled according to this build's windows-runtime manifest. ICU and compiler-runtime linkage depend on the selected Windows toolchain; consult BUILD_PROVENANCE.json and engine/licenses. SDL2 is statically linked.\nNo editor, source tree or build directory is required. Saves use LocalAppData/judas/games/<save-id>/Saves.\nAsset policy/inclusion: DEPENDENCIES.json. Licenses: engine/licenses and engine/third_party/RUNTIME_NOTICES.txt.\n");

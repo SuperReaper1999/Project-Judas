@@ -168,6 +168,10 @@ def main():
     parser.add_argument('--screen', default='1280x720')
     parser.add_argument('--no-xvfb', dest='xvfb', action='store_false', help='use the current display')
     parser.add_argument('--no-validation', dest='validation', action='store_false')
+    parser.add_argument('--max-pixels-over8', type=float, metavar='PERCENT',
+                        help='Fail if the share of pixels with a channel delta above 8/255 exceeds this limit')
+    parser.add_argument('--require-simulation-match', action='store_true',
+                        help='Require identical nonempty simulation telemetry on both backends')
     arguments = parser.parse_args()
     arguments.output = arguments.output.resolve()
     arguments.build_dir = arguments.build_dir.resolve()
@@ -205,6 +209,9 @@ def main():
         entry['simulationRowsIdentical'] = bool(reference['simulationRows'] and
             reference['simulationRows'] == candidate['simulationRows'] and
             reference['simulationSha256'] == candidate['simulationSha256'])
+        if arguments.require_simulation_match and not entry['simulationRowsIdentical']:
+            failed = True
+            print(f'{name}: simulation telemetry differs or is missing')
         for label, result in entry['runs'].items():
             failed |= result['exit'] != 0 or bool(result['missingCaptures'])
         failed |= entry['runs']['vulkan']['validationMessages'] > 0
@@ -219,6 +226,11 @@ def main():
             noise, best = row['openglRepeatability'], min(
                 (row['vulkanVsOpengl'], row['vulkanVsOpenglRepeat']),
                 key=lambda value: value.get('differingPixelsPercent', 100))
+            if arguments.max_pixels_over8 is not None and (
+                    noise.get('pixelsOver8Percent', 100) > arguments.max_pixels_over8 or
+                    best.get('pixelsOver8Percent', 100) > arguments.max_pixels_over8):
+                failed = True
+                row['gateError'] = 'image difference exceeds the pixel threshold'
             print(f'  frame {row["frame"]}: GL-vs-GL differing {noise.get("differingPixelsPercent")}% | '
                   f'Vulkan-vs-GL differing {best.get("differingPixelsPercent")}% '
                   f'(>8/255: {best.get("pixelsOver8Percent")}%, max {best.get("maxChannelDelta")}, '

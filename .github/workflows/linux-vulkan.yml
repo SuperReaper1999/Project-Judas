@@ -1,0 +1,112 @@
+name: Linux Vulkan and SDK qualification
+
+on:
+  push:
+    branches: [Vulkan-V2-Integration, Experimental]
+  pull_request:
+    branches: [Vulkan-V2-Integration, Experimental]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: linux-vulkan-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qualify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 80
+    env:
+      SDL_VIDEODRIVER: x11
+      SDL_AUDIODRIVER: dummy
+      LIBGL_ALWAYS_SOFTWARE: '1'
+      VK_DRIVER_FILES: /usr/share/vulkan/icd.d/lvp_icd.x86_64.json
+      PYTHONDONTWRITEBYTECODE: '1'
+      CCACHE_MAXSIZE: 1G
+      XDG_CACHE_HOME: ${{ runner.temp }}/judas-cache
+      XDG_CONFIG_HOME: ${{ runner.temp }}/judas-config
+      XDG_DATA_HOME: ${{ runner.temp }}/judas-data
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Install Ubuntu development and software graphics packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build g++ ccache libsdl2-dev libglm-dev xvfb xauth libgl1-mesa-dri mesa-vulkan-drivers libvulkan-dev glslang-dev glslang-tools spirv-tools vulkan-validationlayers
+          test -f "$VK_DRIVER_FILES"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/ccache
+            build/unicode
+          key: ubuntu-24.04-vulkan-v1-${{ github.sha }}
+          restore-keys: ubuntu-24.04-vulkan-v1-
+      - name: Capture provenance and configure Release SDK
+        run: |
+          python3 tools/vulkan/debian_compiler_notices.py "$RUNNER_TEMP/vulkan-notices"
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental \
+            -DJUDAS_ENABLE_VALIDATION=ON -DJUDAS_VULKAN=ON -DJUDAS_SDK_RELEASE=ON \
+            -DJUDAS_VULKAN_PACKAGE_METADATA="$RUNNER_TEMP/vulkan-notices" \
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+      - name: Build native tests and SDK
+        run: cmake --build build --target judas_prealpha_tests judas_linux_sdk -j2
+      - name: Verify and relocate the staged SDK
+        run: |
+          sdk="$RUNNER_TEMP/relocated-sdk"
+          mv build/linux-vulkan-sdk "$sdk"
+          python3 "$sdk/tools/inspect_sdk.py" "$sdk" --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output "$RUNNER_TEMP/SDK_ABI.json"
+          python3 "$sdk/tools/package_sdk.py" verify "$sdk"
+      - name: Exercise shared renderer on OpenGL and Vulkan
+        run: |
+          python3 tools/vulkan/compare_backends.py --build-dir "$RUNNER_TEMP/relocated-sdk" \
+            --device llvmpipe --profile portable --output "$RUNNER_TEMP/parity" --frames 32 \
+            --shot 8 --shot 17 --shot 28 --script-line 'RESIZE 960 540 12' --script-line 'RESIZE 1280 720 22' \
+            --max-pixels-over8 0.1 --require-simulation-match \
+            projects/renderer_v2_lab/renderer_v2_lab.judasproj projects/ui_showcase/ui_showcase.judasproj
+      - name: Qualify authoring and relocated exports with both backends
+        run: |
+          sdk="$RUNNER_TEMP/relocated-sdk"
+          VK_DRIVER_FILES=/dev/null xvfb-run -a python3 scripts/qualify_sdk.py --sdk "$sdk" --work "$RUNNER_TEMP/sdk-opengl"
+          xvfb-run -a python3 scripts/qualify_sdk.py --vulkan --sdk "$sdk" --work "$RUNNER_TEMP/sdk-vulkan"
+      - name: Reject a Vulkan request without a usable driver
+        run: |
+          sdk="$RUNNER_TEMP/relocated-sdk"
+          project="$RUNNER_TEMP/sdk-opengl/moved-cli-export/game.judasproj"
+          if timeout 30s xvfb-run -a env VK_DRIVER_FILES=/dev/null JUDAS_GRAPHICS=vulkan \
+            "$sdk/judas" "$project" > "$RUNNER_TEMP/no-vulkan-driver.log" 2>&1; then
+            echo 'An explicit Vulkan request unexpectedly succeeded without an ICD'
+            exit 1
+          fi
+          grep 'Cannot start the Vulkan backend:' "$RUNNER_TEMP/no-vulkan-driver.log"
+          ! grep '\[Graphics\] created OpenGL' "$RUNNER_TEMP/no-vulkan-driver.log"
+      - name: Run the full registered native suite
+        run: xvfb-run -a ctest --test-dir build -L prealpha -j2 --output-on-failure
+      - name: Archive the qualified Linux SDK
+        run: |
+          tar --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner \
+            -C "$RUNNER_TEMP" --transform='s,^relocated-sdk,judas-linux-sdk,' -cf - relocated-sdk \
+            | gzip -n > "$RUNNER_TEMP/judas-linux-vulkan-sdk.tar.gz"
+          cd "$RUNNER_TEMP"
+          sha256sum judas-linux-vulkan-sdk.tar.gz > judas-linux-vulkan-sdk.tar.gz.sha256
+      - uses: actions/upload-artifact@v7
+        with:
+          name: judas-linux-vulkan-sdk-${{ github.sha }}
+          path: ${{ runner.temp }}/judas-linux-vulkan-sdk.tar.gz*
+          if-no-files-found: error
+          retention-days: 14
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: vulkan-qualification-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/SDK_ABI.json
+            ${{ runner.temp }}/no-vulkan-driver.log
+            ${{ runner.temp }}/parity/RESULTS.json
+            ${{ runner.temp }}/parity/*/*/*.log
+            ${{ runner.temp }}/sdk-*/*.json
+            ${{ runner.temp }}/sdk-*/*.log
+            build/Testing/Temporary/
+          retention-days: 14
