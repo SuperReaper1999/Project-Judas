@@ -67,7 +67,7 @@ bool Window::CreateDesktopGraphicsWindow(const char* title, int width, int heigh
                                         SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN);
         }
         if (!m_window) {
-            m_lastError = "SDL_CreateWindow failed: " + std::string(SDL_GetError());
+            m_lastError = "Cannot start the Vulkan backend: SDL_CreateWindow failed: " + std::string(SDL_GetError());
             return false;
         }
         const bool portable = m_graphicsProfile == GraphicsProfile::Portable;

@@ -51,14 +51,44 @@ guarantee exact equality.
 
 ## SDK and distribution
 
-A Vulkan-enabled development SDK stages to `build/linux-vulkan-sdk` through
-`judas_linux_sdk`. It requires the system Vulkan loader and driver even though
-OpenGL remains the default renderer. The backend translates the shared shaders
-at runtime using its linked compiler. Exported Linux games carry the runtime
-binary chosen by the exporter. The existing published SDK and Linux support
-policy apply to the qualified OpenGL baseline. The Vulkan branch needs its
-own toolchain, runtime dependency, licence and relocation qualification
-before distribution. Windows, Android and Web Vulkan are outside this increment.
+A Vulkan-enabled SDK stages to `build/linux-vulkan-sdk` through
+`judas_linux_sdk`. Its Linux binaries link the system loader, `libvulkan.so.1`
+(`libvulkan1` on Ubuntu). The default OpenGL backend requires an OpenGL
+driver and the loader library. Installing a Vulkan driver is necessary only
+for Vulkan selection. An explicit Vulkan request exits with the graphics
+initialisation error if no compatible driver can start. The program does not
+fall back to OpenGL.
+
+Run `judas --build-info-json` and check `vulkan` to inspect a build's Vulkan
+capability. For a running Vulkan application, the graphics startup log
+identifies the device, driver and validation state. During an active Vulkan
+session a device loss ends the process with an operation-specific diagnostic.
+Restart the application to create a new device. The editor's Vulkan
+presentation contract uses one window, with detached viewports disabled.
+
+The linked glslang and SPIR-V Tools compiler translates engine shaders on the
+target system. The SDK and exports made from it carry the compiler notices
+and source versions in `third_party/vulkan` (under `engine` in exports).
+Shader and Vulkan pipeline caches are generated per user and are excluded
+from packages. On a Debian/Ubuntu build host using the installed distribution
+compiler packages:
+
+```sh
+python3 tools/vulkan/debian_compiler_notices.py build/vulkan-notices
+cmake -S . -B build -DJUDAS_VULKAN=ON \
+  -DJUDAS_VULKAN_PACKAGE_METADATA="$PWD/build/vulkan-notices"
+cmake --build build --target judas_linux_sdk -j2
+python3 tools/package_sdk.py verify build/linux-vulkan-sdk
+```
+
+For a different compiler distribution, supply a metadata directory containing
+`PROVENANCE.json` with schema 1 and `components.glslang` and
+`components.spirv-tools`. Each entry names the linked source, version and
+relative `licence` file. Include the referenced licence texts.
+Distribution qualification uses the Ubuntu 24.04 build and verifies every
+public tool against the glibc 2.39 ceiling. SDKs built on other hosts may
+require newer system libraries. Windows, Android and Web Vulkan are outside
+this integration.
 
 ## Initial qualification
 

@@ -173,6 +173,8 @@ def main():
     parser.add_argument('--require-simulation-match', action='store_true',
                         help='Require identical nonempty simulation telemetry on both backends')
     arguments = parser.parse_args()
+    if arguments.max_pixels_over8 is not None and not 0 <= arguments.max_pixels_over8 <= 100:
+        parser.error('--max-pixels-over8 must be a percentage from 0 to 100')
     arguments.output = arguments.output.resolve()
     arguments.build_dir = arguments.build_dir.resolve()
     shots = arguments.shot or [30]
@@ -208,7 +210,8 @@ def main():
         candidate = entry['runs']['vulkan']
         entry['simulationRowsIdentical'] = bool(reference['simulationRows'] and
             reference['simulationRows'] == candidate['simulationRows'] and
-            reference['simulationSha256'] == candidate['simulationSha256'])
+            reference['simulationSha256'] == candidate['simulationSha256'] ==
+            entry['runs']['opengl-repeat']['simulationSha256'])
         if arguments.require_simulation_match and not entry['simulationRowsIdentical']:
             failed = True
             print(f'{name}: simulation telemetry differs or is missing')
@@ -225,7 +228,7 @@ def main():
                 continue
             noise, best = row['openglRepeatability'], min(
                 (row['vulkanVsOpengl'], row['vulkanVsOpenglRepeat']),
-                key=lambda value: value.get('differingPixelsPercent', 100))
+                key=lambda value: value.get('pixelsOver8Percent', 100))
             if arguments.max_pixels_over8 is not None and (
                     noise.get('pixelsOver8Percent', 100) > arguments.max_pixels_over8 or
                     best.get('pixelsOver8Percent', 100) > arguments.max_pixels_over8):

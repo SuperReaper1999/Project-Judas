@@ -178,6 +178,27 @@ add_executable(${target} ${sources})
         self.assertEqual(result["build"], BUILD)
         self.assertEqual(result["tools"], ["judas"])
 
+    def test_vulkan_sdk_requires_and_preserves_compiler_notices(self):
+        build = json.dumps(dict(BUILD, vulkan=True))
+        self.build_info.write_text(build)
+        (self.binaries / "judas").write_text("#!" + sys.executable + "\nprint(" + repr(build) + ")\n")
+        with self.assertRaisesRegex(ValueError, "requires --vulkan-notices"):
+            package_sdk.stage(self.args)
+        notices = self.root / "vulkan-notices"
+        notices.mkdir()
+        self.args.vulkan_notices = notices
+        components = {name: {"version": "1", "source": name, "licence": name + ".txt"}
+                      for name in ("glslang", "spirv-tools")}
+        (notices / "PROVENANCE.json").write_text(json.dumps({"schema": 1, "components": components}))
+        for component in components.values():
+            (notices / component["licence"]).write_text("Test licence text\n")
+        package_sdk.stage(self.args)
+        package_sdk.verify(self.output)
+        (notices / components["glslang"]["licence"]).unlink()
+        with self.assertRaisesRegex(ValueError, "Missing Vulkan compiler licence"):
+            package_sdk.stage(self.args)
+        self.assertEqual(package_sdk.verify(self.output)["build"]["vulkan"], True)
+
     def test_editable_workflow_project_and_metadata_survive_sdk_staging(self):
         relative = Path("docs/judasjs/examples/developer_workflows")
         shutil.copytree(ROOT / relative, self.source / relative)

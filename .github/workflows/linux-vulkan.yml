@@ -62,6 +62,13 @@ jobs:
           mv build/linux-vulkan-sdk "$sdk"
           python3 "$sdk/tools/inspect_sdk.py" "$sdk" --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output "$RUNNER_TEMP/SDK_ABI.json"
           python3 "$sdk/tools/package_sdk.py" verify "$sdk"
+      - name: Exercise Vulkan rendering and compute contracts
+        run: |
+          xvfb-run -a python3 scripts/prealpha_validate.py --graphics-backend vulkan --graphics-profile modern \
+            --expected-channel Experimental --output "$RUNNER_TEMP/vulkan-native" \
+            --test renderer-v2-submission --test rendering-architecture --test renderer-shadow-reuse \
+            --test render-cameras --test terrain-v2-transition --test particle-gpu-resident \
+            --test water-visuals --test editor-application-lifecycle --test editor-v2-viewports
       - name: Exercise shared renderer on OpenGL and Vulkan
         run: |
           python3 tools/vulkan/compare_backends.py --build-dir "$RUNNER_TEMP/relocated-sdk" \
@@ -111,5 +118,7 @@ jobs:
             ${{ runner.temp }}/parity/*/*/*.log
             ${{ runner.temp }}/sdk-*/*.json
             ${{ runner.temp }}/sdk-*/*.log
+            ${{ runner.temp }}/vulkan-native/*.log
+            ${{ runner.temp }}/vulkan-native/RESULTS.json
             build/Testing/Temporary/
           retention-days: 14

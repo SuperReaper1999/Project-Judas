@@ -43,6 +43,9 @@ software graphics and synthetic input do not imply hardware or human acceptance.
 [Android](docs/ANDROID.md) and [Experimental browser export](docs/BROWSER_SUPPORT.md)
 have different prerequisites and qualification scopes.
 
+OpenGL is the default desktop renderer. See the [Linux Vulkan guide](docs/VULKAN_INTEGRATION.md)
+for opt-in builds, SDK dependencies and qualification scope.
+
 ## Develop with the current platform
 
 Basic Water/swimming are independent default-enabled effects. Advanced Fluids V2

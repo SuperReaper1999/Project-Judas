@@ -231,12 +231,14 @@ def annotate_finding(result, entry, manifest):
                                 '; observed result remains authoritative')
 
 
-def execution_environment(output, graphics_profile):
+def execution_environment(output, graphics_profile, graphics_backend='opengl'):
     # Gameplay/test overrides must not leak in from an editor session. Graphics
     # policy is an explicit gate input and must reach the actual child process.
     environment = {k: v for k, v in os.environ.items() if not k.startswith('JUDAS_')}
     environment.update(SDL_AUDIODRIVER='dummy', JUDAS_WORLD_STATE='none', JUDAS_ENGINE_ROOT=str(ROOT),
                        JUDAS_GL_PROFILE=graphics_profile, XDG_DATA_HOME=str(output / 'user-data'))
+    if graphics_backend == 'vulkan':
+        environment.update(JUDAS_GRAPHICS='vulkan', JUDAS_VULKAN_VALIDATION='1')
     return environment
 
 
@@ -250,6 +252,8 @@ def main():
     parser.add_argument('--timeout', type=float, default=120)
     parser.add_argument('--graphics-profile', choices=['auto', 'portable', 'modern'], default='auto',
                         help='Explicit child graphics policy, recorded in the qualification receipt')
+    parser.add_argument('--graphics-backend', choices=['opengl', 'vulkan'], default='opengl',
+                        help='Vulkan requires explicitly selected tests that create a graphics device')
     parser.add_argument('--list', action='store_true')
     parser.add_argument('--check-manifest', action='store_true',
                         help='Validate gate declarations without configuring or executing native tests')
@@ -276,6 +280,8 @@ def main():
                 if item['name'] in args.test or groups.intersection(item['groups'])]
     if not selected:
         parser.error('no tests match requested groups')
+    if args.graphics_backend == 'vulkan' and (args.group or not args.test):
+        parser.error('Vulkan validation requires explicitly named graphics tests')
     if args.list:
         print(json.dumps({'selected': selected, 'knownFindings': manifest.get('known_findings', [])}, indent=2))
         return 0
@@ -287,7 +293,7 @@ def main():
     except (OSError, ValueError) as error:
         parser.error(str(error))
     output.mkdir(parents=True, exist_ok=False)
-    environment = execution_environment(output, args.graphics_profile)
+    environment = execution_environment(output, args.graphics_profile, args.graphics_backend)
     revision = git('rev-parse', 'HEAD')
     tracked = git('status', '--porcelain', '--untracked-files=no')
     source_diff = git('diff', 'HEAD', '--binary', '--no-ext-diff')
@@ -297,7 +303,7 @@ def main():
               'trackedDiffSha256': diff_hash,
               'platform': platform.platform(), 'machine': platform.machine(),
               'cpuCount': os.cpu_count(), 'groups': sorted(groups), 'tests': [],
-              'graphicsProfile': args.graphics_profile,
+              'graphicsProfile': args.graphics_profile, 'graphicsBackend': args.graphics_backend,
               'knownFindings': manifest.get('known_findings', []),
               'humanAcceptance': 'not-established', 'scope': 'explicit manifest subset'}
     result_path = output / 'RESULTS.json'
@@ -324,6 +330,11 @@ def main():
             result = run_verified_case(command, output / (entry['name'] + '.log'), output,
                                        environment, args.timeout, expected_source,
                                        expected_channel=args.expected_channel)
+            if args.graphics_backend == 'vulkan' and result['status'] == 'passed':
+                log = (output / (entry['name'] + '.log')).read_text(errors='replace')
+                if not any(line.startswith('[Graphics] Vulkan backend:') and 'validation on' in line
+                           for line in log.splitlines()) or '[Vulkan validation]' in log:
+                    result.update(status='failed', error='Vulkan device or clean validation was not confirmed')
             workspace_storage.check(ROOT)
         except (OSError, ValueError, subprocess.SubprocessError) as error:
             result = dict(status='unavailable', exit=None, argv=command, error=str(error))
