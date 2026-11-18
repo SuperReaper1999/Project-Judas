@@ -12,6 +12,7 @@ struct SceneSettings;
 namespace JudasLighting {
 struct ShadowCaster { VisualBounds bounds; std::string content; };
 struct ShadowScene {
+    // Cache-key inputs. The draw callback owns the actual caster submission.
     std::vector<ShadowCaster> casters;
     // Unknown mutable draw owners fail open: redraw, never publish stale depth.
     bool volatileContent=false;

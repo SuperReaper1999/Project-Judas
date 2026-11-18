@@ -51,6 +51,8 @@ ShadowCaster Caster(SceneObjectId id,const SceneRenderComponent& render,const Sc
 ShadowScene RuntimeShadowScene(const RuntimeWorld& world,float alpha) {
     JUDAS_PROFILE_SCOPE("Lighting caster snapshot");ShadowScene result;
     result.volatileContent=world.HasPlanets()||world.HasRuntimeLandscapes()||world.NetworkIfLoaded();
+    // These draw owners already require every chart to be redrawn.
+    if(result.volatileContent)return result;
     for(const auto& s:world.StaticRenderables()){
         const auto* def=world.RuntimeDefinition(s.id);
         if(!def||!world.IsPublished(s.id)||!world.RenderVisible(s.id)||!s.render.visible)continue;
@@ -106,15 +108,15 @@ void PrepareShadows(Renderer& renderer,const SceneSettings& settings,const std::
     const bool cacheable=!scene.volatileContent&&!(reuse&&std::strcmp(reuse,"0")==0);
     auto render=[&](int slot,std::uint64_t identity,const glm::mat4& matrix){
         JudasRender::ShadowPassKey key;
-        {
-        JUDAS_PROFILE_SCOPE("Shadow cache keys");
-        key.slot=slot;key.source=identity;key.lightViewProjection=matrix;
-        key.viewDependentLod=renderer.HasViewDependentMeshLods();
-        if(key.viewDependentLod){key.cameraView=view;key.cameraProjection=projection;key.viewport=renderer.RenderTargetDiagnostics().viewport;}
-        key.resourceRevision=renderer.ShadowResourceRevision();
-        const Frustum frustum(matrix);
-        for(const auto& c:scene.casters)if(frustum.IsVisible(c.bounds)){Append(key.content,c.content);}
-        if(cacheable&&renderer.ShadowCache().Matches(key)&&renderer.ReuseShadowChart(slot,matrix))return;
+        if(cacheable){
+            JUDAS_PROFILE_SCOPE("Shadow cache keys");
+            key.slot=slot;key.source=identity;key.lightViewProjection=matrix;
+            key.viewDependentLod=renderer.HasViewDependentMeshLods();
+            if(key.viewDependentLod){key.cameraView=view;key.cameraProjection=projection;key.viewport=renderer.RenderTargetDiagnostics().viewport;}
+            key.resourceRevision=renderer.ShadowResourceRevision();
+            const Frustum frustum(matrix);
+            for(const auto& c:scene.casters)if(frustum.IsVisible(c.bounds)){Append(key.content,c.content);}
+            if(renderer.ShadowCache().Matches(key)&&renderer.ReuseShadowChart(slot,matrix))return;
         }
         {
         JUDAS_PROFILE_SCOPE("Shadow draw submission");
