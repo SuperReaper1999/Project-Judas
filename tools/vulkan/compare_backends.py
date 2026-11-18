@@ -126,21 +126,23 @@ def run(binary, project, script_lines, shots, directory, backend, arguments):
     if arguments.xvfb:
         command = ['xvfb-run', '-a', '-s', f'-screen 0 {arguments.screen}x24'] + command
     log = directory / 'run.log'
-    with log.open('wb') as stream:
+    diagnostics = directory / 'graphics.log'
+    with log.open('wb') as stream, diagnostics.open('wb') as errors:
         try:
-            status = subprocess.run(command, stdout=stream, stderr=subprocess.STDOUT, env=environment,
+            status = subprocess.run(command, stdout=stream, stderr=errors, env=environment,
                                     cwd=ROOT, timeout=arguments.timeout).returncode
         except subprocess.TimeoutExpired:
             status = 'timeout'
-    text = log.read_text(errors='replace')
+    stdout = log.read_text(errors='replace')
+    text = diagnostics.read_text(errors='replace') + '\n' + stdout
     device = next((line for line in text.splitlines() if line.startswith('[Graphics] Vulkan backend')), '')
     if backend == 'vulkan' and status == 0:
         if not device:
             status = 'missing Vulkan device confirmation'
         elif arguments.validation and 'validation on' not in device:
             status = 'missing Vulkan validation confirmation'
-    simulation = [line for line in text.splitlines()
-                  if line.partition(',')[0].isdigit() and line.count(',') >= 19]
+    simulation = [line for line in stdout.splitlines()
+                  if line.partition(',')[0].isdigit() and line.count(',') >= 18]
     return {'exit': status, 'simulationRows': len(simulation),
             'simulationSha256': hashlib.sha256('\n'.join(simulation).encode()).hexdigest(),
             'captures': [str(c) for c in captures],
