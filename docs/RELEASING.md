@@ -62,38 +62,22 @@ workflows reproducible from engine-only source archives. No deleted /tmp script
 is required. All 15 common Linux tools have actual representative operations, not merely
 version probes. Positive/negative script and collision controls are included.
 
-Windows uses the established native MSVC 2022 x64 workflow:
-
-```powershell
-./packaging/windows/Build-Windows.ps1 -Channel Alpha -ReleasePackage -Jobs 2
-```
-
-Use `scripts/qualify_m100.py --build BUILD --configuration Release --output
-FRESH_RESULTS` and `scripts/qualify_sdk.py --sdk SDK --work FRESH_WORK` in an
-appropriate desktop session. The latter accepts `--mesa TEST_DRIVER_DIRECTORY`
-for **disposable VM test copies only**; stock SDK/exports remain free of that
-software-driver overlay. VM functionality, hosted-CI checks, previous human
-Windows 11 acceptance and clean-machine/hardware qualification are separate.
-Do not run memory-intensive local Linux and VM builds simultaneously.
-
-The manual **Prepare release candidate** Action is contents-read-only. It builds
-Linux and MSVC packages for an exact commit. Hosted Windows CI records its limited
-native/SDK scope and does not claim a desktop/GPU trial. Operator desktop/VM
-qualification is still required before final acceptance. Use the same exact
-artifacts for human review and publication; a later CI rebuild with different
-hashes is a new candidate, not an approved replacement.
+The **Prepare Linux release candidate** workflow has read-only repository
+permissions. It builds the SDK and source archive for the exact Experimental
+commit. Windows is unsupported and excluded from official preparation and
+publication. Use the same exact artifacts for human review and publication.
 
 ## 3. Prepare local candidate artifacts
 
-`tools/prepare_release.py` requires both verified SDKs, matching exact source /
+`tools/prepare_release.py` requires a verified Linux x86-64 SDK, matching exact source /
 version/channel, a matching tracked source archive, notes and a successful
 exact-source qualification receipt. Example:
 
 ```sh
-python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes PATH_TO_CURRENT_VERSION_NOTES --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
+python3 tools/prepare_release.py --linux-sdk LINUX_SDK --source-archive source.tar.gz --notes PATH_TO_CURRENT_VERSION_NOTES --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
 ```
 
-This creates versioned Linux `.tar.gz`, Windows `.zip` and source `.tar.gz`,
+This creates versioned Linux SDK and source `.tar.gz`,
 `release-manifest.json`, `RELEASE_NOTES.md`, `QUALIFICATION.json`,
 `CANDIDATE.json` (awaiting approval) and `SHA256SUMS`. Archive ordering, timestamps
 and ownership are deterministic for identical inputs and the source epoch. This
@@ -120,7 +104,7 @@ known limits and human checklist. Stop for final approval.
    refuses an existing final tag, creates a draft prerelease, uploads the exact
    files, downloads and verifies every artifact, then publishes. It never
    overwrites final release artifacts. It updates Alpha.json **after** verification.
-6. Alternatively, use **Publish explicitly accepted release** for the exact
+6. Alternatively, use **Publish explicitly accepted Linux release** for the exact
    successfully prepared CI run, then approve its protected environment. Dispatch
    the publication workflow from accepted `main` (`gh workflow run ... --ref main`)
    when the environment permits protected branches only; an Experimental dispatch

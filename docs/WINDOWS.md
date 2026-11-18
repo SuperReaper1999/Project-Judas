@@ -8,28 +8,27 @@ Source identity is **Judas Engine Alpha v2.0.0** (`2.0.0-alpha.1`).
 Source identity and publication are separate. The
 [publication record](RELEASE_STATUS.json) is a dated receipt.
 Check the release page for subsequently published packages.
-<!-- judas-release-status:end -->Current native Windows SDK build/tool/contracts and loader inspection passed at
-the [development baseline](DEVELOPMENT_READINESS.md). This is separate from a new
-Windows editor/GL/export, hardware audio/controller or clean-machine trial.
-Older operator acceptance does not certify this changed snapshot.
+<!-- judas-release-status:end -->
 
 ## Platform support and executable trust
 
-Linux is the primary, officially supported development and distribution platform.
-Windows is experimental and best-effort. Windows builds and SDKs may be provided
-without a compatibility guarantee. Existing Windows workflows remain available for
-developers who want to use them experimentally.
+Linux is the only officially supported development and distribution platform.
+**Windows is unsupported.** Judas offers no Windows compatibility, security,
+functionality, performance or maintenance guarantees. Official Windows
+maintenance and qualification have ended. No future official Windows SDKs or
+release packages will be published. Windows-specific bugs may remain unresolved
+indefinitely.
 
-Windows 11 with Smart App Control (SAC) enabled is unqualified for official Judas
-SDKs and exported games. Windows may reject an executable or a DLL at launch or
-load time. The tested Windows 11 Home configuration confirmed failures in both
-[native source builds](https://github.com/SuperReaper1999/Project-Judas/issues/34)
-and [unsigned exported games](https://github.com/SuperReaper1999/Project-Judas/issues/36).
-The project is deferring SAC compatibility work. Successful Windows CI or
-testing with SAC disabled does not establish compatibility with SAC enabled.
+Judas previously built and ran on Windows. Earlier technical results remain
+valid for their recorded builds and environments. Existing source and instructions
+below are available for independent use. Previously published Windows packages
+remain available as historical artifacts without current support.
 
-Keep your Windows security settings in place. Changing them is outside the
-documented installation and build procedures.
+Windows 11 Smart App Control blocked components of the tested
+[native source build](https://github.com/SuperReaper1999/Project-Judas/issues/34)
+and [unsigned exported game](https://github.com/SuperReaper1999/Project-Judas/issues/36).
+Both issues are closed as Not planned. Disabling or weakening Windows security
+is neither a supported installation requirement nor a recommendation.
 
 ## Build natively
 
@@ -46,7 +45,7 @@ package manager or downloaded metadata-validation executable is needed.
 
 The result is `build/windows-native-Experimental/windows-sdk`. `-ReleasePackage` requires
 clean Release provenance, not merely successful compilation. `-BuildDirectory`,
-`-CompilerLauncher` remains an explicit supported choice;
+`-CompilerLauncher` can be set explicitly;
 see [the script](../packaging/windows/Build-Windows.ps1) and
 [packaging prerequisites](../packaging/windows/README.md).
 Do not run competing memory-intensive builds/VMs on a constrained host.
@@ -121,19 +120,18 @@ the install prefix and removing the original build location. Upstream's generate
 distributed native pkg-config contract. SDK/export licensing comes from the exact
 extracted sources. No pkgconf or software graphics DLL is shipped in stock SDKs.
 
-The normal build script produces the Release SDK. Dependency Release/Debug
-compilation and independent consumers are qualified separately; a complete Debug
-engine/editor/SDK (including Debug ICU and nonredistributable Debug CRT delivery)
-is not implied. `-ReleasePackage` still requires clean Release provenance.
+The normal build script produces the Release SDK. The historical dependency tests covered Release and Debug compilation and
+independent consumers. A complete Debug engine/editor/SDK, including Debug ICU
+and Debug CRT delivery, was outside that scope. `-ReleasePackage` still requires clean Release provenance.
 
 Use the new default `build/windows-native-Experimental` directory. Old vcpkg
 build trees, tool caches and selected SDKs are left untouched. An explicitly
 selected legacy toolchain/build tree is rejected; choose a new `-BuildDirectory`.
 The retired `-VcpkgRoot`, `-ToolCache` and `-PkgConfig` build parameters are removed.
 An existing `PKG_CONFIG` environment variable is irrelevant to native MSVC and is
-never executed or changed by the build. Windows security remains enabled. Native
-build CI does not certify Windows 11 Smart App Control acceptance of Judas or
-any other compiler-generated program; that requires the real Windows 11 trial.
+never executed or changed by the build. Windows security remains enabled. Historical hosted
+build results do not certify Windows 11 Smart App Control acceptance of Judas or
+any other compiler-generated program; Windows 11 compatibility work is retired.
 
 ```powershell
 # Build the native SDL2/GLM dependencies without compiling Judas:
@@ -142,13 +140,11 @@ any other compiler-generated program; that requires the real Windows 11 trial.
 ./packaging/windows/Test-Bootstrap.ps1 -WorkDirectory "$env:TEMP/JudasDependencyTrial"
 ```
 
-Hosted bootstrap CI disables binary caches, uses an unusable pkg-config trap,
-and checks real hash/configuration rejections. Application qualification is
-separate: stock SDK integrity/loader inspection, editor authoring/Play/Stop,
-exports, relocation and cold process behaviour. Hosted test-only software OpenGL
-runs are functional evidence, not hardware graphics/performance or human acceptance.
-The previous local VM is not part of this checkpoint; VM restoration/provisioning
-is deferred to the operator.
+The retained dependency test builds from source with binary caches disabled.
+It checks source hashes, configuration rejection and relocated CMake consumers.
+Historical hosted application tests exercised editor authoring, Play/Stop and
+relocated exports with test-only software OpenGL. The results apply to that
+specific run. [Historical Windows qualification](https://github.com/SuperReaper1999/Project-Judas/actions/runs/44159429150).
 
 The pinned dependency sources and [runtime notices](../third_party/RUNTIME_NOTICES.txt)
 own third-party terms. Keep Windows runtime DLLs/notices in the exported package.

@@ -45,7 +45,6 @@ def main():
     with tempfile.TemporaryDirectory(prefix='judas-release-assemble-') as tmp:
         root=Path(tmp)
         extract(one(a.inputs,'linux-sdk.tar.gz'),root)
-        extract(one(a.inputs,'windows-sdk.tar.gz'),root)
         sdk=root/'linux-sdk';identity=json.loads((sdk/'BUILD_INFO.json').read_text())
         if identity['source_revision']!=a.accepted_commit:raise ValueError('CI SDK revision differs from approval')
         gates=[p for p in a.inputs.rglob('RESULTS.json') if p.parent.name=='release-qualification']
@@ -56,9 +55,8 @@ def main():
         with tarfile.open(source) as tar:epoch=tar.getmembers()[0].mtime
         q=root/'QUALIFICATION.json'
         q.write_text(json.dumps({'source_revision':a.accepted_commit,'passed':True,'Linux':'CI native gates and actual SDK/editor/export workflows',
-            'Windows':'CI MSVC SDK/tool/selected native contracts; desktop/GPU qualification is a separate final operator requirement',
             'humanAcceptance':'Required separately by protected publication environment and exact main source approval'},indent=2)+'\n')
-        prepare_release.prepare(SimpleNamespace(linux_sdk=sdk,windows_sdk=root/'windows-sdk',source_archive=source,
+        prepare_release.prepare(SimpleNamespace(linux_sdk=sdk,source_archive=source,
             notes=release_notes(Path(__file__).resolve().parents[1],identity),qualification=q,
             channel=identity['channel'],epoch=epoch,output=a.output))
 

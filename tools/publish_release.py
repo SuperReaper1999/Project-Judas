@@ -16,11 +16,28 @@ import tempfile
 from release_manifest import REPOSITORY, read_manifest, verify_download
 
 
+def release_assets(manifest):
+    version, channel = manifest['version'], manifest['channel']
+    expected = {
+        ('Linux', 'x86_64', f'JudasEngine-{version}-{channel}-Linux-x86_64.tar.gz'),
+        ('Source', 'any', f'JudasEngine-{version}-Source.tar.gz'),
+    }
+    actual = {(a['platform'], a['architecture'], a['name']) for a in manifest['artifacts']}
+    if actual != expected or len(manifest['artifacts']) != len(expected):
+        raise ValueError('Official releases require exactly a Linux x86-64 SDK and source archive')
+    return {name for _, _, name in expected} | {
+        'release-manifest.json', 'RELEASE_NOTES.md', 'QUALIFICATION.json', 'CANDIDATE.json', 'SHA256SUMS',
+    }
+
+
 def validate_candidate(directory, accepted_commit):
     if not re.fullmatch('[0-9a-f]{40}', accepted_commit):
         raise ValueError('Approval must name an exact 40-character source commit')
     if (directory/'INCOMPLETE.txt').exists():raise ValueError('Incomplete candidate cannot be published')
     manifest=read_manifest(directory/'release-manifest.json')
+    assets = release_assets(manifest)
+    if {p.name for p in directory.iterdir()} != assets:
+        raise ValueError('Unexpected or missing official release asset')
     candidate=json.loads((directory/'CANDIDATE.json').read_text())
     if candidate.get('state')!='awaiting-operator-approval' or any(candidate.get(k)!=manifest[k] for k in ('version','source_revision','channel')):
         raise ValueError('Candidate identity differs from release manifest')
@@ -39,8 +56,6 @@ def validate_candidate(directory, accepted_commit):
     qualification=json.loads((directory/'QUALIFICATION.json').read_text())
     if qualification.get('source_revision')!=accepted_commit or qualification.get('passed') is not True:
         raise ValueError('Candidate qualification is absent, failed or for another source')
-    platforms={a['platform'] for a in manifest['artifacts']}
-    if platforms!={'Linux','Windows','Source'}:raise ValueError('Initial desktop release requires both SDKs and source')
     return manifest
 
 
@@ -68,12 +83,13 @@ def check_remote(manifest):
 def publish(directory, manifest):
     # A draft prevents advertising an incomplete upload. No existing tag/release
     # is clobbered. gh itself refuses an existing tag/release collision.
+    assets = release_assets(manifest)
     tag=manifest['tag']
     title='Judas Engine '+manifest['channel']+' v'+manifest['version'].split('-')[0]
     command=['release','create',tag,'--repo',REPOSITORY,'--target',manifest['source_revision'],
              '--title',title,'--notes-file',str(directory/'RELEASE_NOTES.md'),'--draft','--latest=false']
     if manifest['channel']!='Stable':command.append('--prerelease')
-    gh(*command,*[str(p) for p in sorted(directory.iterdir()) if p.is_file()])
+    gh(*command, *(str(directory/name) for name in sorted(assets)))
     with tempfile.TemporaryDirectory(prefix='judas-published-integrity-') as tmp:
         for artifact in manifest['artifacts']:
             gh('release','download',tag,'--repo',REPOSITORY,'--pattern',artifact['name'],'--dir',tmp)

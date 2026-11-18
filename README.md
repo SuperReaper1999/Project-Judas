@@ -23,9 +23,10 @@ Check the release page for subsequently published packages.
 
 ## Build and test
 
-Linux is Judas Engine's primary, officially supported development and distribution
-platform. Windows is experimental and best-effort. Windows builds and SDKs may be
-provided without a compatibility guarantee. See the [platform support matrix](docs/ALPHA_SUPPORT_MATRIX.md).
+Linux is Judas Engine's **only officially supported development and distribution
+platform**. Windows is **unsupported**. Official Windows SDKs and release packages
+have ended. Earlier releases remain available as historical artifacts.
+See the [platform support matrix](docs/ALPHA_SUPPORT_MATRIX.md).
 
 Install the [native build prerequisites](docs/DISTRIBUTION.md). From the checkout:
 

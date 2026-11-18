@@ -15,7 +15,7 @@
     {
       "id": "PLATFORMS",
       "status": "scoped",
-      "disposition": "Native Linux integrated development and Ubuntu/Windows build/contracts passed at the recorded V2 baseline. Current Windows desktop graphics/export, Android and browser runtime remain unqualified; historical device acceptance is not inherited."
+      "disposition": "Linux is the sole official platform. Native Linux integrated development and Ubuntu baseline checks passed at the recorded V2 baseline. Windows results are historical and Windows is unsupported. Android and browser runtime remain unqualified for this snapshot."
     },
     {
       "id": "GPU-FALLBACKS",

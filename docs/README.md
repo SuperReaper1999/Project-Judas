@@ -47,7 +47,7 @@ owns tested configurations; guide contents alone do not certify every platform.
 ## Build, qualify and contribute
 
 - [Build identity](BUILD_RELEASES.md), [CI](CI.md), [test harness](TEST_HARNESS.md), [profiler/GPU diagnostics](PROFILER.md), [physical event debugger](PHYSICS_EVENT_DEBUGGER.md), [whole-application performance](WHOLE_ENGINE_PERFORMANCE.md).
-- [Linux reference userland](LINUX_BASELINE_BUILD.md), [Windows](WINDOWS.md), [MinGW cross-build](WINDOWS_CROSS_BUILD.md), [Android](ANDROID.md), [browser](BROWSER_SUPPORT.md).
+- [Linux reference userland](LINUX_BASELINE_BUILD.md), [Unsupported Windows build notes](WINDOWS.md), [MinGW cross-build notes](WINDOWS_CROSS_BUILD.md), [Android](ANDROID.md), [browser](BROWSER_SUPPORT.md).
 - [Supported scope](ALPHA_SUPPORT_MATRIX.md), [qualified baseline](DEVELOPMENT_READINESS.md), [known limitations](CURRENT_FINDINGS.md), [intentional compatibility breaks](V2_BREAKING_CHANGES.md).
 - [Versioning](VERSIONING.md), [release procedure](RELEASING.md), [current source notes](ALPHA_V2_0_0_NOTES.md), [storage](WORKSPACE_STORAGE.md), [documentation maintenance](DOCUMENTATION_MAINTENANCE.md).
 

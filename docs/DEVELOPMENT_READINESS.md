@@ -30,10 +30,13 @@ The repaired fixtures use the normal engine-root resolver and an owned image/dep
 target, retaining all continuation, visibility, pixel and depth assertions.
 The initial Windows build also exposed an invalid no-throw material-transfer
 assumption. Platforms without safe transfer run the same ordered kernels on the
-owner; the full native material contract now runs in Windows qualification.
+owner; the full native material contract ran in the recorded Windows qualification.
 These failed runs remain recorded as earlier evidence, rather than overwritten.
 
 ## Target tiers
+
+Linux is the sole official platform. Windows is unsupported. The Windows
+results below are historical evidence. See the [Windows policy](WINDOWS.md).
 
 ## Performance and reliability limits
 
@@ -66,8 +69,7 @@ qualified workflows.
 The native-Linux verdict is supported by the shared runtime ownership, integrated
 editor/SDK workflows, actual application/persistence checks, meaningful fidelity
 regressions, observed performance and bounded output policy. Continue feature/game
-development within this scope. Qualify additional platforms/hardware as their
-actual environments become available; do not inherit older acceptance silently.
+development within this scope. Qualify additional Linux environments and hardware as they become available.
 
 The exact qualified code candidate is
 `eb2123684e77494007a4452cee6bb0918f8b4eff`, build
@@ -81,7 +83,7 @@ GCC material worker path and measured rendering implementation are unchanged.
 | Local native desktop | 209/209, 471.71 seconds; 195 clean native identities |
 | Source-hidden matching SDK | 15 tools; 39 tool operations; author/Play/Stop/save/reopen/export/move/cold restore; checksum invariant |
 | Regular CI | Documentation, tooling and focused engine gates passed for `eb212368` |
-| Ubuntu/Windows qualification | [Exact non-publishing run](https://github.com/SuperReaper1999/Project-Judas/actions/runs/44101575648), scope in target table |
+| Historical Ubuntu/Windows qualification | [Exact non-publishing run](https://github.com/SuperReaper1999/Project-Judas/actions/runs/44101575648), scope in the baseline receipt |
 | Reproduction | Source checkout: [test harness](TEST_HARNESS.md), `scripts/qualify_sdk.py`, and [performance policy](WHOLE_ENGINE_PERFORMANCE.md) |
 
 The [baseline receipt](qualification/baseline.json) records the exact qualified

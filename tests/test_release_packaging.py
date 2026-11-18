@@ -196,7 +196,7 @@ class QualificationScope(unittest.TestCase):
 class Packaging(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name)
-        sdk(self.root/'linux','Linux');sdk(self.root/'windows','Windows')
+        sdk(self.root/'linux','Linux')
         source=self.root/'source.tar.gz'
         payload=b'fixture source file'
         inventory=json.dumps({'schema':1,'files':[{'path':'engine-version.json','sha256':hashlib.sha256(payload).hexdigest()}]}).encode()
@@ -207,7 +207,7 @@ class Packaging(unittest.TestCase):
         source.with_name(source.name+'.build.json').write_text(json.dumps({'source':{'revision':'a'*40},'sha256':prepare_release.sha(source)}))
         notes=self.root/'notes.md';notes.write_text('Fixture release only, not published.')
         qualification=self.root/'qualification.json';qualification.write_text(json.dumps({'source_revision':'a'*40,'passed':True,'scope':'synthetic packaging fixture, not an engine qualification'}))
-        self.args=argparse.Namespace(qualification=qualification,linux_sdk=self.root/'linux',windows_sdk=self.root/'windows',source_archive=source,
+        self.args=argparse.Namespace(qualification=qualification,linux_sdk=self.root/'linux',source_archive=source,
             notes=notes,output=self.root/'candidate',channel='Alpha',epoch=1700000000)
 
     def test_reproducible_candidate_and_default_dry_run(self):
@@ -225,10 +225,27 @@ class Packaging(unittest.TestCase):
         archive=next(self.args.output.glob('*Linux*.tar.gz'));archive.write_bytes(b'corrupt')
         with self.assertRaises(ValueError):publish_release.validate_candidate(self.args.output,'a'*40)
 
-    def test_missing_windows_and_mismatched_provenance(self):
-        (self.root/'windows/judas.exe').unlink()
-        with self.assertRaises(ValueError):prepare_release.prepare(self.args)
+    def test_windows_sdk_cannot_be_prepared_as_linux(self):
+        sdk(self.root/'windows', 'Windows')
+        self.args.linux_sdk = self.root/'windows'
+        with self.assertRaisesRegex(ValueError, 'Expected a Linux x86-64 SDK'):
+            prepare_release.prepare(self.args)
         self.assertFalse(self.args.output.exists())
+
+    def test_windows_manifest_and_extra_package_are_rejected(self):
+        manifest = prepare_release.prepare(self.args)
+        self.assertEqual({row['platform'] for row in manifest['artifacts']}, {'Linux', 'Source'})
+        windows = dict(manifest['artifacts'][0], platform='Windows', name='windows-sdk.zip')
+        windows['url'] = windows['url'].rsplit('/', 1)[0] + '/' + windows['name']
+        legacy = dict(manifest, artifacts=manifest['artifacts'] + [windows])
+        with self.assertRaisesRegex(ValueError, 'exactly a Linux'):
+            publish_release.release_assets(legacy)
+        extra = self.args.output/'windows-sdk.zip'
+        extra.write_bytes(b'old package')
+        with (self.args.output/'SHA256SUMS').open('a') as checksums:
+            checksums.write(f'{prepare_release.sha(extra)}  {extra.name}\n')
+        with self.assertRaisesRegex(ValueError, 'Unexpected or missing official release asset'):
+            publish_release.validate_candidate(self.args.output, 'a'*40)
 
     def test_invalid_source_archive_is_rejected(self):
         self.args.source_archive.write_bytes(b'not an archive')

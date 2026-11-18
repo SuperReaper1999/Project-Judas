@@ -1,4 +1,4 @@
-name: Publish explicitly accepted release
+name: Publish explicitly accepted Linux release
 on:
   workflow_dispatch:
     inputs:
@@ -42,7 +42,8 @@ jobs:
           assert re.fullmatch('[0-9a-f]{40}',sha) and re.fullmatch('[0-9]+',run)
           r=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+run]))
           assert r['conclusion']=='success' and r['head_sha']==sha
-          assert r['path']=='.github/workflows/release-candidate.yml' and r['event']=='workflow_dispatch'
+          assert r['path']=='.github/workflows/linux-release-candidate.yml'
+          assert r['event'] in ('push','workflow_dispatch') and r['head_branch']=='Experimental'
           assert r['head_repository']['full_name']==os.environ['GITHUB_REPOSITORY']
           PY
       - uses: actions/checkout@v7
@@ -50,7 +51,7 @@ jobs:
           ref: ${{ inputs.accepted_commit }}
           persist-credentials: false
       - name: Download already-qualified candidate artifacts
-        run: gh run download "$ARTIFACT_RUN" --repo "$GITHUB_REPOSITORY" --dir "$RUNNER_TEMP/candidate-inputs"
+        run: gh run download "$ARTIFACT_RUN" --repo "$GITHUB_REPOSITORY" --pattern "candidate-Linux-$ACCEPTED_COMMIT-*" --dir "$RUNNER_TEMP/candidate-inputs"
       - name: Assemble and publish only after protected environment approval
         run: |
           python3 tools/assemble_release_run.py --inputs "$RUNNER_TEMP/candidate-inputs" --output "$RUNNER_TEMP/release" --accepted-commit "$ACCEPTED_COMMIT"

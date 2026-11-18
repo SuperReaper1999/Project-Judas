@@ -1,5 +1,8 @@
 # Native Windows build dependencies
 
+Windows is unsupported. These instructions are retained for independent use.
+Official Windows qualification and SDK distribution have ended.
+
 Entry point: [Windows build and SDK guide](../../docs/WINDOWS.md).
 Run `Build-Windows.ps1` from Developer PowerShell for Visual Studio 2022/2026,
 or select Ninja with a prepared native compiler environment.

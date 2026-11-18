@@ -79,7 +79,8 @@ python3 tools/release_manifest.py check --channel Alpha --installed 1.0.0-alpha.
 python3 tools/release_manifest.py verify release-manifest.json JudasEngine-VERSION-Alpha-Linux-x86_64.tar.gz
 ```
 
-On Windows use `python` and its `.zip` artifact. Download the immutable
+Existing Windows packages remain historical artifacts. New official releases
+contain a Linux SDK and source archive. Download the immutable
 `release-manifest.json` from the same versioned release. The helper refuses
 size/hash/name mismatches and performs no installation. Checksums protect content
 integrity, not compromise of the repository/account or a maliciously replaced

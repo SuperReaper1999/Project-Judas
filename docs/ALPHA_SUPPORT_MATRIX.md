@@ -20,8 +20,8 @@ qualification to every device or imply main promotion/publication.
 
 | Target | Development scope | Boundary |
 | --- | --- | --- |
-| Native Linux x86-64 | Primary, officially supported development and distribution platform for the engine, editor and SDK. Ubuntu 24.04 is the reference build. | Host-native SDKs inherit the host ABI. Other distributions and devices need their own checks. |
-| Windows x64 MSVC | Experimental, best-effort development and distribution. Builds and SDKs may be provided without a compatibility guarantee. | Windows 11 with Smart App Control enabled is unqualified for official Judas SDKs and exported games. See [Windows trust limitations](WINDOWS.md#platform-support-and-executable-trust). |
+| Native Linux x86-64 | Only officially supported development and distribution platform for the engine, editor and SDK. Ubuntu 24.04 is the reference build. | Host-native SDKs inherit the host ABI. Other distributions and devices need their own checks. |
+| Windows x64 MSVC or MinGW | **Unsupported.** Existing build instructions and historical packages are available for independent use. | Official Windows maintenance, qualification and distribution have ended. See [Windows policy](WINDOWS.md#platform-support-and-executable-trust). |
 | Portable GL / GLES3 | Capability-selected fallback code; portable controls on the tested desktop | Code-path testing is not every GLES/Android device certification |
 | Android | Optional game runtime/APK workflow | Complete JDK/NDK/SDK/device required; no current snapshot device qualification; no Android editor |
 | Browser | Explicit opt-in Experimental game export through WebAssembly/WebGL2 | Emscripten/isolation-capable hosting required; current snapshot browser runtime unqualified; no browser editor |

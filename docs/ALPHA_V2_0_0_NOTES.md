@@ -5,7 +5,7 @@
   production MK2, vehicles/materials, UI, audio and persistence retain their explicit
   ownership, resources and supported integration boundaries.
 - Native Linux has the [development-ready scope](DEVELOPMENT_READINESS.md).
-  Ubuntu/native Windows build qualification, device gaps and measured performance
+  Ubuntu and historical Windows build qualification, device gaps and measured performance
   limits are stated there rather than inferred from version/maturity.
 - Basic Water/swimming are independent default-enabled effects. Advanced Fluids
   uses one game-water backend and explicit project opt-in in every V2 channel.

@@ -27,7 +27,7 @@ def path_patterns(workflow, key):
 class CompilerCachePolicy(unittest.TestCase):
     def test_native_fixture_source_paths_are_not_rewritten(self):
         # Source-relative project/font fixtures must work from isolated test cwd.
-        for name in ('prealpha.yml', 'release-candidate.yml'):
+        for name in ('prealpha.yml', 'linux-release-candidate.yml'):
             text = (ROOT/'.github/workflows'/name).read_text(encoding='utf-8')
             self.assertNotIn('CCACHE_BASEDIR:', text, name)
 
@@ -39,12 +39,12 @@ class Promotion(unittest.TestCase):
         self.run = dict(head_sha=self.revision, conclusion='success',
                         head_repository={'full_name': self.repository},
                         head_branch='Experimental', event='workflow_dispatch',
-                        path='.github/workflows/release-candidate.yml')
+                        path='.github/workflows/linux-release-candidate.yml')
         self.jobs = [dict(name=n, status='completed', conclusion='success')
-                     for n in ('linux', 'windows')]
+                     for n in ('linux',)]
 
     def accepted(self, run=None, jobs=None):
-        return promotion.qualifies(run or self.run, self.jobs if jobs is None else jobs,
+        return promotion.qualifies(self.run if run is None else run, self.jobs if jobs is None else jobs,
                                    self.repository, self.revision)
 
     def test_routine_channel_jobs_are_not_release_qualification(self):
@@ -53,9 +53,9 @@ class Promotion(unittest.TestCase):
 
     def test_missing_skipped_failed_or_incomplete_channels_are_not_proof(self):
         self.assertFalse(self.accepted(jobs=[]))
-        self.assertFalse(self.accepted(jobs=self.jobs[:1]))
+        self.assertFalse(self.accepted(jobs=self.jobs + [dict(name="windows", status="completed", conclusion="success")]))
         for field, value in [('conclusion', 'skipped'), ('conclusion', 'failure'), ('status', 'in_progress')]:
-            jobs = copy.deepcopy(self.jobs);jobs[1][field] = value
+            jobs = copy.deepcopy(self.jobs);jobs[0][field] = value
             self.assertFalse(self.accepted(jobs=jobs))
         self.assertFalse(self.accepted(jobs=[dict(name='tooling', status='completed', conclusion='success')]))
 
@@ -66,19 +66,16 @@ class Promotion(unittest.TestCase):
             run = copy.deepcopy(self.run);run[key] = value
             self.assertFalse(self.accepted(run=run))
 
-    def test_release_requires_both_platform_jobs_and_dispatch(self):
-        run = dict(self.run, path='.github/workflows/release-candidate.yml', event='workflow_dispatch')
-        jobs = [dict(name=n, status='completed', conclusion='success') for n in ('linux', 'windows')]
-        self.assertTrue(self.accepted(run, jobs))
-        self.assertFalse(self.accepted(run, jobs[:1]))
-        self.assertFalse(self.accepted(dict(run, event='push'), jobs))
-        partial=copy.deepcopy(jobs);partial[0]['conclusion']='skipped'
-        self.assertFalse(self.accepted(run, partial))
+    def test_linux_candidate_accepts_manual_or_workflow_bootstrap_push(self):
+        self.assertTrue(self.accepted())
+        self.assertTrue(self.accepted(run=dict(self.run, event='push')))
+        self.assertFalse(self.accepted(run=dict(self.run, event='pull_request')))
+        self.assertFalse(self.accepted(run=dict(self.run, path='.github/workflows/release-candidate.yml')))
 
 
 class Routing(unittest.TestCase):
     def test_release_freezes_strict_source_before_running_qualification(self):
-        workflow=(ROOT/'.github/workflows/release-candidate.yml').read_text(encoding='utf-8')
+        workflow=(ROOT/'.github/workflows/linux-release-candidate.yml').read_text(encoding='utf-8')
         self.assertLess(workflow.index('Snapshot exact tracked source'),workflow.index('scripts/qualify_m100.py'))
         self.assertEqual(workflow.count('python3 tools/package_source.py'),1)
         self.assertNotIn('--allow-untracked',workflow)
@@ -103,7 +100,7 @@ class Routing(unittest.TestCase):
         # additionally cover native inputs; that overlap must not disable gates.
         self.assertLessEqual(set(ignored)-docs, set(tooling))
         for name in ('scripts/qualify_m100.py', 'tools/package_source.py', 'tests/test_release_packaging.py',
-                     '.github/workflows/release-candidate.yml', '.gitignore'):
+                     '.github/workflows/linux-release-candidate.yml', '.gitignore'):
             self.assertTrue(any(fnmatch.fnmatchcase(name, p) for p in ignored))
             self.assertTrue(any(fnmatch.fnmatchcase(name, p) for p in tooling))
 

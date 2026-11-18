@@ -1,10 +1,11 @@
 # Build Windows games on Linux
 
-Current optional support: **optional Windows x64 Release games built with
-MinGW-w64 GCC on Linux**. The native MSVC editor/SDK workflow remains available.
-This is a command-line game export workflow; the editor's Export command still
-builds for its native platform. It does not produce an Android package or a
-complete cross-built Windows SDK.
+**Windows is unsupported.** These retained instructions describe independent
+Windows x64 game builds using MinGW-w64 GCC on Linux. They carry no support
+promise. The [Windows policy](WINDOWS.md#platform-support-and-executable-trust)
+applies to cross-built games as well as native MSVC builds.
+
+This command-line export workflow does not produce a complete Windows SDK.
 
 ## Requirements
 
@@ -87,8 +88,8 @@ archive identity rather than stripping it.
 
 ## Qualification and boundaries
 
-Qualified scope is MinGW-w64 GCC, x64, Release, Linux host, Windows 10 VM.
-Windows 11/hardware/gamepads and other compiler versions require further testing.
+Historical qualification covered MinGW-w64 GCC, x64, Release, Linux host, Windows 10 VM.
+Windows 11, physical hardware, gamepads and other compiler versions were outside that trial.
 Clang's Windows GNU target was investigated with an actual executable probe, but
 **the full Clang engine build is not qualified**. A target flag alone does not
 supply Windows headers, C++ libraries, runtime DLLs or ICU native tools. MSVC ABI

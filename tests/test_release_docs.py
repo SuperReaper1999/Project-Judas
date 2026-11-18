@@ -133,11 +133,9 @@ class ReleaseDocumentationTests(unittest.TestCase):
         self.assertEqual(subprocess.run(command, capture_output=True).returncode, 0)
 
     def test_release_workflows_keep_the_guard_before_build(self):
-        workflow = (ROOT / '.github/workflows/release-candidate.yml').read_text(encoding='utf-8')
-        self.assertEqual(workflow.count('name: Verify release and status documentation before building'), 2)
+        workflow = (ROOT / '.github/workflows/linux-release-candidate.yml').read_text(encoding='utf-8')
+        self.assertEqual(workflow.count('name: Verify release and status documentation before building'), 1)
         self.assertLess(workflow.index('run: python3 tools/release_docs.py'), workflow.index('cmake -S'))
-        self.assertLess(workflow.index('run: python tools/release_docs.py'),
-                        workflow.index('name: Build complete native MSVC SDK'))
         current = (ROOT / '.github/workflows/current-docs.yml').read_text(encoding='utf-8')
         self.assertIn("'engine-version.json'", current)
         self.assertIn('test_release_docs.py', current)

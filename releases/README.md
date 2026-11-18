@@ -1,6 +1,7 @@
 # Judas release metadata
 
-No published channel is changed by this directory or its build scripts.
+New official releases contain a Linux SDK and source archive. Existing Windows
+release records and packages remain available as historical artifacts.
 See [versioning](../docs/VERSIONING.md), [publication](../docs/RELEASING.md) and
 [Alpha notes](../docs/ALPHA_V2_0_0_NOTES.md). A candidate is not a published release.
 

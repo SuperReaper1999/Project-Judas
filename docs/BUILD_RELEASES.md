@@ -32,10 +32,10 @@ The [manifest](../tools/validation/suites.json) owns actual registrations.
 
 ## Platform and packaging boundaries
 
-Build `judas_linux_sdk` or the native Windows `judas_windows_sdk` using the
-[shared inventory](../packaging/sdk-inventory.json). Common tools, Windows extras,
-current docs, declarations, runtime notices and curated/source-only examples are
-explicit. Staging/checksum verification is not relocation or application proof.
+Build `judas_linux_sdk` using the [shared inventory](../packaging/sdk-inventory.json).
+Official SDK distribution is Linux-only. Windows build targets remain available
+for independent use under the [Windows policy](WINDOWS.md#platform-support-and-executable-trust).
+Staging/checksum verification is not relocation or application proof.
 Use [SDK qualification](DISTRIBUTION.md) for create/author/save/Play/Stop/reopen and
 moved exports with source dependencies hidden.
 
@@ -54,7 +54,7 @@ The existing path-routing controls verify those exclusions.
 
 Main promotion requires operator acceptance of the exact candidate. The machine
 proof in `scripts/check_ci_promotion.py` currently accepts a completed successful
-**manual release-candidate workflow with both `linux` and `windows` jobs**, from
+**Linux release-candidate workflow with its successful `linux` job**, from
 this repository's Experimental branch at that exact SHA. Routine focused gates
 alone are not that promotion proof. Incomplete/skipped/foreign-source or tooling-
 only success rejects. This check still does not establish human acceptance.

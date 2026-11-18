@@ -1,0 +1,122 @@
+name: Prepare Linux release candidate (never publishes)
+on:
+  push:
+    branches: [Experimental]
+    paths: [.github/workflows/linux-release-candidate.yml]
+  workflow_dispatch:
+    inputs:
+      candidate:
+        description: Exact 40-character Experimental candidate commit
+        required: true
+        type: string
+      channel:
+        description: Private candidate channel (not a publication)
+        required: true
+        type: choice
+        options: [Alpha, Experimental, Beta, Stable]
+        default: Alpha
+permissions:
+  contents: read
+concurrency:
+  group: prepare-judas-${{ inputs.candidate || github.sha }}-${{ inputs.channel || 'Alpha' }}
+  cancel-in-progress: false
+jobs:
+  linux:
+    if: github.actor == github.repository_owner && github.ref == 'refs/heads/Experimental'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      CANDIDATE: ${{ inputs.candidate || github.sha }}
+      CHANNEL: ${{ inputs.channel || 'Alpha' }}
+      SDL_AUDIODRIVER: dummy
+      LIBGL_ALWAYS_SOFTWARE: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+      CCACHE_DIR: /home/runner/.cache/ccache
+      CCACHE_COMPILERCHECK: content
+      CCACHE_MAXSIZE: 1G
+    steps:
+      - name: Validate literal commit input
+        run: python3 -c 'import os,re; assert re.fullmatch("[0-9a-f]{40}",os.environ["CANDIDATE"])'
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.candidate || github.sha }}
+          persist-credentials: false
+      - name: Verify release and status documentation before building
+        run: python3 tools/release_docs.py
+      - name: Snapshot exact tracked source before qualification
+        run: |
+          mkdir -p "$RUNNER_TEMP/prepared"
+          python3 tools/package_source.py --output "$RUNNER_TEMP/prepared/source.tar.gz" --channel "$CHANNEL"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: tools/verification/package-lock.json
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build g++ ccache libsdl2-dev libglm-dev xvfb xauth libgl1-mesa-dri
+          npm ci --ignore-scripts --prefix tools/verification
+      - name: Identify Linux compiler
+        id: compiler
+        run: |
+          echo "version=$(g++ -dumpfullversion)-$(sha256sum "$(g++ -print-prog-name=cc1plus)" | cut -c1-12)" >> "$GITHUB_OUTPUT"
+          nproc
+          free -m
+      - name: Restore Linux compiler objects
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ccache
+          key: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v2-${{ inputs.candidate || github.sha }}-candidate
+          restore-keys: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v2-
+      - name: Reuse Linux ICU
+        uses: actions/cache@v4
+        with:
+          path: build/unicode
+          key: linux-gcc-${{ steps.compiler.outputs.version }}-icu-v2-${{ hashFiles('third_party/text/*', 'cmake/JudasTextDependencies.cmake') }}
+      - name: Configure exact Linux release candidate
+        run: |
+          ccache --zero-stats
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL="$CHANNEL" -DJUDAS_ENABLE_VALIDATION=ON -DJUDAS_SDK_RELEASE=ON -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+      - name: Build Linux SDK
+        run: |
+          cmake --build build --target judas_linux_sdk -j2
+      - name: Complete Linux qualification
+        run: |
+          xvfb-run -a python3 scripts/qualify_m100.py --build build --output .cache/release-qualification --jobs 2
+      - name: Linux SDK authoring and relocated exports
+        run: |
+          xvfb-run -a python3 scripts/qualify_sdk.py --sdk build/linux-sdk --work .cache/release-sdk-work
+      - name: Linux API and ABI qualification
+        run: |
+          node scripts/check_judasjs_api.mjs
+          python3 tools/inspect_sdk.py build/linux-sdk --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output .cache/release-sdk-platform.json
+      - name: Linux compiler cache statistics
+        if: always()
+        run: ccache --show-stats
+      - name: Pack qualified SDK and tracked source as immutable CI artifacts
+        run: |
+          git diff --exit-code HEAD
+          tar -C build -czf "$RUNNER_TEMP/prepared/linux-sdk.tar.gz" linux-sdk
+      - uses: actions/upload-artifact@v7
+        with:
+          name: candidate-Linux-${{ inputs.candidate || github.sha }}-${{ inputs.channel || 'Alpha' }}
+          path: |
+            ${{ runner.temp }}/prepared/
+            .cache/release-qualification/
+            .cache/release-sdk-work/RESULTS.json
+            .cache/release-sdk-work/COMPLETE.json
+            .cache/release-sdk-platform.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: candidate-Linux-failure-${{ inputs.candidate || github.sha }}
+          path: |
+            .cache/release-qualification/
+            .cache/release-sdk-work/
+            build/Testing/Temporary/
+          include-hidden-files: true
+          retention-days: 14

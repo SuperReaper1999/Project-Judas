@@ -18,10 +18,10 @@ was published after final approval on 27 October 2026. See [versioning](VERSIONI
 
 ## Native SDK
 
-Linux is the primary, officially supported distribution platform. Windows SDKs
-and native game exports are experimental and best-effort. See the
-[platform support matrix](ALPHA_SUPPORT_MATRIX.md) and the
-[Windows executable trust limitations](WINDOWS.md#platform-support-and-executable-trust).
+Linux is the only officially supported development and distribution platform.
+Official releases contain a Linux SDK and source archive. Windows is unsupported,
+and earlier Windows packages are historical artifacts. See the
+[Windows policy](WINDOWS.md#platform-support-and-executable-trust).
 
 Configure separate build directories, then build the shared inventory target:
 
@@ -31,15 +31,11 @@ cmake --build build --target judas_linux_sdk -j2
 python3 build/linux-sdk/tools/package_sdk.py verify build/linux-sdk
 ```
 
-For native Windows games exported **from Linux**, use the optional
-[MinGW-w64 cross-build workflow](WINDOWS_CROSS_BUILD.md).
-
-On Windows use [Build-Windows.ps1](../packaging/windows/Build-Windows.ps1) and the
-`judas_windows_sdk` target; see [Windows prerequisites](WINDOWS.md). Staging and
-verification use only Python 3.11+ standard library. Packaged games do not require
-Python. Linux SDK executables require compatible glibc/libstdc++, SDL2 and OpenGL
-3.3 drivers; platform libraries/drivers are not bundled. Windows SDKs include the
-existing ICU/Visual C++ runtime dependency closure and redistribution notices.
+Independent Windows builds and exports are described in the
+[retained native build instructions](WINDOWS.md) and
+[MinGW cross-build instructions](WINDOWS_CROSS_BUILD.md).
+Linux staging and verification require Python 3.11+. Packaged games require
+compatible glibc/libstdc++, SDL2 and OpenGL 3.3 drivers.
 
 ### Binary compatibility qualification
 

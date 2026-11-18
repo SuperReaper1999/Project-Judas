@@ -23,13 +23,14 @@ is required to keep ordinary CI running.
 
 ## Complete candidate qualification
 
-`release-candidate.yml` is manual and never publishes. Its literal candidate SHA,
-channel and platform selector freeze the requested source. Single-platform runs
-are investigation only; complete preparation/promotion proof requires both native
-Linux and Windows jobs. Linux includes coordinated native gates, SDK editor/tool/
-relocation workflows, API checks and declared Ubuntu/ABI inspection. Windows
-builds MSVC SDKs, selected native contracts (including materials) and loader closure.
-Windows hosted success does not certify editor/GL/export/hardware behaviour.
+`linux-release-candidate.yml` prepares Linux candidates and never publishes.
+Manual dispatch selects an exact Experimental SHA and channel. A push changing
+the workflow definition also prepares that exact Experimental commit on the
+Alpha channel, which registers the new workflow before its first manual dispatch.
+Linux preparation includes coordinated native gates, SDK editor/tool and relocation
+workflows, API checks and declared Ubuntu/ABI inspection.
+
+Windows qualification and dependency bootstrap workflows are retired.
 
 `ci-tooling.yml` covers packaging, updates, identity/routing and storage controls.
 `current-docs.yml` checks managed source/publication summaries and current links.
