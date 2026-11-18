@@ -42,10 +42,16 @@ void Warn(const char *format, ...) {
     va_end(arguments);
 }
 
+[[noreturn]] static void FailResult(const char *operation, VkResult result) {
+    if (result == VK_ERROR_DEVICE_LOST)
+        Fatal("%s returned VK_ERROR_DEVICE_LOST. Restart Judas to create a new graphics device.", operation);
+    Fatal("%s failed (%d)", operation, int(result));
+}
+
 #define VK_CHECK(call)                                                                             \
     do {                                                                                           \
         VkResult judasResult = (call);                                                             \
-        if (judasResult != VK_SUCCESS) Fatal("%s failed (%d)", #call, int(judasResult));           \
+        if (judasResult != VK_SUCCESS) FailResult(#call, judasResult);                               \
     } while (0)
 
 bool IsDepthFormat(VkFormat format) {
@@ -458,7 +464,9 @@ void PollCompleted(bool wait, std::uint64_t untilSerial) {
         VkResult status = mustWait
             ? vkWaitForFences(g->device, 1, &oldest.fence, VK_TRUE, UINT64_MAX)
             : vkGetFenceStatus(g->device, oldest.fence);
-        if (status != VK_SUCCESS) break;
+        if (!mustWait && status == VK_NOT_READY) break;
+        if (status != VK_SUCCESS)
+            FailResult(mustWait ? "vkWaitForFences" : "vkGetFenceStatus", status);
         g->completedSerial = std::max(g->completedSerial, oldest.serial);
         VK_CHECK(vkResetFences(g->device, 1, &oldest.fence));
         g->freeFences.push_back(oldest.fence);
@@ -684,14 +692,12 @@ void DestroySwapchain() {
 void CreateSwapchain() {
     g->swapchainDirty = false;
     if (!g->surface) return;
-    vkDeviceWaitIdle(g->device);
-    VkSurfaceCapabilitiesKHR caps;
-    if (vkGetPhysicalDeviceSurfaceCapabilitiesKHR(g->physical, g->surface, &caps) != VK_SUCCESS) {
-        DestroySwapchain();
-        return;
-    }
     int width = 0, height = 0;
     SDL_Vulkan_GetDrawableSize(g->window, &width, &height);
+    if (width <= 0 || height <= 0) return;
+    VK_CHECK(vkDeviceWaitIdle(g->device));
+    VkSurfaceCapabilitiesKHR caps;
+    VK_CHECK(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(g->physical, g->surface, &caps));
     VkExtent2D extent = caps.currentExtent;
     if (extent.width == 0xFFFFFFFFu) extent = {std::uint32_t(width), std::uint32_t(height)};
     extent.width = std::clamp(extent.width, caps.minImageExtent.width, caps.maxImageExtent.width);
@@ -701,13 +707,10 @@ void CreateSwapchain() {
         return;
     }
     std::uint32_t count = 0;
-    vkGetPhysicalDeviceSurfaceFormatsKHR(g->physical, g->surface, &count, nullptr);
+    VK_CHECK(vkGetPhysicalDeviceSurfaceFormatsKHR(g->physical, g->surface, &count, nullptr));
+    if (!count) Fatal("no surface formats for the Vulkan swapchain");
     std::vector<VkSurfaceFormatKHR> formats(count);
-    vkGetPhysicalDeviceSurfaceFormatsKHR(g->physical, g->surface, &count, formats.data());
-    if (formats.empty()) {
-        DestroySwapchain();
-        return;
-    }
+    VK_CHECK(vkGetPhysicalDeviceSurfaceFormatsKHR(g->physical, g->surface, &count, formats.data()));
     // The renderer writes display-encoded values, exactly as it does to the
     // OpenGL default framebuffer without GL_FRAMEBUFFER_SRGB: use UNORM.
     VkSurfaceFormatKHR chosen = formats[0];
@@ -716,9 +719,9 @@ void CreateSwapchain() {
             chosen = format;
             break;
         }
-    vkGetPhysicalDeviceSurfacePresentModesKHR(g->physical, g->surface, &count, nullptr);
+    VK_CHECK(vkGetPhysicalDeviceSurfacePresentModesKHR(g->physical, g->surface, &count, nullptr));
     std::vector<VkPresentModeKHR> modes(count);
-    vkGetPhysicalDeviceSurfacePresentModesKHR(g->physical, g->surface, &count, modes.data());
+    VK_CHECK(vkGetPhysicalDeviceSurfacePresentModesKHR(g->physical, g->surface, &count, modes.data()));
     VkPresentModeKHR mode = VK_PRESENT_MODE_FIFO_KHR;
     if (g->swapInterval == 0) {
         for (auto candidate : modes)
@@ -747,17 +750,18 @@ void CreateSwapchain() {
     VkSwapchainKHR created = VK_NULL_HANDLE;
     const VkResult result = vkCreateSwapchainKHR(g->device, &info, nullptr, &created);
     DestroySwapchain();
-    if (result != VK_SUCCESS) {
-        Warn("swapchain creation failed (%d); presentation disabled until the next resize", int(result));
+    if (result == VK_ERROR_OUT_OF_DATE_KHR) {
+        g->swapchainDirty = true;
         return;
     }
+    if (result != VK_SUCCESS) FailResult("vkCreateSwapchainKHR", result);
     g->swapchain = created;
     g->swapchainFormat = chosen.format;
     g->presentMode = mode;
     g->swapchainExtent = extent;
-    vkGetSwapchainImagesKHR(g->device, g->swapchain, &count, nullptr);
+    VK_CHECK(vkGetSwapchainImagesKHR(g->device, g->swapchain, &count, nullptr));
     g->swapchainImages.resize(count);
-    vkGetSwapchainImagesKHR(g->device, g->swapchain, &count, g->swapchainImages.data());
+    VK_CHECK(vkGetSwapchainImagesKHR(g->device, g->swapchain, &count, g->swapchainImages.data()));
     g->swapchainLayouts.assign(count, VK_IMAGE_LAYOUT_UNDEFINED);
     // The previous swapchain is destroyed, releasing its presents' semaphore waits.
     while (g->presentSemaphores.size() < count) {
@@ -1267,12 +1271,14 @@ void Present() {
     int width = g->drawableWidth, height = g->drawableHeight;
     if (g->surface) SDL_Vulkan_GetDrawableSize(g->window, &width, &height);
     else if (g->window) SDL_GetWindowSize(g->window, &width, &height);
-    if (g->surface && (g->swapchainDirty || !g->swapchain ||
+    const bool canPresent = g->surface && width > 0 && height > 0 &&
+                            !(SDL_GetWindowFlags(g->window) & SDL_WINDOW_MINIMIZED);
+    if (canPresent && (g->swapchainDirty || !g->swapchain ||
                        g->swapchainExtent.width != std::uint32_t(width) ||
                        g->swapchainExtent.height != std::uint32_t(height)))
         CreateSwapchain();
     bool presented = false;
-    if (g->swapchain) {
+    if (canPresent && g->swapchain) {
         std::uint32_t index = 0;
         VkSemaphore acquireSemaphore = VK_NULL_HANDLE;
         if (!g->freeAcquireSemaphores.empty()) {
@@ -1285,8 +1291,10 @@ void Present() {
         }
         VkResult acquired = vkAcquireNextImageKHR(g->device, g->swapchain, UINT64_MAX,
                                                   acquireSemaphore, VK_NULL_HANDLE, &index);
-        if (acquired != VK_SUCCESS && acquired != VK_SUBOPTIMAL_KHR)
+        if (acquired == VK_ERROR_OUT_OF_DATE_KHR)
             g->freeAcquireSemaphores.push_back(acquireSemaphore); // not signalled
+        else if (acquired != VK_SUCCESS && acquired != VK_SUBOPTIMAL_KHR)
+            FailResult("vkAcquireNextImageKHR", acquired);
         if (acquired == VK_SUCCESS || acquired == VK_SUBOPTIMAL_KHR) {
             VkSemaphore presentSemaphore = g->presentSemaphores[index];
             Transition(*g->defaultColor, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL);
@@ -1326,8 +1334,11 @@ void Present() {
             present.pSwapchains = &g->swapchain;
             present.pImageIndices = &index;
             const VkResult result = vkQueuePresentKHR(g->queue, &present);
-            if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR)
+            if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR ||
+                acquired == VK_SUBOPTIMAL_KHR)
                 g->swapchainDirty = true;
+            if (result != VK_SUCCESS && result != VK_ERROR_OUT_OF_DATE_KHR && result != VK_SUBOPTIMAL_KHR)
+                FailResult("vkQueuePresentKHR", result);
             presented = true;
         } else
             g->swapchainDirty = true;

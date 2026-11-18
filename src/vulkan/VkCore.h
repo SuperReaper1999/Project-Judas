@@ -17,7 +17,7 @@ struct SDL_Window;
 
 namespace JudasVulkan::detail {
 
-void Fatal(const char *format, ...);
+[[noreturn]] void Fatal(const char *format, ...);
 void Warn(const char *format, ...);
 
 // ---------------------------------------------------------------- memory ---

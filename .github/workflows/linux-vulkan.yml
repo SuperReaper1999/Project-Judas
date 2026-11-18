@@ -22,7 +22,6 @@ jobs:
       SDL_VIDEODRIVER: x11
       SDL_AUDIODRIVER: dummy
       LIBGL_ALWAYS_SOFTWARE: '1'
-      VK_DRIVER_FILES: /usr/share/vulkan/icd.d/lvp_icd.x86_64.json
       PYTHONDONTWRITEBYTECODE: '1'
       CCACHE_MAXSIZE: 1G
     steps:
@@ -38,7 +37,9 @@ jobs:
           } >> "$GITHUB_ENV"
           sudo apt-get update
           sudo apt-get install -y cmake ninja-build g++ ccache libsdl2-dev libglm-dev xvfb xauth libgl1-mesa-dri mesa-vulkan-drivers libvulkan-dev glslang-dev glslang-tools spirv-tools vulkan-validationlayers
-          test -f "$VK_DRIVER_FILES"
+          icd=$(dpkg-query -L mesa-vulkan-drivers | grep '/lvp_icd[^/]*\.json$')
+          test -f "$icd"
+          echo "VK_DRIVER_FILES=$icd" >> "$GITHUB_ENV"
       - uses: actions/cache@v4
         with:
           path: |
