@@ -51,21 +51,25 @@ void DropTexelView(Buffer &buffer) {
     buffer.texelView = VK_NULL_HANDLE;
 }
 
-// GPU-owned per the application's own hint: *_COPY usage (the GL meaning is
-// "written by the GL, read by the GL"), or immutable storage the CPU cannot map
-// or update. Everything else stays in host memory, which the CPU reads fast.
-bool GpuOwned(const Buffer &buffer) {
+BufferPlacement Placement(GLenum usage) {
+    if (usage == GL_STATIC_COPY || usage == GL_DYNAMIC_COPY || usage == GL_STREAM_COPY)
+        return BufferPlacement::GpuOwned;
+    return usage == GL_STATIC_DRAW ? BufferPlacement::StaticDraw : BufferPlacement::Host;
+}
+
+BufferPlacement Placement(const Buffer &buffer) {
     if (buffer.storageFlags || buffer.persistent)
-        return !(buffer.storageFlags & (GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_DYNAMIC_STORAGE_BIT |
-                                        GL_MAP_PERSISTENT_BIT | GL_CLIENT_STORAGE_BIT));
-    return buffer.usage == GL_STATIC_COPY || buffer.usage == GL_DYNAMIC_COPY || buffer.usage == GL_STREAM_COPY;
+        return (buffer.storageFlags & (GL_MAP_READ_BIT | GL_MAP_WRITE_BIT | GL_DYNAMIC_STORAGE_BIT |
+                                       GL_MAP_PERSISTENT_BIT | GL_CLIENT_STORAGE_BIT)) ?
+            BufferPlacement::Host : BufferPlacement::GpuOwned;
+    return Placement(buffer.usage);
 }
 
 void ReplaceStorage(Buffer &buffer, VkDeviceSize size, bool copy) {
     // New storage means new VkBuffer/offset for every binding of this buffer;
     // a texel view of the old storage also changes descriptor contents.
     MarkDirty(DirtyBuffers | (buffer.texelView ? DirtyTextures : 0u));
-    Range replacement = AllocateBuffer(size, GpuOwned(buffer));
+    Range replacement = AllocateBuffer(size, Placement(buffer));
     if (copy && buffer.storage) std::memcpy(replacement.Data(), buffer.storage.Data(), std::size_t(std::min(size, buffer.size)));
     DropTexelView(buffer);
     RetireRange(buffer.storage, buffer.lastUse);
@@ -79,8 +83,7 @@ void BufferDataImpl(Buffer *buffer, GLsizeiptr size, const void *data, GLenum us
     if (!buffer || size < 0) return;
     const VkDeviceSize bytes = VkDeviceSize(size);
     const bool busy = buffer->lastUse > g->completedSerial || buffer->lastGpuWrite > g->completedSerial;
-    const bool placementChanged = buffer->storage && (GpuOwned(*buffer) !=
-        (usage == GL_STATIC_COPY || usage == GL_DYNAMIC_COPY || usage == GL_STREAM_COPY));
+    const bool placementChanged = buffer->storage && Placement(*buffer) != Placement(usage);
     const bool wasPersistent = buffer->persistent;
     buffer->usage = usage;
     buffer->persistent = false;

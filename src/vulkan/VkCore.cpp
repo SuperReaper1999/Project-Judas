@@ -115,7 +115,7 @@ void BlockFree(MemBlock &block, VkDeviceSize offset, VkDeviceSize size) {
     block.free[offset] = size;
 }
 
-std::unique_ptr<MemBlock> CreateBufferBlock(VkDeviceSize size, bool dedicated, bool deviceLocal) {
+std::unique_ptr<MemBlock> CreateBufferBlock(VkDeviceSize size, bool dedicated, BufferPlacement placement) {
     auto block = std::make_unique<MemBlock>();
     VkBufferCreateInfo info{VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO};
     info.size = size;
@@ -135,26 +135,43 @@ std::unique_ptr<MemBlock> CreateBufferBlock(VkDeviceSize size, bool dedicated, b
     // persistently mapped because the backend writes buffer contents directly.
     const std::uint32_t hostType = FindMemoryType(requirements.memoryTypeBits, mappable, VK_MEMORY_PROPERTY_HOST_CACHED_BIT);
     VkResult result = VK_ERROR_OUT_OF_DEVICE_MEMORY;
-    if (deviceLocal && !g->deviceBufferHeapExhausted) {
+    const bool staticDraw = placement == BufferPlacement::StaticDraw;
+    if (placement != BufferPlacement::Host && !g->deviceBufferHeapExhausted) {
         const std::uint32_t deviceType =
             FindMemoryType(requirements.memoryTypeBits, mappable, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-        if (g->memoryProperties.memoryTypes[deviceType].propertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) {
+        const auto &type = g->memoryProperties.memoryTypes[deviceType];
+        // Leave at least half the mapped heap available for GPU-owned
+        // buffers and other clients.
+        const auto staticBudget = g->memoryProperties.memoryHeaps[type.heapIndex].size / 2;
+        const bool fitsStaticBudget = g->staticDrawBytes <= staticBudget &&
+                                      requirements.size <= staticBudget - g->staticDrawBytes;
+        if ((type.propertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT) && (!staticDraw || fitsStaticBudget)) {
             allocate.memoryTypeIndex = deviceType;
             result = vkAllocateMemory(g->device, &allocate, nullptr, &block->memory);
-            if (result != VK_SUCCESS) {
+            if (result != VK_SUCCESS && !staticDraw) {
                 g->deviceBufferHeapExhausted = true;
                 Warn("device-local host-visible memory exhausted after %llu MiB; GPU-owned buffers now use host memory",
                      static_cast<unsigned long long>(g->deviceBufferBytes >> 20));
-            } else
+            } else if (result == VK_SUCCESS) {
+                block->countedAsDeviceLocal = true;
                 g->deviceBufferBytes += requirements.size;
+                if (staticDraw) {
+                    g->staticDrawBytes += requirements.size;
+                    g->peakStaticDrawBytes = std::max(g->peakStaticDrawBytes, g->staticDrawBytes);
+                }
+            }
         }
     }
     if (result != VK_SUCCESS) {
+        if (staticDraw) {
+            vkDestroyBuffer(g->device, block->buffer, nullptr);
+            return nullptr;
+        }
         allocate.memoryTypeIndex = hostType;
         VK_CHECK(vkAllocateMemory(g->device, &allocate, nullptr, &block->memory));
     }
-    block->memoryType = allocate.memoryTypeIndex;
-    block->devicePlacement = deviceLocal;
+    block->placement = placement;
+    block->allocationSize = requirements.size;
     VK_CHECK(vkBindBufferMemory(g->device, block->buffer, block->memory, 0));
     void *mapped = nullptr;
     VK_CHECK(vkMapMemory(g->device, block->memory, 0, VK_WHOLE_SIZE, 0, &mapped));
@@ -169,9 +186,10 @@ void DestroyBlock(MemBlock &block) {
     if (block.buffer) {
         vkDestroyBuffer(g->device, block.buffer, nullptr);
         g->bufferBytes -= block.size;
-        if (g->memoryProperties.memoryTypes[block.memoryType].propertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT &&
-            block.devicePlacement)
-            g->deviceBufferBytes -= std::min(g->deviceBufferBytes, block.size);
+        if (block.countedAsDeviceLocal)
+            g->deviceBufferBytes -= block.allocationSize;
+        if (block.placement == BufferPlacement::StaticDraw)
+            g->staticDrawBytes -= block.allocationSize;
     } else
         g->imageBytes -= block.size;
     if (block.memory) vkFreeMemory(g->device, block.memory, nullptr);
@@ -179,21 +197,23 @@ void DestroyBlock(MemBlock &block) {
 }
 } // namespace
 
-Range AllocateBuffer(VkDeviceSize size, bool deviceLocal) {
+Range AllocateBuffer(VkDeviceSize size, BufferPlacement placement) {
     size = std::max<VkDeviceSize>(size, 1);
     const VkDeviceSize rounded = (size + g->bufferAlignment - 1) / g->bufferAlignment * g->bufferAlignment;
     Range range;
     range.size = rounded;
-    if (rounded <= kBufferBlockBytes / 4) {
+    const bool dedicated = rounded > kBufferBlockBytes / 4;
+    if (!dedicated) {
         for (auto &block : g->bufferBlocks)
-            if (!block->dedicated && block->devicePlacement == deviceLocal &&
+            if (!block->dedicated && block->placement == placement &&
                 BlockAllocate(*block, rounded, g->bufferAlignment, range.offset)) {
                 range.block = block.get();
                 return range;
             }
-        g->bufferBlocks.push_back(CreateBufferBlock(kBufferBlockBytes, false, deviceLocal));
-    } else
-        g->bufferBlocks.push_back(CreateBufferBlock(rounded, true, deviceLocal));
+    }
+    auto block = CreateBufferBlock(dedicated ? rounded : kBufferBlockBytes, dedicated, placement);
+    if (!block) return AllocateBuffer(size, BufferPlacement::Host);
+    g->bufferBlocks.push_back(std::move(block));
     range.block = g->bufferBlocks.back().get();
     if (!BlockAllocate(*range.block, rounded, g->bufferAlignment, range.offset))
         Fatal("buffer block allocation failed");
@@ -568,7 +588,7 @@ Range RingAllocate(VkDeviceSize size, VkDeviceSize alignment) {
             }
         if (g->ringCurrent < 0) {
             Context::RingChunk chunk;
-            chunk.block = CreateBufferBlock(std::max(kChunk, size), true, false);
+            chunk.block = CreateBufferBlock(std::max(kChunk, size), true, BufferPlacement::Host);
             g->ring.push_back(std::move(chunk));
             g->ringCurrent = int(g->ring.size() - 1);
         }
@@ -1241,6 +1261,9 @@ void Shutdown() {
     if (g->validation)
         std::fprintf(stderr, "[Vulkan] validation messages: %llu\n",
                      static_cast<unsigned long long>(g->validationMessages));
+    if (g->trace)
+        std::fprintf(stderr, "[Vulkan trace] peak mapped device-local static buffers: %.2f MiB\n",
+                     double(g->peakStaticDrawBytes) / (1024 * 1024));
     if (g->instance) vkDestroyInstance(g->instance, nullptr);
     delete g;
     g = nullptr;

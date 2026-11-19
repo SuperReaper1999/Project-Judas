@@ -13,6 +13,14 @@ renderer. The historical explicit mesh and shadow pass is preserved behind
 skinning and current shadow and material submission optimizations. Use the
 bridge for integration testing.
 
+The bridge uses transient uploads by default. Busy ranges are replaced and
+retired after their Vulkan submission completes, which avoids waiting on
+persistent OpenGL stream pages during draw submission. Static draw buffers
+prefer mapped device-local memory when available, with a separate budget of
+half the eligible heap. They fall back to host memory when the allocation
+does not fit. `JUDAS_VULKAN_TRACE=1` reports peak mapped static-buffer usage
+at shutdown.
+
 ## Build and run
 
 Build on native Linux with a Vulkan 1.3 loader and driver, the Vulkan

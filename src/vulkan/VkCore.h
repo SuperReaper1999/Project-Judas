@@ -23,14 +23,18 @@ void Warn(const char *format, ...);
 // ---------------------------------------------------------------- memory ---
 // One device allocation subdivided by a first-fit free list. Buffer blocks
 // also own a VkBuffer covering the whole block (bound with offsets).
+enum class BufferPlacement { Host, GpuOwned, StaticDraw };
+
 struct MemBlock {
     VkDeviceMemory memory = VK_NULL_HANDLE;
     VkBuffer buffer = VK_NULL_HANDLE;
     std::uint8_t *mapped = nullptr;
     VkDeviceSize size = 0;
-    std::uint32_t memoryType = 0;
+    VkDeviceSize allocationSize = 0;
+    std::uint32_t memoryType = 0; // Used to pool image memory.
     bool dedicated = false;
-    bool devicePlacement = false; // buffer block requested in device-local memory
+    bool countedAsDeviceLocal = false;
+    BufferPlacement placement = BufferPlacement::Host;
     std::map<VkDeviceSize, VkDeviceSize> free; // offset -> size
 };
 struct Range {
@@ -461,6 +465,7 @@ struct Context {
     std::uint64_t frames = 0, submissions = 0, renderPasses = 0, draws = 0, descriptorSets = 0,
                   validationMessages = 0, bufferBytes = 0, imageBytes = 0, deviceBufferBytes = 0;
     bool deviceBufferHeapExhausted = false;
+    VkDeviceSize staticDrawBytes = 0, peakStaticDrawBytes = 0;
     // Draw-state cache: accumulated since the last draw; DirtyAll disables reuse.
     std::uint32_t dirty = DirtyAll;
     // Bumped whenever texture or buffer identity may have changed (views,
@@ -506,10 +511,9 @@ template <class R, class... A, R (GLAD_API_PTR *Function)(A...)> struct Invalida
 };
 
 // ---- core (VkCore.cpp) ----
-// deviceLocal: the GL buffer is GPU-owned (written/read mainly by the GPU), so
-// prefer memory that is both device-local and host-visible (a discrete GPU's
-// BAR heap). Falls back to host memory when that heap is absent or exhausted.
-Range AllocateBuffer(VkDeviceSize size, bool deviceLocal = false);
+// GPU-owned and static draw buffers prefer mapped device-local memory.
+// Static draws have a separate budget and can fall back to host memory.
+Range AllocateBuffer(VkDeviceSize size, BufferPlacement placement = BufferPlacement::Host);
 void RetireRange(Range range, std::uint64_t serial);
 void Retire(Retired::Kind kind, std::uint64_t handle, std::uint64_t serial);
 void RetireImage(std::shared_ptr<Image> image);

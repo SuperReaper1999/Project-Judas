@@ -228,7 +228,9 @@ bool Renderer::Init() {
     }
     m_render->lightStorageVariant=m_capabilities.modernTier&&m_capabilities.storageBuffers&&(!lightPolicy||
         std::strcmp(lightPolicy,"texture")!=0);
-    m_render->persistentUploads=true;
+    // Vulkan renames busy transient storage by submission serial. Persistent
+    // GL pages instead force intermediate Vulkan submissions and waits.
+    m_render->persistentUploads=!JudasVulkan::Active();
     if(const char* setting=std::getenv("JUDAS_PERSISTENT_UPLOADS"))m_render->persistentUploads=std::strcmp(setting,"0")!=0;
     if(const char* batching=std::getenv("JUDAS_RENDER_BATCHING"))m_batchingEnabled=std::strcmp(batching,"0")!=0;
     const char* shadows=std::getenv("JUDAS_SHADOWS");m_shadowsEnabled=!(shadows&&std::string(shadows)=="0");
