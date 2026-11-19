@@ -548,6 +548,9 @@
       "target": "judas_exceptional_cleanup_tests",
       "groups": [
         "tooling"
+      ],
+      "args": [
+        "{root}/tests/fixtures"
       ]
     },
     {

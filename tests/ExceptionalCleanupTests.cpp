@@ -7,6 +7,7 @@
 #include <atomic>
 #include <cstdlib>
 #include <cstdio>
+#include <filesystem>
 #include <fstream>
 #include <future>
 #include <iterator>
@@ -28,13 +29,12 @@ void Check(bool condition, const char* description) {
     std::printf("PASS %s\n", description);
 }
 
-std::vector<unsigned char> Read(const char* path) {
+std::vector<unsigned char> Read(const std::filesystem::path& path) {
     std::ifstream file(path, std::ios::binary);
-    Check(bool(file), path);
+    Check(bool(file), path.string().c_str());
     return {std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>()};
 }
 
-constexpr auto wavPath = "tests/fixtures/engine-assets/audio/loop.wav";
 }
 
 #ifdef JUDAS_TRACK_NATIVE_CLEANUP
@@ -96,10 +96,10 @@ void CheckReleased(const char* description) {
 #endif
 }
 
-void CheckDecodeFailures() {
-    const auto png = Read("tests/fixtures/engine-assets/textures/beacon.png");
+void CheckDecodeFailures(const std::filesystem::path& fixtures, const std::filesystem::path& wavPath) {
+    const auto png = Read(fixtures / "engine-assets/textures/beacon.png");
     const auto wav = Read(wavPath);
-    const auto gltf = Read("tests/fixtures/m66/material-uv.gltf");
+    const auto gltf = Read(fixtures / "m66/material-uv.gltf");
     TextureData texture;
     AudioData audio;
     MeshData mesh;
@@ -146,7 +146,7 @@ void CheckDecodeFailures() {
 
 enum class RetirementCase { Worker, Rejected, Cancelled };
 
-void CheckRetirement(RetirementCase scenario) {
+void CheckRetirement(RetirementCase scenario, const std::string& wavPath) {
     JobSystem jobs(1);
     AudioSystem audio;
     audio.SetJobSystem(&jobs);
@@ -195,12 +195,14 @@ void CheckRetirement(RetirementCase scenario) {
 }
 }
 
-int main() {
+int main(int argc, char** argv) {
     try {
-        CheckDecodeFailures();
-        CheckRetirement(RetirementCase::Worker);
-        CheckRetirement(RetirementCase::Rejected);
-        CheckRetirement(RetirementCase::Cancelled);
+        const std::filesystem::path fixtures = argc > 1 ? argv[1] : "tests/fixtures";
+        const auto wavPath = fixtures / "engine-assets/audio/loop.wav";
+        CheckDecodeFailures(fixtures, wavPath);
+        CheckRetirement(RetirementCase::Worker, wavPath.string());
+        CheckRetirement(RetirementCase::Rejected, wavPath.string());
+        CheckRetirement(RetirementCase::Cancelled, wavPath.string());
         return 0;
     } catch (const std::exception& error) {
         probe = {};
