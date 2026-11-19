@@ -126,6 +126,7 @@ public:
     ProjectAudioSettings audioGroups;
     std::vector<AudioZone>& AudioZones(){return m_audioZones;}
     void BeginAudio();void EndAudio();
+    void PrepareStartupAudio();
     bool PlayAudioOneShot(SceneObjectId,std::string& error,const std::string* clipOverride=nullptr);
     void ReleaseEntityAudio(SceneObjectId);
     bool SeekAudio(SceneObjectId,double seconds);

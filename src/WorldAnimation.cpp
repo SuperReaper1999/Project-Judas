@@ -31,12 +31,14 @@ void ObserveAnimationInterval(RuntimeWorld::AnimationInstance& a,float dt){
  for(const auto& l:a.layers)if(l.settings.enabled)sample(l.playback,l.settings.weight,"layer:"+l.settings.id);
  if(a.step.overflow)a.error="animation event interval exceeds 256 markers; no partial events published";
 }
-bool PrepareLayer(const SkeletalAsset& asset,const AnimationLayerSettings& settings,RuntimeWorld::AnimationLayer& layer,std::string& error){
+bool PrepareLayer(const SkeletalAsset& asset,const AnimationLayerSettings& settings,RuntimeWorld::AnimationLayer& layer,std::string& error,
+                  const std::vector<int>* preparedMask=nullptr){
  if(!ValidAnimationLayers({settings},error))return false;
  auto clip=std::find_if(asset.clips.begin(),asset.clips.end(),[&](const auto& c){return c.name==settings.clip;});
  if(clip==asset.clips.end()){error="unknown layer clip: "+settings.clip;return false;}
  layer.settings=settings;layer.playback.clip=settings.clip;layer.playback.time=settings.time;layer.playback.speed=settings.speed;
- if(!ResolveJointMask(asset.skeleton,settings.mask,layer.mask,error))return false;
+ if(preparedMask)layer.mask=*preparedMask;
+ else if(!ResolveJointMask(asset.skeleton,settings.mask,layer.mask,error))return false;
  layer.reference=asset.skeleton.rest;
  if(!settings.referenceClip.empty()){auto ref=std::find_if(asset.clips.begin(),asset.clips.end(),[&](const auto& c){return c.name==settings.referenceClip;});if(ref==asset.clips.end()){error="unknown additive reference clip";return false;}layer.reference=SampleClip(asset.skeleton,*ref,settings.referenceTime);}
  if(settings.additive)for(const auto& p:layer.reference.local)for(int k=0;k<3;++k)if(std::abs(p.scale[k])<1e-8f){error="additive reference scale is zero";return false;}
@@ -204,7 +206,10 @@ bool RuntimeWorld::SetAnimationLayer(EntityId id,const AnimationLayerSettings& s
  auto* instance=RuntimeAnimation(id);if(!instance||!instance->asset){error="animation asset is not ready";return false;}
  auto it=std::find_if(instance->layers.begin(),instance->layers.end(),[&](const auto& l){return l.settings.id==settings.id;});
  if(remove){if(it!=instance->layers.end())instance->layers.erase(it);instance->preparedM70=false;ResolveAnimationPose(*instance,0);return true;}
- if(it==instance->layers.end()&&instance->layers.size()>=16){error="too many layers";return false;}AnimationLayer layer;if(!PrepareLayer(*instance->asset,settings,layer,error))return false;
+ if(it==instance->layers.end()&&instance->layers.size()>=16){error="too many layers";return false;}
+ // RuntimeAnimation clears the layers when the skeletal asset changes.
+ const auto* preparedMask=it!=instance->layers.end()&&it->settings.mask==settings.mask?&it->mask:nullptr;
+ AnimationLayer layer;if(!PrepareLayer(*instance->asset,settings,layer,error,preparedMask))return false;
  if(it!=instance->layers.end()){if(it->settings.clip==settings.clip){layer.playback=it->playback;layer.playback.speed=settings.speed;}*it=std::move(layer);}else instance->layers.push_back(std::move(layer));instance->preparedM70=false;ResolveAnimationPose(*instance,0);return true;
 }
 

@@ -45,6 +45,25 @@ int main(int argc,char** argv){
    target.positionWeight=1;target.orientationWeight=0;settings.targets.push_back(target);
   }
   check(world.ConfigureFullBodyIK(10,settings,error),"live four-target IK config through runtime owner");
+  auto* animation=world.RuntimeAnimation(10);
+  AnimationLayerSettings layer;
+  layer.id="mask-update";
+  layer.clip="Walk";
+  layer.mask={"PalmA"};
+  layer.time=.125f;
+  check(world.SetAnimationLayer(10,layer,false,error),"ordinary runtime layer resolves its first joint mask");
+  layer.weight=.7f;
+  const auto first=FindSkeletonJoint(animation->asset->skeleton,"PalmA");
+  const auto second=FindSkeletonJoint(animation->asset->skeleton,"PalmB");
+  check(world.SetAnimationLayer(10,layer,false,error)&&animation->layers.back().mask==std::vector<int>{first}&&
+        animation->layers.back().playback.time==.125f,"weight update retains resolved mask and playback time");
+  layer.mask={"PalmB"};
+  check(world.SetAnimationLayer(10,layer,false,error)&&animation->layers.back().mask==std::vector<int>{second},
+        "edited joint keys resolve a replacement mask");
+  layer.mask.push_back("PalmB");
+  check(!world.SetAnimationLayer(10,layer,false,error)&&animation->layers.back().mask==std::vector<int>{second},
+        "duplicate edited keys fail without changing the live mask");
+  check(world.SetAnimationLayer(10,layer,true,error),"remove fixture layer before continuation");
  }
 
  // Manual clip advancement is gameplay intent; production fixed stepping owns IK and physics.

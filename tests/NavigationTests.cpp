@@ -60,6 +60,10 @@ int main(){std::string error;auto scene=fixture();auto* source=scene.Find(2);Pro
   check(warm.Navigation().Statistics().surfaces==1&&warm.Navigation().Errors().empty()&&
         live.status==NavigationPath::Status::Complete&&live.distance==normal.distance,
         "prepared and ordinary first-step publication give the same path");
+  const auto copies=warm.MetadataStats().definitionsCopied;
+  warm.UpdateNavigation(.02f);
+  check(warm.MetadataStats().definitionsCopied==copies&&warm.Navigation().Statistics().surfaces==1,
+        "routine navigation update reads live definitions without copying the bake source scene");
  }
  {
   RuntimeWorld changed;

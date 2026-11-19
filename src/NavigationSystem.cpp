@@ -18,6 +18,7 @@
 #include <set>
 #include <cmath>
 #include <cstring>
+#include <optional>
 namespace {
 struct StartupNavigation {
     std::string sceneSignature;
@@ -276,20 +277,30 @@ void NavigationSystem::PrepareStartup(RuntimeWorld& world) {
 
 void NavigationSystem::Update(RuntimeWorld& world,float dt){
     JUDAS_PROFILE_SCOPE("Navigation update");
-    Scene geometry;
-    geometry.Objects()=world.ScriptObjects();
-    const auto& objects=geometry.Objects();
+    std::vector<const SceneObject*> objects;
+    for (auto id : world.DefinitionIds()) {
+        const auto* o = world.RuntimeDefinition(id);
+        if (o && (o->navigationSurface || o->navigationAgent || o->navigationLink || o->navigationObstacle))
+            objects.push_back(o);
+    }
+    // A bake needs all its source geometry. Routine agent and obstacle updates
+    // only read the live navigation definitions, in the same entity order.
+    std::optional<Scene> geometry;
+    const auto bakeSource = [&]() -> const Scene& {
+        if (!geometry) geometry.emplace().Objects() = world.ScriptObjects();
+        return *geometry;
+    };
     std::set<SceneObjectId> liveSurfaces,liveAgents,liveLinks;
     auto startup = std::move(m->startup);
     if (startup) {
         JUDAS_PROFILE_SCOPE("Recheck prepared navigation inputs");
         auto* resources = world.Resources();
         std::string signature;
-        if (!resources || !resources->Assets() || !StartupSceneSignature(geometry,signature) ||
+        if (!resources || !resources->Assets() || !StartupSceneSignature(bakeSource(),signature) ||
             signature != startup->sceneSignature || !startup->sourceFiles.Matches(*resources->Assets()))
             startup.reset();
     }
- for(auto& o:objects){if(o.navigationLink&&o.navigationLink->enabled){auto existing=m->links.find(o.id);if(existing==m->links.end()||NavigationProperties(existing->second)!=NavigationProperties(o)||existing->second.transform.position!=o.transform.position||existing->second.transform.rotation!=o.transform.rotation)++m->revision;m->links[o.id]=o;liveLinks.insert(o.id);}if(o.navigationAgent&&o.navigationAgent->enabled){m->agents.try_emplace(o.id);liveAgents.insert(o.id);}if(o.navigationSurface&&o.navigationSurface->enabled){liveSurfaces.insert(o.id);if(!o.landscape&&!m->surfaces.count(o.id)&&!m->errors.count(o.id)&&world.Resources()){
+ for(const auto* object:objects){const auto& o=*object;if(o.navigationLink&&o.navigationLink->enabled){auto existing=m->links.find(o.id);if(existing==m->links.end()||NavigationProperties(existing->second)!=NavigationProperties(o)||existing->second.transform.position!=o.transform.position||existing->second.transform.rotation!=o.transform.rotation)++m->revision;m->links[o.id]=o;liveLinks.insert(o.id);}if(o.navigationAgent&&o.navigationAgent->enabled){m->agents.try_emplace(o.id);liveAgents.insert(o.id);}if(o.navigationSurface&&o.navigationSurface->enabled){liveSurfaces.insert(o.id);if(!o.landscape&&!m->surfaces.count(o.id)&&!m->errors.count(o.id)&&world.Resources()){
   std::string error;
   auto data=world.Resources()->GetNavigation(o.navigationSurface->asset,error);
   if(data){
@@ -299,7 +310,7 @@ void NavigationSystem::Update(RuntimeWorld& world,float dt){
     if(found!=startup->surfaces.end()&&found->second->surface->data==data)
         prepared=found->second.get();
    }
-   if((!prepared&&!ValidateBakedSurface(geometry,o,m->config,*data,world.Resources()->Assets(),error))||
+   if((!prepared&&!ValidateBakedSurface(bakeSource(),o,m->config,*data,world.Resources()->Assets(),error))||
       !LoadSurface(o.id,o.transform,data,error,true,prepared))m->errors[o.id]=error;
   }else if(error!="loading")m->errors[o.id]=error;
  }}}
@@ -307,7 +318,7 @@ void NavigationSystem::Update(RuntimeWorld& world,float dt){
  for(auto it=m->agents.begin();it!=m->agents.end();)if(!liveAgents.count(it->first))it=m->agents.erase(it);else ++it;
  for(auto it=m->links.begin();it!=m->links.end();)if(!liveLinks.count(it->first)){it=m->links.erase(it);++m->revision;}else ++it;
  JUDAS_PROFILE_COUNTER("Navigation agents",double(m->agents.size()),ProfileCounterMode::Latest);
- for(auto& [id,s]:m->surfaces){JUDAS_PROFILE_SCOPE("Navigation obstacles and tile cache"); JUDAS_PROFILE_COUNTER("Navigation obstacle batches",1,ProfileCounterMode::Sum);std::set<SceneObjectId> present;for(auto& o:objects)if(o.navigationObstacle&&o.navigationObstacle->enabled){present.insert(o.id);auto p=o.transform;EntityPhysicalState state;if(world.GetEntityState(o.id,state)){p.position=state.position;p.rotation=state.rotation;}auto settings=*o.navigationObstacle;auto it=s->obstacles.find(o.id);if(it!=s->obstacles.end()&&it->second.frame.position==s->frame.position&&it->second.frame.rotation==s->frame.rotation&&glm::distance(p.position,it->second.pose.position)<settings.updateDistance&&std::abs(glm::dot(p.rotation,it->second.pose.rotation))>.9999f&&it->second.settings.enabled==settings.enabled&&it->second.settings.cylinder==settings.cylinder&&it->second.settings.halfExtents==settings.halfExtents&&it->second.settings.radius==settings.radius&&it->second.settings.height==settings.height)continue;const auto bounds=s->obstacleBounds(p,settings);
+ for(auto& [id,s]:m->surfaces){JUDAS_PROFILE_SCOPE("Navigation obstacles and tile cache"); JUDAS_PROFILE_COUNTER("Navigation obstacle batches",1,ProfileCounterMode::Sum);std::set<SceneObjectId> present;for(const auto* object:objects)if(const auto& o=*object;o.navigationObstacle&&o.navigationObstacle->enabled){present.insert(o.id);auto p=o.transform;EntityPhysicalState state;if(world.GetEntityState(o.id,state)){p.position=state.position;p.rotation=state.rotation;}auto settings=*o.navigationObstacle;auto it=s->obstacles.find(o.id);if(it!=s->obstacles.end()&&it->second.frame.position==s->frame.position&&it->second.frame.rotation==s->frame.rotation&&glm::distance(p.position,it->second.pose.position)<settings.updateDistance&&std::abs(glm::dot(p.rotation,it->second.pose.rotation))>.9999f&&it->second.settings.enabled==settings.enabled&&it->second.settings.cylinder==settings.cylinder&&it->second.settings.halfExtents==settings.halfExtents&&it->second.settings.radius==settings.radius&&it->second.settings.height==settings.height)continue;const auto bounds=s->obstacleBounds(p,settings);
    if(!s->accepts(bounds)){
        m->errors[o.id]="navigation obstacle exceeds Detour's eight tile layers";
        continue;

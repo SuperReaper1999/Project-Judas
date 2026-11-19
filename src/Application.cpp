@@ -51,7 +51,10 @@ bool PrepareFirstFrame(EngineHost& host,RuntimeWorld& world,StartupScreen& splas
         if(ready&&scriptsStable){if(++stable>=2)break;}else stable=0;
         SDL_Delay(1);
     }
-    if(!host.GetWindow().ShouldClose())world.PrepareStartupNavigation();
+    if(!host.GetWindow().ShouldClose()){
+        world.PrepareStartupNavigation();
+        world.PrepareStartupAudio();
+    }
     splash.Finish();
     if(host.GetWindow().ShouldClose())return false;
     host.GetWindow().ClearPendingRequests();

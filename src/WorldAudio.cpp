@@ -25,6 +25,26 @@ std::string StableKey(RuntimeWorld& w,EntityId id){return w.AudioStableIdentity(
 }
 void RuntimeWorld::ResetAudioMotion(){m_listenerMotionValid=false;for(auto& e:m_audioEmitters)e.motionValid=false;}
 void RuntimeWorld::BeginAudio(){if(m_audioResume.empty())EndAudio();m_audioRunning=true;if(m_audioSystem){AudioGroupSettings master;bool retained=m_audioSystem->GetGroup("master",master);m_audioSystem->ConfigureGroups(audioGroups);if(m_restoreConstruction&&retained)m_audioSystem->SetGroup("master",master);}for(auto& e:m_audioEmitters){if(!IsPublished(e.id))continue;e.wantPlay=m_audioResume.count(e.id)?m_audioResume.at(e.id).requested:e.settings.playOnStart;e.error.clear();}ResetAudioMotion();}
+void RuntimeWorld::PrepareStartupAudio(){
+    JUDAS_PROFILE_SCOPE("Startup audio device");
+    if(!m_audioRunning||!m_audioSystem||!m_assets)return;
+    glm::vec3 position;glm::quat rotation;
+    const bool listener=m_audioListener&&m_audioListener->settings.enabled&&
+        Pose(*this,m_audioListener->id,m_audioListener->transform,1,position,rotation);
+    for(const auto& e:m_audioEmitters){
+        if(!IsPublished(e.id)||!e.settings.enabled||(e.settings.spatial&&!listener)||
+           !Pose(*this,e.id,e.transform,1,position,rotation))continue;
+        std::string error;
+        const bool ready=e.settings.loading==AudioLoading::Streamed
+            ?!m_assets->GetStreamAudioPath(e.settings.asset,error).empty()
+            :m_assets->StateOf(e.settings.asset)==ResourceState::Ready;
+        if(!ready)continue;
+        // Prepare the suspended device only. Runtime voice creation still owns
+        // authored playback, restored state, and nonfatal device diagnostics.
+        m_audioSystem->Init(error);
+        return;
+    }
+}
 void RuntimeWorld::ReleaseEntityAudio(SceneObjectId id){
  for(auto& e:m_audioEmitters)if(e.id==id){if(m_audioSystem)m_audioSystem->DestroyVoice(e.voice);e.voice={};e.wantPlay=false;}
  for(auto it=m_audioOneShots.begin();it!=m_audioOneShots.end();)if(it->first==id){if(m_audioSystem)m_audioSystem->DestroyVoice(it->second);it=m_audioOneShots.erase(it);}else ++it;
