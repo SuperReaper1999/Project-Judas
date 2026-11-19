@@ -15,12 +15,17 @@ export default class {
         this.full = new WorldMap(this.document.get('overview'), region);
         this.local = new WorldMap(this.document.get('minimap'), region);
         this.full.placeMarker(this.document.get('overview_pin'), waypoint);
+        this.playerMarker = this.document.get('minimap_player');
+        this.waypointMarker = this.document.get('minimap_pin');
+    }
+    restore() {
+        this.start();
     }
     uiUpdate() {
         const player = world.toAbsolute(this.entity.transform.position);
         this.local.setView({center: player, width: 16, height: 16, heading: 0, circular: true});
-        this.local.placeMarker(this.document.get('minimap_player'), player);
-        this.local.placeMarker(this.document.get('minimap_pin'), waypoint);
+        this.local.placeMarker(this.playerMarker, player);
+        this.local.placeMarker(this.waypointMarker, waypoint);
     }
     destroy() {
         this.document?.unload();
