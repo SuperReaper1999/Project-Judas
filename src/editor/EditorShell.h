@@ -18,6 +18,7 @@ class EditorShell {
     void Draw(EditorContext &, EditorPreferences &);
     void DrawStopped(EditorContext &, EditorPreferences &);
     void Present(EngineHost &);
+    void PresentVulkanViewports(EngineHost &);
     void Destroy(Renderer &);
     EditorViewportPresenter views;
 

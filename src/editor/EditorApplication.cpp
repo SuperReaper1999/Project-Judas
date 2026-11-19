@@ -1,5 +1,6 @@
 #include "EditorApplication.h"
 #include "EditorPlatformPlacement.h"
+#include "EditorVulkanViewports.h"
 #include "../ExperimentalBrowser.h"
 #include "AnimationTimeline.h"
 #include "BrowserExportWorkflow.h"
@@ -220,7 +221,7 @@ int EditorApplication::Run(int argc, char **argv) {
     const auto editorTitle = std::string("Judas Editor V2 — ") + GetBuildIdentity().releaseName + " " +
                              GetBuildIdentity().version + " [" + GetBuildIdentity().channel + "] " +
                              GetBuildIdentity().buildId;
-    if (!host.Init(editorTitle.c_str(), kWindowWidth, kWindowHeight, true, error)) {
+    if (!host.Init(editorTitle.c_str(), kWindowWidth, kWindowHeight, true, error, {}, true)) {
         std::fprintf(stderr, "%s\n", error.c_str());
         return 1;
     }
@@ -249,8 +250,6 @@ int EditorApplication::Run(int argc, char **argv) {
     LoadEditorPreferences();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     const char *driver = SDL_GetCurrentVideoDriver();
-    // Detached editor windows are additional OpenGL contexts; the experimental
-    // Vulkan backend presents to the main window only.
     if (driver && (std::string(driver) == "x11" || std::string(driver) == "windows") &&
         !host.GetWindow().UsesVulkan())
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
@@ -268,6 +267,7 @@ int EditorApplication::Run(int argc, char **argv) {
     m_scriptTools->presentStoppedShell = [this, &host, &window] {
         m_shell.Present(host);
         window.SwapBuffers();
+        m_shell.PresentVulkanViewports(host);
     };
 
     m_preferences.ApplyPending(m_panels);
@@ -280,6 +280,10 @@ int EditorApplication::Run(int argc, char **argv) {
     if (!m_guiRendererReady) {
         std::fprintf(stderr, "Editor UI backend initialization failed: %s\n", SDL_GetError());
         return 1;
+    }
+    if (window.UsesVulkan()) {
+        if (InstallVulkanEditorViewports()) io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+        else std::fprintf(stderr, "[Editor] Vulkan detached viewports unavailable; using the main window\n");
     }
     InstallEditorPlatformPlacement();
     window.SetEventHook([this,
@@ -471,6 +475,7 @@ int EditorApplication::Run(int argc, char **argv) {
             JUDAS_PROFILE_WAIT("Swap present wait");
             window.SwapBuffers();
         }
+        m_shell.PresentVulkanViewports(host);
     }
 
     Shutdown(true);
@@ -496,6 +501,7 @@ void EditorApplication::Shutdown(bool savePreferences) {
         m_scriptTools->drawStoppedShell = {};
         m_scriptTools->presentStoppedShell = {};
     }
+    if (window.UsesVulkan() && m_guiRendererReady) ImGui::DestroyPlatformWindows();
     m_shell.Destroy(renderer);
     m_panels.brandImage = 0;
     m_sceneViewport.Destroy(renderer);

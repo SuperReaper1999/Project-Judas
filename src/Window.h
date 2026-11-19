@@ -24,7 +24,8 @@ public:
     // Embedding tools can request native text independently of gameplay focus.
     // The event hook receives it; claimed keyboard input stays out of gameplay.
     void SetHostTextInput(bool enabled);
-    bool Init(const char* title, int width, int height, bool visible = true);
+    bool Init(const char* title, int width, int height, bool visible = true,
+              bool allowVulkanPlatformWindows = false);
     const std::string& LastError() const { return m_lastError; }
     GraphicsProfile RequestedGraphicsProfile() const { return m_graphicsProfile; }
     void Shutdown();
@@ -111,7 +112,8 @@ public:
     void RequestTestSasToggle();
 
 private:
-    bool CreateDesktopGraphicsWindow(const char*, int width, int height, bool visible);
+    bool CreateDesktopGraphicsWindow(const char*, int width, int height, bool visible,
+                                     bool allowVulkanPlatformWindows);
     std::string m_lastError;
     GraphicsProfile m_graphicsProfile = GraphicsProfile::Auto;
     void UpdateNativeTextInput();

@@ -9,6 +9,7 @@
 #include "EditorSceneViewport.h"
 #include "EditorPlaySession.h"
 #include "EngineHost.h"
+#include "PerformanceProfiler.h"
 #include "Window.h"
 #include "glad/gl.h"
 #include "vulkan/VulkanBackend.h"
@@ -129,11 +130,20 @@ void EditorShell::Present(EngineHost &host) {
     glClearColor(background.x, background.y, background.z, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+    if (!window.UsesVulkan() && (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)) {
         SDL_Window *backupWindow = SDL_GL_GetCurrentWindow();
         SDL_GLContext backupContext = SDL_GL_GetCurrentContext();
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
         SDL_GL_MakeCurrent(backupWindow, backupContext);
     }
+}
+
+void EditorShell::PresentVulkanViewports(EngineHost &host) {
+    if (!host.GetWindow().UsesVulkan() ||
+        !(ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable))
+        return;
+    JUDAS_PROFILE_SCOPE("Detached editor viewport render and present");
+    ImGui::UpdatePlatformWindows();
+    ImGui::RenderPlatformWindowsDefault(nullptr, &host.GetRenderer());
 }

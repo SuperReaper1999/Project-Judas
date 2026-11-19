@@ -38,7 +38,8 @@ std::uint32_t WindowFlag();
 // Creates the instance, device, swapchain and default framebuffer for
 // `window`. `glMajor.glMinor` is the feature level reported through the
 // renderer's capability queries (3.3 = portable tier, 4.6 = modern tier).
-bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error);
+bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error,
+          bool allowPlatformWindows = false);
 void Shutdown();
 // True between a successful Init and Shutdown.
 bool Active();
@@ -59,10 +60,19 @@ int SwapInterval();
 // Drawable size of the default framebuffer in pixels.
 void DrawableSize(int &width, int &height);
 
+// Additional SDL windows share the active device and have independent WSI
+// ownership. Destroy their presentation state before destroying the SDL window.
+struct PlatformWindow;
+bool PlatformWindowsAvailable();
+PlatformWindow *CreatePlatformWindow(SDL_Window *window, std::string &error);
+void DestroyPlatformWindow(PlatformWindow *window);
+bool PresentPlatformWindow(PlatformWindow &window, std::uint32_t colorTexture, std::string &error);
+
 struct Statistics {
     std::uint64_t frames = 0, submissions = 0, renderPasses = 0, draws = 0;
     std::uint64_t pipelines = 0, descriptorSets = 0, validationMessages = 0;
     std::uint64_t bufferBytes = 0, imageBytes = 0;
+    std::uint64_t platformPresents = 0;
 };
 Statistics Stats();
 // Device description for logs and evidence ("Vulkan 1.4.x / llvmpipe ...").
@@ -73,7 +83,7 @@ std::uintptr_t ContextIdentity();
 #else
 inline bool Compiled() { return false; }
 inline std::uint32_t WindowFlag() { return 0; }
-inline bool Init(SDL_Window *, int, int, std::string &error) {
+inline bool Init(SDL_Window *, int, int, std::string &error, bool = false) {
     error = "This build does not contain the Vulkan backend (configure with JUDAS_VULKAN=ON).";
     return false;
 }
@@ -85,10 +95,16 @@ inline void Present() {}
 inline void SetSwapInterval(int) {}
 inline int SwapInterval() { return -1; }
 inline void DrawableSize(int &width, int &height) { width = height = 0; }
+struct PlatformWindow;
+inline bool PlatformWindowsAvailable() { return false; }
+inline PlatformWindow *CreatePlatformWindow(SDL_Window *, std::string &) { return nullptr; }
+inline void DestroyPlatformWindow(PlatformWindow *) {}
+inline bool PresentPlatformWindow(PlatformWindow &, std::uint32_t, std::string &) { return false; }
 struct Statistics {
     std::uint64_t frames = 0, submissions = 0, renderPasses = 0, draws = 0;
     std::uint64_t pipelines = 0, descriptorSets = 0, validationMessages = 0;
     std::uint64_t bufferBytes = 0, imageBytes = 0;
+    std::uint64_t platformPresents = 0;
 };
 inline Statistics Stats() { return {}; }
 inline std::string DeviceSummary() { return "Vulkan backend not built"; }

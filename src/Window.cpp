@@ -47,7 +47,8 @@ EM_ASYNC_JS(void, AwaitBrowserFrame, (), {
 #include <cmath>
 #include <cstdlib>
 
-bool Window::CreateDesktopGraphicsWindow(const char* title, int width, int height, bool visible) {
+bool Window::CreateDesktopGraphicsWindow(const char* title, int width, int height, bool visible,
+                                         bool allowVulkanPlatformWindows) {
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     if (JudasVulkan::Requested()) {
         // Experimental Vulkan backend: no OpenGL context is created. The
@@ -72,7 +73,8 @@ bool Window::CreateDesktopGraphicsWindow(const char* title, int width, int heigh
         }
         const bool portable = m_graphicsProfile == GraphicsProfile::Portable;
         std::string error;
-        if (!JudasVulkan::Init(m_window, portable ? 3 : 4, portable ? 3 : 6, error)) {
+        if (!JudasVulkan::Init(m_window, portable ? 3 : 4, portable ? 3 : 6, error,
+                              allowVulkanPlatformWindows)) {
             m_lastError = "Cannot start the Vulkan backend: " + error;
             SDL_DestroyWindow(m_window);
             m_window = nullptr;
@@ -152,7 +154,8 @@ bool Window::CreateDesktopGraphicsWindow(const char* title, int width, int heigh
 #endif
 }
 
-bool Window::Init(const char* title, int width, int height, bool visible) {
+bool Window::Init(const char* title, int width, int height, bool visible,
+                  [[maybe_unused]] bool allowVulkanPlatformWindows) {
     m_lastError.clear();
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     if (!ParseGraphicsProfile(std::getenv("JUDAS_GL_PROFILE"), m_graphicsProfile, m_lastError)) {
@@ -201,7 +204,7 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
         return false;
     }
 #else
-    if (!CreateDesktopGraphicsWindow(title, width, height, visible)) {
+    if (!CreateDesktopGraphicsWindow(title, width, height, visible, allowVulkanPlatformWindows)) {
         std::fprintf(stderr, "%s\n", m_lastError.c_str());
         Shutdown();
         return false;

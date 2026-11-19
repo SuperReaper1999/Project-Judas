@@ -59,9 +59,9 @@ is neither withdrawn nor inherited by this changed source. See [Windows](WINDOWS
 - Online sessions support explicit authored-root authority/replication. Streamed or
   mod-enabled dedicated roots, hostile public-Internet deployment and arbitrary
   assembly replication are outside the current foundation.
-- Editor native detachment requires the OpenGL renderer and an eligible SDL
-  video driver. On Linux that driver is X11. The [Vulkan editor](VULKAN_PARITY.md)
-  uses one presentation window. Scene/Game render at logical UI resolution.
+- Linux editor native detachment requires the SDL X11 video driver. Vulkan
+  also requires [presentation fence support](VULKAN_INTEGRATION.md#detached-editor-windows).
+  Native Wayland uses single-window docking. Scene/Game render at logical UI resolution.
   Browser/Android exports do not distribute the desktop editor.
 
 Use the corresponding guide/reference for API phase, format, resource and persistence

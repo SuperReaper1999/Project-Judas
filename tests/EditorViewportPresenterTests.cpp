@@ -12,12 +12,15 @@
 #include "editor/EditorPlaySession.h"
 #include "editor/EditorSceneViewport.h"
 #include "editor/EditorViewportPresenter.h"
+#include "editor/EditorVulkanViewports.h"
+#include "editor/ScriptTools.h"
 #include "glad/gl.h"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl2.h"
 #include <SDL2/SDL.h>
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <cstdio>
 #include <filesystem>
@@ -62,10 +65,10 @@ bool Pixel(const std::vector<unsigned char> &pixels, int width, int height, int 
            std::abs(int(pixels[offset + 2]) - int(blue)) <= 5;
 }
 
-// This is the normal native platform-window render sequence, with observation
-// inserted before swap. It proves shared textures in actual secondary contexts.
+// Observe OpenGL secondary framebuffers and Vulkan's source for the actual
+// secondary swapchain blit. Presentation success is checked separately.
 void RenderSecondaryWindows(const EditorViewSurface &scene, const EditorViewSurface &game, Renderer &renderer,
-                            bool blueGame, bool &scenePixels, bool &gamePixels) {
+                            bool vulkan, bool blueGame, bool &scenePixels, bool &gamePixels) {
     auto &platform = ImGui::GetPlatformIO();
     for (int i = 1; i < platform.Viewports.Size; ++i) {
         auto *viewport = platform.Viewports[i];
@@ -74,15 +77,27 @@ void RenderSecondaryWindows(const EditorViewSurface &scene, const EditorViewSurf
         if (platform.Platform_RenderWindow)
             platform.Platform_RenderWindow(viewport, nullptr);
         if (platform.Renderer_RenderWindow)
-            platform.Renderer_RenderWindow(viewport, nullptr);
+            platform.Renderer_RenderWindow(viewport, vulkan ? &renderer : nullptr);
         const auto id = Uint32(reinterpret_cast<intptr_t>(viewport->PlatformHandle));
         auto *native = SDL_GetWindowFromID(id);
         if (!native)
             continue;
         int width = 0, height = 0;
-        SDL_GL_GetDrawableSize(native, &width, &height);
         std::vector<unsigned char> pixels;
-        renderer.CaptureFrame(width, height, pixels);
+        if (vulkan) {
+            TextureData rgba;
+            if (!ReadVulkanEditorViewport(*viewport, rgba)) continue;
+            width = rgba.width;
+            height = rgba.height;
+            pixels.resize(std::size_t(width) * height * 3);
+            for (int y = 0; y < height; ++y)
+                for (int x = 0; x < width; ++x)
+                    std::copy_n(&rgba.pixels[(std::size_t(height - 1 - y) * width + x) * 4], 3,
+                                &pixels[(std::size_t(y) * width + x) * 3]);
+        } else {
+            SDL_GL_GetDrawableSize(native, &width, &height);
+            renderer.CaptureFrame(width, height, pixels);
+        }
         const auto inspect = [&](const EditorViewSurface &surface, unsigned r, unsigned g, unsigned b) {
             if (surface.windowId != id || viewport->Size.x <= 0 || viewport->Size.y <= 0)
                 return false;
@@ -108,16 +123,22 @@ void RenderSecondaryWindows(const EditorViewSurface &scene, const EditorViewSurf
 
 int main(int argc, char **argv) try {
     bool detached = false;
+    bool windowManager = false;
+    bool timing = false;
     std::filesystem::path output = "build/editor-v2-presenter";
     for (int i = 1; i < argc; ++i)
         if (std::string(argv[i]) == "--detached")
             detached = true;
+        else if (std::string(argv[i]) == "--window-manager")
+            windowManager = true;
+        else if (std::string(argv[i]) == "--timing")
+            timing = true;
         else
             output = argv[i];
     std::filesystem::create_directories(output);
     EngineHost host;
     std::string error;
-    Check(host.Init("Judas Editor V2 viewport qualification", 1000, 700, detached, error),
+    Check(host.Init("Judas Editor V2 viewport qualification", 1000, 700, detached, error, {}, detached),
           "real native graphics host starts");
     if (failures) {
         std::fprintf(stderr, "%s\n", error.c_str());
@@ -125,7 +146,9 @@ int main(int argc, char **argv) try {
     }
     const std::string driver = SDL_GetCurrentVideoDriver() ? SDL_GetCurrentVideoDriver() : "unknown";
     std::printf("VIDEO_DRIVER %s\n", driver.c_str());
-    if (detached && (host.GetWindow().UsesVulkan() || (driver != "x11" && driver != "windows"))) {
+    const bool vulkan = host.GetWindow().UsesVulkan();
+    if (detached && ((vulkan && !JudasVulkan::PlatformWindowsAvailable()) ||
+                    (driver != "x11" && driver != "windows"))) {
         std::puts("UNAVAILABLE detached native windows require the qualified desktop backend");
         return 77;
     }
@@ -144,6 +167,13 @@ int main(int argc, char **argv) try {
     else
         ImGui_ImplSDL2_InitForOpenGL(window.NativeWindow(), window.NativeGLContext());
     ImGui_ImplOpenGL3_Init("#version 330 core");
+    if (detached && vulkan && !InstallVulkanEditorViewports()) {
+        std::puts("FAIL could not install Vulkan editor viewport callbacks");
+        ImGui_ImplOpenGL3_Shutdown();
+        ImGui_ImplSDL2_Shutdown();
+        ImGui::DestroyContext();
+        return 1;
+    }
     window.SetEventHook([](const SDL_Event &event) { ImGui_ImplSDL2_ProcessEvent(&event); });
     EditorDocument document;
     Project project;
@@ -184,7 +214,8 @@ int main(int argc, char **argv) try {
     EditorViewportPresenter views;
     bool blueGame = false;
     glm::vec2 sceneSize{360, 290}, gameSize{360, 290};
-    bool outsidePointer = false, detachedScene = false;
+    bool outsidePointer = false, detachedScene = false, reattach = false;
+    bool observePixels = true;
     std::optional<glm::vec2> pointerOverride;
     std::vector<std::pair<int, bool>> pointerButtons;
     int focusFixture = 0; // 1: real text edit, 2: real slider drag.
@@ -243,6 +274,8 @@ int main(int argc, char **argv) try {
             ImGui::SetNextWindowSize({gameSize.x, gameSize.y}, ImGuiCond_Always);
             if (detachNow)
                 ImGui::SetNextWindowViewport(0);
+            if (reattach)
+                ImGui::SetNextWindowViewport(ImGui::GetMainViewport()->ID);
             views.DrawGame(context, session);
         }
         if (scene.target.IsValid() && renderer.BeginRenderTarget(scene.target)) {
@@ -270,7 +303,7 @@ int main(int argc, char **argv) try {
         if (window.UsesVulkan()) JudasVulkan::DrawableSize(width, height);
         else SDL_GL_GetDrawableSize(window.NativeWindow(), &width, &height);
         std::vector<unsigned char> pixels;
-        renderer.CaptureFrame(width, height, pixels);
+        if (observePixels) renderer.CaptureFrame(width, height, pixels);
         const auto inspectMain = [&](const EditorViewSurface &surface, unsigned r, unsigned g, unsigned b) {
             if (!surface.visible || surface.windowId != SDL_GetWindowID(window.NativeWindow()))
                 return false;
@@ -280,12 +313,16 @@ int main(int argc, char **argv) try {
         };
         bool scenePixels = inspectMain(views.Scene(), 255, 0, 0);
         bool gamePixels = inspectMain(views.Game(), 0, blueGame ? 0 : 255, blueGame ? 255 : 0);
+        if (vulkan) window.SwapBuffers();
         if (detached) {
             ImGui::UpdatePlatformWindows();
-            RenderSecondaryWindows(views.Scene(), views.Game(), renderer, blueGame, scenePixels, gamePixels);
-            SDL_GL_MakeCurrent(window.NativeWindow(), window.NativeGLContext());
+            if (observePixels)
+                RenderSecondaryWindows(views.Scene(), views.Game(), renderer, vulkan, blueGame, scenePixels, gamePixels);
+            else
+                ImGui::RenderPlatformWindowsDefault(nullptr, &renderer);
+            if (!vulkan) SDL_GL_MakeCurrent(window.NativeWindow(), window.NativeGLContext());
         }
-        window.SwapBuffers();
+        if (!vulkan) window.SwapBuffers();
         return std::pair<bool, bool>{scenePixels, gamePixels};
     };
     frame();
@@ -641,7 +678,114 @@ int main(int argc, char **argv) try {
         Check(views.Game().windowId && views.Game().windowId != SDL_GetWindowID(window.NativeWindow()) &&
                   SDL_GetWindowFromID(views.Game().windowId),
               "Game is hosted in an actual secondary SDL OS window");
-        Check(native.second, "secondary OpenGL context displays the main-context Game texture");
+        Check(native.second, "secondary renderer displays the shared Game texture");
+        if (vulkan) {
+            Check(JudasVulkan::Stats().platformPresents > 0, "Vulkan presents to a real secondary swapchain");
+            const auto mainId = SDL_GetWindowID(window.NativeWindow());
+            auto *child = SDL_GetWindowFromID(views.Game().windowId);
+            if (!child || child == window.NativeWindow()) return 1;
+            int oldX = 0, oldY = 0;
+            SDL_GetWindowPosition(child, &oldX, &oldY);
+            SDL_SetWindowPosition(child, oldX - 30, oldY + 35);
+            for (int attempt = 0; attempt < 30; ++attempt) {
+                SDL_PumpEvents();
+                int x = 0, y = 0;
+                SDL_GetWindowPosition(child, &x, &y);
+                if (x != oldX || y != oldY) break;
+                SDL_Delay(5);
+            }
+            int movedX = 0, movedY = 0;
+            SDL_GetWindowPosition(child, &movedX, &movedY);
+            Check((movedX != oldX || movedY != oldY) && frame(true).second,
+                  "moving the detached SDL window preserves its image");
+            const auto parkedFlag = windowManager ? SDL_WINDOW_MINIMIZED : SDL_WINDOW_HIDDEN;
+            if (windowManager) SDL_MinimizeWindow(child);
+            else SDL_HideWindow(child);
+            for (int attempt = 0; attempt < 30 && !(SDL_GetWindowFlags(child) & parkedFlag); ++attempt) {
+                SDL_PumpEvents();
+                SDL_Delay(5);
+            }
+            const auto parkedPresents = JudasVulkan::Stats().platformPresents;
+            frame(true);
+            Check((SDL_GetWindowFlags(child) & parkedFlag) &&
+                      JudasVulkan::Stats().platformPresents == parkedPresents,
+                  "a parked native window skips Vulkan presentation");
+            if (windowManager) SDL_RestoreWindow(child);
+            else SDL_ShowWindow(child);
+            for (int attempt = 0; attempt < 30 && (SDL_GetWindowFlags(child) & parkedFlag); ++attempt) {
+                SDL_PumpEvents();
+                SDL_Delay(5);
+            }
+            Check(!(SDL_GetWindowFlags(child) & parkedFlag) && frame(true).second &&
+                      JudasVulkan::Stats().platformPresents > parkedPresents,
+                  "the restored native window resumes Vulkan presentation");
+            for (int repeat = 0; repeat < 3; ++repeat) {
+                const auto oldId = views.Game().windowId;
+                gameSize += glm::vec2(17, -10);
+                frame(true);
+                const auto resizedView = frame(true);
+                Check(views.Game().windowId == oldId && resizedView.second,
+                      "resizing a detached Vulkan Game retains its SDL window and current image");
+                reattach = true;
+                frame();
+                const auto attachedView = frame();
+                reattach = false;
+                Check(views.Game().windowId == mainId && !SDL_GetWindowFromID(oldId) && attachedView.second,
+                      "reattach retires its Vulkan surface before deleting the SDL window");
+                frame(true);
+                frame(true);
+                Check(views.Game().windowId != mainId && views.Game().windowId != oldId,
+                      "Game detaches again into a fresh native window");
+            }
+            const auto gameId = views.Game().windowId;
+            auto *gameViewport = ImGui::FindViewportByPlatformHandle(reinterpret_cast<void *>(std::uintptr_t(gameId)));
+            const auto gameViewportId = gameViewport ? gameViewport->ID : 0;
+            const auto authored = document.GetScene();
+            session.StopPlay(context, scene);
+            context.runtime = nullptr;
+            const auto beforeEditPresent = JudasVulkan::Stats().platformPresents;
+            frame(true);
+            frame(true);
+            Check(!session.world && panels.mode == EditorMode::Edit && gameViewportId &&
+                      SDL_GetWindowFromID(gameId) && ImGui::FindViewportByID(gameViewportId) &&
+                      JudasVulkan::Stats().platformPresents > beforeEditPresent,
+                  "Stop keeps the existing detached editor panel presenting in Edit");
+            std::unique_ptr<ScriptTools> scriptTools;
+            const bool restarted = session.StartPlay(context, scene, scriptTools, error);
+            Check(restarted, "ordinary editor Play recreates the runtime while the viewport is detached");
+            if (!restarted) throw std::runtime_error(error);
+            frame(true);
+            Check(frame(true).second && views.Game().windowId == gameId &&
+                      ScenesEqual(authored, document.GetScene()),
+                  "new Play frames reuse the native window and preserve the authored scene");
+
+            if (timing) {
+                GraphicsSetSwapInterval(0);
+                observePixels = false;
+                for (bool floating : {false, true, true, false}) {
+                    reattach = !floating;
+                    for (int i = 0; i < 25; ++i) frame(floating);
+                    const auto before = JudasVulkan::Stats();
+                    std::vector<double> samples;
+                    for (int i = 0; i < 120; ++i) {
+                        const auto start = std::chrono::steady_clock::now();
+                        frame(floating);
+                        samples.push_back(std::chrono::duration<double, std::milli>(
+                            std::chrono::steady_clock::now() - start).count());
+                    }
+                    std::sort(samples.begin(), samples.end());
+                    const auto after = JudasVulkan::Stats();
+                    std::printf("VIEWPORT_TIMING %s frames=120 p50_ms=%.3f p95_ms=%.3f p99_ms=%.3f submissions=%llu detached_presents=%llu\n",
+                                floating ? "floating" : "docked", samples[59], samples[113], samples[118],
+                                static_cast<unsigned long long>(after.submissions - before.submissions),
+                                static_cast<unsigned long long>(after.platformPresents - before.platformPresents));
+                }
+                reattach = false;
+                observePixels = true;
+                frame(true);
+                frame(true);
+            }
+        }
         views.ConfigureInput(window, true);
         Check(SDL_GetWindowID(window.InputWindow()) == views.Game().windowId,
               "detached Game input belongs to its native window");
@@ -673,6 +817,7 @@ int main(int argc, char **argv) try {
               "closing a native Scene tool leaves the main editor alive");
     }
     window.ClearInputRegion();
+    if (vulkan && detached) ImGui::DestroyPlatformWindows();
     views.Destroy(renderer);
     if (scene.target.IsValid())
         renderer.DestroyRenderTarget(scene.target);

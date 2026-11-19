@@ -721,55 +721,79 @@ void SavePipelineCache() {
 
 // ------------------------------------------------------------- swapchain ---
 namespace {
-void DestroySwapchain() {
-    if (g->swapchain) vkDestroySwapchainKHR(g->device, g->swapchain, nullptr);
-    g->swapchain = VK_NULL_HANDLE;
-    g->swapchainImages.clear();
-    g->swapchainLayouts.clear();
+bool FinishPresent(PresentTicket &ticket, bool wait) {
+    if (!ticket.pending) return true;
+    const auto result = wait ? vkWaitForFences(g->device, 1, &ticket.fence, VK_TRUE, UINT64_MAX)
+                             : vkGetFenceStatus(g->device, ticket.fence);
+    if (result == VK_NOT_READY && !wait) return false;
+    if (result != VK_SUCCESS) FailResult("presentation fence", result);
+    VK_CHECK(vkResetFences(g->device, 1, &ticket.fence));
+    ticket.pending = false;
+    return true;
 }
 
-void CreateSwapchain() {
-    g->swapchainDirty = false;
-    if (!g->surface) return;
-    int width = 0, height = 0;
-    SDL_Vulkan_GetDrawableSize(g->window, &width, &height);
-    if (width <= 0 || height <= 0) return;
-    VK_CHECK(vkDeviceWaitIdle(g->device));
-    VkSurfaceCapabilitiesKHR caps;
-    VK_CHECK(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(g->physical, g->surface, &caps));
+bool FinishPresents(Swapchain &swapchain, bool wait) {
+    bool complete = true;
+    for (auto &ticket : swapchain.tickets)
+        if (!FinishPresent(ticket, wait)) complete = false;
+    return complete;
+}
+
+void DestroySwapchain(Swapchain &swapchain) {
+    if (swapchain.handle) vkDestroySwapchainKHR(g->device, swapchain.handle, nullptr);
+    for (auto semaphore : swapchain.imageSemaphores) vkDestroySemaphore(g->device, semaphore, nullptr);
+    for (auto &ticket : swapchain.tickets) {
+        vkDestroySemaphore(g->device, ticket.semaphore, nullptr);
+        vkDestroyFence(g->device, ticket.fence, nullptr);
+    }
+    swapchain = Swapchain{};
+}
+
+VkResult BuildSwapchain(Swapchain &swapchain, VkSurfaceKHR surface, int width, int height, int swapInterval) {
+    VkSurfaceCapabilitiesKHR caps{};
+    auto result = vkGetPhysicalDeviceSurfaceCapabilitiesKHR(g->physical, surface, &caps);
+    if (result != VK_SUCCESS) return result;
     VkExtent2D extent = caps.currentExtent;
-    if (extent.width == 0xFFFFFFFFu) extent = {std::uint32_t(width), std::uint32_t(height)};
+    if (extent.width == UINT32_MAX) extent = {std::uint32_t(width), std::uint32_t(height)};
     extent.width = std::clamp(extent.width, caps.minImageExtent.width, caps.maxImageExtent.width);
     extent.height = std::clamp(extent.height, caps.minImageExtent.height, caps.maxImageExtent.height);
-    if (!extent.width || !extent.height) {
-        DestroySwapchain();
-        return;
-    }
+    if (!extent.width || !extent.height) return VK_NOT_READY;
+
     std::uint32_t count = 0;
-    VK_CHECK(vkGetPhysicalDeviceSurfaceFormatsKHR(g->physical, g->surface, &count, nullptr));
-    if (!count) Fatal("no surface formats for the Vulkan swapchain");
+    result = vkGetPhysicalDeviceSurfaceFormatsKHR(g->physical, surface, &count, nullptr);
+    if (result != VK_SUCCESS) return result;
+    if (!count) return VK_ERROR_FORMAT_NOT_SUPPORTED;
     std::vector<VkSurfaceFormatKHR> formats(count);
-    VK_CHECK(vkGetPhysicalDeviceSurfaceFormatsKHR(g->physical, g->surface, &count, formats.data()));
-    // The renderer writes display-encoded values, exactly as it does to the
-    // OpenGL default framebuffer without GL_FRAMEBUFFER_SRGB: use UNORM.
+    result = vkGetPhysicalDeviceSurfaceFormatsKHR(g->physical, surface, &count, formats.data());
+    if (result != VK_SUCCESS) return result;
+    // The shared renderer produces display-encoded pixels in UNORM.
     VkSurfaceFormatKHR chosen = formats[0];
     for (const auto &format : formats)
         if (format.format == VK_FORMAT_B8G8R8A8_UNORM || format.format == VK_FORMAT_R8G8B8A8_UNORM) {
             chosen = format;
             break;
         }
-    VK_CHECK(vkGetPhysicalDeviceSurfacePresentModesKHR(g->physical, g->surface, &count, nullptr));
+    if (chosen.format == VK_FORMAT_UNDEFINED) chosen.format = VK_FORMAT_B8G8R8A8_UNORM;
+    VkFormatProperties properties{};
+    vkGetPhysicalDeviceFormatProperties(g->physical, chosen.format, &properties);
+    if (!(caps.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_DST_BIT) ||
+        !(properties.optimalTilingFeatures & VK_FORMAT_FEATURE_BLIT_DST_BIT))
+        return VK_ERROR_FORMAT_NOT_SUPPORTED;
+
+    result = vkGetPhysicalDeviceSurfacePresentModesKHR(g->physical, surface, &count, nullptr);
+    if (result != VK_SUCCESS) return result;
     std::vector<VkPresentModeKHR> modes(count);
-    VK_CHECK(vkGetPhysicalDeviceSurfacePresentModesKHR(g->physical, g->surface, &count, modes.data()));
+    result = vkGetPhysicalDeviceSurfacePresentModesKHR(g->physical, surface, &count, modes.data());
+    if (result != VK_SUCCESS) return result;
     VkPresentModeKHR mode = VK_PRESENT_MODE_FIFO_KHR;
-    if (g->swapInterval == 0) {
+    if (swapInterval == 0) {
         for (auto candidate : modes)
             if (candidate == VK_PRESENT_MODE_MAILBOX_KHR) mode = candidate;
         for (auto candidate : modes)
             if (candidate == VK_PRESENT_MODE_IMMEDIATE_KHR) mode = candidate;
     }
     VkSwapchainCreateInfoKHR info{VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR};
-    info.surface = g->surface;
+    info.surface = surface;
     info.minImageCount = std::max(caps.minImageCount, 2u);
     if (caps.maxImageCount && info.minImageCount > caps.maxImageCount)
         info.minImageCount = caps.maxImageCount;
@@ -777,38 +801,151 @@ void CreateSwapchain() {
     info.imageColorSpace = chosen.colorSpace;
     info.imageExtent = extent;
     info.imageArrayLayers = 1;
-    info.imageUsage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+    info.imageUsage = VK_IMAGE_USAGE_TRANSFER_DST_BIT |
+                      (caps.supportedUsageFlags & VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT);
     info.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
     info.preTransform = caps.currentTransform;
-    info.compositeAlpha = (caps.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR)
-                              ? VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
-                              : VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR;
+    for (auto alpha : {VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR, VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR,
+                       VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR, VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR})
+        if (caps.supportedCompositeAlpha & alpha) {
+            info.compositeAlpha = alpha;
+            break;
+        }
     info.presentMode = mode;
     info.clipped = VK_TRUE;
-    info.oldSwapchain = g->swapchain;
+    info.oldSwapchain = swapchain.handle;
     VkSwapchainKHR created = VK_NULL_HANDLE;
-    const VkResult result = vkCreateSwapchainKHR(g->device, &info, nullptr, &created);
-    DestroySwapchain();
-    if (result == VK_ERROR_OUT_OF_DATE_KHR) {
-        g->swapchainDirty = true;
-        return;
-    }
-    if (result != VK_SUCCESS) FailResult("vkCreateSwapchainKHR", result);
-    g->swapchain = created;
-    g->swapchainFormat = chosen.format;
-    g->presentMode = mode;
-    g->swapchainExtent = extent;
-    VK_CHECK(vkGetSwapchainImagesKHR(g->device, g->swapchain, &count, nullptr));
-    g->swapchainImages.resize(count);
-    VK_CHECK(vkGetSwapchainImagesKHR(g->device, g->swapchain, &count, g->swapchainImages.data()));
-    g->swapchainLayouts.assign(count, VK_IMAGE_LAYOUT_UNDEFINED);
-    // The previous swapchain is destroyed, releasing its presents' semaphore waits.
-    while (g->presentSemaphores.size() < count) {
+    result = vkCreateSwapchainKHR(g->device, &info, nullptr, &created);
+    // vkCreateSwapchainKHR retires oldSwapchain even on failure.
+    auto imageSemaphores = std::move(swapchain.imageSemaphores);
+    DestroySwapchain(swapchain);
+    swapchain.imageSemaphores = std::move(imageSemaphores);
+    if (result != VK_SUCCESS) return result;
+
+    swapchain.handle = created;
+    swapchain.extent = extent;
+    swapchain.mode = mode;
+    VK_CHECK(vkGetSwapchainImagesKHR(g->device, created, &count, nullptr));
+    swapchain.images.resize(count);
+    VK_CHECK(vkGetSwapchainImagesKHR(g->device, created, &count, swapchain.images.data()));
+    if (!g->platformWindows) {
         VkSemaphoreCreateInfo semaphoreInfo{VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO};
-        VkSemaphore semaphore = VK_NULL_HANDLE;
-        VK_CHECK(vkCreateSemaphore(g->device, &semaphoreInfo, nullptr, &semaphore));
-        g->presentSemaphores.push_back(semaphore);
+        while (swapchain.imageSemaphores.size() < count) {
+            auto &semaphore = swapchain.imageSemaphores.emplace_back();
+            VK_CHECK(vkCreateSemaphore(g->device, &semaphoreInfo, nullptr, &semaphore));
+        }
     }
+    return VK_SUCCESS;
+}
+
+bool RetrySwapchain(VkResult result) {
+    return result == VK_NOT_READY || result == VK_INCOMPLETE || result == VK_ERROR_OUT_OF_DATE_KHR;
+}
+
+void CreateSwapchain() {
+    if (!g->surface) return;
+    int width = 0, height = 0;
+    SDL_Vulkan_GetDrawableSize(g->window, &width, &height);
+    if (width <= 0 || height <= 0) return;
+    if (g->swapchain.handle) {
+        if (g->platformWindows) FinishPresents(g->swapchain, true);
+        else VK_CHECK(vkDeviceWaitIdle(g->device));
+    }
+    const auto result = BuildSwapchain(g->swapchain, g->surface, width, height, g->swapInterval);
+    g->swapchainDirty = result != VK_SUCCESS;
+    if (result != VK_SUCCESS && !RetrySwapchain(result)) FailResult("vkCreateSwapchainKHR", result);
+}
+
+PresentTicket *AcquirePresentTicket(Swapchain &swapchain, bool wait) {
+    for (auto &ticket : swapchain.tickets)
+        if (FinishPresent(ticket, false)) return &ticket;
+    if (swapchain.tickets.size() >= swapchain.images.size()) {
+        if (!wait) return nullptr;
+        auto &ticket = swapchain.tickets.front();
+        FinishPresent(ticket, true);
+        return &ticket;
+    }
+    auto &ticket = swapchain.tickets.emplace_back();
+    VkSemaphoreCreateInfo semaphoreInfo{VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO};
+    VK_CHECK(vkCreateSemaphore(g->device, &semaphoreInfo, nullptr, &ticket.semaphore));
+    VkFenceCreateInfo fenceInfo{VK_STRUCTURE_TYPE_FENCE_CREATE_INFO};
+    VK_CHECK(vkCreateFence(g->device, &fenceInfo, nullptr, &ticket.fence));
+    return &ticket;
+}
+
+void RecordPresentBlit(Image &source, VkImage destination, VkExtent2D extent) {
+    EndPass();
+    Transition(source, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL);
+    source.lastUse = g->serial;
+    VkImageMemoryBarrier barrier{VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER};
+    barrier.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+    barrier.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+    barrier.srcQueueFamilyIndex = barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+    barrier.image = destination;
+    barrier.subresourceRange = {VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1};
+    barrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+    vkCmdPipelineBarrier(g->cmd, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
+                         VK_PIPELINE_STAGE_ALL_COMMANDS_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
+    // Bridge framebuffers use the shared renderer's bottom-left origin.
+    VkImageBlit blit{};
+    blit.srcSubresource = {VK_IMAGE_ASPECT_COLOR_BIT, 0, 0, 1};
+    blit.srcOffsets[0] = {0, int(source.height), 0};
+    blit.srcOffsets[1] = {int(source.width), 0, 1};
+    blit.dstSubresource = {VK_IMAGE_ASPECT_COLOR_BIT, 0, 0, 1};
+    blit.dstOffsets[1] = {int(extent.width), int(extent.height), 1};
+    vkCmdBlitImage(g->cmd, source.image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
+                   destination, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &blit, VK_FILTER_NEAREST);
+    barrier.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+    barrier.newLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+    barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+    barrier.dstAccessMask = 0;
+    vkCmdPipelineBarrier(g->cmd, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
+                         VK_PIPELINE_STAGE_ALL_COMMANDS_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
+}
+
+VkResult PresentImage(Swapchain &swapchain, Image &source, bool wait, bool &submitted) {
+    submitted = false;
+    auto *ticket = g->platformWindows ? AcquirePresentTicket(swapchain, wait) : nullptr;
+    if (g->platformWindows && !ticket) return VK_NOT_READY;
+    VkSemaphore acquire;
+    if (g->freeAcquireSemaphores.empty()) {
+        VkSemaphoreCreateInfo semaphoreInfo{VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO};
+        VK_CHECK(vkCreateSemaphore(g->device, &semaphoreInfo, nullptr, &acquire));
+        g->acquireSemaphores.push_back(acquire);
+    } else {
+        acquire = g->freeAcquireSemaphores.back();
+        g->freeAcquireSemaphores.pop_back();
+    }
+    std::uint32_t index = 0;
+    const auto acquired = vkAcquireNextImageKHR(g->device, swapchain.handle, wait ? UINT64_MAX : 0,
+                                                acquire, VK_NULL_HANDLE, &index);
+    if (acquired != VK_SUCCESS && acquired != VK_SUBOPTIMAL_KHR) {
+        g->freeAcquireSemaphores.push_back(acquire);
+        return acquired;
+    }
+    const auto ready = ticket ? ticket->semaphore : swapchain.imageSemaphores[index];
+    RecordPresentBlit(source, swapchain.images[index], swapchain.extent);
+    Submit(acquire, ready);
+    submitted = true;
+
+    VkSwapchainPresentFenceInfoEXT fenceInfo{VK_STRUCTURE_TYPE_SWAPCHAIN_PRESENT_FENCE_INFO_EXT};
+    VkPresentInfoKHR present{VK_STRUCTURE_TYPE_PRESENT_INFO_KHR};
+    if (ticket) {
+        fenceInfo.swapchainCount = 1;
+        fenceInfo.pFences = &ticket->fence;
+        present.pNext = &fenceInfo;
+    }
+    present.waitSemaphoreCount = 1;
+    present.pWaitSemaphores = &ready;
+    present.swapchainCount = 1;
+    present.pSwapchains = &swapchain.handle;
+    present.pImageIndices = &index;
+    const auto result = vkQueuePresentKHR(g->queue, &present);
+    // WSI rejections still enqueue the semaphore wait and presentation fence.
+    if (ticket && (result == VK_SUCCESS || result == VK_SUBOPTIMAL_KHR ||
+                   result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_ERROR_SURFACE_LOST_KHR))
+        ticket->pending = true;
+    return result == VK_SUCCESS ? acquired : result;
 }
 
 VKAPI_ATTR VkBool32 VKAPI_CALL DebugMessage(VkDebugUtilsMessageSeverityFlagBitsEXT severity,
@@ -883,7 +1020,7 @@ Proc ProcAddress(const char *name) {
     return found == table.end() ? nullptr : found->second;
 }
 
-bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
+bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error, bool allowPlatformWindows) {
     if (g) {
         error = "The Vulkan backend supports one device per process.";
         return false;
@@ -910,6 +1047,25 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
         }
         instanceExtensions.resize(extensionCount);
         SDL_Vulkan_GetInstanceExtensions(window, &extensionCount, instanceExtensions.data());
+    }
+    const char *driver = SDL_GetCurrentVideoDriver();
+    bool platformSurface = false;
+    if (allowPlatformWindows && hasSurface && driver && std::strcmp(driver, "x11") == 0) {
+        std::uint32_t count = 0;
+        vkEnumerateInstanceExtensionProperties(nullptr, &count, nullptr);
+        std::vector<VkExtensionProperties> available(count);
+        vkEnumerateInstanceExtensionProperties(nullptr, &count, available.data());
+        const auto supports = [&](const char *name) {
+            return std::any_of(available.begin(), available.end(), [&](const auto &property) {
+                return std::strcmp(property.extensionName, name) == 0;
+            });
+        };
+        platformSurface = supports(VK_EXT_SURFACE_MAINTENANCE_1_EXTENSION_NAME) &&
+                          supports(VK_KHR_GET_SURFACE_CAPABILITIES_2_EXTENSION_NAME);
+        if (platformSurface) {
+            instanceExtensions.push_back(VK_KHR_GET_SURFACE_CAPABILITIES_2_EXTENSION_NAME);
+            instanceExtensions.push_back(VK_EXT_SURFACE_MAINTENANCE_1_EXTENSION_NAME);
+        }
     }
     std::vector<const char *> layers;
     if (context->validation) {
@@ -1074,11 +1230,25 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
     // z after main(), which is equivalent up to floating-point rounding.
     VkPhysicalDeviceDepthClipControlFeaturesEXT clipControl{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_CLIP_CONTROL_FEATURES_EXT};
     VkPhysicalDeviceTransformFeedbackFeaturesEXT feedback{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT};
+    VkPhysicalDeviceSwapchainMaintenance1FeaturesEXT maintenance{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SWAPCHAIN_MAINTENANCE_1_FEATURES_EXT};
     {
         std::uint32_t count = 0;
         vkEnumerateDeviceExtensionProperties(g->physical, nullptr, &count, nullptr);
         std::vector<VkExtensionProperties> available(count);
         vkEnumerateDeviceExtensionProperties(g->physical, nullptr, &count, available.data());
+        if (platformSurface && std::any_of(available.begin(), available.end(), [](const auto &property) {
+                return std::strcmp(property.extensionName, VK_EXT_SWAPCHAIN_MAINTENANCE_1_EXTENSION_NAME) == 0;
+            })) {
+            VkPhysicalDeviceFeatures2 query{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2};
+            query.pNext = &maintenance;
+            vkGetPhysicalDeviceFeatures2(g->physical, &query);
+            if (maintenance.swapchainMaintenance1) {
+                g->platformWindows = true;
+                deviceExtensions.push_back(VK_EXT_SWAPCHAIN_MAINTENANCE_1_EXTENSION_NAME);
+                maintenance.pNext = const_cast<void *>(enable13.pNext);
+                enable13.pNext = &maintenance;
+            }
+        }
         bool present = false;
         for (const auto &extension : available)
             present |= std::strcmp(extension.extensionName, VK_EXT_DEPTH_CLIP_CONTROL_EXTENSION_NAME) == 0;
@@ -1093,7 +1263,7 @@ bool Init(SDL_Window *window, int glMajor, int glMinor, std::string &error) {
                 g->transformFeedback = true;
                 deviceExtensions.push_back(VK_EXT_TRANSFORM_FEEDBACK_EXTENSION_NAME);
                 feedback.geometryStreams = VK_FALSE;
-                feedback.pNext = nullptr;
+                feedback.pNext = const_cast<void *>(enable13.pNext);
                 enable13.pNext = &feedback;
             }
         }
@@ -1257,10 +1427,10 @@ void Shutdown() {
         for (auto &block : g->imageBlocks) DestroyBlock(*block);
         g->bufferBlocks.clear();
         g->imageBlocks.clear();
-        DestroySwapchain();
+        FinishPresents(g->swapchain, true);
+        DestroySwapchain(g->swapchain);
         if (g->queryPool) vkDestroyQueryPool(g->device, g->queryPool, nullptr);
         for (VkSemaphore semaphore : g->acquireSemaphores) vkDestroySemaphore(g->device, semaphore, nullptr);
-        for (VkSemaphore semaphore : g->presentSemaphores) vkDestroySemaphore(g->device, semaphore, nullptr);
         if (g->commandPool) vkDestroyCommandPool(g->device, g->commandPool, nullptr);
         vkDestroyDevice(g->device, nullptr);
     }
@@ -1297,13 +1467,94 @@ void SetSwapInterval(int interval) {
 
 int SwapInterval() {
     if (!g) return -1;
-    if (!g->swapchain || g->swapchainDirty) return g->swapInterval;
-    return g->presentMode == VK_PRESENT_MODE_IMMEDIATE_KHR || g->presentMode == VK_PRESENT_MODE_MAILBOX_KHR ? 0 : 1;
+    if (!g->swapchain.handle || g->swapchainDirty) return g->swapInterval;
+    return g->swapchain.mode == VK_PRESENT_MODE_IMMEDIATE_KHR || g->swapchain.mode == VK_PRESENT_MODE_MAILBOX_KHR ? 0 : 1;
 }
 
 void DrawableSize(int &width, int &height) {
     width = g ? g->drawableWidth : 0;
     height = g ? g->drawableHeight : 0;
+}
+
+struct PlatformWindow {
+    SDL_Window *window = nullptr;
+    VkSurfaceKHR surface = VK_NULL_HANDLE;
+    Swapchain swapchain;
+    bool dirty = true;
+};
+
+bool PlatformWindowsAvailable() { return g && g->platformWindows; }
+
+PlatformWindow *CreatePlatformWindow(SDL_Window *window, std::string &error) {
+    error.clear();
+    if (!PlatformWindowsAvailable() || !window || window == g->window ||
+        !(SDL_GetWindowFlags(window) & SDL_WINDOW_VULKAN)) {
+        error = "A secondary SDL Vulkan window and presentation fence support are required";
+        return nullptr;
+    }
+    auto platform = std::make_unique<PlatformWindow>();
+    if (!SDL_Vulkan_CreateSurface(window, g->instance, &platform->surface)) {
+        error = SDL_GetError();
+        return nullptr;
+    }
+    VkBool32 supported = VK_FALSE;
+    const auto result = vkGetPhysicalDeviceSurfaceSupportKHR(g->physical, g->queueFamily,
+                                                               platform->surface, &supported);
+    if (result != VK_SUCCESS || !supported) {
+        vkDestroySurfaceKHR(g->instance, platform->surface, nullptr);
+        error = "The editor's Vulkan queue cannot present to this SDL surface";
+        return nullptr;
+    }
+    platform->window = window;
+    return platform.release();
+}
+
+void DestroyPlatformWindow(PlatformWindow *platform) {
+    if (!platform) return;
+    FinishPresents(platform->swapchain, true);
+    DestroySwapchain(platform->swapchain);
+    vkDestroySurfaceKHR(g->instance, platform->surface, nullptr);
+    delete platform;
+}
+
+bool PresentPlatformWindow(PlatformWindow &platform, std::uint32_t colorTexture, std::string &error) {
+    error.clear();
+    PollCompleted(false);
+    int width = 0, height = 0;
+    SDL_Vulkan_GetDrawableSize(platform.window, &width, &height);
+    if (width <= 0 || height <= 0 ||
+        (SDL_GetWindowFlags(platform.window) & (SDL_WINDOW_MINIMIZED | SDL_WINDOW_HIDDEN)))
+        return true;
+    auto &swapchain = platform.swapchain;
+    if (platform.dirty || swapchain.extent.width != std::uint32_t(width) ||
+        swapchain.extent.height != std::uint32_t(height)) {
+        if (!FinishPresents(swapchain, false)) return true;
+        const auto result = BuildSwapchain(swapchain, platform.surface, width, height, 0);
+        platform.dirty = result != VK_SUCCESS;
+        if (result == VK_ERROR_DEVICE_LOST) FailResult("Vulkan detached swapchain creation", result);
+        if (RetrySwapchain(result)) return true;
+        if (result != VK_SUCCESS) {
+            error = "Vulkan detached swapchain creation failed (" + std::to_string(int(result)) + ")";
+            return false;
+        }
+    }
+    Texture *texture = GetTexture(colorTexture);
+    if (!texture || !RealizeTexture(*texture)) {
+        error = "The detached viewport's colour target is unavailable";
+        return false;
+    }
+    bool submitted = false;
+    const auto result = PresentImage(swapchain, *texture->image, false, submitted);
+    if (result == VK_SUCCESS || result == VK_SUBOPTIMAL_KHR) ++g->platformPresents;
+    if (result == VK_ERROR_DEVICE_LOST ||
+        (submitted && result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR &&
+         result != VK_ERROR_OUT_OF_DATE_KHR && result != VK_ERROR_SURFACE_LOST_KHR))
+        FailResult("Vulkan detached presentation", result);
+    if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) platform.dirty = true;
+    if (result == VK_SUCCESS || result == VK_SUBOPTIMAL_KHR || RetrySwapchain(result) || result == VK_TIMEOUT)
+        return true;
+    error = "Vulkan detached presentation failed (" + std::to_string(int(result)) + ")";
+    return false;
 }
 
 void Present() {
@@ -1315,77 +1566,18 @@ void Present() {
     else if (g->window) SDL_GetWindowSize(g->window, &width, &height);
     const bool canPresent = g->surface && width > 0 && height > 0 &&
                             !(SDL_GetWindowFlags(g->window) & SDL_WINDOW_MINIMIZED);
-    if (canPresent && (g->swapchainDirty || !g->swapchain ||
-                       g->swapchainExtent.width != std::uint32_t(width) ||
-                       g->swapchainExtent.height != std::uint32_t(height)))
+    if (canPresent && (g->swapchainDirty || !g->swapchain.handle ||
+                       g->swapchain.extent.width != std::uint32_t(width) ||
+                       g->swapchain.extent.height != std::uint32_t(height)))
         CreateSwapchain();
-    bool presented = false;
-    if (canPresent && g->swapchain) {
-        std::uint32_t index = 0;
-        VkSemaphore acquireSemaphore = VK_NULL_HANDLE;
-        if (!g->freeAcquireSemaphores.empty()) {
-            acquireSemaphore = g->freeAcquireSemaphores.back();
-            g->freeAcquireSemaphores.pop_back();
-        } else {
-            VkSemaphoreCreateInfo semaphoreInfo{VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO};
-            VK_CHECK(vkCreateSemaphore(g->device, &semaphoreInfo, nullptr, &acquireSemaphore));
-            g->acquireSemaphores.push_back(acquireSemaphore);
-        }
-        VkResult acquired = vkAcquireNextImageKHR(g->device, g->swapchain, UINT64_MAX,
-                                                  acquireSemaphore, VK_NULL_HANDLE, &index);
-        if (acquired == VK_ERROR_OUT_OF_DATE_KHR)
-            g->freeAcquireSemaphores.push_back(acquireSemaphore); // not signalled
-        else if (acquired != VK_SUCCESS && acquired != VK_SUBOPTIMAL_KHR)
-            FailResult("vkAcquireNextImageKHR", acquired);
-        if (acquired == VK_SUCCESS || acquired == VK_SUBOPTIMAL_KHR) {
-            VkSemaphore presentSemaphore = g->presentSemaphores[index];
-            Transition(*g->defaultColor, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL);
-            VkImageMemoryBarrier barrier{VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER};
-            barrier.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-            barrier.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-            barrier.srcQueueFamilyIndex = barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-            barrier.image = g->swapchainImages[index];
-            barrier.subresourceRange = {VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1};
-            barrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-            vkCmdPipelineBarrier(g->cmd, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
-                                 VK_PIPELINE_STAGE_ALL_COMMANDS_BIT, 0, 0, nullptr, 0, nullptr, 1,
-                                 &barrier);
-            // The default framebuffer keeps OpenGL's bottom-left origin: row 0
-            // is the bottom of the picture, so presentation flips vertically.
-            VkImageBlit blit{};
-            blit.srcSubresource = {VK_IMAGE_ASPECT_COLOR_BIT, 0, 0, 1};
-            blit.srcOffsets[0] = {0, g->drawableHeight, 0};
-            blit.srcOffsets[1] = {g->drawableWidth, 0, 1};
-            blit.dstSubresource = {VK_IMAGE_ASPECT_COLOR_BIT, 0, 0, 1};
-            blit.dstOffsets[1] = {int(g->swapchainExtent.width), int(g->swapchainExtent.height), 1};
-            vkCmdBlitImage(g->cmd, g->defaultColor->image, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
-                           g->swapchainImages[index], VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &blit,
-                           VK_FILTER_NEAREST);
-            barrier.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-            barrier.newLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-            barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-            barrier.dstAccessMask = 0;
-            vkCmdPipelineBarrier(g->cmd, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
-                                 VK_PIPELINE_STAGE_ALL_COMMANDS_BIT, 0, 0, nullptr, 0, nullptr, 1,
-                                 &barrier);
-            Submit(acquireSemaphore, presentSemaphore);
-            VkPresentInfoKHR present{VK_STRUCTURE_TYPE_PRESENT_INFO_KHR};
-            present.waitSemaphoreCount = 1;
-            present.pWaitSemaphores = &presentSemaphore;
-            present.swapchainCount = 1;
-            present.pSwapchains = &g->swapchain;
-            present.pImageIndices = &index;
-            const VkResult result = vkQueuePresentKHR(g->queue, &present);
-            if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR ||
-                acquired == VK_SUBOPTIMAL_KHR)
-                g->swapchainDirty = true;
-            if (result != VK_SUCCESS && result != VK_ERROR_OUT_OF_DATE_KHR && result != VK_SUBOPTIMAL_KHR)
-                FailResult("vkQueuePresentKHR", result);
-            presented = true;
-        } else
+    bool submitted = false;
+    if (canPresent && g->swapchain.handle && !g->swapchainDirty) {
+        const auto result = PresentImage(g->swapchain, *g->defaultColor, true, submitted);
+        if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR)
             g->swapchainDirty = true;
+        else if (result != VK_SUCCESS) FailResult("Vulkan primary window presentation", result);
     }
-    if (!presented) Submit(VK_NULL_HANDLE, VK_NULL_HANDLE);
+    if (!submitted) Submit(VK_NULL_HANDLE, VK_NULL_HANDLE);
     // Bound latency and memory: at most two frames may be in flight. Count
     // frames, not submissions: a frame that also flushed mid-way (fences,
     // readbacks) must not force the CPU to wait for the previous frame, which
@@ -1413,6 +1605,7 @@ Statistics Stats() {
     stats.validationMessages = g->validationMessages;
     stats.bufferBytes = g->bufferBytes;
     stats.imageBytes = g->imageBytes;
+    stats.platformPresents = g->platformPresents;
     return stats;
 }
 

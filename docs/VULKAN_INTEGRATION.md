@@ -40,7 +40,36 @@ OpenGL is the default runtime backend. A build configured with
 `AUTO` includes Vulkan if its dependencies are present. Use
 `JUDAS_VULKAN_DEVICE` to require a particular device name substring.
 A Vulkan validation request requires the Khronos layer and callback to
-initialize successfully. Vulkan editor presentation uses one main window.
+initialize successfully.
+
+## Detached editor windows
+
+On Linux X11, including an SDL X11 session under XWayland, the Vulkan editor
+can float a panel or a docked group in its own window. Drag the panel out of
+the main editor to detach it, then drag it back to a docking target to
+reattach. Scene and Game use the same world and renderer when detached.
+
+This requires `VK_EXT_surface_maintenance1`,
+`VK_KHR_get_surface_capabilities2`, and the
+`VK_EXT_swapchain_maintenance1` feature on the selected device. The editor
+selects single-window docking when those capabilities or SDL X11 are unavailable.
+Native Wayland remains single-window. A failure to create or present an
+individual secondary surface closes that panel and reports the failure.
+
+The editor presents the main surface first. Each detached window has its own
+swapchain and display target on the same graphics device and queue. Busy
+secondary surfaces skip presentation. Resize retries after the previous
+presentation fences signal. Close waits for that window's fences before
+releasing the Vulkan surface and its SDL window. The runtime and the
+single-window fallback retain their existing device requirements.
+
+On the GTX 970 under isolated Openbox/Xvfb, the editor viewport fixture
+alternated one docked and one floating Game panel with pixel readback and
+validation disabled during timing. The six 120-frame samples per mode gave
+median run p50/p95/p99 of 18.17/18.37/18.56 ms docked and
+20.86/21.11/21.53 ms floating. The floating variant issued one extra
+submission and present per frame. This includes Xvfb presentation and costs
+from the shared editor fixture. It does not measure KWin or physical scanout.
 
 ```sh
 python3 tools/vulkan/compare_backends.py --no-xvfb --device 'GTX 970' \
@@ -67,8 +96,7 @@ Run `judas --build-info-json` and check `vulkan` to inspect a build's Vulkan
 capability. For a running Vulkan application, the graphics startup log
 identifies the device, driver and validation state. During an active Vulkan
 session a device loss ends the process with an operation-specific diagnostic.
-Restart the application to create a new device. The editor's Vulkan
-presentation contract uses one window, with detached viewports disabled.
+Restart the application to create a new device.
 The GTX 970 with NVIDIA 580.178.04 intermittently returned
 `VK_ERROR_DEVICE_LOST` during device creation in local trials. The bounded
 startup retry recovered and the affected programs completed. The cause on

@@ -88,6 +88,16 @@ jobs:
           xvfb-run -a python3 scripts/prealpha_validate.py --graphics-backend vulkan --graphics-profile modern \
             --expected-channel Experimental --output "$RUNNER_TEMP/vulkan-synchronization" \
             --test portal-camera --test lighting-lists --test runtime-ui
+      - name: Exercise native detached editor windows on both APIs
+        env:
+          VK_LAYER_ENABLES: VK_VALIDATION_FEATURE_ENABLE_SYNCHRONIZATION_VALIDATION_EXT
+        run: |
+          xvfb-run -a -s '-screen 0 1920x1080x24 -nolisten tcp' \
+            python3 scripts/prealpha_validate.py --graphics-backend vulkan --graphics-profile modern \
+            --expected-channel Experimental --output "$RUNNER_TEMP/vulkan-detached" --test editor-v2-detached-viewports
+          xvfb-run -a -s '-screen 0 1920x1080x24 -nolisten tcp' \
+            python3 scripts/prealpha_validate.py --graphics-backend opengl --graphics-profile modern \
+            --expected-channel Experimental --output "$RUNNER_TEMP/opengl-detached" --test editor-v2-detached-viewports
       - name: Exercise shared renderer on OpenGL and Vulkan
         run: |
           python3 -m unittest discover -s tests -p test_vulkan_parity.py
@@ -143,5 +153,7 @@ jobs:
             ${{ runner.temp }}/vulkan-native/RESULTS.json
             ${{ runner.temp }}/vulkan-synchronization/*.log
             ${{ runner.temp }}/vulkan-synchronization/RESULTS.json
+            ${{ runner.temp }}/*-detached/*.log
+            ${{ runner.temp }}/*-detached/RESULTS.json
             build/Testing/Temporary/
           retention-days: 14

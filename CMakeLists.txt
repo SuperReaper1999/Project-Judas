@@ -550,6 +550,7 @@ add_library(judas_editor_core STATIC
     src/editor/JudasToolsPanel.cpp
     src/editor/EditorToolPanels.cpp
     src/editor/EditorShell.cpp
+    src/editor/EditorVulkanViewports.cpp
     src/editor/EditorViewportPresenter.cpp
     src/editor/EditorPanelRegistry.cpp
     src/editor/EditorWorkspace.cpp

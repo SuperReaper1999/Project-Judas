@@ -354,6 +354,23 @@ struct PassState {
     std::uint32_t width = 0, height = 0;
 };
 
+struct PresentTicket {
+    VkSemaphore semaphore = VK_NULL_HANDLE;
+    VkFence fence = VK_NULL_HANDLE;
+    bool pending = false;
+};
+
+struct Swapchain {
+    VkSwapchainKHR handle = VK_NULL_HANDLE;
+    VkExtent2D extent{};
+    VkPresentModeKHR mode = VK_PRESENT_MODE_FIFO_KHR;
+    std::vector<VkImage> images;
+    // Legacy main-window presentation recycles semaphores by acquired image.
+    // Fenced presentation recycles them only after the present fence signals.
+    std::vector<VkSemaphore> imageSemaphores;
+    std::vector<PresentTicket> tickets;
+};
+
 struct Context {
     SDL_Window *window = nullptr;
     VkInstance instance = VK_NULL_HANDLE;
@@ -367,19 +384,12 @@ struct Context {
     VkQueue queue = VK_NULL_HANDLE;
     VkCommandPool commandPool = VK_NULL_HANDLE;
     VkSurfaceKHR surface = VK_NULL_HANDLE;
-    VkSwapchainKHR swapchain = VK_NULL_HANDLE;
-    VkFormat swapchainFormat = VK_FORMAT_UNDEFINED;
-    VkExtent2D swapchainExtent{};
-    std::vector<VkImage> swapchainImages;
-    std::vector<VkImageLayout> swapchainLayouts;
-    // A semaphore waited on by a submission (acquire) may be reused only after that
-    // submission completes; one waited on by vkQueuePresentKHR only after its image is
-    // acquired again. Hence a pool of acquire semaphores and one present semaphore
-    // per swapchain image (kept across swapchain recreation).
-    std::vector<VkSemaphore> acquireSemaphores, freeAcquireSemaphores, presentSemaphores;
+    Swapchain swapchain;
+    // Acquire semaphores return to the pool after their submission fence signals.
+    std::vector<VkSemaphore> acquireSemaphores, freeAcquireSemaphores;
     int swapInterval = 1;
-    VkPresentModeKHR presentMode = VK_PRESENT_MODE_FIFO_KHR;
     bool swapchainDirty = true;
+    bool platformWindows = false;
     VkFormat depth24Format = VK_FORMAT_D32_SFLOAT;
     bool bcSupported = false, anisotropy = false;
     // VK_EXT_depth_clip_control: the device applies OpenGL's [-w, w] clip volume itself.
@@ -462,6 +472,7 @@ struct Context {
     } dynamic;
 
     // Statistics.
+    std::uint64_t platformPresents = 0;
     std::uint64_t frames = 0, submissions = 0, renderPasses = 0, draws = 0, descriptorSets = 0,
                   validationMessages = 0, bufferBytes = 0, imageBytes = 0, deviceBufferBytes = 0;
     bool deviceBufferHeapExhausted = false;

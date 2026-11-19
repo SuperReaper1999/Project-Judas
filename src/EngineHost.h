@@ -38,7 +38,7 @@ public:
     EngineHost& operator=(const EngineHost&) = delete;
 
     bool Init(const char* title, int width, int height, bool visible, std::string& outError,
-              ResourceTrace trace = {});
+              ResourceTrace trace = {}, bool allowVulkanPlatformWindows = false);
     void Shutdown();
 
     // Points the asset database at a project's assets directory (rescans)

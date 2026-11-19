@@ -722,6 +722,19 @@
       ]
     },
     {
+      "name": "editor-v2-detached-viewports",
+      "target": "judas_editor_v2_viewport_tests",
+      "groups": [
+        "editor",
+        "rendering"
+      ],
+      "manual": true,
+      "args": [
+        "--detached",
+        "{output}/editor-v2-detached-viewports"
+      ]
+    },
+    {
       "name": "editor-window-routing",
       "target": "judas_editor_window_routing_tests",
       "groups": [

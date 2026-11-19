@@ -53,13 +53,13 @@ smaller width) holds axes and snapping. Build/export remains a distinct project
 operation. Status reports unsaved edits and operation results. Hover truncated
 names or controls for details.
 
-Native detached OS windows are enabled only on the SDL **x11** and **windows**
-backends. Native Wayland and other backends retain docking/in-window floating.
-On a Linux Wayland desktop, `SDL_VIDEODRIVER=x11 ./judas_editor` requests the
-XWayland route when X11 support is available. That is a per-launch choice, not a
-project setting or a claim that native Wayland OS-window detachment works.
-Linux native detached Scene/Game qualification passed its scoped automated checks;
-Windows V2 has not been rerun. Older Windows engine acceptance is not that evidence.
+On Linux, native detached windows use the SDL **x11** backend. Vulkan also
+requires [presentation fence support](VULKAN_INTEGRATION.md#detached-editor-windows).
+Drag a panel out of the editor to detach it, or back to a docking target to
+reattach it. Native Wayland retains docking and floating inside the main window.
+On a Wayland desktop, `SDL_VIDEODRIVER=x11 ./judas_editor` requests the XWayland
+route when X11 is available. See the [parity matrix](VULKAN_PARITY.md) for the
+scope of detached Scene/Game qualification.
 Scene/Game render targets currently use one pixel per logical UI unit, including
 on HiDPI displays; native backing-pixel rendering at higher display scales is not
 implemented. See the [qualification receipt](DEVELOPMENT_READINESS.md).
