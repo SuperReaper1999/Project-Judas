@@ -42,6 +42,7 @@ struct SubmissionTimings {
     }
 };
 struct RendererInfrastructure {
+    GLuint uiMapSampler = 0;
     SubmissionTimings submissionTimings;
     bool coalesceOpaqueShadow=true;
     SubmissionQueue submission;

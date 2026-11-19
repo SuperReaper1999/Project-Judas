@@ -556,6 +556,8 @@ void Renderer::Shutdown() {
 
     if(m_textVbo){glDeleteBuffers(1,&m_textVbo);m_textVbo=0;}
     if(m_textVao){glDeleteVertexArrays(1,&m_textVao);m_textVao=0;}
+    if (m_render->uiMapSampler) glDeleteSamplers(1,&m_render->uiMapSampler);
+    m_render->uiMapSampler=0;
     if (m_uiQuadVbo) {
         glDeleteBuffers(1, &m_uiQuadVbo);
         m_uiQuadVbo = 0;
@@ -1400,8 +1402,20 @@ void Renderer::DrawUIMap(glm::vec2 position,glm::vec2 size,TextureHandle texture
     glUniform4f(m_uiUColor,tint.r,tint.g,tint.b,tint.a);
     glUniform2f(m_uiUUVOffset,origin.x,1.f-origin.y);
     glUniform2f(m_uiUUVScale,right.x,-down.y);
+    // Imported texture wrapping belongs to world materials. Map margins
+    // must sample their own edge even when a bilinear footprint crosses it.
+    auto& sampler=m_render->uiMapSampler;
+    if (!sampler) {
+        glGenSamplers(1,&sampler);
+        glSamplerParameteri(sampler,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+        glSamplerParameteri(sampler,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
+        glSamplerParameteri(sampler,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
+        glSamplerParameteri(sampler,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    }
     glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));
+    glBindSampler(0,sampler);
     glDrawArrays(GL_TRIANGLES,0,6);
+    glBindSampler(0,0);
     ++m_uiDrawCalls;
     glUniform1i(m_uiUMapMode,0);
 }

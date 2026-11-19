@@ -126,6 +126,11 @@ int main() {
     Check(Near(Pixel(r,80,32),{255,0,255}),"map sampling state does not leak to panels");
     r.BeginUIFrame(96,64);
     r.DrawUIRect({0,0},{96,64},{0,0,0,1});
+    r.DrawUIMap({0,0},{64,64},map,{1,1,1,1},{0,0},{1,0},{0,1},false);
+    r.EndUIFrame();
+    Check(Near(Pixel(r,1,16),{255,0,0},12),"map edge filters against its own texels without wrapping");
+    r.BeginUIFrame(96,64);
+    r.DrawUIRect({0,0},{96,64},{0,0,0,1});
     r.DrawUIMap({0,0},{64,64},map,{1,1,1,1},{0,1},{0,-1},{1,0},false);
     r.EndUIFrame();
     Check(Near(Pixel(r,16,16),{0,0,255},12),"map affine sampling rotates the artwork");
