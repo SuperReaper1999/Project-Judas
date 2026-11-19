@@ -485,6 +485,13 @@
       ]
     },
     {
+      "name": "portal-camera",
+      "target": "judas_portal_camera_tests",
+      "groups": [
+        "rendering"
+      ]
+    },
+    {
       "name": "particle-gpu-resident",
       "target": "judas_gpu_particles_tests",
       "groups": [

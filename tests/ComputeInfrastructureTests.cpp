@@ -208,12 +208,18 @@ int main(int argc, char **argv) {
     });
     worker.join();
     Check(!wrongThreadAccepted, "compute resources cannot be manipulated from a foreign thread");
-    Check(SDL_GL_MakeCurrent(nullptr, nullptr) == 0,
-          "test temporarily releases its actual native context");
-    Check(!device.BindStorage(numbers, 0, ComputeAccess::ReadOnly, error),
-          "context-free operations cannot touch the device's GPU state");
-    Check(SDL_GL_MakeCurrent(host.GetWindow().NativeWindow(), host.GetWindow().NativeGLContext()) == 0,
-          "test restores the owning native graphics context");
+    const bool vulkan = host.GetWindow().UsesVulkan();
+    if (vulkan) {
+        Check(SDL_GL_GetCurrentContext() == nullptr && GraphicsContextIdentity() != 0,
+              "the Vulkan device owns compute resources without an OpenGL context");
+    } else {
+        Check(SDL_GL_MakeCurrent(nullptr, nullptr) == 0,
+              "test temporarily releases its actual native context");
+        Check(!device.BindStorage(numbers, 0, ComputeAccess::ReadOnly, error),
+              "context-free operations cannot touch the device's GPU state");
+        Check(SDL_GL_MakeCurrent(host.GetWindow().NativeWindow(), host.GetWindow().NativeGLContext()) == 0,
+              "test restores the owning native graphics context");
+    }
 
     constexpr const char *triangle = R"GLSL(#version 450 core
 layout(local_size_x=1)in;
@@ -315,8 +321,24 @@ commands[0]=3u;commands[1]=1u;commands[2]=0u;commands[3]=0u;}
           "owning-context shutdown retires all compute allocations and kernels");
     Check(device.Initialize(caps, {1024, 2, 1}, error) &&
               !device.BindStorage(recycled, 0, ComputeAccess::ReadOnly, error),
-          "old handles remain invalid after an entire device lifecycle restarts");
-    device.Shutdown(error);
+          "old handles remain invalid after the compute owner restarts");
+    Check(device.Shutdown(error), "compute resources retire before graphics shutdown");
+    if (vulkan) {
+        host.Shutdown();
+        Check(GraphicsContextIdentity() == 0 &&
+                  !device.Initialize(caps, {1024, 2, 1}, error) && !error.empty(),
+              "compute cannot initialize between Vulkan device lifetimes");
+        if (host.Init("Compute device recreation", 128, 128, false, error)) {
+            Check(GraphicsContextIdentity() != 0 &&
+                      device.Initialize(host.GraphicsCaps(), {1024, 2, 1}, error) &&
+                      !device.BindStorage(recycled, 0, ComputeAccess::ReadOnly, error) &&
+                      device.Shutdown(error),
+                  "the new Vulkan device rejects old compute handles");
+        } else {
+            Check(false, "Vulkan device recreation succeeds");
+            std::fprintf(stderr, "%s\n", error.c_str());
+        }
+    }
     std::printf("Compute infrastructure: %u checks, %u failures\n", checks, failures);
     return failures ? 1 : 0;
 #endif

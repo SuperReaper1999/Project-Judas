@@ -1,8 +1,4 @@
-# Linux Vulkan integration
-
-`Vulkan-V2-Integration` starts at Experimental `6765e9fb`. It ports the
-backend from `Vulkan-Exp` at `0cf1c0fe`, with common ancestor `65a0400b`.
-The original branch retains its history and measurements.
+# Linux Vulkan backend
 
 The integration uses the current engine renderer and shaders. When Vulkan is
 selected, the Vulkan bridge fills the graphics dispatch table and owns device
@@ -13,7 +9,7 @@ renderer. The historical explicit mesh and shadow pass is preserved behind
 skinning and current shadow and material submission optimizations. Use the
 bridge for integration testing.
 
-The bridge uses transient uploads by default. Busy ranges are replaced and
+The Vulkan bridge uses transient uploads by default. Busy ranges are replaced and
 retired after their Vulkan submission completes, which avoids waiting on
 persistent OpenGL stream pages during draw submission. Static draw buffers
 prefer mapped device-local memory when available, with a separate budget of
@@ -103,25 +99,10 @@ public tool against the glibc 2.39 ceiling. SDKs built on other hosts may
 require newer system libraries. Windows, Android and Web Vulkan are outside
 this integration.
 
-## Initial qualification
+## Parity and qualification
 
-These are local Linux desktop results on the GTX 970 with NVIDIA
-580.178.04 and Vulkan 1.4.312. The shared renderer ran in its modern tier
-on each backend. A Khronos validation run ended with zero callback
-messages in the sample applications and the focused tests below.
-
-| V2 contract | Evidence in this increment | Remaining scope |
-| --- | --- | --- |
-| Editor and game viewport | Built-in editor automation rendered Edit and Play and found the authored scene identical after Stop. Native viewport and context lifecycle suites passed on both backends. | Detached Vulkan editor windows and sustained human authoring |
-| Geometry, PBR, materials and cameras | Renderer lab, native submission, render controls, material overrides and multi-camera shadow tests passed. The lab exercised save/load, scene switches, split views and camera monitors. | Broader project and material combinations |
-| Lucifer | Workshop captures differed at most one byte level. Native directional and local light contract checks passed. | More hardware and scenes |
-| Skinning and animation | Animation studio images matched at two fixed ticks and the renderer submission suite passed. | Full structural-fracture visibility and animation/IK stress qualification |
-| Terrain | Native fade and coverage tests passed. Workshop samples contain small residual image differences. | Planetary and long-streaming comparisons |
-| Particles | GPU-resident compute and draw gates passed. The sample lab rendered on both backends with small localized pixel differences. | Stress performance and long-running memory |
-| Advanced water and UI | Water workshop and UI showcase launched and rendered. UI samples matched exactly; water samples have small image differences. | Dynamic water conservation and rendering under extended backend workloads |
-| Standalone export | Renderer lab exported with Vulkan capability in provenance, then ran both backends after relocation without an engine source path. | Full native SDK inventory, build dependency provenance, licences and Ubuntu release baseline |
-
-The branch has scoped hardware evidence. OpenGL continues to own the published
-support baseline. Cross-backend output can differ by rasterization, render
-scheduling and scene timing. Review the actual captures and use the numerical
-contracts for every feature separately.
+See the [backend parity assessment](VULKAN_PARITY.md) for tested contracts,
+known differences, and reproduction commands. Linux CI exercises Vulkan with
+Mesa llvmpipe on Ubuntu 24.04 and qualifies relocated OpenGL and Vulkan exports.
+Software-driver evidence covers functional behaviour. GPU performance and
+human editor acceptance require separate evidence.

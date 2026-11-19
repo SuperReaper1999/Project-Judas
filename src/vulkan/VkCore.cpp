@@ -387,12 +387,32 @@ VkAccessFlags AccessForLayout(VkImageLayout layout) {
     default: return 0;
     }
 }
+
+VkPipelineStageFlags WriteStagesForLayout(VkImageLayout layout) {
+    switch (layout) {
+    // The bridge uses GENERAL for in-place transfers such as mip blits.
+    case VK_IMAGE_LAYOUT_GENERAL:
+    case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
+        return VK_PIPELINE_STAGE_TRANSFER_BIT;
+    case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
+        return VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+    case VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL:
+        return VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT | VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT;
+    default:
+        return 0;
+    }
+}
 } // namespace
 
 void Transition(Image &image, VkImageLayout layout) {
-    if (image.layout == layout) return;
+    const bool layoutChanged = image.layout != layout;
+    // Reusing a writable layout still needs a memory dependency, for example
+    // when a depth copy follows the initial clear or an atlas is updated twice.
+    const VkPipelineStageFlags stages = layoutChanged
+        ? VK_PIPELINE_STAGE_ALL_COMMANDS_BIT : WriteStagesForLayout(layout);
+    if (!stages) return;
     if (g->pass.active) Fatal("image layout transition inside a render pass");
-    MarkDirty(DirtyTextures);
+    if (layoutChanged) MarkDirty(DirtyTextures);
     VkImageMemoryBarrier barrier{VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER};
     barrier.oldLayout = image.layout;
     barrier.newLayout = layout;
@@ -402,8 +422,7 @@ void Transition(Image &image, VkImageLayout layout) {
                                 VK_REMAINING_ARRAY_LAYERS};
     barrier.srcAccessMask = AccessForLayout(image.layout);
     barrier.dstAccessMask = AccessForLayout(layout);
-    vkCmdPipelineBarrier(g->cmd, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
-                         VK_PIPELINE_STAGE_ALL_COMMANDS_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
+    vkCmdPipelineBarrier(g->cmd, stages, stages, 0, 0, nullptr, 0, nullptr, 1, &barrier);
     image.layout = layout;
 }
 

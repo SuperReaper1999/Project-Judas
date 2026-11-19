@@ -80,7 +80,9 @@ profiles report unsupported. Defaults are 64 MiB, 256 buffers and 64 kernels.
 Handles are owner/generation checked. Callers bound dispatch/index access and
 publish the actual storage/vertex/indirect/CPU-consumer barrier after writes.
 Diagnostic readback blocks and is unsuitable for ordinary frame-loop observation.
-No Vulkan backend or arbitrary image-allocation API is supplied here.
+The [Linux Vulkan bridge](VULKAN_INTEGRATION.md) lowers supported buffer and
+dispatch operations to Vulkan. `ComputeDevice` provides no general
+image-allocation API.
 
 ## Diagnostic controls
 

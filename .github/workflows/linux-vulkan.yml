@@ -78,7 +78,16 @@ jobs:
             --expected-channel Experimental --output "$RUNNER_TEMP/vulkan-native" \
             --test renderer-v2-submission --test rendering-architecture --test renderer-shadow-reuse \
             --test render-cameras --test terrain-v2-transition --test particle-gpu-resident \
-            --test water-visuals --test editor-application-lifecycle --test editor-v2-viewports
+            --test water-visuals --test editor-application-lifecycle --test editor-v2-viewports \
+            --test renderer-pass-state --test shadow-sampling --test renderer-compute \
+            --test terrain-v2-editor-preview-rendering --test terrain-v2-planet-render
+      - name: Verify Vulkan image synchronization
+        env:
+          VK_LAYER_ENABLES: VK_VALIDATION_FEATURE_ENABLE_SYNCHRONIZATION_VALIDATION_EXT
+        run: |
+          xvfb-run -a python3 scripts/prealpha_validate.py --graphics-backend vulkan --graphics-profile modern \
+            --expected-channel Experimental --output "$RUNNER_TEMP/vulkan-synchronization" \
+            --test portal-camera --test lighting-lists --test runtime-ui
       - name: Exercise shared renderer on OpenGL and Vulkan
         run: |
           python3 -m unittest discover -s tests -p test_vulkan_parity.py
@@ -132,5 +141,7 @@ jobs:
             ${{ runner.temp }}/sdk-*/*.log
             ${{ runner.temp }}/vulkan-native/*.log
             ${{ runner.temp }}/vulkan-native/RESULTS.json
+            ${{ runner.temp }}/vulkan-synchronization/*.log
+            ${{ runner.temp }}/vulkan-synchronization/RESULTS.json
             build/Testing/Temporary/
           retention-days: 14
