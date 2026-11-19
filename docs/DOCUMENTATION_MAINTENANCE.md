@@ -75,10 +75,11 @@ and support guides were rewritten where successive milestone explanations confli
 The shared declarations/examples are independently checked against the binding
 catalogue; qualification claims reuse the established exact V2 baseline.
 
-The unregistered legacy `judas_script_presentation_tests` target still references
-removed demos. It is a separate implementation finding in [the register](CURRENT_FINDINGS.md),
-not repaired or represented as covered by this documentation pass.
-
+The registered `scripting-presentation` regression now owns the JudasJS
+interpolation contract previously checked through retired demos. Its fixture
+uses a motor, body-free follower and script camera. The registered
+`scripting-developer-lab` case exercises breakpoint inspection, source repair,
+and deliberate reload in a disposable copy of the maintained developer lab.
 
 ## Implementation verification map
 
@@ -102,8 +103,7 @@ manifest and exact baseline receipts, not this table alone.
 | UI, text, localization, audio/input | RuntimeUI/UIStack/RuntimeUIControls, UIAssetEditor, text/layout/localization, audio backend, InputMap/device/local-player routing |
 | Build/platform/debug workflow | CMake identity/feature selection, packaging scripts, Android/browser builders, selected CI workflows, bounded storage and actual tool parsers |
 
-The API pass includes 58 type-checked examples, 353 registered native operations and
-524 live VM surface entries; these are surface checks. The cookbook's six actual
-VM/world cases have 37 behavioural assertions. Supported native application and
-SDK lifecycle/persistence qualification remains tied to its exact V2 code candidate.
-This documentation-only assignment does not claim new full-platform qualification.
+The API checker reports the declaration and example counts for the current
+checkout. The cookbook's native VM/world cases establish behavior separately.
+Use the corresponding receipt or CI run when citing lifecycle and persistence
+qualification.

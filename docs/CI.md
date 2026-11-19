@@ -15,6 +15,12 @@ running. Cold, portable and loss/recovery variants remain distinct when they
 exercise different contracts. Use `scripts/prealpha_validate.py --list` and
 `--check-manifest` for the current declaration.
 
+`linux-vulkan.yml` runs on Experimental. Its Ubuntu 24.04 build exercises
+OpenGL and Vulkan through the relocated SDK, with dedicated Vulkan synchronization
+checks and a detached viewport run on each backend. The detached viewport case
+is explicitly selected there and requires SDL X11 and present-fence capability
+for its Vulkan path.
+
 Compiler caches validate actual inputs and preserve source-path semantics.
 Dependency keys include toolchain/dependency identities; SDKs are freshly staged.
 A cache hit is not qualification. Local [storage budgets](WORKSPACE_STORAGE.md)

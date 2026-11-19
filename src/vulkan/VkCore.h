@@ -294,7 +294,7 @@ struct GlState {
     GlState() { for (auto &value : genericAttrib) { value[0] = value[1] = value[2] = 0.0f; value[3] = 1.0f; } }
 };
 
-// What a state change invalidates for the next draw (see docs/VULKAN_NATIVE.md).
+// What a state change invalidates for the next draw (see docs/VULKAN_INTEGRATION.md).
 // A draw redoes only the marked parts; an unmarked draw rebinds nothing but
 // its per-draw uniform offset.
 enum DirtyBits : std::uint32_t {

@@ -1,5 +1,5 @@
 #pragma once
-// Experimental Vulkan graphics backend (branch Vulkan-Exp).
+// Optional native Linux Vulkan graphics backend.
 //
 // The renderer's graphics calls are resolved through GLAD's function-pointer
 // table. The OpenGL backend fills that table from the driver's context. This
@@ -9,8 +9,8 @@
 // both backends, which is what makes their output directly comparable.
 //
 // Selection is a run-time decision so one binary can be compared against
-// itself: JUDAS_GRAPHICS=vulkan selects this backend, anything else (or a
-// build without JUDAS_VULKAN) keeps OpenGL. See docs/VULKAN_BACKEND.md.
+// itself: OpenGL is the default. An explicit JUDAS_GRAPHICS=vulkan request
+// requires a Vulkan-enabled build and a usable device. See docs/VULKAN_INTEGRATION.md.
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>

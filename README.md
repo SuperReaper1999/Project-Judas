@@ -44,7 +44,7 @@ software graphics and synthetic input do not imply hardware or human acceptance.
 have different prerequisites and qualification scopes.
 
 OpenGL is the default desktop renderer. See the [Linux Vulkan guide](docs/VULKAN_INTEGRATION.md)
-for opt-in builds, SDK dependencies and qualification scope.
+for opt-in builds, SDK dependencies and [detached editor windows](docs/VULKAN_INTEGRATION.md#detached-editor-windows).
 
 ## Develop with the current platform
 

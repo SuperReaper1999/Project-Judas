@@ -48,18 +48,23 @@ For exact scene keys and a complete SDK-only example, see the
 Headless authoring uses the same baker, through CMake's `judas_navigation_bake`:
 
 ```sh
-./build/judas_navigation_bake /path/to/Project/shooter_game.judasproj Scenes/range.judas
+./build/judas_navigation_bake /path/to/YOUR_PROJECT.judasproj Scenes/YOUR_SCENE.judas
 ```
 
-This tool bakes every authored surface, registers/reuses asset IDs, writes scene
-references, and reports tile layers, polygon count, time and source fingerprint.
-No runtime launch automatically rebakes.
+Replace both paths with your project file and a scene path relative to its project
+root. The tool bakes authored non-terrain surfaces, registers or reuses asset IDs,
+writes scene references, and reports layer and polygon counts, time and source
+fingerprint. Source-owned terrain navigation is prepared automatically during
+Play. For published bakes, use `--check-dependents` to identify stale inputs
+and `--rebuild-dependents` to refresh owned outputs.
 
 ## Geometry, coordinates and staleness
 
-Bounds are in the surface frame; queries and steering use Judas local world-space
-metres. M23's double-precision absolute origin remains fixed. Adding a large absolute
-origin does not alter the float-local geometry or bake identity. No live rebasing.
+Bounds are in the surface frame. Queries and steering use local world-space
+metres. A large absolute origin does not alter the local bake geometry or identity.
+On a runtime origin shift, navigation translates active and staged surface frames,
+obstacles, links, agent destinations and route corners. The baked polygons remain
+in their surface-local coordinates.
 
 Enabled physical boxes/compound boxes are tessellated exactly. Spheres use a finite
 24×48 collider tessellation. Terrain uses the real TerrainLibrary surface's 96×192

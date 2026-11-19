@@ -58,8 +58,8 @@ requires [presentation fence support](VULKAN_INTEGRATION.md#detached-editor-wind
 Drag a panel out of the editor to detach it, or back to a docking target to
 reattach it. Native Wayland retains docking and floating inside the main window.
 On a Wayland desktop, `SDL_VIDEODRIVER=x11 ./judas_editor` requests the XWayland
-route when X11 is available. See the [parity matrix](VULKAN_PARITY.md) for the
-scope of detached Scene/Game qualification.
+route when X11 is available. See the [detachment evidence](VULKAN_PARITY.md#editor-detachment-evidence)
+for the scope of detached Scene/Game qualification.
 Scene/Game render targets currently use one pixel per logical UI unit, including
 on HiDPI displays; native backing-pixel rendering at higher display scales is not
 implemented. See the [qualification receipt](DEVELOPMENT_READINESS.md).

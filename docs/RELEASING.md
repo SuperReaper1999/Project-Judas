@@ -99,8 +99,9 @@ known limits and human checklist. Stop for final approval.
    this repository after approval. Do not upload Stable.json during Alpha.
 4. Validate the already-reviewed files with `tools/publish_release.py CANDIDATE
    --accepted-commit EXACT_SHA` (dry-run; no network/publication).
-5. Only when authorized, add `--publish --human-approval 'PUBLISH
-   v1.2.2-alpha.1'`. This checks remote main/commit and required reviewer protection,
+5. Only when authorized, add `--publish --human-approval 'PUBLISH EXACT_TAG'`,
+   replacing `EXACT_TAG` with the tag from the verified candidate manifest.
+   This checks remote main/commit and required reviewer protection,
    refuses an existing final tag, creates a draft prerelease, uploads the exact
    files, downloads and verifies every artifact, then publishes. It never
    overwrites final release artifacts. It updates Alpha.json **after** verification.

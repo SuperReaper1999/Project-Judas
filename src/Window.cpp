@@ -51,7 +51,7 @@ bool Window::CreateDesktopGraphicsWindow(const char* title, int width, int heigh
                                          bool allowVulkanPlatformWindows) {
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     if (JudasVulkan::Requested()) {
-        // Experimental Vulkan backend: no OpenGL context is created. The
+        // Vulkan backend: no OpenGL context is created. The
         // requested profile selects the same renderer tier as it does for GL.
         if (!JudasVulkan::Compiled()) {
             m_lastError = "JUDAS_GRAPHICS=vulkan was requested, but this build does not contain the "

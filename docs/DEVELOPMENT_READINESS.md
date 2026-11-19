@@ -2,10 +2,11 @@
 
 Verdict: **development-ready for native Linux engine/editor/JudasJS SDK projects
 within the qualified boundaries below**. Clean code candidate `eb212368` passed
-the final qualification recorded below. This is an Experimental development baseline, not main promotion,
-a published release or inferred human acceptance. Accepted predecessor `ad41f73f`
-passed all three CI workflows; the current candidate also passed all three.
-The separate hosted target run is recorded below. Qualification receipts identify the actual measured builds.
+the original integrated qualification recorded below. The receipts apply to that
+Experimental development baseline. Subsequent Vulkan validation and the scoped
+human checks for detached Scene and Game panels are recorded in the
+[Vulkan parity guide](VULKAN_PARITY.md#editor-detachment-evidence). Release
+authority and human acceptance are tracked separately.
 
 Development-ready means a reproducible, usable engine/editor/SDK for the supported
 scope below, with actionable diagnostics and known limits. It does not mean every
@@ -16,7 +17,7 @@ stress workload meets 120 FPS, every device is certified or every preview is com
 Tests establish specific contracts. A unit test, native application check, source-
 hidden SDK workflow, performance capture and human review are distinct evidence.
 The accepted predecessor passed 207 CTest cases and 16 additional workflows.
-The current clean candidate passed **209/209 cases in 471.71 seconds**, with all
+The clean `eb212368` candidate passed **209/209 cases in 471.71 seconds**, with all
 195 native executables reporting its exact source identity. Python tooling passed
 206 cases, with three explicit JDK/Ninja skips; the API contract checker passed.
 The source-hidden SDK passed its 39 tool operations and actual editor/runtime

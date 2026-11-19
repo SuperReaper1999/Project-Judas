@@ -730,7 +730,7 @@ bool RefreshDefaults(Program &program) {
 }
 
 // The last graphics draw's resolved state. Reused while nothing it depends on
-// is marked dirty (Context::dirty); see docs/VULKAN_NATIVE.md.
+// is marked dirty (Context::dirty); see docs/VULKAN_INTEGRATION.md.
 struct DrawCache {
     bool valid = false;
     std::uint64_t program = 0; // Program::generation

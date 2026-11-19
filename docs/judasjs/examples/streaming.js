@@ -1,5 +1,5 @@
 import {scenes,session} from 'judas';
-/** Run on a persistent root entity in projects/streamed_range. */
+/** Run on a persistent root entity of a streaming scene that declares gallery-0. */
 export default class {
  constructor(){this.token='';this.state={active:false};}
  start(){this.token=scenes.requestRegion('gallery-0',{preload:true});session.set('streamExample',0);}

@@ -1,4 +1,4 @@
-// Explicit Vulkan renderer interface: see VulkanGfx.h and docs/VULKAN_NATIVE.md.
+// Explicit Vulkan renderer interface: see VulkanGfx.h and docs/VULKAN_INTEGRATION.md.
 //
 // This file records Vulkan commands directly from explicit descriptions. It
 // shares the device, command buffer, transient ring and resource tables with

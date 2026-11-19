@@ -46,11 +46,6 @@
       "id": "PRIVATE-ASSET-FOOTPRINT",
       "status": "measured limitation",
       "disposition": "Large active private model/image sets can exceed resource cache targets because live pinned data cannot be evicted. This is content-dependent footprint, not evidence of unbounded growth; private assets remain outside Git/SDKs."
-    },
-    {
-      "id": "LEGACY-PRESENTATION-TEST",
-      "status": "unregistered stale target",
-      "disposition": "CMake still declares judas_script_presentation_tests, whose source copies removed projects/shooter_game and projects/boundary_demo and missing docs/evidence/m52 originals. It is absent from the supported validation manifest. Documentation cleanup does not repair or certify this target; reconcile or retire it as a separate implementation task."
     }
   ]
 }

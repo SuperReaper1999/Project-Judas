@@ -49,9 +49,9 @@ can float a panel or a docked group in its own window. Drag the panel out of
 the main editor to detach it, then drag it back to a docking target to
 reattach. Scene and Game use the same world and renderer when detached.
 
-This requires `VK_EXT_surface_maintenance1`,
-`VK_KHR_get_surface_capabilities2`, and the
-`VK_EXT_swapchain_maintenance1` feature on the selected device. The editor
+This requires the instance extensions `VK_EXT_surface_maintenance1` and
+`VK_KHR_get_surface_capabilities2`, and the device extension
+`VK_EXT_swapchain_maintenance1` with `swapchainMaintenance1` enabled. The editor
 selects single-window docking when those capabilities or SDL X11 are unavailable.
 Native Wayland remains single-window. A failure to create or present an
 individual secondary surface closes that panel and reports the failure.
@@ -61,7 +61,9 @@ swapchain and display target on the same graphics device and queue. Busy
 secondary surfaces skip presentation. Resize retries after the previous
 presentation fences signal. Close waits for that window's fences before
 releasing the Vulkan surface and its SDL window. The runtime and the
-single-window fallback retain their existing device requirements.
+single-window fallback retain their existing device requirements. The
+[parity record](VULKAN_PARITY.md#editor-detachment-evidence) gives the exact
+automated and human test scope.
 
 On the GTX 970 under isolated Openbox/Xvfb, the editor viewport fixture
 alternated one docked and one floating Game panel with pixel readback and

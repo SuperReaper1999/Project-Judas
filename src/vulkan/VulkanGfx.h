@@ -1,12 +1,12 @@
 #pragma once
-// Explicit Vulkan renderer interface (branch Vulkan-Exp).
+// Explicit Vulkan renderer interface for the opt-in historical mesh and shadow path.
 //
 // Renderer passes written against this interface state what they draw in
 // Vulkan's own terms: a pipeline created from a shader, vertex layout and
 // blend mode; a pass with named attachments and load operations; a binding
 // group naming every texture and buffer the shader reads; and a draw. Nothing
 // is inferred from OpenGL-style global state and no OpenGL-named entry point
-// is involved. See docs/VULKAN_NATIVE.md.
+// is involved. See docs/VULKAN_INTEGRATION.md.
 //
 // Resources (textures, buffers, programs) are still created by the engine's
 // existing resource code and are referred to here by their engine handles.

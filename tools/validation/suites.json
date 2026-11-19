@@ -743,6 +743,32 @@
       ]
     },
     {
+      "name": "scripting-presentation",
+      "target": "judas_script_presentation_tests",
+      "groups": [
+        "scripting",
+        "rendering",
+        "lifecycle"
+      ],
+      "args": [
+        "{output}/scripting-presentation"
+      ],
+      "parallel": true
+    },
+    {
+      "name": "scripting-developer-lab",
+      "target": "judas_script_developer_consumer_tests",
+      "groups": [
+        "application",
+        "scripting",
+        "lifecycle"
+      ],
+      "args": [
+        "{root}/projects/developer_lab",
+        "{output}/scripting-developer-lab"
+      ]
+    },
+    {
       "name": "scripting-module-acceptance",
       "target": "judas_script_module_acceptance_tests",
       "groups": [

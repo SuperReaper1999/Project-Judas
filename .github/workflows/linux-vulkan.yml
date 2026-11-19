@@ -2,9 +2,9 @@ name: Linux Vulkan and SDK qualification
 
 on:
   push:
-    branches: [Vulkan-V2-Integration, Experimental]
+    branches: [Experimental]
   pull_request:
-    branches: [Vulkan-V2-Integration, Experimental]
+    branches: [Experimental]
   workflow_dispatch:
 
 permissions:
@@ -80,7 +80,8 @@ jobs:
             --test render-cameras --test terrain-v2-transition --test particle-gpu-resident \
             --test water-visuals --test editor-application-lifecycle --test editor-v2-viewports \
             --test renderer-pass-state --test shadow-sampling --test renderer-compute \
-            --test terrain-v2-editor-preview-rendering --test terrain-v2-planet-render
+            --test terrain-v2-editor-preview-rendering --test terrain-v2-planet-render \
+            --test scripting-developer-lab
       - name: Verify Vulkan image synchronization
         env:
           VK_LAYER_ENABLES: VK_VALIDATION_FEATURE_ENABLE_SYNCHRONIZATION_VALIDATION_EXT

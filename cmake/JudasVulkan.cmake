@@ -1,11 +1,11 @@
 # Optional Vulkan graphics backend for native Linux.
 #
 # The optional backend is selected at run time with JUDAS_GRAPHICS=vulkan. OpenGL
-# remains the default backend of every build. See docs/VULKAN_BACKEND.md.
+# remains the default backend of every build. See docs/VULKAN_INTEGRATION.md.
 #   JUDAS_VULKAN=AUTO  build it when the Vulkan headers/loader and glslang exist
 #   JUDAS_VULKAN=ON    require it (configuration fails when a dependency is absent)
 #   JUDAS_VULKAN=OFF   never build it (default)
-set(JUDAS_VULKAN "OFF" CACHE STRING "Experimental Vulkan backend: AUTO, ON or OFF")
+set(JUDAS_VULKAN "OFF" CACHE STRING "Optional Linux Vulkan backend: AUTO, ON or OFF")
 set_property(CACHE JUDAS_VULKAN PROPERTY STRINGS AUTO ON OFF)
 if(NOT JUDAS_VULKAN MATCHES "^(AUTO|ON|OFF)$")
     message(FATAL_ERROR "JUDAS_VULKAN must be AUTO, ON or OFF")
@@ -14,7 +14,7 @@ set(JUDAS_VULKAN_ENABLED OFF)
 if(NOT JUDAS_VULKAN STREQUAL "OFF")
     if(NOT CMAKE_SYSTEM_NAME STREQUAL "Linux" OR ANDROID)
         if(JUDAS_VULKAN STREQUAL "ON")
-            message(FATAL_ERROR "JUDAS_VULKAN=ON: the experimental Vulkan backend is only wired for native Linux")
+            message(FATAL_ERROR "JUDAS_VULKAN=ON: the Vulkan backend requires native Linux")
         endif()
     else()
         find_package(Vulkan QUIET)
@@ -46,7 +46,7 @@ if(JUDAS_VULKAN_ENABLED)
         PRIVATE glslang::glslang glslang::SPIRV glslang::glslang-default-resource-limits)
     judas_warnings(judas_vulkan)
     target_link_libraries(judas_graphics_caps PUBLIC judas_vulkan)
-    message(STATUS "Judas: experimental Vulkan backend enabled (run with JUDAS_GRAPHICS=vulkan)")
+    message(STATUS "Judas: Vulkan backend enabled (run with JUDAS_GRAPHICS=vulkan)")
 else()
-    message(STATUS "Judas: experimental Vulkan backend not built (JUDAS_VULKAN=${JUDAS_VULKAN})")
+    message(STATUS "Judas: Vulkan backend not built (JUDAS_VULKAN=${JUDAS_VULKAN})")
 endif()

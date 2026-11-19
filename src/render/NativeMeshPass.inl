@@ -8,7 +8,7 @@
 // (DrawMesh's submit, BindMaterial, BindTerrain*, EndMeshBatch, Begin/End
 // ShadowPass) are untouched and remain the path of the OpenGL backend.
 //
-// Still shared with code that has not been migrated (see docs/VULKAN_NATIVE.md):
+// Still shared with code that has not been migrated (see docs/VULKAN_INTEGRATION.md):
 // scene-wide shader parameters (lighting, weather, water, terrain flags) are
 // written by their own passes into the same parameter block; the frame's
 // colour target and viewport are chosen by frame code; resources are created by

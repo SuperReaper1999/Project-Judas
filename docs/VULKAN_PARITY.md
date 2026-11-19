@@ -35,7 +35,7 @@ with NVIDIA 580.178.04. Neither substitutes for human editor acceptance.
 | **Animation and entity visibility — scoped parity confirmed** | Shared pose and visibility preparation supplies the mesh pass. Animation studio fixed-tick captures and recorded simulation rows matched to within one image channel value and exact telemetry. The shared glTF importer rejects morph targets on both backends. | Animated structural fracture and physical animation under varied scenes need matched GPU captures. The native physics tests alone establish no visual parity for those cases. |
 | **Cameras and composition — scoped parity confirmed** | `Renderer.cpp`, `RendererMaterials.inl`, shared camera projection. Native camera and portal cases exercise target readback, per-view shadow policy, off-axis projection, oblique clipping, origin rebasing, target recreation and clean ownership. The renderer lab and UI showcase compare fixed frames before and after two SDL resizes. | More combined portals and render-to-texture chains remain unverified. General scaled depth blits are outside the supported camera contract. |
 | **Runtime UI, text and maps — scoped parity confirmed** | `RuntimeUI.cpp`, shared UI shaders. `runtime-ui` exercises text and texture ownership, clipping paths and frame capture. UI showcase pixels were exact in all three matched hardware frames. The accepted `6d85a304` map qualification separately covered hardware bake, crop, marker alignment, clamp, resize and relocated exports on both backends. | More font/locale combinations and long texture-atlas churn are unverified. |
-| **Editor — single-window and Linux X11 detachment qualified** | `EditorVulkanViewports.cpp` installs ImGui renderer callbacks over the shared renderer. `editor-v2-detached-viewports` tests native Scene and Game windows, shared texture pixels, move, resize, close, three detach/reattach cycles and Play/Stop. GTX 970 and llvmpipe additionally passed minimize and restore with Openbox on an isolated X display and synchronization validation enabled. | Vulkan detachment requires the [present-fence extensions](VULKAN_INTEGRATION.md#detached-editor-windows). Human dragging, snapping, monitor changes, fractional scaling and sustained editing in KWin/XWayland remain to be checked. |
+| **Editor — single-window and Linux X11 detachment qualified** | `EditorVulkanViewports.cpp` installs ImGui renderer callbacks over the shared renderer. `editor-v2-detached-viewports` tests native Scene and Game windows, shared texture pixels, move, resize, close, three detach/reattach cycles and Play/Stop. GTX 970 and llvmpipe additionally passed minimize and restore with Openbox on an isolated X display and synchronization validation enabled. | Vulkan detachment requires the [present-fence extensions](VULKAN_INTEGRATION.md#detached-editor-windows). [Operator confirmation](#editor-detachment-evidence) covers Scene and Game detach and re-dock in KWin/XWayland. Snapping, monitor changes, fractional scaling and sustained editing in that session remain unverified. |
 | **Device and presentation — scoped parity and unverified recovery** | `Window.cpp`, `VkCore.cpp`. Device recreation, application restart, resize, resource retirement and owner rejection have executable coverage. Vulkan skips swapchain work while minimized and recreates on out-of-date events. Device loss currently requires restart. A bounded retry covers initial device creation, and explicit Vulkan selection rejects a missing driver. | Minimize/restore beyond the tested X11 environment, live device-loss injection/recovery and prolonged WSI stress are unverified. Do not infer hot recovery from a successful recreate after normal shutdown. |
 | **Platforms and distribution** | `JudasVulkan.cmake` enables Vulkan only on desktop Linux. Hosted Ubuntu 24.04 checks both backends in relocated SDK and standalone exports and enforces the glibc 2.39 ceiling. The Vulkan-capable SDK links the Vulkan loader even when OpenGL is selected. | Windows is unsupported project-wide. Android and Web use their own GLES and WebGL paths and have no Judas Vulkan backend. Other platforms and other physical GPU vendors have no parity qualification in this assessment. |
 
@@ -70,6 +70,18 @@ The combined p99 trials ranged from 4.517 to 4.537 ms before and from 4.525
 to 4.666 ms after. These short checks are evidence about the dependency
 change in the selected workloads. Broader backend performance comparisons
 need independently controlled captures.
+
+## Editor detachment evidence
+
+On Experimental [`eecef3a3`](https://github.com/SuperReaper1999/Project-Judas/commit/eecef3a31ccd323d749bf176937e0e90bb05e72b),
+the operator confirmed that both the Scene and Game panels could be detached and
+docked again on the Kubuntu Plasma desktop with SDL X11 through XWayland, using
+the GTX 970 and NVIDIA 580.178.04. This acceptance covers those two interactions
+on that setup. Native Wayland uses single-window docking.
+
+The [Ubuntu 24.04 Vulkan/SDK run](https://github.com/SuperReaper1999/Project-Judas/actions/runs/44632228483)
+on that commit exercised both APIs' detached-window tests and the full registered
+suite. That run used the software graphics CI environment.
 
 ## Reproduce
 
