@@ -2,10 +2,12 @@ import {ui, world, WorldMap} from 'judas';
 
 export const properties = {mapUi: {type: 'string', default: ''}};
 
+/** @type {import("judas").WorldMapRegion} */
 const region = {min: {x: -16, z: -16}, max: {x: 16, z: 16}, orientation: 0};
 const waypoint = {x: 4, z: -4};
 
 export default class {
+    /** @param {import("judas").ScriptContext<{mapUi: string}>} context */
     constructor({entity, properties}) {
         this.entity = entity;
         this.properties = properties;
@@ -22,6 +24,7 @@ export default class {
         this.start();
     }
     uiUpdate() {
+        if (!this.local || !this.playerMarker || !this.waypointMarker) return;
         const player = world.toAbsolute(this.entity.transform.position);
         this.local.setView({center: player, width: 16, height: 16, heading: 0, circular: true});
         this.local.placeMarker(this.playerMarker, player);

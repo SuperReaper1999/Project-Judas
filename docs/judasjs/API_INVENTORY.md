@@ -367,6 +367,13 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Wheel.settings` | `wheelSettings` | [declaration](../judas.d.ts) | [reference](wheels.md) |
 | `Wheel.state` | `wheelState` | [declaration](../judas.d.ts) | [reference](wheels.md) |
 | `Wheel.valid` | `wheelValid` | [declaration](../judas.d.ts) | [reference](wheels.md) |
+| `WorldMap` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `WorldMap.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `WorldMap.detach` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `WorldMap.mapToWorld` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `WorldMap.placeMarker` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `WorldMap.setView` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `WorldMap.worldToMap` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `audio` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `audio.diagnostics` | `audioDiagnostics` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `audio.group` | `audioGroup` | [declaration](../judas.d.ts) | [reference](audio.md) |
@@ -537,7 +544,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 
 - **globalThis.__judas**: Internal native dispatcher; unsupported, not a public API declaration.
 - **globalThis.console**: Alias of exported console; no extra API.
-- **result objects / config / property schema**: Native structured fields (including JointConfiguration.rotationalResistance, mechanical-damage DeformableAttachmentOptions/observations and PowertrainConnection/connected) and value validation reviewed manually; representative runtime/type examples cover shapes, not every invalid value.
+- **result objects / config / property schema**: Native structured fields (including JointConfiguration.rotationalResistance, M83 DeformableAttachmentOptions/observations and PowertrainConnection/connected) and value validation reviewed manually; representative runtime/type examples cover shapes, not every invalid value.
 - **types-only exports**: Interfaces/type aliases are tooling only; runtime export comparison excludes them.
 - **setter-only accessors**: TypeScript cannot prohibit reads; docs state these return undefined.
 - **callback ordering / phases**: Implementation traced manually; no AST checker proves temporal semantics.

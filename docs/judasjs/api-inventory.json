@@ -1585,6 +1585,36 @@
       "maximum": 1
     },
     {
+      "symbol": "WorldMap.constructor",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "WorldMap.detach",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "WorldMap.mapToWorld",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "WorldMap.placeMarker",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "WorldMap.setView",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "symbol": "WorldMap.worldToMap",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
       "symbol": "audio.group",
       "minimum": 1,
       "maximum": 1
@@ -5943,6 +5973,73 @@
       ],
       "type": "docs/judas.d.ts:Wheel.valid",
       "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "WorldMap",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:WorldMap",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "WorldMap.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:WorldMap.constructor",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "WorldMap.detach",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:WorldMap.detach",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "WorldMap.mapToWorld",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:WorldMap.mapToWorld",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "WorldMap.placeMarker",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:WorldMap.placeMarker",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "WorldMap.setView",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:WorldMap.setView",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "WorldMap.worldToMap",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:WorldMap.worldToMap",
+      "reference": "docs/judasjs/ui.md"
     },
     {
       "symbol": "audio",

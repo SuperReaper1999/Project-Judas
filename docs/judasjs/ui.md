@@ -153,3 +153,10 @@ ordinary UI images, panels and text remain display-referred.
 
 See [the practical guide and editable menu](../UI_TRANSFERS_AND_PREVIEWS.md)
 for authoring, event validation, ownership, controls and qualification boundaries.
+
+## Baked world maps
+
+`WorldMap` presents an ordinary UI Image as a bounded map viewport. Use
+`setView` for crop, zoom, heading and mask. Use `worldToMap`, `mapToWorld`
+and `placeMarker` to keep world positions aligned with the image. See the
+[baking workflow, coordinate contract and SDK example](../WORLD_MAPS.md).
