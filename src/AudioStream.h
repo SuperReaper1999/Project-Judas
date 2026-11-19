@@ -37,7 +37,7 @@ struct PreparedAudioStream {
     explicit PreparedAudioStream(std::shared_ptr<AudioStreamMetadata>,unsigned frames);
     ~PreparedAudioStream();
     void Fill(JobContext& context); // ordered jobs, exactly one worker at a time
-    void Close();                 // decoder destruction on a worker, after graph detachment
+    void Close();                 // idempotent cleanup after graph detachment and decode completion
     void Seek(std::uint64_t frame);
     std::size_t BufferBytes()const{return std::size_t(pageFrames)*4*2*sizeof(float);}
     static ma_result Read(ma_data_source*,void*,ma_uint64,ma_uint64*);

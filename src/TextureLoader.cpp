@@ -3,6 +3,7 @@
 #include <cstring>
 #include <fstream>
 #include <filesystem>
+#include <memory>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "../third_party/stb_image.h"
@@ -40,14 +41,13 @@ bool Finish(unsigned char* decoded, int width, int height, const std::string& pa
         return false;
     }
 
+    const std::unique_ptr<unsigned char, decltype(&stbi_image_free)> pixels(decoded, stbi_image_free);
     outTexture=TextureData{};
     outTexture.width = width;
     outTexture.height = height;
     const size_t byteCount =
         static_cast<size_t>(width) * static_cast<size_t>(height) * TextureData::kChannels;
-    outTexture.pixels.assign(decoded, decoded + byteCount);
-
-    stbi_image_free(decoded);
+    outTexture.pixels.assign(pixels.get(), pixels.get() + byteCount);
     return true;
 }
 }  // namespace

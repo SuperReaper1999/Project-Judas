@@ -1062,6 +1062,12 @@ judas_add_engine_test(judas_ui_preview_color_tests tests/UIPreviewColorTests.cpp
 judas_add_engine_test(judas_portal_camera_tests tests/PortalCameraTests.cpp)
 
 judas_add_engine_test(judas_audio_tests tests/AudioTests.cpp SOURCES src/editor/EditorHistory.cpp)
+judas_add_engine_test(judas_exceptional_cleanup_tests tests/ExceptionalCleanupTests.cpp)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    target_compile_definitions(judas_exceptional_cleanup_tests PRIVATE JUDAS_TRACK_NATIVE_CLEANUP)
+    target_link_options(judas_exceptional_cleanup_tests PRIVATE
+        -Wl,--wrap=malloc,--wrap=free,--wrap=ma_decoder_uninit)
+endif()
 
 judas_add_engine_test(judas_input_tests tests/InputTests.cpp)
 judas_add_engine_test(judas_pointer_harness_tests tests/PointerHarnessTests.cpp SOURCES src/TestHarness.cpp)

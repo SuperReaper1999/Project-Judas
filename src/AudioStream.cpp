@@ -26,7 +26,12 @@ PreparedAudioStream::PreparedAudioStream(std::shared_ptr<AudioStreamMetadata> m,
  for(auto& page:pages)page.pcm.resize(pageFrames*2);
  auto config=ma_data_source_config_init();config.vtable=&table;ma_data_source_init(&config,&base);
 }
-PreparedAudioStream::~PreparedAudioStream(){ma_data_source_uninit(&base);}
+PreparedAudioStream::~PreparedAudioStream(){
+ // The graph has detached and queued/running jobs hold their own shared
+ // references. The last owner must close even if a cleanup job never ran.
+ Close();
+ ma_data_source_uninit(&base);
+}
 void PreparedAudioStream::Seek(std::uint64_t frame){seekFrame.store(frame);generation.fetch_add(1,std::memory_order_release);ready.store(false);ended.store(false);cursor.store(frame);}
 void PreparedAudioStream::Close(){if(decoderReady){ma_decoder_uninit(&decoder);decoderReady=false;}for(auto& p:pages)std::vector<float>().swap(p.pcm);}
 void PreparedAudioStream::Fill(JobContext& context){

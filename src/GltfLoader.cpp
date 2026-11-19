@@ -89,9 +89,11 @@ bool ParseGltfMeshSource(const void* bytes,size_t size,const std::string& source
    if(view.has_transform){out.scale={view.transform.scale[0],view.transform.scale[1]};out.offset={view.transform.offset[0],view.transform.offset[1]};out.rotation=view.transform.rotation;}
    const auto* texture=view.texture;const auto* image=texture->image;if(!image)throw std::runtime_error("missing core texture image");
    if(texture->sampler){auto& t=*texture->sampler;out.sampler={int(t.wrap_s),int(t.wrap_t),t.min_filter?int(t.min_filter):9987,t.mag_filter?int(t.mag_filter):9729};}
-   const uint8_t* bytes=nullptr;size_t size=0;void* owned=nullptr;
+   const uint8_t* bytes=nullptr;size_t size=0;
+   auto freeImage=[&memory=options.memory](void* imageData){memory.free_func(memory.user_data,imageData);};
+   std::unique_ptr<void,decltype(freeImage)> owned(nullptr,freeImage);
    if(image->buffer_view){auto* buffer=image->buffer_view;bytes=static_cast<const uint8_t*>(buffer->buffer->data)+buffer->offset;size=buffer->size;}
-   else if(image->uri&&std::strncmp(image->uri,"data:",5)==0){std::string uri=image->uri;auto comma=uri.find(',');if(comma==std::string::npos||uri.substr(0,comma).find(";base64")==std::string::npos)throw std::runtime_error("image data URI must use base64");size=(uri.size()-comma-1)*3/4;while(size&&uri.back()=='='){--size;uri.pop_back();}if(cgltf_load_buffer_base64(&options,size,image->uri+comma+1,&owned)!=cgltf_result_success)throw std::runtime_error("invalid embedded image");bytes=static_cast<uint8_t*>(owned);}
+   else if(image->uri&&std::strncmp(image->uri,"data:",5)==0){std::string uri=image->uri;auto comma=uri.find(',');if(comma==std::string::npos||uri.substr(0,comma).find(";base64")==std::string::npos)throw std::runtime_error("image data URI must use base64");size=(uri.size()-comma-1)*3/4;while(size&&uri.back()=='='){--size;uri.pop_back();}void* decoded=nullptr;if(cgltf_load_buffer_base64(&options,size,image->uri+comma+1,&decoded)!=cgltf_result_success)throw std::runtime_error("invalid embedded image");owned.reset(decoded);bytes=static_cast<const uint8_t*>(owned.get());}
    else if(image->uri&&!approved.empty()){
     std::string uri=image->uri;auto path=Dependency(approved,uri,remaps);
     if(!std::filesystem::is_regular_file(path)||std::filesystem::file_size(path)>64*1024*1024)throw std::runtime_error("missing/oversized external image: "+uri);
@@ -100,7 +102,7 @@ bool ParseGltfMeshSource(const void* bytes,size_t size,const std::string& source
     out.encodedImage=contents;if(dependencies)dependencies->push_back(path.string());
     std::string decodeError;if(!DecodeTextureFromMemory(contents.data(),contents.size(),uri,out.embedded,decodeError))throw std::runtime_error(decodeError);return;
    }else throw std::runtime_error("external glTF image requires approved import source root");
-   out.encodedImage.assign(bytes,bytes+size);std::string error;bool ok=DecodeTextureFromMemory(bytes,size,"embedded glTF image",out.embedded,error);free(owned);if(!ok)throw std::runtime_error(error);
+   out.encodedImage.assign(bytes,bytes+size);std::string error;if(!DecodeTextureFromMemory(bytes,size,"embedded glTF image",out.embedded,error))throw std::runtime_error(error);
   };
   for(size_t i=0;i<data->materials_count;++i){const auto& src=data->materials[i];MaterialDefinition m;m.flipV=true;m.model=src.unlit?MaterialModel::Unlit:MaterialModel::PBR;auto& pbr=src.pbr_metallic_roughness;m.baseColor={pbr.base_color_factor[0],pbr.base_color_factor[1],pbr.base_color_factor[2],pbr.base_color_factor[3]};m.metallic=pbr.metallic_factor;m.roughness=pbr.roughness_factor;m.emissive={src.emissive_factor[0],src.emissive_factor[1],src.emissive_factor[2]};m.alpha=src.alpha_mode==cgltf_alpha_mode_mask?MaterialAlpha::Mask:src.alpha_mode==cgltf_alpha_mode_blend?MaterialAlpha::Blend:MaterialAlpha::Opaque;m.alphaCutoff=src.alpha_cutoff;m.doubleSided=src.double_sided;m.normalStrength=src.normal_texture.scale;m.occlusionStrength=src.occlusion_texture.scale;map(pbr.base_color_texture,m.maps[0]);map(pbr.metallic_roughness_texture,m.maps[1]);map(src.normal_texture,m.maps[2]);map(src.occlusion_texture,m.maps[3]);map(src.emissive_texture,m.maps[4]);std::string error;if(!ValidateMaterial(m,error))throw std::runtime_error(error);mesh.materialKeys.push_back(src.name?src.name:"unnamed-material");mesh.materials.push_back(std::move(m));}
   bool missingTangents=false;

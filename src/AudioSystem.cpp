@@ -241,11 +241,22 @@ void AudioSystem::ResetEnvironment(){if(m->reverb){ma_node_uninit(&m->reverb->ba
 void AudioSystem::Update(){
  JUDAS_PROFILE_SCOPE("Audio control and retirement");
  for(auto it=m->retired.begin();it!=m->retired.end();){auto& r=*it;auto& s=*r.stream;
-  if(!m->jobs){++it;continue;}
-  if(s.job.IsValid()&&!m->jobs->IsFinished(s.job)){++it;continue;}
-  if(s.job.IsValid())m->jobs->Forget(s.job);
-  if(r.closing){it=m->retired.erase(it);continue;}
-  auto stream=r.stream;s.job=m->jobs->Submit([stream](JobContext&){JUDAS_PROFILE_SCOPE("Audio stream retirement worker");stream->Close();},JobPriority::Normal,"audio stream retirement");r.closing=true;++it;
+  if(m->jobs&&s.job.IsValid()){
+   if(!m->jobs->IsFinished(s.job)){++it;continue;}
+   m->jobs->Forget(s.job);
+   s.job={};
+  }
+  if(m->jobs&&!r.closing){
+   auto stream=r.stream;
+   s.job=m->jobs->Submit([stream](JobContext&){
+    JUDAS_PROFILE_SCOPE("Audio stream retirement worker");
+    stream->Close();
+   },JobPriority::Normal,"audio stream retirement");
+   if(s.job.IsValid()){r.closing=true;++it;continue;}
+  }
+  // Dropping the last reference also closes a decoder if the worker was
+  // rejected or cancelled. Neither the mixer nor an active decode owns it here.
+  it=m->retired.erase(it);
  }
  for(auto it=m->voices.begin();it!=m->voices.end();){auto h=AudioVoiceHandle{it->first};auto& v=*it->second;
   if(v.autoRelease&&ma_sound_at_end(&v.sound)){++it;DestroyVoice(h);continue;}

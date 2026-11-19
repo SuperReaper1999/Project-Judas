@@ -544,6 +544,13 @@
       ]
     },
     {
+      "name": "exceptional-cleanup",
+      "target": "judas_exceptional_cleanup_tests",
+      "groups": [
+        "tooling"
+      ]
+    },
+    {
       "name": "asset-pipeline",
       "target": "judas_asset_pipeline_tests",
       "groups": [
