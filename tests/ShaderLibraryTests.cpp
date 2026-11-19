@@ -62,12 +62,14 @@ int main() {
     // Mesh fragment advances from bba0b2e6da115bf8 to skip sun shadow filtering
     // at zero direct contribution. The native pixel and depth checks cover
     // both OpenGL profiles with the reviewed shader behavior.
+    // UI fragment advances for bounded affine map sampling and circular coverage.
+    // UIPreviewColorTests verifies orientation, clipping and ordinary UI state.
     const std::array<Builtin, 8> builtins = {
         Builtin::MeshVertex, Builtin::MeshFragment, Builtin::ShadowVertex, Builtin::ShadowFragment,
         Builtin::UIVertex,   Builtin::UIFragment,   Builtin::DebugVertex,  Builtin::DebugFragment};
     const std::array<std::uint64_t, 8> approved = {
         0x8e40d663fcf10b6bull, 0xfaf938a1e74d930dull, 0x72cd5d86fbe7a639ull, 0x925b7b5dc8ab7d48ull,
-        0xee3dfe2e18412c0dull, 0x28a3c2a8126fe9e3ull, 0x0183210d9e1a752cull, 0xcabdf66de2492589ull};
+        0xee3dfe2e18412c0dull, 0x6f641e8eaa5da171ull, 0x0183210d9e1a752cull, 0xcabdf66de2492589ull};
     for (std::size_t i = 0; i < builtins.size(); ++i) {
         const auto *source = Source(builtins[i]);
         if (source && Fingerprint(source) != approved[i])

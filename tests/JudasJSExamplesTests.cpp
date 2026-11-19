@@ -57,7 +57,8 @@ int main(int argc, char** argv) {
             if(n=="queries")check(yes("ray")&&yes("shape")&&yes("closest")&&yes("collider"),"real MK2 query results in copyable example");
             if(n=="impulse-point")check(yes("angular")&&yes("linear")&&yes("rejectsInvalid")&&yes("unchanged"),"off-centre impulse and atomic invalid-input rejection");
             if(n=="presentation")check(yes("synchronized")&&yes("frameMode"),"presentation timing and interpolation context");
-            if(n=="surface")check(state.find("Entity.destroy")!=std::string::npos,"actual VM surface enumeration");
+            if(n=="surface")check(state.find("Entity.destroy")!=std::string::npos&&
+                                  state.find("WorldMap.placeMarker")!=std::string::npos,"actual VM surface enumeration");
             world.Destroy();
         }
         std::cout<<checks<<" current cookbook checks passed\n";
