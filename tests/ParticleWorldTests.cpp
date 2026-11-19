@@ -80,6 +80,25 @@ int IdleBenchmark(bool active = false, ParticleBackend backend = ParticleBackend
     }
     return 0;
 }
+void StaticOwnerLookup() {
+    Scene scene;
+    SceneObjectId last = 0;
+    for (int i = 0; i < 32; ++i) {
+        auto &object = scene.CreateObject("Static collision receiver");
+        object.transform.position.x = float(i) * 3.f;
+        object.body = SceneBodyComponent{};
+        last = object.id;
+    }
+    RuntimeWorld world;
+    std::string error;
+    Require(world.Build(scene, nullptr, error), "static body ownership fixture: " + error);
+    const auto body = world.RuntimeBody(last);
+    const auto before = world.MetadataStats().lookups;
+    Require(body.IsValid() && world.EntityIdOfBody(body) == last,
+            "late static body maps to its original entity");
+    Require(world.MetadataStats().lookups - before <= 2,
+            "resolving a static body does not look up unrelated entity definitions");
+}
 void SharedSnapshots() {
     auto scene = Fixture(ParticleBackend::Cpu, true);
     scene.Objects()[1].body->motion = SceneBodyMotion::Kinematic;
@@ -478,11 +497,11 @@ int main(int argc, char **argv) {
             return IdleBenchmark(true, ParticleBackend::Gpu, &host.Resources());
         }
         if (argc == 2 && std::strcmp(argv[1], "--cpu-only") == 0) {
-            SharedSnapshots(); IdleCpuLifecycle();
+            StaticOwnerLookup(); SharedSnapshots(); IdleCpuLifecycle();
             std::printf("CPU world: %u checks PASS\n", checks);
             return 0;
         }
-        SharedSnapshots(); IdleCpuLifecycle();
+        StaticOwnerLookup(); SharedSnapshots(); IdleCpuLifecycle();
         EngineHost host;
         std::string error;
         Require(host.Init("Particle world lifecycle", 128, 128, false, error), "actual renderer/compute context: " + error);

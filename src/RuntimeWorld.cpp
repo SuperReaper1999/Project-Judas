@@ -843,9 +843,10 @@ EntityId RuntimeWorld::EntityIdOfBody(BodyHandle handle) const {
         // Dynamic entries retain authored category data while unloaded. Their
         // cached handle is not a live incarnation; only the loop above may
         // resolve them. This fallback supplies ordinary static bodies.
+        if(entry.second.body.id!=handle.id)continue;
         const auto* entity=FindEntity(entry.first);
         if(entity && entity->slot!=std::numeric_limits<std::size_t>::max())continue;
-        if(entry.second.body.id==handle.id && RuntimeDefinition(entry.first))return entry.first;
+        if(RuntimeDefinition(entry.first))return entry.first;
     }
     return kInvalidSceneObjectId;
 }
