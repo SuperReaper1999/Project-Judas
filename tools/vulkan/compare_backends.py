@@ -123,18 +123,24 @@ def run(binary, project, script_lines, shots, directory, backend, arguments):
         if arguments.device:
             environment['JUDAS_VULKAN_DEVICE'] = arguments.device
     command = [str(binary), str(project)]
-    if arguments.xvfb:
-        command = ['xvfb-run', '-a', '-s', f'-screen 0 {arguments.screen}x24'] + command
     log = directory / 'run.log'
     diagnostics = directory / 'graphics.log'
-    with log.open('wb') as stream, diagnostics.open('wb') as errors:
+    process_errors = diagnostics
+    if arguments.xvfb:
+        # Some distro wrappers merge the child's stderr into stdout. Redirect
+        # inside the wrapper so diagnostics cannot interrupt a telemetry row.
+        command = ['xvfb-run', '-a', '-s', f'-screen 0 {arguments.screen}x24',
+                   'sh', '-c', 'log=$1; shift; exec "$@" 2>"$log"', 'judas', str(diagnostics)] + command
+        process_errors = directory / 'xvfb.log'
+    with log.open('wb') as stream, process_errors.open('wb') as errors:
         try:
             status = subprocess.run(command, stdout=stream, stderr=errors, env=environment,
                                     cwd=ROOT, timeout=arguments.timeout).returncode
         except subprocess.TimeoutExpired:
             status = 'timeout'
     stdout = log.read_text(errors='replace')
-    text = diagnostics.read_text(errors='replace') + '\n' + stdout
+    graphics = diagnostics.read_text(errors='replace') if diagnostics.is_file() else ''
+    text = graphics + '\n' + stdout
     device = next((line for line in text.splitlines() if line.startswith('[Graphics] Vulkan backend')), '')
     if backend == 'vulkan' and status == 0:
         if not device:

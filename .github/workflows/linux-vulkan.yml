@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: vulkan-qualification-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   qualify:
@@ -79,6 +79,7 @@ jobs:
             --test water-visuals --test editor-application-lifecycle --test editor-v2-viewports
       - name: Exercise shared renderer on OpenGL and Vulkan
         run: |
+          python3 -m unittest discover -s tests -p test_vulkan_parity.py
           python3 tools/vulkan/compare_backends.py --build-dir "$RUNNER_TEMP/relocated-sdk" \
             --device llvmpipe --profile portable --output "$RUNNER_TEMP/parity" --frames 32 \
             --shot 8 --shot 17 --shot 28 --script-line 'RESIZE 960 540 12' --script-line 'RESIZE 1280 720 22' \
