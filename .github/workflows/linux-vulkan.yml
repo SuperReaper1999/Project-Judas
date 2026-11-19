@@ -41,7 +41,7 @@ jobs:
           icd=$(dpkg-query -L mesa-vulkan-drivers | grep '/lvp_icd[^/]*\.json$')
           test -f "$icd"
           echo "VK_DRIVER_FILES=$icd" >> "$GITHUB_ENV"
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@v6
         id: build-cache
         with:
           path: |
@@ -59,7 +59,7 @@ jobs:
             -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
       - name: Build native tests and SDK
         run: cmake --build build --target judas_prealpha_tests judas_linux_sdk -j2
-      - uses: actions/cache/save@v4
+      - uses: actions/cache/save@v6
         if: steps.build-cache.outputs.cache-hit != 'true'
         with:
           path: |

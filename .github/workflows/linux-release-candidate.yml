@@ -64,13 +64,13 @@ jobs:
           nproc
           free -m
       - name: Restore Linux compiler objects
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/ccache
           key: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v2-${{ inputs.candidate || github.sha }}-candidate
           restore-keys: linux-gcc-${{ steps.compiler.outputs.version }}-objects-v2-
       - name: Reuse Linux ICU
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: build/unicode
           key: linux-gcc-${{ steps.compiler.outputs.version }}-icu-v2-${{ hashFiles('third_party/text/*', 'cmake/JudasTextDependencies.cmake') }}
