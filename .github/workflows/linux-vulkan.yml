@@ -23,6 +23,7 @@ jobs:
       SDL_AUDIODRIVER: dummy
       LIBGL_ALWAYS_SOFTWARE: '1'
       PYTHONDONTWRITEBYTECODE: '1'
+      CCACHE_DIR: /home/runner/.cache/ccache
       CCACHE_MAXSIZE: 1G
     steps:
       - uses: actions/checkout@v7
@@ -50,6 +51,7 @@ jobs:
           restore-keys: ubuntu-24.04-vulkan-v1-
       - name: Capture provenance and configure Release SDK
         run: |
+          python3 scripts/prealpha_build_identity_checks.py --output "$RUNNER_TEMP/build-identity.json"
           python3 tools/vulkan/debian_compiler_notices.py "$RUNNER_TEMP/vulkan-notices"
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental \
             -DJUDAS_ENABLE_VALIDATION=ON -DJUDAS_VULKAN=ON -DJUDAS_SDK_RELEASE=ON \
@@ -122,6 +124,7 @@ jobs:
           name: vulkan-qualification-${{ github.sha }}
           path: |
             ${{ runner.temp }}/SDK_ABI.json
+            ${{ runner.temp }}/build-identity.json
             ${{ runner.temp }}/no-vulkan-driver.log
             ${{ runner.temp }}/parity/RESULTS.json
             ${{ runner.temp }}/parity/*/*/*.log

@@ -53,6 +53,8 @@ def main():
             "cmake_minimum_required(VERSION 3.20)\nproject(IdentityFixture LANGUAGES NONE)\n"
             'include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/JudasBuildIdentity.cmake")\n'
             'judas_build_identity("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/generated")\n'
+            'add_library(judas_build_identity INTERFACE)\n'
+            'set_property(TARGET judas_build_identity PROPERTY JUDAS_VULKAN_BUILD "${IDENTITY_FIXTURE_VULKAN}")\n'
             'file(GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/identity-$<CONFIG>.json" INPUT "${CMAKE_CURRENT_BINARY_DIR}/generated/judas-build-info.json.in")\n')
 
         def configure(label, directory, *options, succeeds=True):
@@ -70,6 +72,9 @@ def main():
         unknown = configure("unknown-source", fixture)
         assert unknown["source_origin"] == "unknown" and unknown["source_revision"] == "unknown"
         assert unknown["channel"] == "Local" and unknown["source_dirty"] is True
+        assert unknown["vulkan"] is False
+        vulkan = configure("vulkan-build", fixture, "-DIDENTITY_FIXTURE_VULKAN=ON")
+        assert vulkan["vulkan"] is True
         configure("invalid-channel", fixture, "-DJUDAS_BUILD_CHANNEL=Unknown", succeeds=False)
         configure("invalid-version", fixture, "-DJUDAS_ENGINE_VERSION=misleading-version", succeeds=False)
         archive = {"schema": 1, "revision": "a" * 40, "tree": "b" * 40,
