@@ -11,6 +11,10 @@ class RuntimeWorld; class Renderer; class ResourceManager; class AssetDatabase; 
 enum class UIKind { Canvas, Panel, Text, Image, Button, Slider, Toggle, TextInput, Scroll, List };
 enum class UIFlow { Free, Horizontal, Vertical };
 struct UIRect {glm::vec2 position{0},size{0};bool Contains(glm::vec2 p)const;};
+struct UIMapSampling {
+    glm::vec2 origin, right, down;
+    bool circular = false;
+};
 struct UIElement {
     std::string id,parent,text,texture,font;
     std::string placeholder,accessibleLabel,description;bool readOnly=false;unsigned maxBytes=4096;float rowHeight=40;glm::vec4 focusColor{1,.78f,.28f,1};
@@ -21,6 +25,7 @@ struct UIElement {
     glm::vec4 margin{0},padding{0},background{0,0,0,0},color{1};
     float spacing=8,fontSize=22,value=0,minimum=0,maximum=1;
     std::string dragType={},dropType={}; // Appended: preserve native aggregate prefixes.
+    std::optional<UIMapSampling> mapSampling; // Runtime image presentation only.
 };
 struct UIDocument {glm::vec2 reference{1280,720};bool visible=true,enabled=true,modal=false;std::vector<UIElement> elements;
     bool Validate(std::string& error)const;

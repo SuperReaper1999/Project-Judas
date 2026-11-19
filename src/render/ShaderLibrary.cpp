@@ -492,13 +492,26 @@ uniform sampler2D uTexture;
 uniform vec4 uColor;
 uniform vec2 uUVOffset;
 uniform vec2 uUVScale;
+uniform int uMapMode;
+uniform vec2 uMapCross;
 uniform bool uSceneLinear;
 uniform float uExposure;
 )" ) + DisplayTransformSource() + R"(
 
 void main() {
     vec2 uv = uUVOffset + vUnit * uUVScale;
+    float coverage = 1.0;
+    if (uMapMode != 0) {
+        uv += vUnit.yx * uMapCross;
+        if (any(lessThan(uv, vec2(0.0))) || any(greaterThan(uv, vec2(1.0)))) coverage = 0.0;
+        if (uMapMode == 2) {
+            float radius = length(vUnit - 0.5);
+            float edge = max(fwidth(radius), 0.00001);
+            coverage *= 1.0 - smoothstep(0.5 - edge, 0.5, radius);
+        }
+    }
     vec4 sampled = texture(uTexture, uv);
+    sampled.a *= coverage;
     if (uSceneLinear) sampled.rgb = JudasDisplayColour(sampled.rgb, uExposure);
     FragColor = sampled * uColor;
 }

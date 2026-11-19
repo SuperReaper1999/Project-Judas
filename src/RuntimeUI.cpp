@@ -245,7 +245,12 @@ void RuntimeUI::Draw(Renderer& r,int w,int h,const RuntimeWorld* world){
                 auto texture=available?world->CameraTexture(camera):TextureHandle{};
                 if(texture.IsValid()){r.DrawUIImage(l.rect.position,l.rect.size,texture,e.color,e.fit,true);++m_stats.draws;}
             }
-            if(!camera&&e.kind==UIKind::Image&&!e.texture.empty()&&m_resources){if(std::find(in.refs.begin(),in.refs.end(),e.texture)==in.refs.end()){m_resources->AddRef(e.texture);in.refs.push_back(e.texture);}m_resources->RequestTexture(e.texture);auto t=m_resources->TryGetTexture(e.texture);if(t.IsValid()){r.DrawUIImage(l.rect.position,l.rect.size,t,e.color,e.fit);++m_stats.draws;}}
+            if(!camera&&e.kind==UIKind::Image&&!e.texture.empty()&&m_resources){if(std::find(in.refs.begin(),in.refs.end(),e.texture)==in.refs.end()){m_resources->AddRef(e.texture);in.refs.push_back(e.texture);}m_resources->RequestTexture(e.texture);auto t=m_resources->TryGetTexture(e.texture);if(t.IsValid()){
+                if (const auto& map=e.mapSampling)
+                    r.DrawUIMap(l.rect.position,l.rect.size,t,e.color,map->origin,map->right,map->down,map->circular);
+                else r.DrawUIImage(l.rect.position,l.rect.size,t,e.color,e.fit);
+                ++m_stats.draws;
+            }}
             std::string text=e.text;if(!e.textKey.empty()&&m_localization){m_localization->Refresh();auto& cached=m_localizedText[{p.first,e.id}];std::string identity=e.textKey+":"+std::to_string(m_localization->Revision());if(cached.second.empty()||cached.first!=m_localization->Revision()||cached.second.substr(0,identity.size())!=identity){std::string error;auto value=m_localization->Format(e.textKey,{},error);cached={m_localization->Revision(),identity+'\0'+value};}auto nul=cached.second.find('\0');text=cached.second.substr(nul+1);}
             if(!text.empty()||e.kind==UIKind::TextInput||e.kind==UIKind::List){
                 std::vector<std::shared_ptr<const TextFont>> fonts;

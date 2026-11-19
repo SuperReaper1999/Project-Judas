@@ -623,7 +623,7 @@ judas_warnings(judas_editor)
 
 # Milestone 30: the scene authoring tool that writes the shipped demonstration
 # scenes and the tiny game scene (tools/SceneAuthor.cpp tools/StructuredAuthor.cpp).
-add_executable(judas_scene_author tools/SceneAuthor.cpp tools/StructuredAuthor.cpp tools/AuthoringCLI.cpp tools/RecipeCLI.cpp tools/ContentServicesCLI.cpp)
+add_executable(judas_scene_author tools/SceneAuthor.cpp tools/StructuredAuthor.cpp tools/AuthoringCLI.cpp tools/RecipeCLI.cpp tools/ContentServicesCLI.cpp tools/WorldMapBake.cpp)
 target_link_libraries(judas_scene_author PRIVATE judas_engine)
 judas_warnings(judas_scene_author)
 

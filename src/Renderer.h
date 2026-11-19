@@ -401,6 +401,8 @@ public:
     void EndUIFrame();
     void SetUIClip(glm::vec2 position,glm::vec2 size);
     void ClearUIClip();
+    void DrawUIMap(glm::vec2 position,glm::vec2 size,TextureHandle texture,glm::vec4 tint,
+                   glm::vec2 origin,glm::vec2 right,glm::vec2 down,bool circular);
     void DrawUIImage(glm::vec2 position,glm::vec2 size,TextureHandle texture,glm::vec4 tint,bool fit,bool flipVertical=false);
     bool SelectUIFont(const std::string& path,std::string& error);
     std::shared_ptr<const TextFont> DefaultTextFont()const{return m_defaultTextFont;}
@@ -655,6 +657,7 @@ private:
     GLint m_uiUTexture = -1;
     GLint m_uiUSceneLinear = -1, m_uiUExposure = -1;
     GLint m_uiUUVOffset = -1;
+    GLint m_uiUMapMode = -1, m_uiUMapCross = -1;
     GLint m_uiUUVScale = -1;
     glm::vec2 m_uiScreenSize{0.0f, 0.0f};
     unsigned m_uiDrawCalls=0;

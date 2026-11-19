@@ -3,6 +3,7 @@
 #include "ContentServicesCLI.h"
 #include "RecipeCLI.h"
 #include "StructuredAuthor.h"
+#include "WorldMapBake.h"
 
 #include <cstdio>
 #include <string>
@@ -10,6 +11,8 @@
 int main(int argc, char **argv) {
     if (HandleBuildIdentityArguments(argc, argv, "scene_author"))
         return 0;
+    if (auto result = RunWorldMapBake(argc, argv); result >= 0)
+        return result;
     if (auto result = RunContentServicesCLI(argc, argv); result >= 0)
         return result;
     if (auto result = RunRecipeCLI(argc, argv); result >= 0)
@@ -27,7 +30,8 @@ int main(int argc, char **argv) {
     std::fprintf(stderr,
                  "usage: %s --structured <input.json> <output>\n"
                  "       %s --create|--inspect|--validate|--convert|--edit|--patch ...\n"
+                 "       %s --bake-map project scene-or-- output.png minX minZ maxX maxZ bottomY topY width height orientation [layerMask]\n"
                  "See docs/NAMED_AUTHORING.md and docs/SDK_AUTHORING.md.\n",
-                 argv[0], argv[0]);
+                 argv[0], argv[0], argv[0]);
     return argc == 2 && std::string(argv[1]) == "--help" ? 0 : 2;
 }

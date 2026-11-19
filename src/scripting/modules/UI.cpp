@@ -79,6 +79,24 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
                     {"targetDocument",ui.Name(drag->target)},{"targetElement",drag->targetElement},
                     {"position",{{"x",drag->position.x},{"y",drag->position.y}}},{"keyboard",drag->keyboard}}.dump());
             }
+            if (action == "mapSampling" && element) {
+                require(write && element->kind==UIKind::Image,"map sampling requires an Image element");
+                if (value.is_null()) element->mapSampling.reset();
+                else {
+                    auto vector = [&](const char* key) {
+                        const auto& point = value.at(key);
+                        glm::vec2 v{point.at(0).get<float>(),point.at(1).get<float>()};
+                        require(std::isfinite(v.x) && std::isfinite(v.y) &&
+                                glm::all(glm::lessThanEqual(glm::abs(v),glm::vec2(1e6f))),
+                                "invalid map UV transform");
+                        return v;
+                    };
+                    UIMapSampling sampling{vector("origin"),vector("right"),vector("down"),value.at("circular").get<bool>()};
+                    require(ui.SetPreviewCamera(h,id,0),"invalid map image");
+                    element->mapSampling = sampling;
+                }
+                return JS_UNDEFINED;
+            }
             if (action == "previewCamera" && element) {
                 require(element->kind==UIKind::Image,"preview camera requires an Image element");
                 if(write){

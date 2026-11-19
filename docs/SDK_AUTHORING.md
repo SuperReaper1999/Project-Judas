@@ -4,6 +4,9 @@ Use this copy with its SDK BUILD_INFO.json. This reference describes the current
 Terrain V2, JudasScene 3 text/named documents and native navigation baker.
 Do not use old V1 terrain create/brush/cook commands or liquid-bake tools.
 
+[Baked world maps](WORLD_MAPS.md) covers the map baking command, asset import and
+JudasJS presentation API.
+
 ## Terrain → navmesh → NPC
 
 Create a landscape in **World → Terrain tools → New landscape**, then sculpt,

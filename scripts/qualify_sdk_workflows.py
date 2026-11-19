@@ -17,19 +17,28 @@ import time
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--sdk',type=Path,required=True);p.add_argument('--work',type=Path,required=True)
+    p.add_argument('--vulkan',action='store_true')
     a=p.parse_args();sdk=a.sdk.resolve();root=a.work.resolve();out=root/'tool-operations';out.mkdir(exist_ok=False)
     project=root/'game/SDK_First_Game.judasproj';game=project.parent;rows=[]
     ext='.exe' if os.name=='nt' else ''
     env={k:v for k,v in os.environ.items() if not k.startswith('JUDAS_')}
     env['XDG_DATA_HOME']=str(out/'user-data')
-    def run(tool,*args,expected=0):
+    def run(tool,*args,expected=0,graphics=False):
         command=[str(sdk/(tool+ext)),*map(str,args)];start=time.monotonic()
-        child=subprocess.run(command,cwd=out,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=120,env=env)
+        runtime_env=dict(env,JUDAS_GRAPHICS='vulkan',JUDAS_VULKAN_VALIDATION='1') if graphics and a.vulkan else env
+        child=subprocess.run(command,cwd=out,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=120,env=runtime_env)
         rows.append(dict(tool=tool,command=command,exit=child.returncode,expected=expected,seconds=time.monotonic()-start,stdout=child.stdout,stderr=child.stderr))
         (out/'RESULTS.json').write_text(json.dumps(rows,indent=2)+'\n',encoding='utf-8')
         if child.returncode!=expected:raise RuntimeError(tool+': '+child.stdout+child.stderr)
+        if graphics and a.vulkan:
+            log=child.stdout+child.stderr
+            if 'created Vulkan device' not in log or '[Vulkan validation]' in log:
+                raise RuntimeError(tool+' did not complete Vulkan validation cleanly')
     run('judas_scene_author','--validate','project',project)
     run('judas_scene_author','--validate','scene',game/'Scenes/main.judas')
+    baked_map=game/'Assets/qualification-map.png'
+    run('judas_scene_author','--bake-map',project,'-',baked_map,-8,-8,8,8,-8,24,128,128,1,1,graphics=True)
+    run('judas_scene_author','--track-asset',project,baked_map)
     run('judas_scene_author','--create','ui',out/'menu.judasui')
     run('judas_scene_author','--validate','ui',out/'menu.judasui')
     run('judas_script_check',project)

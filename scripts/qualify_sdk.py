@@ -79,7 +79,10 @@ def main():
             (work/(mode+'.sh')).write_text(script)
             run('editor-'+mode,prefix()+['/bin/sh',inner_work/(mode+'.sh')])
         else:run('editor-'+mode,command,env,vulkan_graphics=a.vulkan)
-    run('tool-operations',prefix()+[py,inner_work/'tool-workflows.py','--sdk',inner_sdk,'--work',inner_work])
+    tool_workflows=prefix()+[py,inner_work/'tool-workflows.py','--sdk',inner_sdk,'--work',inner_work]
+    if a.vulkan:
+        tool_workflows.append('--vulkan')
+    run('tool-operations',tool_workflows)
     # SDK-only operations must not create caches, alter binaries or add content.
     run('sdk-verify-after',prefix()+[py,inner_sdk/'tools/package_sdk.py','verify',inner_sdk])
     for name in ['editor-export','cli-export']:

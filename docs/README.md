@@ -17,7 +17,7 @@ owns tested configurations; guide contents alone do not certify every platform.
 ## Create, author and deliver
 
 - [First project](FIRST_PROJECT.md), [editor](EDITOR_GUIDE.md), [2D quick start](2D_QUICKSTART.md), [traversal](2D_TRAVERSAL.md).
-- [SDK consumer workflow](V2_CONSUMER_GUIDE.md), [terrain → navigation → NPC](SDK_AUTHORING.md), [distribution](DISTRIBUTION.md), [exports](EXPORTS.md).
+- [SDK consumer workflow](V2_CONSUMER_GUIDE.md), [terrain → navigation → NPC](SDK_AUTHORING.md), [distribution](DISTRIBUTION.md), [exports](EXPORTS.md), [baked world maps](WORLD_MAPS.md).
 - [Named content/CLI](NAMED_AUTHORING.md), [assets and cooking](ASSET_PIPELINE.md), [model import](MODEL_IMPORT.md), [prefabs](PREFABS.md).
 - [Ownership/readiness walkthrough](DEVELOPER_WORKFLOWS.md), [startup presentation](STARTUP_LOADING.md), [project and water settings](PROJECT_SETTINGS_AND_WATER.md).
 

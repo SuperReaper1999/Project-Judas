@@ -100,6 +100,85 @@ export class UIElement {
         call("uiSet", this.handle, this.id, "texture", v);
     }
 }
+// Region coordinates use X/Z on the horizontal world plane, with north at -Z.
+export class WorldMap {
+    #region;
+    #view;
+    #image;
+    #sampling;
+    constructor(image, {min, max, orientation = 0}) {
+        if (!(image instanceof UIElement) || !Number.isInteger(orientation) || orientation < 0 || orientation > 3 ||
+            ![min?.x, min?.z, max?.x, max?.z].every(Number.isFinite) || max.x <= min.x || max.z <= min.z)
+            throw new TypeError("WorldMap requires an image and finite, ordered X/Z bounds with orientation 0–3");
+        const dx = max.x - min.x, dz = max.z - min.z;
+        if (!Number.isFinite(dx) || !Number.isFinite(dz)) throw new TypeError("WorldMap bounds exceed the coordinate range");
+        const right = [[1, 0], [0, 1], [-1, 0], [0, -1]][orientation];
+        const down = [-right[1], right[0]];
+        this.#image = image;
+        this.#region = {x: min.x + dx / 2, z: min.z + dz / 2, right, down,
+                        width: orientation % 2 ? dz : dx, height: orientation % 2 ? dx : dz, orientation};
+        this.setView();
+    }
+    setView({center, width, height, zoom = 1, heading, circular = false} = {}) {
+        const r = this.#region;
+        center ??= r;
+        width ??= r.width;
+        height ??= r.height;
+        heading ??= r.orientation * Math.PI / 2;
+        if (![center.x, center.z, width, height, zoom, heading].every(Number.isFinite) ||
+            width <= 0 || height <= 0 || zoom <= 0 || typeof circular !== "boolean")
+            throw new TypeError("Invalid WorldMap view");
+        const c = Math.cos(heading), s = Math.sin(heading);
+        const right = [c, s], down = [-s, c];
+        const w = width / zoom, h = height / zoom;
+        if (!Number.isFinite(w) || !Number.isFinite(h) || w <= 0 || h <= 0)
+            throw new TypeError("Invalid WorldMap view scale");
+        const imageDelta = (x, z) => [(x * r.right[0] + z * r.right[1]) / r.width,
+                                      (x * r.down[0] + z * r.down[1]) / r.height];
+        const uvRight = imageDelta(w * right[0], w * right[1]);
+        const uvDown = imageDelta(h * down[0], h * down[1]);
+        const centerUV = imageDelta(center.x - r.x, center.z - r.z);
+        const origin = centerUV.map((v, i) => .5 + v - (uvRight[i] + uvDown[i]) / 2);
+        const sampling = JSON.stringify({origin, right: uvRight, down: uvDown, circular});
+        if (sampling !== this.#sampling) {
+            call("uiControl", this.#image.handle, this.#image.id, "mapSampling", sampling);
+            this.#sampling = sampling;
+        }
+        this.#view = {x: center.x, z: center.z, right, down, width: w, height: h, circular};
+    }
+    worldToMap({x, z}) {
+        if (![x, z].every(Number.isFinite)) throw new TypeError("WorldMap requires a finite X/Z position");
+        const v = this.#view, r = this.#region;
+        const dx = x - v.x, dz = z - v.z;
+        const u = .5 + (dx * v.right[0] + dz * v.right[1]) / v.width;
+        const t = .5 + (dx * v.down[0] + dz * v.down[1]) / v.height;
+        const rx = x - r.x, rz = z - r.z;
+        const inRegion = Math.abs(rx * r.right[0] + rz * r.right[1]) <= r.width / 2 &&
+                         Math.abs(rx * r.down[0] + rz * r.down[1]) <= r.height / 2;
+        const inView = v.circular ? (u - .5) ** 2 + (t - .5) ** 2 <= .25
+                                  : u >= 0 && u <= 1 && t >= 0 && t <= 1;
+        return {x: u, y: t, visible: inRegion && inView};
+    }
+    mapToWorld({x, y}) {
+        if (![x, y].every(Number.isFinite)) throw new TypeError("WorldMap requires a finite map position");
+        const v = this.#view, dx = (x - .5) * v.width, dy = (y - .5) * v.height;
+        return {x: v.x + dx * v.right[0] + dy * v.down[0],
+                z: v.z + dx * v.right[1] + dy * v.down[1]};
+    }
+    detach() {
+        call("uiControl", this.#image.handle, this.#image.id, "mapSampling", "null");
+        this.#sampling = undefined;
+    }
+    placeMarker(marker, position) {
+        const p = this.worldToMap(position);
+        if (p.visible) {
+            const anchor = {x: p.x, y: p.y};
+            marker.setLayout({anchorMin: anchor, anchorMax: anchor, align: {x: .5, y: .5}});
+        }
+        marker.visible = p.visible;
+        return p.visible;
+    }
+}
 export class UIDocument {
     constructor(handle) {
         this.handle = handle;

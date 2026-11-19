@@ -1209,6 +1209,22 @@ declare module "judas" {
   export interface UIState {version:1;[key:string]:unknown}
   export interface UIAccessibleElement {id:string;role:"group"|"text"|"image"|"button"|"slider"|"toggle"|"textbox"|"scroll"|"list";label:string;description:string;focused:boolean;value:number;text?:string;selectedIndex?:number}
   export interface UIControlOptions {dragType?:string;dropType?:string;placeholder?:string;accessibleLabel?:string;description?:string;readOnly?:boolean;maxBytes?:number;fontSize?:number;rowHeight?:number;background?:{r:number;g:number;b:number;a:number};color?:{r:number;g:number;b:number;a:number};focusColor?:{r:number;g:number;b:number;a:number}}
+  export interface WorldMapPosition { x: number; z: number }
+  export interface WorldMapRegion {
+    min: WorldMapPosition; max: WorldMapPosition; orientation?: 0 | 1 | 2 | 3;
+  }
+  export interface WorldMapView {
+    center?: WorldMapPosition; width?: number; height?: number; zoom?: number;
+    heading?: number; circular?: boolean;
+  }
+  export class WorldMap {
+    constructor(image: UIElement, region: WorldMapRegion);
+    setView(options?: WorldMapView): void;
+    worldToMap(position: WorldMapPosition): {x: number; y: number; visible: boolean};
+    mapToWorld(position: {x: number; y: number}): WorldMapPosition;
+    placeMarker(marker: UIElement, position: WorldMapPosition): boolean;
+    detach(): void;
+  }
   export class UIElement {
     constructor(handle: number, id: string);
     handle: number;

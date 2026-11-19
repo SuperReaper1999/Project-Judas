@@ -1,0 +1,12 @@
+{
+  "kind": "ui",
+  "reference": [1280, 720],
+  "elements": [
+    {"id":"root","kind":"canvas"},
+    {"id":"overview","parent":"root","kind":"image","texture":"9212a745649a43a2b86573421948eaa0","offset":[24,24],"size":[640,640],"clip":true},
+    {"id":"overview_pin","parent":"overview","kind":"panel","size":[10,10],"background":[1,0.68,0.16,1]},
+    {"id":"minimap","parent":"root","kind":"image","texture":"9212a745649a43a2b86573421948eaa0","offset":[984,24],"size":[272,272],"clip":true},
+    {"id":"minimap_player","parent":"minimap","kind":"panel","size":[8,8],"background":[0.2,0.9,0.9,1]},
+    {"id":"minimap_pin","parent":"minimap","kind":"panel","size":[8,8],"background":[1,0.68,0.16,1]}
+  ]
+}

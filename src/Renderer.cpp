@@ -381,6 +381,8 @@ bool Renderer::Init() {
     m_uiUTexture = glGetUniformLocation(m_uiShaderProgram, "uTexture");
     m_uiUSceneLinear = glGetUniformLocation(m_uiShaderProgram, "uSceneLinear");
     m_uiUExposure = glGetUniformLocation(m_uiShaderProgram, "uExposure");
+    m_uiUMapMode = glGetUniformLocation(m_uiShaderProgram, "uMapMode");
+    m_uiUMapCross = glGetUniformLocation(m_uiShaderProgram, "uMapCross");
     m_uiUUVOffset = glGetUniformLocation(m_uiShaderProgram, "uUVOffset");
     m_uiUUVScale = glGetUniformLocation(m_uiShaderProgram, "uUVScale");
     glUseProgram(m_uiShaderProgram);
@@ -1388,6 +1390,22 @@ void Renderer::SetUIClip(glm::vec2 position,glm::vec2 size){
     glEnable(GL_SCISSOR_TEST);glScissor(int(std::floor(lo.x)),int(std::floor(m_uiScreenSize.y-hi.y)),std::max(0,int(std::ceil(hi.x)-std::floor(lo.x))),std::max(0,int(std::ceil(hi.y)-std::floor(lo.y))));
 }
 void Renderer::ClearUIClip(){glDisable(GL_SCISSOR_TEST);}
+void Renderer::DrawUIMap(glm::vec2 position,glm::vec2 size,TextureHandle texture,glm::vec4 tint,
+                         glm::vec2 origin,glm::vec2 right,glm::vec2 down,bool circular) {
+    glUniform1i(m_uiUMapMode,circular ? 2 : 1);
+    glUniform2f(m_uiUMapCross,down.x,-right.y);
+    glUniform1i(m_uiUSceneLinear,0);
+    glUniform2f(m_uiUPosition,position.x,position.y);
+    glUniform2f(m_uiUSize,size.x,size.y);
+    glUniform4f(m_uiUColor,tint.r,tint.g,tint.b,tint.a);
+    glUniform2f(m_uiUUVOffset,origin.x,1.f-origin.y);
+    glUniform2f(m_uiUUVScale,right.x,-down.y);
+    glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));
+    glDrawArrays(GL_TRIANGLES,0,6);
+    ++m_uiDrawCalls;
+    glUniform1i(m_uiUMapMode,0);
+}
+
 void Renderer::DrawUIImage(glm::vec2 position,glm::vec2 size,TextureHandle texture,glm::vec4 tint,bool fit,bool flipVertical){
     if(!texture.IsValid())return;
     // Camera surfaces stay linear for world-material consumers. UI is a display
