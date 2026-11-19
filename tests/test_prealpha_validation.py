@@ -108,9 +108,10 @@ class GateTests(unittest.TestCase):
         summary = json.loads(result.stdout)
         manifest = gate.load_manifest(gate.MANIFEST)
         self.assertEqual(summary['tests'], len(manifest['tests']))
-        self.assertEqual(summary['manual'], 0)
+        native_display_cases = {'editor-v2-detached-viewports'}
+        self.assertEqual(summary['manual'], len(native_display_cases))
         self.assertEqual({entry['name'] for entry in manifest['tests'] if entry.get('manual', False)},
-                         set())
+                         native_display_cases)
 
     def test_finding_status_annotation_preserves_observed_results(self):
         manifest = gate.load_manifest(gate.MANIFEST)
