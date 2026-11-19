@@ -204,6 +204,7 @@ public:
     JudasRender::ShadowPassCache& ShadowCache();
     std::uint64_t ShadowResourceRevision()const{return m_shadowResourceRevision;}
     bool HasViewDependentMeshLods() const;
+    bool SupportsStaticOpaqueShadowReuse(MeshHandle, const std::vector<MaterialBinding>&);
     bool ReuseShadowChart(int slot,const glm::mat4&);
 
     // --- Judas-owned mesh/texture resources (Milestone 9) ---

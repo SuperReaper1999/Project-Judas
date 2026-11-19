@@ -1079,6 +1079,19 @@ GLuint Renderer::ResolveTexture(TextureHandle handle) const {
     return 0;
 }
 
+bool Renderer::SupportsStaticOpaqueShadowReuse(MeshHandle handle, const std::vector<MaterialBinding>& bindings) {
+    const auto* mesh = GetMesh(handle);
+    if (!m_shadowPassActive || m_nativeMesh || !mesh || !mesh->restSkin.empty() || !mesh->structuralSections.empty())
+        return false;
+    // Check all source materials so a change in chart LOD cannot select a masked or blended source.
+    const bool opaqueSource = std::all_of(mesh->materials.begin(), mesh->materials.end(), [&](MaterialHandle material) {
+        return !ValidMaterial(material) || m_materials[material.id].definition.alpha == MaterialAlpha::Opaque;
+    });
+    return opaqueSource && std::all_of(bindings.begin(), bindings.end(), [](const MaterialBinding& binding) {
+        return binding.overrides.alpha.value_or(MaterialAlpha::Opaque) == MaterialAlpha::Opaque;
+    });
+}
+
 void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::quat& rotation,
                          const glm::vec3& scale, TextureHandle texture,
                          const glm::vec3& tintColor, float alpha,const std::vector<glm::mat4>* skin,const std::vector<std::string>* hiddenParts) {

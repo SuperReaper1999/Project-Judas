@@ -58,6 +58,19 @@ constexpr float kDirShadowDistance = 40.0f;
 const glm::vec3 kLoadingPlaceholderColor(0.55f, 0.55f, 0.58f);
 const glm::vec3 kFailedPlaceholderColor(0.95f, 0.15f, 0.85f);
 
+struct ShadowMeshBindings {
+    MeshHandle mesh;
+    std::vector<MaterialBinding> bindings;
+};
+
+bool HasShadowBindingDependencies(const std::vector<MaterialBinding>& bindings) {
+    return std::any_of(bindings.begin(), bindings.end(), [](const MaterialBinding& binding) {
+        return binding.explicitAsset || binding.handle.IsValid() || binding.failed ||
+               std::any_of(binding.overrides.textures.begin(), binding.overrides.textures.end(),
+                           [](const auto& asset) { return asset && !asset->empty(); });
+    });
+}
+
 // The primary Render component and particles/fire/haze are distinct visual
 // components. An entity gate affects all of them; the primary gate affects only
 // its own geometry, leaving the other components' existing settings intact.
@@ -66,18 +79,35 @@ bool EntityRenderVisible(const RuntimeWorld& world,EntityId id){
 }
 
 void DrawMeshOrPlaceholder(Renderer& r, ResourceManager* resources, const SceneRenderComponent& render,
-                           const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale, float alpha, TextureHandle generated = {},const std::vector<glm::mat4>* skin = nullptr) {
+                           const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale, float alpha, TextureHandle generated = {}, const std::vector<glm::mat4>* skin = nullptr,
+                           ShadowMeshBindings* prepared = nullptr) {
     r.SetMeshLodMultiplier(render.lodMultiplier);
     if(resources&&resources->VisualStreaming()&&r.AcceptsCurrentLayer()){
         auto matrix=glm::translate(glm::mat4(1),position)*glm::mat4_cast(rotation)*glm::scale(glm::mat4(1),scale);
         if(!r.IsVisible(TransformBounds(resources->VisualMeshBounds(render.meshAsset),matrix)))return;
         resources->DemandVisual(render.meshAsset);resources->DemandVisual(render.textureAsset);
     }
-    r.SetMaterialBindings(BuildRenderMaterialBindings(resources,render));
-    const MeshHandle mesh = resources ? resources->TryGetMesh(render.meshAsset) : MeshHandle{};
-    if (mesh.IsValid()) {
+    const auto draw = [&](MeshHandle mesh) {
         const TextureHandle texture = render.textureCamera ? generated : (resources ? resources->TryGetTexture(render.textureAsset) : TextureHandle{});
         r.DrawMesh(mesh, position, rotation, scale, texture, render.color, alpha*render.alpha,skin,&render.hiddenParts);
+    };
+    if (prepared && prepared->mesh.IsValid()) {
+        // Visit the resource every chart and reuse only the same ready generation.
+        const MeshHandle mesh = resources->TryGetMesh(render.meshAsset);
+        if (mesh.id == prepared->mesh.id && mesh.generation == prepared->mesh.generation) {
+            r.SetMaterialBindings(prepared->bindings);
+            draw(mesh);
+            return;
+        }
+        *prepared = {};
+    }
+    auto bindings = BuildRenderMaterialBindings(resources, render);
+    r.SetMaterialBindings(bindings);
+    const MeshHandle mesh = resources ? resources->TryGetMesh(render.meshAsset) : MeshHandle{};
+    if (mesh.IsValid()) {
+        if (prepared && !HasShadowBindingDependencies(bindings) && r.SupportsStaticOpaqueShadowReuse(mesh, bindings))
+            *prepared = {mesh, std::move(bindings)};
+        draw(mesh);
         return;
     }
     if (!resources) return;  // headless: nothing to draw
@@ -93,7 +123,8 @@ void DrawCompoundChild(Renderer& renderer,ResourceManager* resources,const Compo
 }
 
 void DrawRenderable(Renderer& r, ResourceManager* resources, const SceneRenderComponent& render,
-                    const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale, float alpha, TextureHandle generated = {},const std::vector<glm::mat4>* skin = nullptr,SceneObjectId identity=0) {
+                    const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale, float alpha, TextureHandle generated = {},const std::vector<glm::mat4>* skin = nullptr, SceneObjectId identity = 0,
+                    ShadowMeshBindings* prepared = nullptr) {
     if(!render.visible)return;
     if(render.shape!=SceneShape::Mesh)r.SetMaterialBindings(BuildRenderMaterialBindings(resources,render));
     switch (render.shape) {
@@ -123,7 +154,7 @@ void DrawRenderable(Renderer& r, ResourceManager* resources, const SceneRenderCo
             r.DrawSphereTransformed(position,rotation,scale,render.radius,render.color,alpha*render.alpha,generated);
             break;
         case SceneShape::Mesh:
-            DrawMeshOrPlaceholder(r, resources, render, position, rotation, scale, alpha, generated,skin);
+            DrawMeshOrPlaceholder(r, resources, render, position, rotation, scale, alpha, generated,skin,prepared);
             break;
         case SceneShape::Compound:
         case SceneShape::ConvexHull:
@@ -163,7 +194,8 @@ PresentedObject SampleObject(const RuntimeWorld& world, SceneObjectId id, float 
 
 }
 
-static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world,                               float alpha, const WorldDrawOptions& options, PresentedObjects* objects) {
+static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, float alpha, const WorldDrawOptions& options,
+                              PresentedObjects* objects, std::vector<ShadowMeshBindings>* prepared = nullptr) {
     JUDAS_PROFILE_SCOPE("World culling and opaque submission");
     RendererProfileScope opaqueGPU(r, r.IsShadowPass() ? nullptr : "World opaque geometry");
     r.BeginMeshBatch();
@@ -175,7 +207,10 @@ static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world,           
         const auto [t, skin] = SampleObject(world, s.id, alpha, objects ? &objects->statics[i] : nullptr, [&] {
             return world.PresentedTransform(s.id, {s.position, s.rotation, s.scale}, alpha);
         });
-        DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f, world.CameraTexture(s.render.textureCamera),skin,s.id);
+        ShadowMeshBindings* reuse = prepared && s.render.shape == SceneShape::Mesh && !s.render.textureCamera &&
+                                    s.render.hiddenParts.empty() && (!skin || skin->empty()) ? &(*prepared)[i] : nullptr;
+        DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f,
+                       world.CameraTexture(s.render.textureCamera), skin, s.id, reuse);
     }
     if (options.includeTerrain && world.HasPlanets()) {
         RendererProfileScope terrainGPU(r, r.IsShadowPass() ? nullptr : "Planet terrain");
@@ -434,8 +469,13 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     std::optional<JudasLighting::ShadowScene> shadowScene;
     auto lightPass = [&]() {
         if (!shadowScene) shadowScene.emplace(JudasLighting::RuntimeShadowScene(world,alpha));
+        const bool reuse = settings.sunEnabled && world.Resources() && !world.Resources()->VisualStreaming();
+        // One view's chart production borrows bindings from one presentation sample.
+        // Culling, LOD and actual submissions still belong to each chart.
+        std::vector<ShadowMeshBindings> prepared;
         JudasLighting::PrepareShadows(renderer,settings,lights,*shadowScene,[&]{
-            DrawWorldGeometry(renderer,world,alpha,WorldDrawOptions{},&presentedObjects);
+            if (reuse && prepared.empty()) prepared.resize(world.StaticRenderables().size());
+            DrawWorldGeometry(renderer,world,alpha,WorldDrawOptions{},&presentedObjects,reuse ? &prepared : nullptr);
         });
     };
     (void)shadowFocus;
