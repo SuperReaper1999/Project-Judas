@@ -15,6 +15,9 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#if defined(__linux__) && !defined(__ANDROID__)
+#include <unistd.h>
+#endif
 
 namespace {
 namespace fs = std::filesystem;
@@ -63,6 +66,17 @@ export default class {
             map.find(x => x.name === "jump").bindings[0].control = "key:K";
             audio.setGroup("master", {gain: 0.25, mute: true});
             input.setBindings(map);
+            const other = state.activeBackend === "opengl" ? "vulkan" : "opengl";
+            if (state.backendLocked) {
+                let blocked = false;
+                try { settings.applyVideo({backend: other}); } catch (_) { blocked = true; }
+                require(blocked, "Launch backend override was bypassed");
+            } else if (state.backends.some(backend => backend.name === other)) {
+                settings.applyVideo({backend: other});
+                const staged = settings.read();
+                require(staged.restartRequired && staged.requestedBackend === other &&
+                        staged.activeBackend === state.activeBackend, "Backend choice did not remain restart-only");
+            }
             const patch = {fpsCap: 30, shadows: false, localShadowBudget: 2};
             if (!state.backendLocked) patch.backend = state.activeBackend;
             settings.applyVideo(patch);
@@ -198,7 +212,12 @@ int main(int argc, char** argv) try {
 #if !defined(__linux__) || defined(__ANDROID__)
     return 0;
 #else
-    if (argc == 4 && std::string(argv[1]) == "child") return RunChild(argv[2], argv[3]);
+    if (argc == 4 && std::string(argv[1]) == "child") {
+        // CaptureToolOutput captures standard output only. Include driver and
+        // script diagnostics from both streams in the parent validation gate.
+        Require(dup2(STDOUT_FILENO, STDERR_FILENO) >= 0, "Cannot combine test output streams");
+        return RunChild(argv[2], argv[3]);
+    }
     if (argc != 2) return 2;
     const auto path = fs::absolute(argv[1]);
     Require(fs::create_directory(path), "Use a fresh fixture output directory");
@@ -211,6 +230,9 @@ int main(int argc, char** argv) try {
                                               output, error, std::chrono::seconds(60), 65536);
         std::cout << output;
         Require(passed, error);
+        Require(output.find("[Vulkan validation]") == std::string::npos &&
+                output.find("Validation Error:") == std::string::npos,
+                "The settings session emitted a Vulkan validation diagnostic");
     };
     run("saved");
     run("restored");

@@ -82,14 +82,19 @@ harness, which leave the game's preference store alone.
 ```js
 import {settings, audio, input, weather, world} from "judas";
 
-// Call on scene startup. A newer game build may have changed its action map.
+// Call once from the first update (or uiUpdate) of the scene.
+// The hidden startup pass has no live input owner.
 export function restoreOptions() {
     const preferences = settings.readGame();
     if (!preferences) return;
     if (preferences.master) audio.setGroup("master", preferences.master);
     if (preferences.bindings) {
-        try { input.setBindings(preferences.bindings); }
-        catch (error) { console.warn(String(error)); }
+        try {
+            if (!input.setBindings(preferences.bindings)) console.warn("Input is not ready");
+        } catch (error) {
+            // A newer game build may have changed its authored action map.
+            console.warn(String(error));
+        }
     }
     if ([0, 1, 2].includes(preferences.weather)) weather.quality = preferences.weather;
     if (Number.isFinite(preferences.exposure)) world.setAppearance({exposure: preferences.exposure});
