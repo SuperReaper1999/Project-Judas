@@ -41,6 +41,12 @@ public:
               ResourceTrace trace = {}, bool allowVulkanPlatformWindows = false,
               std::optional<bool> useVulkan = std::nullopt);
     void Shutdown();
+    // Frame-boundary primitive for standalone transitions. The caller must
+    // retire all world-owned device resources and detach Assets first.
+    // A failed attempt leaves services alive and may be retried on the old
+    // backend; the caller must not resume presentation until it succeeds.
+    bool RebuildDesktopGraphics(const char* title, int width, int height, bool visible,
+                                bool useVulkan, std::string& error);
 
     // Points the asset database at a project's assets directory (rescans)
     // and releases every resource loaded from the previous one (in-flight
@@ -53,7 +59,7 @@ public:
 
     AudioSystem& Audio() { return m_audio; }
     Window& GetWindow() { return m_window; }
-    Renderer& GetRenderer() { return m_renderer; }
+    Renderer& GetRenderer() { return *m_renderer; }
     const GraphicsCapabilities& GraphicsCaps() const { return m_graphicsCapabilities; }
     AssetDatabase& Assets() { return m_assetDatabase; }
     const AssetDatabase& Assets() const { return m_assetDatabase; }
@@ -63,6 +69,8 @@ public:
 private:
     bool InitGraphics(const char*, int width, int height, bool visible, std::string&,
                       bool allowVulkanPlatformWindows, std::optional<bool> useVulkan);
+    bool InitRenderer(std::string& error);
+    void RetireRenderer();
     void ShutdownGraphics();
     void StartGpuDiagnostics();
     void PollGpuReset();
@@ -77,11 +85,12 @@ private:
 #endif
     AudioSystem m_audio;
     Window m_window;
-    Renderer m_renderer;
+    std::unique_ptr<Renderer> m_renderer;
     GraphicsCapabilities m_graphicsCapabilities;
     AssetDatabase m_assetDatabase;
     std::unique_ptr<JobSystem> m_jobs;
     std::unique_ptr<ResourceManager> m_resources;
     bool m_rendererInitialized = false;
+    bool m_standaloneGraphics = false;
     ResourceTrace m_resourceTrace;
 };

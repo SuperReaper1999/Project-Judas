@@ -1,6 +1,12 @@
 #include "GameSettings.h"
 
 #include "EngineHost.h"
+#include "RuntimeWorld.h"
+#include "SceneSession.h"
+#include "WorldGraphicsState.h"
+#include "WorldPresentation.h"
+#include "CameraProjection.h"
+#include <glm/gtc/matrix_transform.hpp>
 #include "PlatformServices.h"
 #include "Project.h"
 #include "SceneFingerprint.h"
@@ -205,8 +211,9 @@ Json GameSettings::Read() const {
             {"canDisableVSync", window.UsesVulkan() ? Json(JudasVulkan::SupportsSwapInterval(0)) : Json(nullptr)},
             {"fpsCap", m_fpsCap}, {"shadows", m_host->GetRenderer().ShadowsEnabled()},
             {"localShadowBudget", m_localShadowBudget}, {"activeBackend", active},
-            {"requestedBackend", m_backend}, {"backends", backends},
+            {"requestedBackend", m_switchRequest ? (*m_switchRequest ? "vulkan" : "opengl") : m_backend}, {"backends", backends},
             {"restartRequired", !m_backendOverride && m_backend != active},
+            {"liveBackendSwitch", CanSwitchBackend()}, {"backendTransition", m_switchState},
             {"displayLocked", m_windowOverride}, {"shadowsLocked", m_shadowsOverride},
             {"backendLocked", m_backendOverride}, {"desktop", m_desktop}, {"persistent", !m_path.empty()},
             {"displayPending", m_request.has_value() || m_revert || m_confirm},
@@ -219,6 +226,7 @@ void GameSettings::Write(bool reset) {
     Require(!m_path.empty(), "This game has no writable preferences path");
     Require(reset || m_loadError.empty(), "Preferences could not be loaded; explicitly reset before replacing them");
     Require(!m_request && !m_previous, "Confirm or revert the display preview before saving preferences");
+    Require(!m_switchRequest, "Wait for the backend transition before saving preferences");
     Json video = Json::object();
     if (!reset) {
         video = {{"width", m_display.width}, {"height", m_display.height}, {"fullscreen", m_display.fullscreen},
@@ -248,13 +256,24 @@ Json GameSettings::Invoke(const std::string& operation, const std::string& argum
     if (operation == "settingsRead") return Read();
     if (operation == "settingsGame") return Parse(m_game);
     Require(m_desktop, "Game settings changes are supported only on Linux desktop");
-    if (operation == "settingsSetGame") {
+    if (operation == "settingsSwitchBackend") {
+        Require(CanSwitchBackend(), "Live backend switching is unavailable in this session");
+        Require(!m_request && !m_previous, "Finish the display preview before changing backend");
+        Require(!m_switchRequest, "A graphics backend change is already queued");
+        const bool requested = Backend(Parse(argument)) == "vulkan";
+        if (m_host->GetWindow().UsesVulkan() != requested) {
+            m_switchRequest = requested;
+            m_switchState = "pending";
+            m_backendError.clear();
+        }
+    } else if (operation == "settingsSetGame") {
         const auto value = Parse(argument);
         Require(value.is_object(), "Game preferences must be an object");
         m_game = value.dump();
     } else if (operation == "settingsSave" || operation == "settingsResetSaved") {
         Write(operation == "settingsResetSaved");
     } else if (operation == "settingsDisplay") {
+        Require(!m_switchRequest, "Wait for the backend transition before previewing display changes");
         Require(!m_windowOverride, "Display is locked by JUDAS_WINDOW_SIZE");
         Require(HasDesktopWindow(), "Display changes require an X11 or Wayland window");
         Require(!m_request && !m_previous, "A display preview is already in progress");
@@ -341,4 +360,144 @@ void GameSettings::Advance() {
         m_previous.reset();
     }
     m_revert = m_confirm = false;
+}
+
+
+bool GameSettings::CanSwitchBackend() const {
+    return m_desktop && m_switchAllowed && !m_backendOverride && JudasVulkan::Compiled() &&
+           HasDesktopWindow();
+}
+
+bool GameSettings::AdvanceBackendSwitch(RuntimeWorld& world, const char* title, bool visible,
+                                        float interpolation, std::string& fatalError) {
+    if (!m_switchRequest) return true;
+    const auto requested = *m_switchRequest;
+    m_switchRequest.reset();
+    m_switchState = "active";
+    fatalError.clear();
+    auto session = world.SceneControl();
+    if (!CanSwitchBackend() || (session && (session->OperationInProgress() || session->networkActive))) {
+        m_backendError = "Finish scene, save or network operations before switching the graphics backend";
+        m_switchState = "failed";
+        return true;
+    }
+    auto& host = *m_host;
+    auto& window = host.GetWindow();
+    const bool originalBackend = window.UsesVulkan();
+    const bool shadows = host.GetRenderer().ShadowsEnabled();
+    const auto vsync = window.VSync();
+    auto display = CurrentDisplay();
+    if (display.fullscreen) { display.width = m_display.width; display.height = m_display.height; }
+
+    auto showTransition = [&] {
+        auto& renderer = host.GetRenderer();
+        const int width = std::max(window.Width(), 1), height = std::max(window.Height(), 1);
+        renderer.BeginFrame(width, height);
+        renderer.EndFrame();
+        renderer.BeginUIFrame(width, height);
+        renderer.DrawUIRect({0,0},{float(width),float(height)},{.025f,.03f,.05f,1});
+        const std::string message = "Changing graphics backend...";
+        const auto measured = renderer.MeasureUIText(message,.55f);
+        renderer.DrawUIText(message,{(float(width)-measured.x)*.5f,(float(height)-measured.y)*.5f},
+                            .55f,{1,1,1,1});
+        renderer.EndUIFrame();
+        window.SwapBuffers();
+    };
+
+    const auto started = std::chrono::steady_clock::now();
+    WorldGraphicsState state;
+    std::string error;
+    if (!world.CaptureGraphicsState(state,error)) {
+        m_backendError = error;
+        m_switchState = "failed";
+        return true;
+    }
+    showTransition();
+    if (!world.ReleaseWorldGraphics(host.GetRenderer(), error) || !host.Resources().DetachGraphics(error)) {
+        fatalError = "Could not safely retire world graphics: " + error;
+        return false;
+    }
+
+    auto prepare = [&](bool backend, std::string& diagnostic) -> bool {
+        try {
+            if (!host.RebuildDesktopGraphics(title,display.width,display.height,visible,backend,diagnostic))
+                return false;
+            auto& renderer = host.GetRenderer();
+            renderer.SetShadowsEnabled(shadows);
+            renderer.SetShadowBudget(m_localShadowBudget);
+            if (!ApplyDisplay(display,diagnostic) || (vsync && !window.SetVSync(*vsync,diagnostic)) ||
+                !world.RestoreGraphicsState(state,host.GraphicsCaps(),diagnostic)) return false;
+            showTransition();
+
+            const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(20);
+            while (std::chrono::steady_clock::now() < deadline) {
+                host.PumpResources();
+                bool assetsReady = false, uiReady = true;
+                if (!host.Resources().GraphicsRestorationReady(assetsReady,diagnostic)) return false;
+                const int width = std::max(window.Width(),1), height = std::max(window.Height(),1);
+                if (world.UIIfLoaded() && !world.UI().PrepareStartup(width,height,uiReady,diagnostic)) return false;
+                if (assetsReady && uiReady) {
+                    glm::mat4 view(1);
+                    if (world.view) {
+                        const auto& pose = world.view->pose;
+                        view = glm::lookAt(pose.position,pose.position + pose.rotation * glm::vec3(0,0,-1),
+                                          pose.rotation * glm::vec3(0,1,0));
+                    }
+                    const auto frame = BuildCameraFrame(glm::vec3(0),glm::quat(1,0,0,0),60,.1f,1000,
+                                                        CameraLens{},width,height);
+                    RenderWorldFrame(renderer,width,height,world,view,frame.projection,
+                                     glm::vec3(glm::inverse(view)[3]),interpolation,0,
+                                     WorldRenderPurpose::GraphicsWarmup);
+                    for (const auto& camera : world.PresentationCameras()) {
+                        if (camera.settings.enabled && world.RuntimeDefinition(camera.id) && world.IsPublished(camera.id) &&
+                            (!camera.target.IsValid() || !camera.error.empty())) {
+                            diagnostic = "Camera " + std::to_string(camera.id) + " could not restore: " + camera.error;
+                            return false;
+                        }
+                    }
+                    renderer.BeginUIFrame(width,height);
+                    if (world.UIIfLoaded()) world.UI().Draw(renderer,width,height,&world);
+                    renderer.EndUIFrame();
+                    // Keep the transition image visible while any demand found
+                    // in this zero-clock frame is still awaiting publication.
+                    if (!host.Resources().Stats().loading) {
+                        window.SwapBuffers();
+                        return true;
+                    }
+                }
+                SDL_Delay(1);
+            }
+            diagnostic = "Timed out restoring graphics resources";
+            return false;
+        } catch (const std::exception& failure) {
+            diagnostic = failure.what();
+            return false;
+        }
+    };
+
+    const auto logTransition = [&](const char* outcome) {
+        const auto elapsed = std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-started).count();
+        std::fprintf(stderr,"[Graphics transition] %s -> %s: %s in %.2f ms\n",
+                     originalBackend ? "vulkan":"opengl", requested ? "vulkan":"opengl", outcome, elapsed);
+    };
+    if (prepare(requested,error)) {
+        m_backend = requested ? "vulkan" : "opengl";
+        m_switchState = "completed";
+        logTransition("completed");
+        return true;
+    }
+    m_backendError = error;
+    if (host.Resources().GetRenderer() &&
+        (!world.ReleaseWorldGraphics(host.GetRenderer(),error) || !host.Resources().DetachGraphics(error))) {
+        fatalError = m_backendError + "; could not retire the rejected backend: " + error;
+        return false;
+    }
+    if (prepare(originalBackend,error)) {
+        m_backend = originalBackend ? "vulkan" : "opengl";
+        m_switchState = "recovered";
+        logTransition("previous backend recovered");
+        return true;
+    }
+    fatalError = m_backendError + "; previous backend recovery failed: " + error;
+    return false;
 }

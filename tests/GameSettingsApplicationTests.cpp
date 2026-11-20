@@ -41,8 +41,52 @@ export default class {
     update() {
         const state = settings.read();
         require(state && state.desktop && state.persistent, "Missing standalone preferences");
+        const game = settings.readGame();
+        if (game.liveFixture) {
+            if (this.state.phase === "start") {
+                require(state.activeBackend === "opengl" && state.liveBackendSwitch, "Expected native live backend candidate");
+                audio.setGroup("master",game.master);
+                input.setBindings(game.bindings);
+                this.continuity = {value: 17};
+                settings.previewDisplay({fullscreen: true});
+                this.state.phase = "live-preview";
+            } else if (this.state.phase === "live-preview") {
+                require(state.fullscreen && state.displayPreview, state.displayError || "Fullscreen preview did not open");
+                settings.confirmDisplay();
+                this.state.phase = "live-apply";
+            } else if (this.state.phase === "live-apply") {
+                require(state.fullscreen && !state.displayPreview,"Fullscreen was not confirmed");
+                settings.switchBackend("vulkan");
+                require(settings.read().backendTransition === "pending" &&
+                        settings.read().activeBackend === "opengl", "Queued candidate reported active early");
+                this.state.phase = "live-vulkan";
+            } else if (this.state.phase === "live-vulkan") {
+                require(state.activeBackend === "vulkan" && state.backendTransition === "completed" &&
+                        state.fullscreen && this.continuity.value === 17, state.backendError || "Vulkan lost the script instance");
+                this.continuity.value++;
+                settings.switchBackend("opengl");
+                this.state.phase = "live-opengl";
+            } else if (this.state.phase === "live-opengl") {
+                require(state.activeBackend === "opengl" && state.backendTransition === "completed" &&
+                        state.fullscreen && this.continuity.value === 18, state.backendError || "OpenGL lost the script instance");
+                settings.switchBackend("vulkan");
+                this.state.phase = "live-fail";
+            } else if (this.state.phase === "live-fail") {
+                require(state.activeBackend === "opengl" && state.backendTransition === "recovered" &&
+                        state.backendError && state.fullscreen && this.continuity.value === 18, "Previous backend failed to recover");
+                settings.previewDisplay({fullscreen: false, width: 800, height: 600});
+                this.state.phase = "live-windowed";
+            } else if (this.state.phase === "live-windowed") {
+                require(!state.fullscreen && state.displayPreview, state.displayError || "Windowed preview did not open");
+                settings.confirmDisplay();
+                this.state.phase = "live-save";
+            } else if (this.state.phase === "live-save") {
+                settings.save();
+                this.state.phase = "live";
+            }
+            return;
+        }
         if (this.state.phase === "start") {
-            const game = settings.readGame();
             if (game.committed) {
                 require(state.fpsCap === 30 && !state.shadows && state.localShadowBudget === 2, "Video restoration");
                 audio.setGroup("master", game.master);
@@ -70,6 +114,7 @@ export default class {
             input.setBindings(map);
             const other = state.activeBackend === "opengl" ? "vulkan" : "opengl";
             if (state.backendLocked) {
+                require(!state.liveBackendSwitch, "Launch override allowed live backend switching");
                 let blocked = false;
                 try { settings.applyVideo({backend: other}); } catch (_) { blocked = true; }
                 require(blocked, "Launch backend override was bypassed");
@@ -142,10 +187,21 @@ export default class {
     project.Settings().startupScene = "Scenes/main.judas";
     const bool projectSaved = project.Save(error);
     Require(projectSaved, error);
+    const auto mesh = fs::path(project.AssetsDir()) / "continuity.obj";
+    std::ofstream(mesh) << "v -1 -1 0\nv 1 -1 0\nv 0 1 0\nf 1 2 3\n";
+    AssetRecord meshRecord;
+    Require(assets.Track(mesh.string(),meshRecord,error),error);
     Scene scene;
     auto& cube = scene.CreateObject("Shadow caster");
     cube.render = SceneRenderComponent{};
+    cube.render->shape = SceneShape::Mesh;
+    cube.render->meshAsset = meshRecord.id;
     cube.transform.position = {0, 0, -3};
+    auto& camera = scene.CreateObject("Continuity render target");
+    camera.renderCamera = SceneRenderCameraComponent{};
+    camera.renderCamera->width = 64;
+    camera.renderCamera->height = 64;
+    camera.renderCamera->updateEveryFrames = 8;
     scene.CreateObject("Settings Script").scripts.push_back({1, record.id, true, "{}"});
     const bool saved = SaveSceneToFile(scene, project.StartupScenePath(), error);
     Require(saved, error);
@@ -156,11 +212,38 @@ int RunChild(const std::string& project, const std::string& terminalPhase) {
     ApplicationControl control;
     control.hidden = std::getenv("JUDAS_WINDOW_SIZE") != nullptr;
     bool finished = false;
+    std::uint32_t hud = 0;
+    if (terminalPhase == "live") {
+        control.worldReady = [&](EngineHost&, RuntimeWorld& world, InteractivePlay&) {
+            UIDocument document;
+            UIElement canvas, text;
+            canvas.id = "canvas";
+            canvas.kind = UIKind::Canvas;
+            document.elements.push_back(canvas);
+            text.id = "status";
+            text.parent = "canvas";
+            text.kind = UIKind::Text;
+            text.text = "HUD stays live";
+            document.elements.push_back(text);
+            std::string error;
+            hud = world.UI().Add(document,"live-hud",0,error);
+            Require(hud != 0,error);
+        };
+    }
     unsigned lastShadowPasses = 0;
+    std::optional<double> transitionSimulationTime;
+
     using Clock = std::chrono::steady_clock;
     Clock::time_point lastFrame;
     auto minimumPacedFrame = Clock::duration::max();
-    control.beforeFrame = [&](EngineHost&, RuntimeWorld&, InteractivePlay&) {
+    control.beforeFrame = [&](EngineHost&, RuntimeWorld& world, InteractivePlay&) {
+        if (transitionSimulationTime) {
+            Require(world.UI().Find("live-hud") == hud && world.CameraTexture(2).IsValid(),
+                    "HUD ownership or camera target was lost on a rebuilt backend");
+            Require(world.SimulationTimeSeconds() == *transitionSimulationTime,
+                    "Simulation advanced during graphics transition");
+            transitionSimulationTime.reset();
+        }
         const auto now = Clock::now();
         if (frames >= 2) minimumPacedFrame = std::min(minimumPacedFrame, now - lastFrame);
         lastFrame = now;
@@ -175,7 +258,12 @@ int RunChild(const std::string& project, const std::string& terminalPhase) {
         }
         for (const auto& entry : scripts->Capture()) {
             const auto state = Json::parse(entry.json);
-            if (state.at("phase") != terminalPhase || frames < 3) continue;
+            const auto phase = state.at("phase").get<std::string>();
+            if (phase == "live-vulkan" || phase == "live-opengl" || phase == "live-fail") {
+                transitionSimulationTime = world.SimulationTimeSeconds();
+                if (phase == "live-fail") SDL_setenv("JUDAS_VULKAN_DEVICE","impossible-fixture-device-name",1);
+            }
+            if (phase != terminalPhase || frames < 3) continue;
             if (terminalPhase != "corrupt") {
                 Require(!host.GetRenderer().ShadowsEnabled(), "Native global shadow setting was not applied");
                 Require(host.GetRenderer().Stats().shadowPasses == lastShadowPasses, "A disabled shadow pass still ran");
@@ -257,6 +345,12 @@ int main(int argc, char** argv) try {
         if (oldDrivers) SDL_setenv("VK_DRIVER_FILES", oldDrivers->c_str(), 1);
         else unsetenv("VK_DRIVER_FILES");
         unsetenv("JUDAS_SETTINGS_EXPECT_BACKEND");
+        saved["video"]["backend"] = "opengl";
+        saved["game"]["liveFixture"] = true;
+        std::ofstream(preferences) << saved.dump();
+        run("live");
+        { std::ifstream in(preferences); in >> saved; }
+        Require(saved["video"]["backend"] == "opengl", "Failed live choice overwrote the effective backend");
         SDL_setenv("JUDAS_GRAPHICS", "vulkan", 1);
     }
     std::ofstream(preferences) << "broken JSON";

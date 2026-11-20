@@ -70,6 +70,7 @@ export const localization = {
 };
 export const settings = {
     read: () => call("settingsRead"),
+    switchBackend: backend => call("settingsSwitchBackend", JSON.stringify(backend)),
     applyVideo: patch => call("settingsApplyVideo", JSON.stringify(patch)),
     previewDisplay: display => call("settingsDisplay", JSON.stringify(display)),
     confirmDisplay: () => call("settingsConfirmDisplay"),

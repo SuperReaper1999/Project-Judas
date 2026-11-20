@@ -1,3 +1,4 @@
+#include "GraphicsApi.h"
 #include "Tangents.h"
 #include "PerformanceProfiler.h"
 #include "ResourceManager.h"
@@ -34,7 +35,8 @@ const char* ResourceStateName(ResourceState state) {
 }
 
 ResourceManager::ResourceManager(Renderer* renderer, const AssetDatabase* assets, JobSystem* jobs, AudioSystem* audio)
-    : m_audio(audio), m_renderer(renderer), m_assets(assets), m_jobs(jobs), m_ownerThread(std::this_thread::get_id()) {if(m_audio)m_audio->SetJobSystem(m_jobs);}
+    : m_audio(audio), m_renderer(renderer), m_assets(assets), m_jobs(jobs), m_ownerThread(std::this_thread::get_id()),
+      m_graphicsContext(renderer ? GraphicsContextIdentity() : 0) {if(m_audio)m_audio->SetJobSystem(m_jobs);}
 
 ResourceManager::~ResourceManager() {
     Shutdown();
@@ -177,6 +179,7 @@ ResourceManager::Entry& ResourceManager::Begin(const AssetId& id, AssetType expe
         case ResourceState::Cancelled:
             break;
     }
+    if (m_graphicsDetached) return entry;
     ++m_stats.misses;
     entry.error.clear();
     if (m_shutDown) { Fail(entry, "resource manager is shut down"); return entry; }
@@ -441,7 +444,7 @@ bool ResourceManager::AdvanceUpload(const std::shared_ptr<LoadTask>& task,double
 
 void ResourceManager::Pump(std::size_t maxUploads) {
     JUDAS_PROFILE_SCOPE("Resource completion and budget");
-    if (m_shutDown) return;
+    if (m_shutDown || m_graphicsDetached) return;
     // Completion adds to the current total. An idle pump only needs the
     // accounting pass below, which also observes renderer-side LOD changes.
     if (!m_inFlight.empty()) RefreshResidentBytes();
@@ -516,6 +519,7 @@ void ResourceManager::Pump(std::size_t maxUploads) {
 
 void ResourceManager::WaitForAll() {
     JUDAS_PROFILE_SCOPE("Resource wait");
+    if (m_graphicsDetached) return;
     while (!m_inFlight.empty()) {
         AdmitPending();
         if (m_jobs) {
@@ -529,7 +533,7 @@ std::size_t ResourceManager::EvictToFit(std::uint64_t targetBytes) {
     JUDAS_PROFILE_SCOPE("Resource eviction");
     if (m_stats.bytesResident <= targetBytes) return 0;
     const auto eligible = [&](const Entry& entry) {
-        return entry.state == ResourceState::Ready && entry.refs == 0 &&
+        return entry.state == ResourceState::Ready && !entry.restoreGraphics && entry.refs == 0 &&
                !(m_visualStreaming && entry.visualDemand && m_visualFrame <= entry.visualDemand + 2);
     };
     const auto older = [](const Entry* a, const Entry* b) { return a->lastUse < b->lastUse; };
@@ -608,6 +612,7 @@ void ResourceManager::Release(const AssetId& id) {
     const auto it = m_entries.find(id);
     if (it == m_entries.end()) return;
     Entry& entry = it->second;
+    entry.restoreGraphics = false;
     if (entry.task && m_jobs) {
         m_jobs->Cancel(entry.task->job);
         TraceTask(*entry.task, ResourceTracePoint::CancelRequested);
@@ -623,6 +628,95 @@ void ResourceManager::Release(const AssetId& id) {
     // Keep the entry (its refs and generation) so demand bookkeeping survives.
 }
 
+bool ResourceManager::DetachGraphics(std::string& error) {
+    error.clear();
+    if (std::this_thread::get_id() != m_ownerThread || m_shutDown || !m_renderer ||
+        !m_graphicsContext || GraphicsContextIdentity() != m_graphicsContext) {
+        error = "Detach graphics requires the live resource manager on its graphics owner thread";
+        return false;
+    }
+    // Decode jobs own CPU data. Upload cursors and staged handles exclusively
+    // belong to this thread. Keep the jobs, but restart any partial upload.
+    for (const auto& task : m_inFlight) {
+        DropUpload(*task);
+        task->uploadCursor = 0;
+    }
+    for (auto& [id, entry] : m_entries) {
+        if (entry.state != ResourceState::Ready) continue;
+        if (entry.type == AssetType::Mesh || entry.type == AssetType::Texture ||
+            entry.type == AssetType::Material || entry.type == AssetType::Environment) {
+            m_renderer->DestroyMesh(entry.mesh);
+            m_renderer->DestroyTexture(entry.texture);
+            m_renderer->DestroyMaterial(entry.material);
+            m_renderer->DestroyEnvironment(entry.environment);
+            entry.mesh = {};
+            entry.texture = {};
+            entry.material = {};
+            entry.environment = {};
+            entry.state = ResourceState::Unloaded;
+            entry.restoreGraphics = true;
+            entry.bytes = 0;
+        } else if (entry.collision && entry.mesh.IsValid()) {
+            // A lazily created collision-view mesh borrows the CPU asset.
+            m_renderer->DestroyMesh(entry.mesh);
+            entry.mesh = {};
+            const auto bytes = entry.collision->faces.size() * 3 * sizeof(MeshVertex);
+            entry.bytes -= std::min<std::uint64_t>(entry.bytes, bytes);
+        }
+    }
+    m_renderer = nullptr;
+    m_graphicsContext = 0;
+    m_graphicsDetached = true;
+    RefreshResidentBytes();
+    return true;
+}
+
+bool ResourceManager::AttachGraphics(Renderer& renderer, std::string& error) {
+    error.clear();
+    if (std::this_thread::get_id() != m_ownerThread || m_shutDown || !m_graphicsDetached ||
+        !GraphicsContextCurrent()) {
+        error = "Attach graphics requires a detached resource manager on the replacement graphics thread";
+        return false;
+    }
+    m_renderer = &renderer;
+    m_graphicsContext = GraphicsContextIdentity();
+    m_graphicsDetached = false;
+    for (auto& [id, entry] : m_entries) {
+        if (!entry.restoreGraphics) continue;
+        // Failed installation on a rejected device must be retried on the
+        // recovery device. CPU metadata and references are still present.
+        if (entry.state == ResourceState::Failed) entry.state = ResourceState::Unloaded;
+        Begin(id, entry.type, JobPriority::High);
+    }
+    return true;
+}
+
+bool ResourceManager::GraphicsRestorationReady(bool& ready, std::string& error) {
+    ready = false;
+    if (m_graphicsDetached) { error = "Graphics assets are detached"; return false; }
+    bool allResident = true;
+    for (auto& [id, entry] : m_entries) {
+        if (!entry.restoreGraphics) continue;
+        if (entry.state == ResourceState::Failed || entry.state == ResourceState::Cancelled) {
+            error = "Graphics restoration failed for asset " + id + ": " + entry.error;
+            return false;
+        }
+        if (entry.state != ResourceState::Ready) {
+            allResident = false;
+            continue;
+        }
+        if (!entry.mesh.IsValid() && !entry.texture.IsValid() &&
+            !entry.material.IsValid() && !entry.environment.IsValid()) {
+            error = "Graphics restoration published no device resource for asset " + id;
+            return false;
+        }
+    }
+    if (allResident)
+        for (auto& [id, entry] : m_entries) entry.restoreGraphics = false;
+    ready = allResident;
+    return true;
+}
+
 void ResourceManager::ReleaseAll() {
     m_visualBounds.clear();
     JUDAS_PROFILE_SCOPE("Resource release");
@@ -636,6 +730,7 @@ void ResourceManager::ReleaseAll() {
         entry.task.reset();
         entry.error.clear();
         entry.state = ResourceState::Unloaded;
+        entry.restoreGraphics = false;
     }
     // Project handoff/shutdown drains synchronously: workers finish their
     // current cooperative unit, then these old results are discarded here.

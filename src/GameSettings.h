@@ -9,6 +9,7 @@
 
 class EngineHost;
 class Project;
+class RuntimeWorld;
 
 // One standalone application owns preferences across scene and save transitions.
 class GameSettings {
@@ -19,6 +20,10 @@ public:
     void Attach(EngineHost&);
     nlohmann::json Invoke(const std::string& operation, const std::string& argument);
     void Advance();
+    void EnableBackendSwitch(bool allowed) { m_switchAllowed = allowed; }
+    bool BackendSwitchPending() const { return m_switchRequest.has_value(); }
+    bool AdvanceBackendSwitch(RuntimeWorld&, const char* title, bool visible,
+                              float interpolation, std::string& fatalError);
     int FrameCap() const { return m_fpsCap; }
 
 private:
@@ -44,6 +49,10 @@ private:
     std::optional<bool> m_vsync, m_shadows;
     unsigned m_localShadowBudget = 8;
     int m_fpsCap = 0;
+    bool CanSwitchBackend() const;
+    bool m_switchAllowed = false;
+    std::optional<bool> m_switchRequest;
+    std::string m_switchState = "idle";
     std::string m_backend = "opengl";
     std::string m_loadError, m_displayError, m_startupError, m_backendError;
     std::string m_game = "{}";

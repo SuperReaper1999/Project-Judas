@@ -196,6 +196,11 @@ public:
     void Release(const AssetId& id);
     void Invalidate(const AssetId& id);
     void ReleaseAll();
+    // Owner-thread transition only. Keep the old context current until detach
+    // completes. Resume frame publication only after attaching a live renderer.
+    bool DetachGraphics(std::string& error);
+    bool AttachGraphics(Renderer&, std::string& error);
+    bool GraphicsRestorationReady(bool& ready, std::string& error);
     void Shutdown();
 
     void SetBudgetBytes(std::uint64_t bytes) { m_budgetBytes = bytes; }
@@ -280,6 +285,7 @@ private:
         std::shared_ptr<LoadTask> task;
         std::thread::id decodeThread;
         double loadMilliseconds = 0.0;
+        bool restoreGraphics = false;
     };
 
     Entry& Begin(const AssetId& id, AssetType expected, JobPriority priority);
@@ -302,6 +308,7 @@ private:
     bool m_blocking = false;
     bool m_headlessResidency = false;
     std::thread::id m_ownerThread;
+    std::uintptr_t m_graphicsContext = 0;
     std::map<AssetId, Entry> m_entries;
     std::vector<std::shared_ptr<LoadTask>> m_inFlight;  // tasks with a job outstanding
     mutable ResourceStats m_stats;
@@ -311,5 +318,6 @@ private:
     std::map<AssetId,VisualBounds> m_visualBounds;
     void RefreshResidentBytes();
     bool m_shutDown = false;
+    bool m_graphicsDetached = false;
     ResourceTrace m_trace;
 };

@@ -15,7 +15,15 @@ V storedPoint(const PlanetTileData& data,const std::vector<V>& points,V directio
 bool descendant(PlanetTileKey k,PlanetTileKey p){return k.face==p.face&&k.level>=p.level&&(k.x>>(k.level-p.level))==p.x&&(k.y>>(k.level-p.level))==p.y;}
 }
 PlanetTiles::PlanetTiles(PlanetSettings settings,PhysicsWorld* physics,unsigned layer,CategoryMask mask,CategoryMask tags):surface(std::move(settings)),m_physics(physics),m_layer(layer),m_mask(mask),m_tags(tags){for(unsigned f=0;f<6;++f)m_leaves.insert({f,0,0,0});IndexLeaves();}
-PlanetTiles::~PlanetTiles(){ClearCollision();if(m_renderer)for(auto& [_,t]:m_tiles)if(t.mesh.IsValid())m_renderer->DestroyMesh(t.mesh);}
+PlanetTiles::~PlanetTiles(){ClearCollision();ReleaseGraphics();}
+void PlanetTiles::ReleaseGraphics() {
+    if (!m_renderer) return;
+    for (auto& [key, tile] : m_tiles) {
+        m_renderer->DestroyMesh(tile.mesh);
+        tile.mesh = {};
+    }
+    m_renderer = nullptr;
+}
 bool PlanetTiles::Masked(PlanetTileKey key) const {
     for (const auto &cut : m_cutouts)
         if (descendant(key, cut.tile))

@@ -1,9 +1,12 @@
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
+#include "WorldGraphicsState.h"
+#include "PlanetTiles.h"
 #include "WorldPresentation.h"
 #include "CameraProjection.h"
 #include "PerformanceProfiler.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <algorithm>
 
 bool RuntimeWorld::PrepareStartup(Renderer& renderer,int width,int height,bool& ready,std::string& error){
     JUDAS_PROFILE_SCOPE("Startup resource preparation");
@@ -46,5 +49,64 @@ bool RuntimeWorld::PrepareStartup(Renderer& renderer,int width,int height,bool& 
     for(const auto& entry:m_renderAssetDemand)for(const auto& id:entry.second)complete=required(id)&&complete;
     if(!error.empty())return false;
     ready=complete&&uiReady&&m_assets->Stats().loading==0;
+    return true;
+}
+
+
+bool RuntimeWorld::CaptureGraphicsState(WorldGraphicsState& output, std::string& error) {
+    WorldGraphicsState captured;
+    for (auto& emitter : m_particleEmitters) {
+        if (!emitter.gpu) continue;
+        WorldGraphicsState::Emitter snapshot{emitter.id, {}};
+        if (!emitter.gpu->CaptureDeviceState(snapshot.state, error)) {
+            error = "Particle emitter " + std::to_string(emitter.id) + ": " + error;
+            return false;
+        }
+        captured.m_emitters.push_back(std::move(snapshot));
+    }
+    output = std::move(captured);
+    return true;
+}
+
+bool RuntimeWorld::ReleaseWorldGraphics(Renderer& renderer, std::string& error) {
+    for (const auto& emitter : m_particleEmitters)
+        if (emitter.gpu && !emitter.gpu->CanMutate(error)) return false;
+    for (auto& emitter : m_particleEmitters) {
+        if (!emitter.gpu) continue;
+        if (!emitter.gpu->Shutdown(error)) return false;
+        emitter.gpu.reset();
+    }
+    ReleasePresentationTargets();
+    if (m_runtimeTerrain) m_runtimeTerrain->ReleaseGraphics();
+    for (auto& [id, planet] : m_planets) planet->ReleaseGraphics();
+    for (auto& [id, deformable] : m_deformables) {
+        renderer.DestroyMesh(deformable.mesh);
+        deformable.mesh = {};
+        deformable.mappedRevision = ~std::uint64_t(0);
+        deformable.mappedAlpha = -1;
+    }
+    return true;
+}
+
+bool RuntimeWorld::RestoreGraphicsState(const WorldGraphicsState& state,
+                                       const GraphicsCapabilities& capabilities, std::string& error) {
+    using Pool = JudasParticles::GpuParticles;
+    std::vector<std::pair<ParticleEmitter*, std::shared_ptr<Pool>>> restored;
+    restored.reserve(state.m_emitters.size());
+    for (const auto& saved : state.m_emitters) {
+        const auto emitter = std::find_if(m_particleEmitters.begin(), m_particleEmitters.end(),
+            [&](const auto& candidate) { return candidate.id == saved.id; });
+        if (emitter == m_particleEmitters.end() || emitter->gpu) {
+            error = "Particle owner changed during graphics transition: " + std::to_string(saved.id);
+            return false;
+        }
+        auto pool = std::make_shared<Pool>();
+        if (!pool->RestoreDeviceState(capabilities, saved.state, {}, error)) {
+            error = "Particle emitter " + std::to_string(saved.id) + ": " + error;
+            return false;
+        }
+        restored.emplace_back(&*emitter, std::move(pool));
+    }
+    for (auto& [emitter, pool] : restored) emitter->gpu = std::move(pool);
     return true;
 }

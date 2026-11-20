@@ -25,6 +25,7 @@ namespace TerrainV2 {
 // regional suspension, native-before-publication restore and save boundary.
 class Runtime {
   public:
+    void ReleaseGraphics();
     Runtime(RuntimeWorld &, uint64_t owner);
     ~Runtime();
     bool Create(Source, std::string &);
@@ -86,7 +87,6 @@ class Runtime {
                 bool replaceAll = false);
     bool ValidateSubmission(const Source &, std::string &) const;
     bool Publish(std::string &);
-    void ReleaseGraphics();
     void CommitPresentation();
 };
 } // namespace TerrainV2

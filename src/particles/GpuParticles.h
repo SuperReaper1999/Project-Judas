@@ -40,6 +40,25 @@ struct GpuParticleDiagnostics {
 // Explicit Shutdown runs on the owner context before world/context teardown.
 class GpuParticles {
 public:
+    // Process-local checkpoint for a replacement graphics device. Contains no
+    // graphics handles and can be reused if a destination device fails.
+    class DeviceState {
+        friend class GpuParticles;
+        std::vector<GpuParticleState> particles;
+        std::vector<std::uint32_t> freeSlots;
+        // The 13 defined words in the shader Counters block.
+        std::array<std::uint32_t,13> counters{};
+        ParticleEmitterSettings settings;
+        ParticleRuntimeStats stats;
+        GpuParticleDiagnostics diagnostics;
+        ParticleImpacts impacts;
+        std::uint32_t nextBirth = 1, impactCapacity = 0;
+        std::uint64_t gpuDropped = 0, invalidImpactDropped = 0;
+    };
+    bool CaptureDeviceState(DeviceState&, std::string& error);
+    bool RestoreDeviceState(const GraphicsCapabilities&, const DeviceState&,
+                            JudasRender::ComputeBudget, std::string& error);
+
     GpuParticles();
     ~GpuParticles();
     GpuParticles(const GpuParticles&)=delete;

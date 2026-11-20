@@ -44,7 +44,9 @@ initialize successfully.
 
 ## Graphics lifetime and backend changes
 
-The game-facing backend choice still applies at process restart. The
+Standalone Linux games can request a live backend switch through the
+[settings API](judasjs/settings.md#backend-selection-and-recovery). The
+restart preference is also available. The
 `graphics-context-lifecycle` gate can retire one graphics host and create another
 in the same process. When run with Vulkan selected in a dual-backend build,
 it alternates OpenGL and Vulkan and checks that each retired host clears
@@ -52,23 +54,27 @@ its dispatch. That fixture has no running world.
 
 | Owner | Lifetime and reconstruction |
 | --- | --- |
-| SDL window and graphics context | `Window` creates an OpenGL context or a Vulkan surface. Its current full shutdown also resets input and controller ownership and quits SDL. Live switching needs a graphics-surface boundary that keeps session input and audio alive. |
+| SDL window and graphics context | The standalone graphics rebuild replaces the native window and its OpenGL context or Vulkan surface. SDL, input settings, audio and jobs retain their existing owners. |
 | Dispatch and device | Desktop GLAD is process-global. Context retirement clears its function pointers and capability flags, and every load starts with an empty table. The Vulkan bridge owns command buffers, fences, deferred resource destruction and the swapchain. Its shutdown waits for device work before destruction. |
 | Renderer | Shaders, shadow charts, material bindings, transient arenas, font atlases and framebuffer storage belong to the device. A new renderer must recreate these resources before publishing a frame. Its shutdown currently runs before window teardown. |
-| Asset manager | Asynchronous decoders produce CPU results and the owning thread installs GPU handles. `ReleaseAll()` also destroys audio clips and discards CPU asset metadata. A graphics-only transition needs selective detachment, draining upload work and preserving audio, metadata and demand. |
+| Asset manager | Graphics detachment retires the old handles and partial uploads. Decode jobs, demand and non-graphics assets stay in the existing manager. Renderer attachment queues previously resident graphics assets for restoration. |
 | World and presentation | Cameras and local players can retire their render targets while retaining camera and player state. Terrain and deformables hold derived meshes. UI documents and scripts retain game state, but presentation references must be rebound and texture/font readiness rechecked. Weather and water render through the shared renderer. |
-| GPU particle simulation | Live particle arrays reside on the GPU. The existing GPU-to-CPU fallback reads particle state but pins the emitter to the CPU. It has no inverse operation for restoring the resident simulation on a replacement device. |
+| GPU particle simulation | A process-local checkpoint transfers resident slots, free-list order, counters, birth IDs and pending impacts onto a replacement compute device. New collision geometry and view scratch are prepared by the normal code paths. |
 | Editor | ImGui and detached viewport surfaces have additional graphics owners. They are outside the initial standalone transition. |
 
-The next bounded stage is a same-backend graphics rebind on a running test
-world. Separate graphics-only window and asset retirement from session
-shutdown, then integrate camera target detachment and add detachment for terrain pages, deformable meshes and UI
-presentation before destroying the old context. Check that native handle
-generations, entity IDs, script instances, physics ticks and audio playback
-remain valid across the rebind. Add a round-trip transfer for resident GPU
-particle state before permitting a transition in worlds that use it. A
-cross-backend request, loading presentation and bounded recovery attempt
-belong at the standalone frame boundary after those checks pass.
+The `asset-residency` fixture exercises graphics replacement on an existing
+asset-backed world. It checks resident meshes, script state, particle pools,
+and the previous-backend recovery primitive after an injected renderer
+initialization failure. The audio fixture independently checks live mixer
+continuity. These are controlled native fixtures.
+
+The standalone application services the request after it presents the current
+frame. It pauses the world, captures resident particle state, retires graphics
+owners and reconstructs the device. A zero-clock warmup restores active
+camera targets and the HUD before gameplay resumes. The ordinary fixed-step
+accumulator and application clock exclude the transition interval. The
+`game-settings` fixture exercises the public switch, script and world
+continuity, and the previous-backend recovery path.
 
 ## Detached editor windows
 

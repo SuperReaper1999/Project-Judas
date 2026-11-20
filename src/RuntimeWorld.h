@@ -42,6 +42,7 @@ class SceneSession;
 class RadialTerrain;
 class ResourceManager;
 struct PhysicalMaterial;
+class WorldGraphicsState;
 namespace JudasParticles {class GpuParticles;}
 namespace JudasWater {class WorldSystem;}
 namespace TerrainV2 {struct PreparedAsset;struct Source;}
@@ -166,6 +167,9 @@ public:
     // Retire transient targets with their owning context current. Camera and
     // local-player state remain intact for the next presentation.
     void ReleasePresentationTargets();
+    bool CaptureGraphicsState(WorldGraphicsState&, std::string& error);
+    bool ReleaseWorldGraphics(Renderer&, std::string& error);
+    bool RestoreGraphicsState(const WorldGraphicsState&, const GraphicsCapabilities&, std::string& error);
 
     // One authored renderable (mesh, box or sphere) that has no dynamic
     // body — drawn at its authored pose every frame.

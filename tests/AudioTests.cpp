@@ -128,6 +128,23 @@ int main(){
         host.Resources().WaitForAll();InteractivePlay game;Check(game.Begin(runtime,WorldCoordinates{},error),"interactive runtime entry uses shared audio lifecycle");
         game.Frame(host.GetWindow(),host.GetRenderer(),1.f/60,false);
         Check(host.Audio().VoiceCount()==2&&host.Audio().Listener().forward==glm::vec3(0,0,-1),"ordinary interactive frame creates voices and updates active-camera listener");
+        auto& projectResources = host.Resources();
+        const auto before = projectResources.GetAudio(loopId, error);
+        const auto clips = host.Audio().ClipCount();
+        Check(projectResources.DetachGraphics(error) && !projectResources.GetRenderer() &&
+                  projectResources.GetAudio(loopId, error).id == before.id &&
+                  host.Audio().AdvanceWithoutDevice(128) && host.Audio().VoiceCount() == 2 &&
+                  host.Audio().ClipCount() == clips,
+              "graphics retirement preserves cached audio clips and active mixer voices");
+#if defined(__linux__) && !defined(__ANDROID__)
+        const bool rebuilt = host.RebuildDesktopGraphics("M34 audio continuity", 320,240,false,
+                                                       host.GetWindow().UsesVulkan(),error);
+#else
+        const bool rebuilt = projectResources.AttachGraphics(host.GetRenderer(),error);
+#endif
+        Check(rebuilt && host.Audio().AdvanceWithoutDevice(128) && host.Audio().VoiceCount() == 2 &&
+                  host.Audio().ClipCount() == clips && projectResources.GetAudio(loopId,error).id == before.id,
+              "graphics recreation preserves clip identity and advances existing mixer voices");
         game.End();Check(host.Audio().VoiceCount()==0&&ScenesEqual(scene,baseline)&&ScenesEqual(authored,Fixture()),"ordinary Stop releases host voices without authored mutations");
         runtime.Destroy();host.OpenProjectAssets(std::filesystem::current_path().string(),"tests/fixtures/engine-assets");
         Check(host.Audio().VoiceCount()==0&&host.Audio().ClipCount()==0,"project closure clears runtime clips and voices");

@@ -116,6 +116,10 @@ public:
     void RequestTestSasToggle();
 
 private:
+    friend class EngineHost;
+    void DestroyGraphicsSurface();
+    bool OpenReplacementDesktopSurface(const char*, int width, int height,
+                                       bool visible, bool useVulkan);
     bool CreateDesktopGraphicsWindow(const char*, int width, int height, bool visible,
                                      bool allowVulkanPlatformWindows, bool useVulkan);
     std::string m_lastError;

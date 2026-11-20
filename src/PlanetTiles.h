@@ -31,6 +31,7 @@ public:
  bool SetTerrainCutouts(const std::vector<PlanetTerrainCutout>&,std::string&);
  const std::vector<PlanetTerrainCutout>& TerrainCutouts()const{return m_cutouts;}
  void ClearCollision();
+ void ReleaseGraphics();
  void SetTags(CategoryMask);
  std::optional<glm::dvec3> CollisionFocus()const{return m_focus;}
  std::vector<PlanetTileKey> Leaves()const;

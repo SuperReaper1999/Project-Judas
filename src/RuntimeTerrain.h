@@ -31,6 +31,7 @@ public:
  // overhead, physics-world storage or GPU residency. Cached at publication.
  size_t LandscapePayloadBytes(uint64_t)const;
  bool Has(uint64_t)const;bool ReadyToSave()const;
+ void ReleaseGraphics();
  void Advance();void Remove(uint64_t);void Draw(Renderer&)const;
  bool Wait(uint64_t,std::string&);
  bool Capture(uint64_t,std::string&,std::string&)const;

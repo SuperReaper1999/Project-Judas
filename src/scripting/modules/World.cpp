@@ -95,7 +95,7 @@ JSValue HandleWorld(BindingContext &context, const std::string &op, int argc, JS
     };
 
     if (op == "settingsRead" || op == "settingsGame" || op == "settingsApplyVideo" ||
-        op == "settingsDisplay" || op == "settingsConfirmDisplay" || op == "settingsRevertDisplay" ||
+        op == "settingsSwitchBackend" || op == "settingsDisplay" || op == "settingsConfirmDisplay" || op == "settingsRevertDisplay" ||
         op == "settingsSetGame" || op == "settingsSave" || op == "settingsResetSaved") {
         const auto session = world.SceneControl();
         if (!session || !session->gameSettings) {
@@ -765,6 +765,7 @@ void RegisterWorldBindings(BindingRegistry &registry) {
                   "settingsRead",
                   "settingsGame",
                   "settingsApplyVideo",
+                  "settingsSwitchBackend",
                   "settingsDisplay",
                   "settingsConfirmDisplay",
                   "settingsRevertDisplay",

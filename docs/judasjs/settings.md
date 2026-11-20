@@ -18,7 +18,7 @@ Borderless fullscreen uses the current desktop mode and refresh rate.
 | VSync and FPS cap | Presentation and standalone frame loop via `settings.applyVideo()` | Live. Vulkan changes present mode on swapchain recreation |
 | Global shadows and local shadow chart budget | Renderer via `settings.applyVideo()` | Live. Direct lighting stays enabled |
 | Exposure and weather effects | `world.setAppearance({exposure})` and `weather.quality` | Live. Store the chosen values in game preferences |
-| Rendering backend | `settings.applyVideo({backend})` then save | Next process launch |
+| Rendering backend | `settings.switchBackend(backend)` or `settings.applyVideo({backend})` | Explicit live request, or next launch after saving the restart preference |
 | Master gain, mute and audio categories | `audio.setGroup("master", patch)` or a project-defined group | Live. Store user choices in game preferences |
 | Rebinding and stick dead zones | `input.getBindings()` and `input.setBindings()` | Next input frame. Store the map in game preferences |
 | Look sensitivity, invert and gameplay preferences | Game logic, or scale/invert a named input axis | Game-owned |
@@ -51,8 +51,26 @@ an expired preview at a frame boundary. Display errors appear in
 OpenGL is the default. Backend entries are `active` for an initialized backend,
 `candidate` for a compiled backend that still needs to initialize on this host,
 or `failed` for a saved Vulkan request that failed during this launch. Only an
-active entry proves availability. The menu can offer a candidate as a
-restart-required choice. Select it, save, and restart the game to try it.
+active entry proves availability.
+
+When `settings.read().liveBackendSwitch` is true, call
+`settings.switchBackend("vulkan")` or `settings.switchBackend("opengl")`.
+The call queues work and returns immediately. The current frame finishes, then
+a static engine transition screen appears. The native window may briefly
+disappear while the replacement context opens. Simulation and script callbacks
+pause during reconstruction. The next UI update can inspect
+`backendTransition` and `backendError`. A completed switch updates the
+effective backend and the in-memory preference. Call `settings.save()` after
+completion to use that backend at the next launch.
+
+A failed candidate triggers one attempt to recover the previous backend.
+A recovered session reports `"recovered"` and retains the initialization error.
+If both devices fail to open or restore, the runtime reports both errors and
+exits. A live switch never writes preferences on its own. Finish display
+previews, save operations and scene transitions first. Editor Play, debug
+sessions with the physics debugger active and network sessions do not support
+live switching. `settings.applyVideo({backend})` and `settings.save()` still
+provide the restart workflow.
 
 Launch environment overrides take priority over saved preferences.
 `JUDAS_GRAPHICS` retains the explicit launch policy including Vulkan failures,

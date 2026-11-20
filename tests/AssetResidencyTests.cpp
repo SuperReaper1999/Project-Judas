@@ -5,8 +5,12 @@
 #include "SceneSerialization.h"
 #include "WorldPersistence.h"
 #include "WorldPresentation.h"
+#include "ScriptSystem.h"
+#include "WorldGraphicsState.h"
+#include "vulkan/VulkanBackend.h"
 #include "fixtures/M93AssetFixtures.h"
 #include <cstdio>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <glm/gtc/matrix_transform.hpp>
@@ -169,11 +173,146 @@ int main(int argc, char **argv) {
   assets.ReleaseAll();
   assets.ConfigureVisualStreaming(0);
   RuntimeWorld legacy;
+  const auto probe = root / "Assets/continuity.js";
+  std::ofstream(probe) << R"JS(export default class {
+    constructor() { this.state = {ticks: 0}; }
+    fixedUpdate() { ++this.state.ticks; }
+  })JS";
+  AssetRecord probeRecord;
+  Check(host.Assets().Track(probe.string(),probeRecord,error), "world continuity probe is a tracked script asset");
+  scene.Objects()[0].scripts.push_back({1,probeRecord.id,true,"{}"});
+  const bool hasGpuPool = host.GraphicsCaps().modernTier;
+  if (hasGpuPool) {
+    auto& particles = scene.Objects()[0].particleEmitter.emplace();
+    particles.backend = ParticleBackend::Gpu;
+    particles.maxParticles = 16;
+    particles.burst = 4;
+    particles.rate = 0;
+    particles.loop = false;
+    particles.collision = false;
+  }
 
   Check(legacy.Build(scene, &assets, error) &&
             assets.RefCount(models[0].id) > 0 &&
             assets.StateOf(models[2].id) == ResourceState::Ready,
         "default projects retain prior eager/pinned visual behaviour");
+  legacy.FixedScripts(nullptr,1.f/60);
+  auto* const scripts = legacy.Scripts();
+  if (!scripts || scripts->Capture().empty()) {
+    Check(false,"asset-backed JudasJS continuity fixture started");
+    return 1;
+  }
+  const auto hudImage = root / "Assets/continuity.png";
+  AssetRecord hudAsset;
+  if (!M93AssetFixtures::WriteTile1(hudImage,error) ||
+      !host.Assets().Track(hudImage.string(),hudAsset,error)) {
+    Check(false,error.c_str());
+    return 1;
+  }
+  UIDocument hud;
+  UIElement canvas, image, textElement;
+  canvas.id = "canvas";
+  canvas.kind = UIKind::Canvas;
+  image.id = "hud-image";
+  image.parent = "canvas";
+  image.kind = UIKind::Image;
+  image.texture = hudAsset.id;
+  textElement.id = "hud-text";
+  textElement.parent = "canvas";
+  textElement.kind = UIKind::Text;
+  textElement.offset = {0,42};
+  textElement.text = "Retained HUD text";
+  hud.elements = {canvas,image,textElement};
+  auto& ui = legacy.UI();
+  const auto hudHandle = ui.Add(hud,"continuity-hud",0,error);
+  bool uiReady = false;
+  TextureData hudPixels;
+  if (!hudHandle || !ui.PrepareStartup(640,360,uiReady,error) || !uiReady ||
+      !host.GetRenderer().ReadTextureForDiagnostics(assets.TryGetTexture(hudAsset.id),hudPixels)) {
+    Check(false,"HUD and tracked image are resident before graphics recreation");
+    return 1;
+  }
+  const auto hudState = ui.CaptureState(hudHandle);
+  legacy.UpdateVisualParticles(1.f/60);
+  if (hasGpuPool && (legacy.VisualEmitters().empty() || !legacy.VisualEmitters()[0].gpu)) {
+    Check(false,"expected a resident GPU pool in the live asset-backed world");
+    return 1;
+  }
+  WorldGraphicsState checkpoint;
+  auto detach = [&] {
+    return legacy.CaptureGraphicsState(checkpoint,error) &&
+           legacy.ReleaseWorldGraphics(host.GetRenderer(),error) && assets.DetachGraphics(error);
+  };
+  auto restore = [&] {
+    assets.WaitForAll();
+    bool ready = false;
+    return assets.GraphicsRestorationReady(ready,error) && ready &&
+           legacy.RestoreGraphicsState(checkpoint,host.GraphicsCaps(),error);
+  };
+  const auto references = assets.RefCount(models[0].id);
+#if defined(__linux__) && !defined(__ANDROID__)
+  const bool previous = host.GetWindow().UsesVulkan();
+  const auto previousScript = scripts->Capture()[0].json;
+  const char* configuredLights = std::getenv("JUDAS_LIGHT_LISTS");
+  const auto savedLights = configuredLights ? std::optional<std::string>(configuredLights) : std::nullopt;
+  if (!detach()) { Check(false,error.c_str()); return 1; }
+  SDL_setenv("JUDAS_LIGHT_LISTS","invalid",1);
+  const bool rejected = !host.RebuildDesktopGraphics("Injected renderer failure",640,360,false,previous,error);
+  if (savedLights) SDL_setenv("JUDAS_LIGHT_LISTS",savedLights->c_str(),1);
+  else unsetenv("JUDAS_LIGHT_LISTS");
+  Check(rejected && error.find("Renderer initialization failed")!=std::string::npos &&
+            !host.GetWindow().NativeWindow() && !assets.GetRenderer() &&
+            scripts->Capture()[0].json == previousScript,
+        "failed renderer initialization leaves the paused world and asset manager alive");
+  if (!host.RebuildDesktopGraphics("Previous backend recovery",640,360,false,previous,error) || !restore()) {
+    Check(false,error.c_str());
+    return 1;
+  }
+  Check(host.GetWindow().UsesVulkan() == previous && assets.TryGetMesh(models[0].id).IsValid() &&
+            scripts->Capture()[0].json == previousScript,
+        "previous backend and resident assets recover without a scene reload");
+#endif
+  const bool verifyBoth = JudasVulkan::Requested() && JudasVulkan::Compiled();
+  const std::vector<bool> backends = verifyBoth ? std::vector<bool>{false,true,false} :
+      std::vector<bool>{host.GetWindow().UsesVulkan()};
+  for (const bool useVulkan : backends) {
+    const auto retiring = assets.TryGetMesh(models[0].id);
+    const auto scriptState = scripts->Capture()[0].json;
+    MeshData readback;
+    Check(retiring.IsValid() && detach() &&
+              !host.GetRenderer().ReadMeshForDiagnostics(retiring, readback) && !assets.GetRenderer() &&
+              assets.RefCount(models[0].id) == references,
+          "graphics detachment retires the mesh without releasing live world demand");
+#if defined(__linux__) && !defined(__ANDROID__)
+    const bool rebuilt = host.RebuildDesktopGraphics("Asset-backed world continuity",640,360,false,useVulkan,error);
+#else
+    const bool rebuilt = assets.AttachGraphics(host.GetRenderer(),error);
+#endif
+    if (!rebuilt || !restore()) {
+      Check(false,error.c_str());
+      return 1;
+    }
+    Check(host.GetWindow().UsesVulkan() == useVulkan &&
+              host.GetRenderer().ReadMeshForDiagnostics(assets.TryGetMesh(models[0].id), readback) &&
+              assets.RefCount(models[0].id) == references && legacy.Scripts() == scripts &&
+              scripts->Capture()[0].json == scriptState &&
+              (!hasGpuPool || (legacy.VisualEmitters()[0].gpu &&
+                               legacy.VisualEmitters()[0].gpu->Diagnostics().emitted == 4)),
+          "recreated graphics restores resident meshes and particles without changing the live script or asset demand");
+    auto& replacement = host.GetRenderer();
+    RenderWorldFrame(replacement,640,360,legacy,view,projection,{0,0,0},1);
+    replacement.BeginUIFrame(640,360);
+    ui.Draw(replacement,640,360,&legacy);
+    const auto draws = replacement.UIDrawCalls();
+    replacement.EndUIFrame();
+    TextureData restoredHud;
+    Check(draws > 0 && ui.Find("continuity-hud") == hudHandle && ui.CaptureState(hudHandle)==hudState &&
+              replacement.ReadTextureForDiagnostics(assets.TryGetTexture(hudAsset.id),restoredHud) &&
+              restoredHud.pixels == hudPixels.pixels,
+          "the same HUD document draws after its texture and text renderer are restored");
+    legacy.FixedScripts(nullptr,1.f/60);
+    Check(scripts->Capture()[0].json != scriptState, "the same script instance resumes ticking after graphics recreation");
+  }
   legacy.Destroy();
   assets.ReleaseAll();
   std::filesystem::create_directories(root / "SourceArt");

@@ -47,7 +47,7 @@ void DrawWorldTransparents(Renderer& renderer, const RuntimeWorld& world,
 // or split-screen display. ObserverFrame owns cadence and the visual clock
 // when Scene is the only visible display. A secondary Observer never advances
 // either. Simulation remains owned by InteractivePlay.
-enum class WorldRenderPurpose { Runtime, Observer, Auxiliary, ObserverFrame };
+enum class WorldRenderPurpose { Runtime, Observer, Auxiliary, ObserverFrame, GraphicsWarmup };
 void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWorld& world,
                       const glm::mat4& view, const glm::mat4& projection,
                       const glm::vec3& shadowFocus, float presentationAlpha,float frameSeconds=1.f/60,

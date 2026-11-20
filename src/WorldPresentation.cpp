@@ -388,7 +388,8 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     const bool observer=purpose==WorldRenderPurpose::Observer || purpose==WorldRenderPurpose::ObserverFrame;
     const bool advancePresentation=purpose!=WorldRenderPurpose::Observer;
     const bool mainView=purpose!=WorldRenderPurpose::Auxiliary;
-    const bool gameInterest=purpose==WorldRenderPurpose::Runtime || purpose==WorldRenderPurpose::Observer;
+    const bool graphicsWarmup=purpose==WorldRenderPurpose::GraphicsWarmup;
+    const bool gameInterest=purpose==WorldRenderPurpose::Runtime || purpose==WorldRenderPurpose::Observer || graphicsWarmup;
     JUDAS_PROFILE_SCOPE("World render submission");
     renderer.ClearWeather();
     // Existing runtime statistics may accumulate across frames. Observe this
@@ -490,10 +491,11 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     // Secondary views are presentation passes only.
     if (advancePresentation && !world.PresentationCameras().empty()) {
         world.BindCameraRenderer(renderer);
-        const auto frame = world.NextCameraFrame();
+        const auto frame = graphicsWarmup ? 0 : world.NextCameraFrame();
         for (auto& camera : world.PresentationCameras()) {
             if(!world.IsPublished(camera.id))continue;
-            if (!camera.settings.enabled || frame % camera.settings.updateEveryFrames != 0) continue;
+            if (!camera.settings.enabled || frame % camera.settings.updateEveryFrames != 0 ||
+                (graphicsWarmup && camera.target.IsValid())) continue;
             glm::vec3 position = camera.transform.position;
             glm::quat rotation = glm::normalize(camera.transform.rotation);
             if (const auto* entity = world.FindEntity(camera.id)) {
@@ -538,7 +540,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             DrawWorldGeometry(renderer, world, alpha, WorldDrawOptions{}, &presentedObjects);
             DrawWorldTransparents(renderer, world, alpha);
             renderer.DrawWeather(true);
-            renderer.EndRenderTarget(); ++camera.updates;
+            renderer.EndRenderTarget(); if (!graphicsWarmup) ++camera.updates;
         }
     }
     if(mainView) {

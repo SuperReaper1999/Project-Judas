@@ -356,6 +356,16 @@ void Window::Shutdown() {
         m_browserGLContext=0;
     }
 #endif
+    for(auto& p:m_localControllers)SDL_GameControllerClose(p.second.first);
+    m_localControllers.clear();
+    DestroyGraphicsSurface();
+    if (m_sdlInitialized) {
+        SDL_Quit();
+        m_sdlInitialized = false;
+    }
+}
+
+void Window::DestroyGraphicsSurface() {
     if (m_vulkan) {
         JudasVulkan::Shutdown();
         m_vulkan = false;
@@ -364,16 +374,25 @@ void Window::Shutdown() {
         SDL_GL_DeleteContext(m_glContext);
         m_glContext = nullptr;
     }
-    for(auto& p:m_localControllers)SDL_GameControllerClose(p.second.first);
-    m_localControllers.clear();
     if (m_window) {
         SDL_DestroyWindow(m_window);
         m_window = nullptr;
     }
-    if (m_sdlInitialized) {
-        SDL_Quit();
-        m_sdlInitialized = false;
+}
+
+bool Window::OpenReplacementDesktopSurface(const char* title, int width, int height,
+                                            bool visible, bool useVulkan) {
+    m_lastError.clear();
+    if (!m_sdlInitialized || m_window || m_inputRegion) {
+        m_lastError = "Replacement requires an initialized, detached standalone SDL window";
+        return false;
     }
+    if (!CreateDesktopGraphicsWindow(title, width, height, visible, false, useVulkan))
+        return false;
+    SDL_GetWindowSize(m_window, &m_width, &m_height);
+    m_inputFocused = !visible || (SDL_GetWindowFlags(m_window) & SDL_WINDOW_INPUT_FOCUS);
+    UpdateNativeTextInput();
+    return true;
 }
 
 void Window::SetEventHook(std::function<void(const SDL_Event&)> hook) {

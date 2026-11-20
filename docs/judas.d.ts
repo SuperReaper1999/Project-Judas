@@ -1306,6 +1306,8 @@ declare module "judas" {
     activeBackend: GraphicsBackend; requestedBackend: GraphicsBackend;
     backends: {name: GraphicsBackend; status: "active" | "candidate" | "failed"}[];
     restartRequired: boolean;
+    liveBackendSwitch: boolean;
+    backendTransition: "idle" | "pending" | "active" | "failed" | "completed" | "recovered";
     desktop: boolean; persistent: boolean;
     displayLocked: boolean; shadowsLocked: boolean; backendLocked: boolean;
     displayPending: boolean; displayPreview: boolean; displayPreviewSeconds: number;
@@ -1314,6 +1316,7 @@ declare module "judas" {
   export const settings: {
     read(): GameSettingsState | null;
     applyVideo(patch: VideoSettingsPatch): boolean;
+    switchBackend(backend: GraphicsBackend): boolean;
     previewDisplay(display: DisplayPreview): boolean;
     confirmDisplay(): boolean;
     revertDisplay(): boolean;

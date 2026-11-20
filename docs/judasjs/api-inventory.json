@@ -2050,6 +2050,11 @@
       "maximum": 1
     },
     {
+      "symbol": "settings.switchBackend",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
       "symbol": "signals.emit",
       "minimum": 1,
       "maximum": 3
@@ -7531,6 +7536,17 @@
       "reference": "docs/judasjs/settings.md"
     },
     {
+      "symbol": "settings.switchBackend",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "settingsSwitchBackend"
+      ],
+      "type": "docs/judas.d.ts:settings.switchBackend",
+      "reference": "docs/judasjs/settings.md"
+    },
+    {
       "symbol": "signals",
       "kinds": [
         "namespace"
@@ -8252,6 +8268,7 @@
     "settingsRevertDisplay",
     "settingsSave",
     "settingsSetGame",
+    "settingsSwitchBackend",
     "signalEmit",
     "signalSend",
     "signalStats",

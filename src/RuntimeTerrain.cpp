@@ -13,6 +13,10 @@ constexpr size_t MaxVolumes=8;
 }
 RuntimeTerrain::RuntimeTerrain(RuntimeWorld& w):world(w){}
 RuntimeTerrain::~RuntimeTerrain(){while(!records.empty())Remove(records.begin()->first);}
+void RuntimeTerrain::ReleaseGraphics() {
+    for (auto& [id, record] : records)
+        if (record.landscape) record.landscape->ReleaseGraphics();
+}
 bool RuntimeTerrain::Has(uint64_t id)const{auto i=records.find(id);return i!=records.end()&&i->second.landscape->State().ready;}
 bool RuntimeTerrain::Wait(uint64_t id,std::string& error){auto it=records.find(id);if(it==records.end()||!it->second.landscape){error="missing landscape preparation";return false;}it->second.landscape->Wait();error=it->second.landscape->State().error;return error.empty()&&it->second.landscape->State().ready;}
 const RuntimeTerrainStatus* RuntimeTerrain::Status(uint64_t id)const{auto i=records.find(id);return i==records.end()?nullptr:&i->second.landscape->State();}

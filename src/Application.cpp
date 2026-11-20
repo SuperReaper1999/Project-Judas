@@ -250,13 +250,15 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
     Uint64 previousCounter = SDL_GetPerformanceCounter();
     startupProfile.End();
     bool applicationSuspended=false;
+    if (settings) settings->EnableBackendSwitch(!physicsDebugger);
     while (!window.ShouldClose() && !play.QuitRequested()) {
         const int frameCap = settings ? settings->FrameCap() : 0;
         const auto frameStart = frameCap ? std::chrono::steady_clock::now() : std::chrono::steady_clock::time_point{};
         ProfileFrame outerProfile("standalone");
         RuntimeWorld& world=*worldOwner;
         if (control && control->beforeFrame) control->beforeFrame(host, world, play);
-        RendererProfileScope wholeGPU(renderer,"Whole runtime frame");
+        auto& frameRenderer = host.GetRenderer();
+        RendererProfileScope wholeGPU(frameRenderer,"Whole runtime frame");
         { JUDAS_PROFILE_SCOPE("Input events"); window.PollEvents(); }
         if(window.ShouldClose())break;
         if(physicsDebugger&&physicsDebugView&&play.PhysicsDebugger()){
@@ -282,7 +284,7 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
         previousCounter = currentCounter;
         if (control && control->frameSeconds) frameDeltaTime = control->frameSeconds(frameDeltaTime);
 
-        play.Frame(window, renderer, frameDeltaTime);
+        const float interpolation = play.Frame(window, frameRenderer, frameDeltaTime);
         if(play.ConsumeDiagnosticClockReset())previousCounter=SDL_GetPerformanceCounter();
         if(physicsDebugger){
             const bool checkpoint=physicsDebugger->ConsumeCheckpoint(),restore=physicsDebugger->ConsumeRestore();
@@ -298,6 +300,16 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
 
         if (control && control->afterFrame) control->afterFrame(host, world, play);
         { JUDAS_PROFILE_WAIT("Swap present wait"); window.SwapBuffers(); }
+        if (settings && settings->BackendSwitchPending()) {
+            wholeGPU.End();
+            const auto title = options.project.Settings().name;
+            if (!settings->AdvanceBackendSwitch(world,title.c_str(),!(control && control->hidden),interpolation,error)) {
+                std::fprintf(stderr,"Graphics transition: %s\n",error.c_str());
+                return 1;
+            }
+            previousCounter = SDL_GetPerformanceCounter();
+            continue;
+        }
         if (settings) settings->Advance();
         if(!sceneControl->AdvanceOuter(worldOwner,play,host.Resources(),window.Input(),error)||!error.empty()){
             std::fprintf(stderr,"Runtime outer services: %s\n",error.c_str());error.clear();

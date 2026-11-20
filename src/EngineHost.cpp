@@ -81,21 +81,25 @@ bool EngineHost::Init(const char* title, int width, int height, bool visible, st
                       ResourceTrace trace, bool allowVulkanPlatformWindows, std::optional<bool> useVulkan) {
     JUDAS_PROFILE_SCOPE("Host startup");
     m_resourceTrace = std::move(trace);
+    m_standaloneGraphics = !allowVulkanPlatformWindows;
     if (!InitGraphics(title, width, height, visible, outError, allowVulkanPlatformWindows, useVulkan))
         return false;
     m_jobs = std::make_unique<JobSystem>();  // worker count derived from the hardware
     m_audio.SetJobSystem(m_jobs.get());
-    m_resources = std::make_unique<ResourceManager>(&m_renderer, &m_assetDatabase, m_jobs.get(), &m_audio);
+    m_resources = std::make_unique<ResourceManager>(m_renderer.get(), &m_assetDatabase, m_jobs.get(), &m_audio);
     m_resources->SetTrace(m_resourceTrace);
     return true;
 }
 bool EngineHost::InitGraphics(const char* title, int width, int height, bool visible, std::string& outError,
                               bool allowVulkanPlatformWindows, std::optional<bool> useVulkan) {
-    m_renderer.SetResourceTrace(m_resourceTrace);
     if (!m_window.Init(title, width, height, visible, allowVulkanPlatformWindows, useVulkan)) {
         outError = m_window.LastError().empty() ? "Window initialization failed." : m_window.LastError();
         return false;
     }
+    return InitRenderer(outError);
+}
+
+bool EngineHost::InitRenderer(std::string& outError) {
 #if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     if (!glGetString(GL_VERSION)) { outError = "OpenGL ES 3 context unavailable"; return false; }
 #else
@@ -109,13 +113,15 @@ bool EngineHost::InitGraphics(const char* title, int width, int height, bool vis
     if (!ValidateGraphicsCapabilities(m_graphicsCapabilities, outError)) return false;
     std::fprintf(stderr, "%s\n", GraphicsCapabilitiesSummary(m_graphicsCapabilities).c_str());
     StartGpuDiagnostics();
-    if (!m_renderer.Init()) {
+    m_renderer = std::make_unique<Renderer>();
+    m_renderer->SetResourceTrace(m_resourceTrace);
+    m_rendererInitialized = true; // Retire partial allocations on failed initialization.
+    if (!m_renderer->Init()) {
         outError = "Renderer initialization failed.";
         return false;
     }
-    m_rendererInitialized = true;
     const std::string fontPath = ResolveEngineDataPath(kUIFontPath);
-    if (!m_renderer.LoadFont(fontPath.c_str(), kUIFontPixelHeight, outError)) {
+    if (!m_renderer->LoadFont(fontPath.c_str(), kUIFontPixelHeight, outError)) {
         outError += " (engine font " + fontPath + "; set JUDAS_ENGINE_ROOT to the repository root)";
         return false;
     }
@@ -215,7 +221,7 @@ void EngineHost::StopGpuDiagnostics() {
 void EngineHost::OpenProjectAssets(const std::string& projectRoot, const std::string& assetsDir) {
     JUDAS_PROFILE_SCOPE("Project resources");
     m_audio.StopAll();
-    m_renderer.ResetProjectText();
+    m_renderer->ResetProjectText();
     if (m_resources) m_resources->ReleaseAll();
     m_assetDatabase.Scan(projectRoot, assetsDir);
 }
@@ -242,19 +248,24 @@ void EngineHost::Shutdown() {
     ShutdownGraphics();
 }
 
-void EngineHost::ShutdownGraphics() {
+void EngineHost::RetireRenderer() {
     if (m_rendererInitialized) {
-        m_renderer.Shutdown();
+        m_renderer->Shutdown();
         m_rendererInitialized = false;
     }
     StopGpuDiagnostics();
-    const bool hadContext = GraphicsContextCurrent();
-    m_window.Shutdown();
+    m_renderer.reset();
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     if (m_desktopDispatchLoaded) gladResetGL();
     m_desktopDispatchLoaded = false;
 #endif
     m_graphicsCapabilities = {};
+}
+
+void EngineHost::ShutdownGraphics() {
+    const bool hadContext = GraphicsContextCurrent();
+    RetireRenderer();
+    m_window.Shutdown();
     if (hadContext && m_resourceTrace) {
         ResourceTraceEvent event{ResourceTracePoint::ContextDestroyed, {}, {}};
         event.contextCurrent = GraphicsContextCurrent();
@@ -262,6 +273,40 @@ void EngineHost::ShutdownGraphics() {
     }
 }
 
+bool EngineHost::RebuildDesktopGraphics(const char* title, int width, int height, bool visible,
+                                         bool useVulkan, std::string& error) {
+#if defined(__linux__) && !defined(__ANDROID__)
+    if (!m_standaloneGraphics || !m_resources || m_resources->GetRenderer() ||
+        width < 1 || height < 1 || width > 8192 || height > 8192) {
+        error = "Graphics rebuild requires a detached standalone resource manager and valid window size";
+        return false;
+    }
+    error.clear();
+    if (m_window.NativeWindow()) {
+        m_window.SetMouseCaptured(false);
+        m_window.ClearPendingRequests();
+        if (m_rendererInitialized) {
+            JUDAS_PROFILE_WAIT("Graphics transition device drain");
+            glFinish();
+        }
+    }
+    RetireRenderer();
+    m_window.DestroyGraphicsSurface();
+    if (!m_window.OpenReplacementDesktopSurface(title, width, height, visible, useVulkan)) {
+        error = m_window.LastError();
+        return false;
+    }
+    if (InitRenderer(error) && m_resources->AttachGraphics(*m_renderer, error)) return true;
+    RetireRenderer();
+    m_window.DestroyGraphicsSurface();
+    return false;
+#else
+    (void)title; (void)width; (void)height; (void)visible; (void)useVulkan;
+    error = "Graphics rebuild requires standalone Linux";
+    return false;
+#endif
+}
+
 void EngineHost::OpenContentView(const AssetDatabase& assets){
-    m_audio.StopAll();m_renderer.ResetProjectText();if(m_resources)m_resources->ReleaseAll();m_assetDatabase=assets;
+    m_audio.StopAll();m_renderer->ResetProjectText();if(m_resources)m_resources->ReleaseAll();m_assetDatabase=assets;
 }

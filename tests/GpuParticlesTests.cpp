@@ -21,9 +21,9 @@ unsigned checks=0,failures=0;
 class GraphicsTestHost {
  SDL_Window* window=nullptr;SDL_GLContext context=nullptr;GraphicsCapabilities caps;bool vulkan=false;
 public:
- bool Init(const char* title,int width,int height,bool,std::string& error){
+ bool Init(const char* title,int width,int height,bool,std::string& error,bool useVulkan=JudasVulkan::Requested()){
   if(SDL_Init(SDL_INIT_VIDEO)!=0){error=SDL_GetError();return false;}
-  if(JudasVulkan::Requested()){
+  if(useVulkan){
    // JUDAS_GRAPHICS=vulkan: the same production particle owners on the experimental Vulkan device.
    window=SDL_CreateWindow(title,SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,width,height,JudasVulkan::WindowFlag()|SDL_WINDOW_HIDDEN);
    if(!window){error=SDL_GetError();Shutdown();return false;}
@@ -231,6 +231,84 @@ void BatchAdmission(GraphicsTestHost& host){
  pool.Shutdown(error);
 }
 
-void Native(){GraphicsTestHost host;std::string error;const bool ready=host.Init("Particles V2 GPU proof",64,64,false,error);Check(ready,"native SDL/GLAD context qualifies the actual production GPU owners");if(!ready){std::fprintf(stderr,"%s\n",error.c_str());return;}if(!host.GraphicsCaps().modernTier){std::puts("SKIP native resident GPU proof: selected context is portable");return;}SmallPools(host);Randomized100k(host);{Target target;Check(target.Init(),"independent known-answer colour target initializes");ViewOrdering(host,target);}Collision(host);StaticFeatureControls(host);ExpiryAndOverflow(host);BatchAdmission(host);Check(glGetError()==GL_NO_ERROR,"resident simulation, collision and rendering finish without GL errors");host.Shutdown();}
+void DeviceRoundtrip(GraphicsTestHost& host) {
+    const bool sourceVulkan = JudasVulkan::Requested();
+    ParticleEmitterSettings settings;
+    settings.backend = ParticleBackend::Gpu;
+    settings.maxParticles = 16;
+    settings.lifetime = 2;
+    settings.seed = 2026;
+    GpuParticles original;
+    GpuParticles::DeviceState state;
+    GpuParticleStepInputs step;
+    std::string error;
+    step.spawnCount = 3;
+    step.tick = 1;
+    if (!original.Initialize(host.GraphicsCaps(), settings, {}, error) ||
+        !original.Step(settings, step, nullptr, error) ||
+        !original.CaptureDeviceState(state, error)) {
+        Check(false, error.c_str());
+        return;
+    }
+    const auto prior = Live(original, error);
+    step.spawnCount = 1;
+    step.dt = 1.f/60;
+    step.tick = 2;
+    Check(original.Step(settings, step, nullptr, error), "uninterrupted reference continues to the next birth");
+    const auto reference = Live(original, error);
+    if (!original.Shutdown(error)) { Check(false, error.c_str()); return; }
+    host.Shutdown();
+    // A Vulkan-qualified test also proves transfer into OpenGL. The ordinary
+    // OpenGL suite can run on builds that lack a Vulkan driver or backend.
+    GraphicsTestHost replacement;
+    if (!replacement.Init("GPU particle restore",64,64,false,error,false)) {
+        Check(false,error.c_str());
+        return;
+    }
+    GpuParticles restored;
+    if (!restored.RestoreDeviceState(replacement.GraphicsCaps(), state, {}, error)) {
+        Check(false,error.c_str());
+        return;
+    }
+    const auto same = Live(restored, error);
+    Check(same.size() == 3 && prior.size() == same.size() &&
+          std::memcmp(prior.data(),same.data(),same.size()*sizeof(same[0])) == 0 &&
+          restored.PrepareView(glm::mat4(1),glm::mat4(1),true,error),
+          "replacement device restores exact resident slots and prepares a view before stepping");
+    Check(restored.Step(settings, step, nullptr, error), "replacement device resumes fixed-step GPU particles");
+    const auto actual = Live(restored,error);
+    bool equal = reference.size() == 4 && actual.size() == reference.size();
+    for (size_t index=0;equal && index<actual.size();++index)
+        equal = actual[index].identity == reference[index].identity &&
+                Near(Position(actual[index]),Position(reference[index])) &&
+                Near(Velocity(actual[index]),Velocity(reference[index]));
+    Check(equal && restored.Diagnostics().emitted==4 && restored.Diagnostics().sampleTick==2,
+          sourceVulkan ? "Vulkan-to-OpenGL restore retains RNG and subsequent births" :
+                         "same-backend restore retains RNG and subsequent births");
+    GpuParticles::DeviceState returnState;
+    if (sourceVulkan && !restored.CaptureDeviceState(returnState,error)) {
+        Check(false,error.c_str());
+        return;
+    }
+    Check(restored.Shutdown(error), "restored GPU allocation retires on its replacement device");
+    if (!sourceVulkan) return;
+    replacement.Shutdown();
+    GraphicsTestHost returned;
+    if (!returned.Init("GPU particle return",64,64,false,error,true)) {
+        Check(false,error.c_str());
+        return;
+    }
+    GpuParticles returnedPool;
+    if (!returnedPool.RestoreDeviceState(returned.GraphicsCaps(),returnState,{},error)) {
+        Check(false,error.c_str());
+        return;
+    }
+    const auto returnedSlots = Live(returnedPool,error);
+    Check(returnedSlots.size() == 4 && actual.size()==returnedSlots.size() &&
+          std::memcmp(returnedSlots.data(),actual.data(),actual.size()*sizeof(actual[0])) == 0,
+          "OpenGL-to-Vulkan return restores the post-step state and identities exactly");
+    Check(returnedPool.Shutdown(error), "return-device particle allocation retires");
+}
+void Native(){GraphicsTestHost host;std::string error;const bool ready=host.Init("Particles V2 GPU proof",64,64,false,error);Check(ready,"native SDL/GLAD context qualifies the actual production GPU owners");if(!ready){std::fprintf(stderr,"%s\n",error.c_str());return;}if(!host.GraphicsCaps().modernTier){std::puts("SKIP native resident GPU proof: selected context is portable");return;}SmallPools(host);Randomized100k(host);{Target target;Check(target.Init(),"independent known-answer colour target initializes");ViewOrdering(host,target);}Collision(host);StaticFeatureControls(host);ExpiryAndOverflow(host);BatchAdmission(host);Check(glGetError()==GL_NO_ERROR,"resident simulation, collision and rendering finish without GL errors");DeviceRoundtrip(host);host.Shutdown();}
 }
 int main(int argc,char** argv){if(argc>2||(argc==2&&std::string(argv[1])!="--native")){std::fprintf(stderr,"usage: GpuParticlesTests [--native]\n");return 2;}Pure();if(argc==2)Native();std::printf("GPU particles: %u checks, %u failures\n",checks,failures);return failures?1:0;}

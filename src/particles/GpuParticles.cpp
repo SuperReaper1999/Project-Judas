@@ -334,6 +334,86 @@ bool GpuParticles::ReadStateForDiagnostics(std::vector<GpuParticleState>& output
  if(!s.device.ReadForDiagnostics(s.states,0,state.data(),state.size()*sizeof(state[0]),error))return false;
  output=std::move(state);return true;
 }
+bool GpuParticles::CaptureDeviceState(DeviceState& output, std::string& error) {
+    auto& s = *storage;
+    DeviceState next;
+    if (!ReadStateForDiagnostics(next.particles, error)) return false;
+    if (!s.pending.empty()) {
+        error = "GPU particle event readbacks are still pending";
+        return false;
+    }
+    if (!s.device.ReadForDiagnostics(s.counters, 0, next.counters.data(), sizeof(next.counters), error))
+        return false;
+    const auto free = next.counters[0];
+    if (free > next.particles.size() || next.counters[1] != next.particles.size() - free) {
+        error = "GPU particle allocation counters do not match capacity";
+        return false;
+    }
+    next.freeSlots.resize(free);
+    if (free && !s.device.ReadForDiagnostics(s.freeSlots, 0, next.freeSlots.data(),
+                                             free * sizeof(next.freeSlots[0]), error)) return false;
+    std::vector<bool> seen(next.particles.size());
+    for (const auto slot : next.freeSlots) {
+        if (slot >= seen.size() || seen[slot] || next.particles[slot].identity[0]) {
+            error = "GPU particle free list does not match live slots";
+            return false;
+        }
+        seen[slot] = true;
+    }
+    for (size_t slot = 0; slot < seen.size(); ++slot) {
+        if (seen[slot] == bool(next.particles[slot].identity[0])) {
+            error = "GPU particle occupancy does not match the free list";
+            return false;
+        }
+    }
+    next.settings = s.settings;
+    next.stats = s.stats;
+    next.diagnostics = s.diagnostics;
+    next.impacts = s.impacts;
+    next.nextBirth = s.nextBirth;
+    next.impactCapacity = s.impactCapacity;
+    next.gpuDropped = s.gpuDropped;
+    next.invalidImpactDropped = s.invalidImpactDropped;
+    output = std::move(next);
+    return true;
+}
+
+bool GpuParticles::RestoreDeviceState(const GraphicsCapabilities& caps, const DeviceState& state,
+                                      ComputeBudget budget, std::string& error) {
+    if (state.particles.empty()) {
+        error = "GPU particle checkpoint is empty";
+        return false;
+    }
+    // The pool's impact allocation is fixed when first created, even if the
+    // emitter later asks for a different per-step limit.
+    auto allocationSettings = state.settings;
+    allocationSettings.maxImpactCells = state.impactCapacity;
+    if (!Initialize(caps, allocationSettings, budget, error)) return false;
+    auto& s = *storage;
+    if (!s.device.Barrier(ComputeBarrier::BufferUpdate, error) ||
+        !s.device.UpdateBuffer(s.states, 0, state.particles.data(),
+                               state.particles.size() * sizeof(state.particles[0]), error) ||
+        !s.device.UpdateBuffer(s.counters, 0, state.counters.data(), sizeof(state.counters), error) ||
+        (!state.freeSlots.empty() &&
+         !s.device.UpdateBuffer(s.freeSlots, 0, state.freeSlots.data(),
+                                state.freeSlots.size() * sizeof(state.freeSlots[0]), error))) {
+        std::string cleanup;
+        if (!Shutdown(cleanup)) error += "; cleanup: " + cleanup;
+        return false;
+    }
+    s.settings = state.settings;
+    s.stats = state.stats;
+    s.stats.gpuBytes = s.device.AllocatedBytes();
+    s.diagnostics = state.diagnostics;
+    s.impacts = state.impacts;
+    s.nextBirth = state.nextBirth;
+    s.gpuDropped = state.gpuDropped;
+    s.invalidImpactDropped = state.invalidImpactDropped;
+    // Geometry and view scratch belong to the device. The next Step and
+    // PrepareView rebuild them through the normal generation paths.
+    return true;
+}
+
 bool GpuParticles::Shutdown(std::string& error){
  auto& s=*storage;if(!s.device.Shutdown(error))return false;
  const auto requested=s.stats.requested;

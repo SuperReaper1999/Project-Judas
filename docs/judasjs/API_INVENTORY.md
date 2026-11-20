@@ -508,6 +508,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `settings.revertDisplay` | `settingsRevertDisplay` | [declaration](../judas.d.ts) | [reference](settings.md) |
 | `settings.save` | `settingsSave` | [declaration](../judas.d.ts) | [reference](settings.md) |
 | `settings.setGame` | `settingsSetGame` | [declaration](../judas.d.ts) | [reference](settings.md) |
+| `settings.switchBackend` | `settingsSwitchBackend` | [declaration](../judas.d.ts) | [reference](settings.md) |
 | `signals` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](signals.md) |
 | `signals.emit` | `signalEmit` | [declaration](../judas.d.ts) | [reference](signals.md) |
 | `signals.send` | `signalSend` | [declaration](../judas.d.ts) | [reference](signals.md) |
