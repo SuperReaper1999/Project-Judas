@@ -3675,6 +3675,8 @@ GLAD_API_CALL PFNGLWAITSYNCPROC glad_glWaitSync;
 
 
 
+/* Judas desktop hosts clear dispatch when retiring a graphics context. */
+GLAD_API_CALL void gladResetGL(void);
 GLAD_API_CALL int gladLoadGLUserPtr( GLADuserptrloadfunc load, void *userptr);
 GLAD_API_CALL int gladLoadGL( GLADloadfunc load);
 

@@ -163,6 +163,9 @@ public:
     std::uint64_t NextCameraFrame() const { return m_cameraFrame++; }
     void BindCameraRenderer(Renderer& renderer) const { m_cameraRenderer = &renderer; }
     TextureHandle CameraTexture(SceneObjectId id) const;
+    // Retire transient targets with their owning context current. Camera and
+    // local-player state remain intact for the next presentation.
+    void ReleasePresentationTargets();
 
     // One authored renderable (mesh, box or sphere) that has no dynamic
     // body — drawn at its authored pose every frame.

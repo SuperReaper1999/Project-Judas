@@ -33,3 +33,9 @@ It retains GLAD's MIT notice, the Khronos OpenGL specification Apache-2.0
 notice, and the Khronos header notice. The generated GLAD files carry their
 own SPDX notice (`(WTFPL OR CC0-1.0) AND Apache-2.0`); `khrplatform.h` also
 retains its original Khronos copyright/license header.
+
+Judas keeps the dispatch definitions in `src/dispatch.inc` so the same list
+initializes and clears every function pointer and capability flag. The desktop
+host clears dispatch on context retirement. Loading a new context also starts
+from a cleared table. Keep the list synchronized with the generated definitions
+when updating GLAD.

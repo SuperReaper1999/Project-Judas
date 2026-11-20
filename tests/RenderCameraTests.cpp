@@ -262,6 +262,17 @@ int main(int argc,char**argv){
  Frame(renderer,world);
  Check(camera.updates==updates+1&&!camera.error.empty()&&camera.targetSize==glm::ivec2(80,48)&&
        world.CameraTexture(3).id==afterResize.id,"failed allocation preserves and renders the last good target");
+ camera.settings.width=80;
+ const auto updatesBeforeRelease=camera.updates;
+ world.ReleasePresentationTargets();
+ world.ReleasePresentationTargets();
+ Check(renderer.RenderTargetDiagnostics().liveTargets==0&&!world.CameraTexture(3).IsValid()&&
+       !camera.allocationAttempted&&camera.settings.width==80&&camera.updates==updatesBeforeRelease,
+       "presentation retirement is idempotent and retains authored camera state and cadence");
+ Frame(renderer,world);
+ Check(!renderer.ReadTextureForDiagnostics(afterResize,resized)&&
+       renderer.ReadTextureForDiagnostics(world.CameraTexture(3),resized)&&resized.width==80&&
+       camera.updates==updatesBeforeRelease+1,"existing world recreates detached camera targets");
  world.Destroy();
  Check(renderer.RenderTargetDiagnostics().liveTargets==0,"scripted targets are cleaned up on world destruction");
  }

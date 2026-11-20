@@ -35,6 +35,7 @@ public:
  std::map<std::uint64_t,Player>& All(){return players;}
  bool HasViews()const;
  void BindRenderer(Renderer& r){renderer=&r;}
+ void ReleasePresentationTargets();
  static bool ValidRect(glm::vec4 rect);
  static glm::ivec2 ViewSize(glm::vec4 rect,int width,int height);
 private:

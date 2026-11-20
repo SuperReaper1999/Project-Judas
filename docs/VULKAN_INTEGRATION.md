@@ -42,6 +42,34 @@ OpenGL is the default runtime backend. A build configured with
 A Vulkan validation request requires the Khronos layer and callback to
 initialize successfully.
 
+## Graphics lifetime and backend changes
+
+The game-facing backend choice still applies at process restart. The
+`graphics-capabilities` gate can retire one graphics host and create another
+in the same process. When run with Vulkan selected in a dual-backend build,
+it alternates OpenGL and Vulkan and checks that each retired host clears
+its dispatch. That fixture has no running world.
+
+| Owner | Lifetime and reconstruction |
+| --- | --- |
+| SDL window and graphics context | `Window` creates an OpenGL context or a Vulkan surface. Its current full shutdown also resets input and controller ownership and quits SDL. Live switching needs a graphics-surface boundary that keeps session input and audio alive. |
+| Dispatch and device | Desktop GLAD is process-global. Context retirement clears its function pointers and capability flags, and every load starts with an empty table. The Vulkan bridge owns command buffers, fences, deferred resource destruction and the swapchain. Its shutdown waits for device work before destruction. |
+| Renderer | Shaders, shadow charts, material bindings, transient arenas, font atlases and framebuffer storage belong to the device. A new renderer must recreate these resources before publishing a frame. Its shutdown currently runs before window teardown. |
+| Asset manager | Asynchronous decoders produce CPU results and the owning thread installs GPU handles. `ReleaseAll()` also destroys audio clips and discards CPU asset metadata. A graphics-only transition needs selective detachment, draining upload work and preserving audio, metadata and demand. |
+| World and presentation | Cameras and local players can retire their render targets while retaining camera and player state. Terrain and deformables hold derived meshes. UI documents and scripts retain game state, but presentation references must be rebound and texture/font readiness rechecked. Weather and water render through the shared renderer. |
+| GPU particle simulation | Live particle arrays reside on the GPU. The existing GPU-to-CPU fallback reads particle state but pins the emitter to the CPU. It has no inverse operation for restoring the resident simulation on a replacement device. |
+| Editor | ImGui and detached viewport surfaces have additional graphics owners. They are outside the initial standalone transition. |
+
+The next bounded stage is a same-backend graphics rebind on a running test
+world. Separate graphics-only window and asset retirement from session
+shutdown, then integrate camera target detachment and add detachment for terrain pages, deformable meshes and UI
+presentation before destroying the old context. Check that native handle
+generations, entity IDs, script instances, physics ticks and audio playback
+remain valid across the rebind. Add a round-trip transfer for resident GPU
+particle state before permitting a transition in worlds that use it. A
+cross-backend request, loading presentation and bounded recovery attempt
+belong at the standalone frame boundary after those checks pass.
+
 ## Detached editor windows
 
 On Linux X11, including an SDL X11 session under XWayland, the Vulkan editor

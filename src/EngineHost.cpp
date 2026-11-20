@@ -81,6 +81,16 @@ bool EngineHost::Init(const char* title, int width, int height, bool visible, st
                       ResourceTrace trace, bool allowVulkanPlatformWindows, std::optional<bool> useVulkan) {
     JUDAS_PROFILE_SCOPE("Host startup");
     m_resourceTrace = std::move(trace);
+    if (!InitGraphics(title, width, height, visible, outError, allowVulkanPlatformWindows, useVulkan))
+        return false;
+    m_jobs = std::make_unique<JobSystem>();  // worker count derived from the hardware
+    m_audio.SetJobSystem(m_jobs.get());
+    m_resources = std::make_unique<ResourceManager>(&m_renderer, &m_assetDatabase, m_jobs.get(), &m_audio);
+    m_resources->SetTrace(m_resourceTrace);
+    return true;
+}
+bool EngineHost::InitGraphics(const char* title, int width, int height, bool visible, std::string& outError,
+                              bool allowVulkanPlatformWindows, std::optional<bool> useVulkan) {
     m_renderer.SetResourceTrace(m_resourceTrace);
     if (!m_window.Init(title, width, height, visible, allowVulkanPlatformWindows, useVulkan)) {
         outError = m_window.LastError().empty() ? "Window initialization failed." : m_window.LastError();
@@ -89,6 +99,7 @@ bool EngineHost::Init(const char* title, int width, int height, bool visible, st
 #if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     if (!glGetString(GL_VERSION)) { outError = "OpenGL ES 3 context unavailable"; return false; }
 #else
+    m_desktopDispatchLoaded = true;
     if (gladLoadGL(m_window.UsesVulkan() ? &LoadVulkanProcAddress : &LoadOpenGLProcAddress) == 0 || !GLAD_GL_VERSION_3_3) {
         outError = "Failed to load the required OpenGL 3.3 Core entry points.";
         return false;
@@ -108,10 +119,6 @@ bool EngineHost::Init(const char* title, int width, int height, bool visible, st
         outError += " (engine font " + fontPath + "; set JUDAS_ENGINE_ROOT to the repository root)";
         return false;
     }
-    m_jobs = std::make_unique<JobSystem>();  // worker count derived from the hardware
-    m_audio.SetJobSystem(m_jobs.get());
-    m_resources = std::make_unique<ResourceManager>(&m_renderer, &m_assetDatabase, m_jobs.get(), &m_audio);
-    m_resources->SetTrace(m_resourceTrace);
     return true;
 }
 
@@ -232,6 +239,10 @@ void EngineHost::Shutdown() {
         }
     }
     m_jobs.reset();
+    ShutdownGraphics();
+}
+
+void EngineHost::ShutdownGraphics() {
     if (m_rendererInitialized) {
         m_renderer.Shutdown();
         m_rendererInitialized = false;
@@ -239,6 +250,10 @@ void EngineHost::Shutdown() {
     StopGpuDiagnostics();
     const bool hadContext = GraphicsContextCurrent();
     m_window.Shutdown();
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    if (m_desktopDispatchLoaded) gladResetGL();
+    m_desktopDispatchLoaded = false;
+#endif
     m_graphicsCapabilities = {};
     if (hadContext && m_resourceTrace) {
         ResourceTraceEvent event{ResourceTracePoint::ContextDestroyed, {}, {}};

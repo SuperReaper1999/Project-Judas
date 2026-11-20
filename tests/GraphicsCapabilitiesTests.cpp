@@ -1,10 +1,12 @@
 #include "EngineHost.h"
 #include "Window.h"
+#include "vulkan/VulkanBackend.h"
 #include "render/GraphicsCapabilities.h"
 
 #include <array>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <optional>
 #include <string>
 
@@ -15,6 +17,31 @@ void Check(bool value, const char *message) {
     failures += !value;
     std::printf("%s %s\n", value ? "PASS" : "FAIL", message);
 }
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+const GLubyte* GLAD_API_PTR LegacyStrings(GLenum name) {
+    if (name == GL_VERSION) return reinterpret_cast<const GLubyte*>("2.1");
+    if (name == GL_EXTENSIONS) return reinterpret_cast<const GLubyte*>("");
+    return nullptr;
+}
+void GLAD_API_PTR PreviousBufferStorage(GLenum, GLsizeiptr, const void*, GLbitfield) {}
+GLADapiproc LegacyLoader(const char* name) {
+    if (std::strcmp(name, "glGetString") == 0) return reinterpret_cast<GLADapiproc>(LegacyStrings);
+    return nullptr;
+}
+GLADapiproc UnavailableLoader(const char*) { return nullptr; }
+
+void DispatchReplacementControls() {
+    glad_glBufferStorage = PreviousBufferStorage;
+    GLAD_GL_VERSION_4_6 = 1;
+    GLAD_GL_ARB_buffer_storage = 1;
+    Check(gladLoadGL(LegacyLoader) == GLAD_MAKE_VERSION(2, 1) &&
+              !glad_glBufferStorage && !GLAD_GL_VERSION_4_6 && !GLAD_GL_ARB_buffer_storage,
+          "a lower-tier context cannot inherit entry points or capabilities");
+    Check(!gladLoadGL(UnavailableLoader) && !GLAD_GL_VERSION_2_1 && !glad_glGetString,
+          "unavailable context clears the prior dispatch and version");
+}
+#endif
+
 GraphicsCapabilityProbe Desktop(int major, int minor) {
     GraphicsCapabilityProbe probe;
     probe.contextCurrent = true;
@@ -232,6 +259,26 @@ void NativeControls() {
                   !host.GraphicsCaps().contextCurrent && !QueryGraphicsCapabilities().contextCurrent,
               "context shutdown clears native ownership and the published capability snapshot");
     }
+#if defined(__linux__)
+    if (JudasVulkan::Compiled() && JudasVulkan::Requested()) {
+        ProfileEnvironment environment("auto");
+        for (const bool useVulkan : {false, true, false, true, false}) {
+            EngineHost host;
+            std::string error;
+            if (!host.Init("Graphics dispatch replacement", 320, 240, false, error, {}, false, useVulkan)) {
+                std::fprintf(stderr, "%s\n", error.c_str());
+                Check(false, "backend initializes after the previous context retires");
+                break;
+            }
+            Check(host.GetWindow().UsesVulkan() == useVulkan && glad_glGetString &&
+                      glGetString(GL_RENDERER) && glGetError() == GL_NO_ERROR,
+                  "new context owns usable dispatch");
+            host.Shutdown();
+            Check(!glad_glGetString && !GLAD_GL_VERSION_3_3,
+                  "retired context has no published dispatch");
+        }
+    }
+#endif
 #else
     Check(true, "desktop profile overrides do not replace the GLES3/WebGL2 platform context path");
 #endif
@@ -244,6 +291,9 @@ int main(int argc, char **argv) {
         return 2;
     }
     PureControls();
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    DispatchReplacementControls();
+#endif
     if (argc == 2)
         NativeControls();
     std::printf("Graphics capabilities: %u checks, %u failures\n", checks, failures);

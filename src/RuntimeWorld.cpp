@@ -1331,6 +1331,19 @@ RuntimeWorld::LifecycleCounts RuntimeWorld::CountLifecycle() const {
 
 
 
+void RuntimeWorld::ReleasePresentationTargets() {
+    if (m_players) m_players->ReleasePresentationTargets();
+    if (!m_cameraRenderer) return;
+    for (auto& camera : m_renderCameras) {
+        m_cameraRenderer->DestroyRenderTarget(camera.target);
+        camera.target = {};
+        camera.targetSize = {};
+        camera.error.clear();
+        camera.allocationAttempted = false;
+    }
+    m_cameraRenderer = nullptr;
+}
+
 void RuntimeWorld::Destroy() {
     m_regionPending.clear();m_regionKinematicCommands.clear();m_regionAssets.clear();m_composed=false;
  JUDAS_PROFILE_SCOPE("World destroy"); PerformanceProfiler::Get().Boundary("World destroy");
@@ -1348,8 +1361,8 @@ void RuntimeWorld::Destroy() {
     m_particleEmitters.clear();
     m_audioEmitters.clear();m_audioZones.clear();m_audioIdentities.clear();m_audioListener.reset();m_audioSystem=nullptr;
     if (!m_built) return;
-    if (m_cameraRenderer) for (const auto& camera : m_renderCameras) m_cameraRenderer->DestroyRenderTarget(camera.target);
-    m_renderCameras.clear(); m_cameraRenderer = nullptr; m_cameraFrame = 0;
+    ReleasePresentationTargets();
+    m_renderCameras.clear(); m_cameraFrame = 0;
     // Scripts and subsystem consumers have finished above. No physical actor
     // survives this whole-world retirement: Shutdown below owns every remaining
     // body/joint. Individual DestroyBody calls would repeatedly wake the same

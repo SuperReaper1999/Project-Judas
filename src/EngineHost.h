@@ -61,10 +61,14 @@ public:
     JobSystem& Jobs() { return *m_jobs; }
 
 private:
+    bool InitGraphics(const char*, int width, int height, bool visible, std::string&,
+                      bool allowVulkanPlatformWindows, std::optional<bool> useVulkan);
+    void ShutdownGraphics();
     void StartGpuDiagnostics();
     void PollGpuReset();
     void StopGpuDiagnostics();
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    bool m_desktopDispatchLoaded = false;
     using GpuCallbackInstaller = void (GLAD_API_PTR *)(GLDEBUGPROC, const void*);
     using GpuResetQuery = GLenum (GLAD_API_PTR *)();
     GpuCallbackInstaller m_gpuCallbackInstaller = nullptr;

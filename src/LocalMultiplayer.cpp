@@ -9,7 +9,17 @@ bool In(glm::vec4 r,float x,float y){return x>=r.x&&y>=r.y&&x<r.x+r.z&&y<r.y+r.w
 bool Overlap(glm::vec4 a,glm::vec4 b){return std::min(a.x+a.z,b.x+b.z)>std::max(a.x,b.x)&&std::min(a.y+a.w,b.y+b.w)>std::max(a.y,b.y);}
 bool Accept(const LocalPlayers::Assignment& a,const std::string& control){return a.controls.empty()||a.controls.count(control);}
 }
-LocalPlayers::~LocalPlayers(){if(renderer)for(auto& p:players)renderer->DestroyRenderTarget(p.second.target);}
+LocalPlayers::~LocalPlayers() { ReleasePresentationTargets(); }
+void LocalPlayers::ReleasePresentationTargets() {
+    if (!renderer) return;
+    for (auto& [id, player] : players) {
+        renderer->DestroyRenderTarget(player.target);
+        player.target = {};
+        player.attemptedSize = {};
+        player.renderError.clear();
+    }
+    renderer = nullptr;
+}
 LocalPlayers::Player* LocalPlayers::Create(const std::string& name,const InputMap& map,std::string& error){if(players.size()>=8||name.size()>128){error="At most eight players and 128-byte names";return nullptr;}Player p;p.id=nextPlayer++;p.name=name;if(!p.input.SetMap(map,error))return nullptr;auto id=p.id;return &players.emplace(id,std::move(p)).first->second;}
 LocalPlayers::Player* LocalPlayers::Find(uint64_t id){auto it=players.find(id);return it==players.end()?nullptr:&it->second;}
 const LocalPlayers::Player* LocalPlayers::Find(uint64_t id)const{auto it=players.find(id);return it==players.end()?nullptr:&it->second;}
