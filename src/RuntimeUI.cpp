@@ -18,8 +18,34 @@ using Clock=std::chrono::steady_clock;
 double Us(Clock::time_point t){return std::chrono::duration<double,std::micro>(Clock::now()-t).count();}
 UIRect Intersect(UIRect a,UIRect b){auto p=glm::max(a.position,b.position);return {p,glm::max(glm::vec2(0),glm::min(a.position+a.size,b.position+b.size)-p)};}
 bool Control(const UIElement& e){auto k=e.kind;return !e.dragType.empty()||!e.dropType.empty()||k==UIKind::Button||k==UIKind::Slider||k==UIKind::Toggle||k==UIKind::TextInput||k==UIKind::List||k==UIKind::Scroll;}
-UIElement* ById(UIDocument& d,const std::string& id){for(auto& e:d.elements)if(e.id==id)return &e;return nullptr;}
+template<class Document>
+auto* ById(Document& d,const std::string& id) {
+    const auto found=std::find_if(d.elements.begin(),d.elements.end(),[&](const auto& e){return e.id==id;});
+    return found==d.elements.end()?nullptr:&*found;
+}
 bool Finite(float x){return std::isfinite(x);}
+constexpr std::pair<const char*,glm::vec2 UIElement::*> LayoutFields[] = {
+    {"offset",&UIElement::offset},{"size",&UIElement::size},
+    {"anchorMin",&UIElement::anchorMin},{"anchorMax",&UIElement::anchorMax},
+    {"relativeSize",&UIElement::relativeSize},{"align",&UIElement::align}
+};
+bool FiniteLayout(const UIElement& e) {
+    for(auto v:{e.anchorMin,e.anchorMax,e.offset,e.size,e.relativeSize,e.align,e.textAlign})
+        if(!Finite(v.x)||!Finite(v.y))return false;
+    return true;
+}
+bool LayoutInRange(const UIElement& e) {
+    return glm::all(glm::greaterThanEqual(e.anchorMin,glm::vec2(0)))&&
+           glm::all(glm::lessThanEqual(e.anchorMax,glm::vec2(1)))&&
+           glm::all(glm::greaterThanEqual(e.anchorMax,e.anchorMin))&&
+           glm::all(glm::greaterThanEqual(e.size,glm::vec2(0)))&&
+           glm::all(glm::greaterThanEqual(e.relativeSize,glm::vec2(0)))&&
+           glm::all(glm::greaterThanEqual(e.align,glm::vec2(0)))&&
+           glm::all(glm::lessThanEqual(e.align,glm::vec2(1)));
+}
+bool SameLayoutValue(float a,float b) {
+    return a==b && (a!=0 || std::signbit(a)==std::signbit(b));
+}
 }
 bool UIRect::Contains(glm::vec2 p)const{return size.x>0&&size.y>0&&p.x>=position.x&&p.y>=position.y&&p.x<position.x+size.x&&p.y<position.y+size.y;}
 bool UIDocument::Validate(std::string& error)const{
@@ -37,11 +63,11 @@ bool UIDocument::Validate(std::string& error)const{
             if(type.size()>64||type.find_first_of("\r\n\0",0,3)!=std::string::npos||!ValidTextUTF8(type,error))return fail("invalid UI drag/drop category");
         if(!ValidTextUTF8(e.id,error)||!ValidTextUTF8(e.parent,error)||!ValidTextUTF8(e.text,error)||!ValidTextUTF8(e.textKey,error)||e.textKey.find_first_of("\r\n\0",0,3)!=std::string::npos||e.textKey.size()>128||int(e.direction)<0||int(e.direction)>2||e.textLogicalAlign<-1||e.textLogicalAlign>4)return fail("invalid UTF-8/text direction/alignment");
         if(int(e.kind)<0||int(e.kind)>9||int(e.flow)<0||int(e.flow)>2||e.text.size()>16384)return fail("invalid UI kind, flow or text size");
-        for(auto v:{e.anchorMin,e.anchorMax,e.offset,e.size,e.relativeSize,e.align,e.textAlign})if(!Finite(v.x)||!Finite(v.y))return fail("nonfinite UI layout");
+        if(!FiniteLayout(e))return fail("nonfinite UI layout");
         if(!Finite(e.rowHeight)||e.rowHeight<12||e.rowHeight>512||e.maxBytes<1||e.maxBytes>16384||!ValidTextUTF8(e.placeholder,error)||!ValidTextUTF8(e.accessibleLabel,error)||!ValidTextUTF8(e.description,error)||e.placeholder.size()>4096||e.accessibleLabel.size()>512||e.description.size()>2048)return fail("invalid UI control settings");
         if(e.kind==UIKind::TextInput&&(e.text.size()>e.maxBytes||e.text.find_first_of("\r\n\0",0,3)!=std::string::npos||!e.textKey.empty()))return fail("text inputs require bounded single-line literal text");
         for(auto v:{e.margin,e.padding,e.background,e.color,e.focusColor})for(int c=0;c<4;++c)if(!Finite(v[c]))return fail("nonfinite UI colour/insets");
-        if(glm::any(glm::lessThan(e.anchorMin,glm::vec2(0)))||glm::any(glm::greaterThan(e.anchorMax,glm::vec2(1)))||glm::any(glm::lessThan(e.anchorMax,e.anchorMin))||glm::any(glm::lessThan(e.size,glm::vec2(0)))||glm::any(glm::lessThan(e.relativeSize,glm::vec2(0)))||glm::any(glm::lessThan(e.align,glm::vec2(0)))||glm::any(glm::greaterThan(e.align,glm::vec2(1))))return fail("UI anchors, size or alignment outside range");
+        if(!LayoutInRange(e))return fail("UI anchors, size or alignment outside range");
         if(!Finite(e.fontSize)||e.fontSize<=0||e.fontSize>512||!Finite(e.spacing)||e.spacing<0||!Finite(e.value)||!Finite(e.minimum)||!Finite(e.maximum)||e.maximum<=e.minimum||e.value<e.minimum||e.value>e.maximum)return fail("invalid UI numeric settings");
         if((!e.texture.empty()&&!IsValidAssetId(e.texture))||(!e.font.empty()&&!IsValidAssetId(e.font)))return fail("invalid UI asset ID");
     }error.clear();return true;
@@ -88,13 +114,14 @@ std::uint32_t RuntimeUI::Find(const std::string& n)const{for(const auto& p:m_doc
 UIDocument* RuntimeUI::Document(uint32_t h){InvalidateLayout();auto it=m_documents.find(h);return it==m_documents.end()?nullptr:&it->second.doc;}
 const UIDocument* RuntimeUI::Document(uint32_t h)const{auto it=m_documents.find(h);return it==m_documents.end()?nullptr:&it->second.doc;}
 UIElement* RuntimeUI::Element(uint32_t h,const std::string& id){auto* d=Document(h);return d?ById(*d,id):nullptr;}
+const UIElement* RuntimeUI::Element(uint32_t h,const std::string& id)const{const auto* d=Document(h);return d?ById(*d,id):nullptr;}
 const UILayout* RuntimeUI::LayoutOf(uint32_t h,const std::string& id)const{auto it=m_documents.find(h);if(it==m_documents.end())return nullptr;auto p=it->second.layout.find(id);return p==it->second.layout.end()?nullptr:&p->second;}
 bool RuntimeUI::Paused(std::uint64_t player)const{for(auto& p:m_documents)if(p.second.player==player&&p.second.doc.visible&&p.second.doc.enabled&&p.second.doc.modal)return true;return false;}
 bool RuntimeUI::OwnsInput()const{return Paused();}
 void RuntimeUI::Layout(int w,int h){
     auto localeRevision=m_localization?m_localization->Revision():0;if(w==m_layoutWidth&&h==m_layoutHeight&&m_layoutRevision==m_computedRevision&&localeRevision==m_localeRevision)return;
     m_layoutWidth=w;m_layoutHeight=h;m_computedRevision=m_layoutRevision;m_localeRevision=localeRevision;
-    JUDAS_PROFILE_SCOPE("Runtime UI layout");auto start=Clock::now();m_stats.elements=0;
+    JUDAS_PROFILE_SCOPE("Runtime UI layout");auto start=Clock::now();m_stats.elements=0;++m_stats.layoutPasses;
     for(auto& p:m_documents){auto& in=p.second;in.layout.clear();for(auto& state:in.widgets)state.second.extent={0,0};auto& d=in.doc;glm::vec2 available=glm::vec2(w,h)*glm::vec2(in.viewport.z,in.viewport.w),offset=glm::vec2(w,h)*glm::vec2(in.viewport.x,in.viewport.y);float base=std::min(available.x/d.reference.x,available.y/d.reference.y),scale=base*in.scale;glm::vec2 origin=offset+(available-d.reference*base)*.5f;
         std::map<std::string,float> cursor;std::map<std::string,UIElement*> authored;for(auto& e:d.elements)authored[e.id]=&e;for(auto& e:d.elements){UILayout l;if(e.parent.empty()){l.rect={origin,d.reference*base};l.clip={offset,available};l.visible=d.visible&&e.visible;l.enabled=d.enabled&&e.enabled;}
             else {const auto& parent=in.layout.at(e.parent);auto* pe=authored.at(e.parent);UIRect content=parent.rect;content.position+=glm::vec2(pe->padding.x,pe->padding.y)*scale;content.size=glm::max(glm::vec2(0),content.size-glm::vec2(pe->padding.x+pe->padding.z,pe->padding.y+pe->padding.w)*scale);
@@ -286,7 +313,57 @@ void RuntimeUI::Draw(Renderer& r,int w,int h,const RuntimeWorld* world){
 
 void RuntimeUI::RemoveSlotOwner(std::uint64_t owner,std::uint64_t slot){std::vector<uint32_t> remove;for(auto& p:m_documents)if(p.second.owner==owner&&p.second.slot==slot)remove.push_back(p.first);for(auto h:remove)Unload(h);}
 
-bool RuntimeUI::SetElementLayout(uint32_t h,const std::string& id,const std::map<std::string,glm::vec2>& patch,std::string& error){auto* e=Element(h,id);if(!e){error="stale UI document/element";return false;}auto candidate=*e;for(auto& [key,v]:patch){if(key=="offset")candidate.offset=v;else if(key=="size")candidate.size=v;else if(key=="anchorMin")candidate.anchorMin=v;else if(key=="anchorMax")candidate.anchorMax=v;else if(key=="relativeSize")candidate.relativeSize=v;else if(key=="align")candidate.align=v;else{error="unknown layout property "+key;return false;}}UIDocument proof;UIElement root;root.id="__layout_root";root.kind=UIKind::Canvas;auto test=candidate;test.id="__layout_element";test.parent=root.id;test.kind=UIKind::Panel;proof.elements={root,test};if(!proof.Validate(error))return false;*e=candidate;InvalidateLayout();return true;}
+bool RuntimeUI::SetElementLayout(uint32_t h,const std::string& id,const std::map<std::string,glm::vec2>& patch,std::string& error) {
+    auto document=m_documents.find(h);
+    auto* element=document==m_documents.end()?nullptr:ById(document->second.doc,id);
+    if(!element) {
+        error="stale UI document/element";
+        return false;
+    }
+
+    // A layout patch can change only these vectors. Validate the resulting
+    // anchors together, without copying strings or making a synthetic document.
+    UIElement candidate;
+    candidate.textAlign=element->textAlign;
+    for(auto [key,member]:LayoutFields)candidate.*member=element->*member;
+    for(const auto& [key,value]:patch) {
+        auto field=std::find_if(std::begin(LayoutFields),std::end(LayoutFields),
+                                [&](const auto& entry){return entry.first==key;});
+        if(field==std::end(LayoutFields)) {
+            error="unknown layout property "+key;
+            return false;
+        }
+        candidate.*field->second=value;
+    }
+    if(!FiniteLayout(candidate)) {
+        error="nonfinite UI layout";
+        return false;
+    }
+    if(!LayoutInRange(candidate)) {
+        error="UI anchors, size or alignment outside range";
+        return false;
+    }
+    error.clear();
+    for(auto [key,member]:LayoutFields) {
+        const auto a=candidate.*member,b=element->*member;
+        if(!SameLayoutValue(a.x,b.x)||!SameLayoutValue(a.y,b.y)) {
+            for(auto [name,field]:LayoutFields)element->*field=candidate.*field;
+            InvalidateLayout();
+            break;
+        }
+    }
+    return true;
+}
+
+bool RuntimeUI::SetMapSampling(uint32_t h,const std::string& id,std::optional<UIMapSampling> sampling) {
+    auto document=m_documents.find(h);
+    if(document==m_documents.end())return false;
+    auto* element=ById(document->second.doc,id);
+    if(!element||element->kind!=UIKind::Image)return false;
+    if(sampling)document->second.previews.erase(id);
+    element->mapSampling=sampling;
+    return true;
+}
 
 bool RuntimeUI::SetPlayer(uint32_t h,uint64_t player){auto it=m_documents.find(h);if(it==m_documents.end())return false;CancelDrag(h);it->second.player=player;it->second.focus.clear();it->second.pressed.clear();it->second.viewport={0,0,1,1};InvalidateLayout();return true;}
 uint64_t RuntimeUI::Player(uint32_t h)const{auto it=m_documents.find(h);return it==m_documents.end()?0:it->second.player;}

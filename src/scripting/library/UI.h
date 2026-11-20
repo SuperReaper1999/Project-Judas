@@ -128,11 +128,16 @@ export class WorldMap {
         if (![center.x, center.z, width, height, zoom, heading].every(Number.isFinite) ||
             width <= 0 || height <= 0 || zoom <= 0 || typeof circular !== "boolean")
             throw new TypeError("Invalid WorldMap view");
-        const c = Math.cos(heading), s = Math.sin(heading);
-        const right = [c, s], down = [-s, c];
         const w = width / zoom, h = height / zoom;
         if (!Number.isFinite(w) || !Number.isFinite(h) || w <= 0 || h <= 0)
             throw new TypeError("Invalid WorldMap view scale");
+        const previous = this.#view;
+        if (this.#sampling !== undefined && previous &&
+            Object.is(previous.x, center.x) && Object.is(previous.z, center.z) &&
+            previous.width === w && previous.height === h &&
+            Object.is(previous.heading, heading) && previous.circular === circular) return;
+        const c = Math.cos(heading), s = Math.sin(heading);
+        const right = [c, s], down = [-s, c];
         const imageDelta = (x, z) => [(x * r.right[0] + z * r.right[1]) / r.width,
                                       (x * r.down[0] + z * r.down[1]) / r.height];
         const uvRight = imageDelta(w * right[0], w * right[1]);
@@ -144,7 +149,7 @@ export class WorldMap {
             call("uiControl", this.#image.handle, this.#image.id, "mapSampling", sampling);
             this.#sampling = sampling;
         }
-        this.#view = {x: center.x, z: center.z, right, down, width: w, height: h, circular};
+        this.#view = {x: center.x, z: center.z, right, down, width: w, height: h, heading, circular};
     }
     worldToMap({x, z}) {
         if (![x, z].every(Number.isFinite)) throw new TypeError("WorldMap requires a finite X/Z position");

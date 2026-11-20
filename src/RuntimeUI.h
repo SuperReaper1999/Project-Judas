@@ -44,7 +44,7 @@ struct UIDragState {
     glm::vec2 position{0};bool keyboard=false;std::uint64_t revision=0;
 };
 struct UILayout {UIRect rect,clip;bool visible=false,enabled=false;};
-struct UIStats {unsigned elements=0,draws=0,listRows=0;double updateUs=0,renderUs=0;};
+struct UIStats {unsigned elements=0,draws=0,listRows=0;double updateUs=0,renderUs=0;std::uint64_t layoutPasses=0;};
 // World-owned document instances; monotonically increasing handles never revive
 // after unload. Authored data is copied, never mutated by runtime edits.
 struct UIListItem {std::string id,text;bool enabled=true;};
@@ -61,6 +61,7 @@ public:
     std::string Name(std::uint32_t handle)const;
     UIDocument* Document(std::uint32_t handle);const UIDocument* Document(std::uint32_t handle)const;
     UIElement* Element(std::uint32_t handle,const std::string& id);
+    const UIElement* Element(std::uint32_t handle,const std::string& id)const;
     const UILayout* LayoutOf(std::uint32_t handle,const std::string& id)const;
     void Layout(int width,int height);
     bool SetElementLayout(std::uint32_t handle,const std::string& id,const std::map<std::string,glm::vec2>& patch,std::string& error);
@@ -72,6 +73,7 @@ public:
     bool BeginDrag(std::uint32_t handle,const std::string& id);
     void CancelDrag(std::uint32_t handle);
     std::optional<UIDragState> Drag(std::uint32_t handle)const;
+    bool SetMapSampling(std::uint32_t handle,const std::string& id,std::optional<UIMapSampling> sampling);
     bool SetPreviewCamera(std::uint32_t handle,const std::string& id,std::uint64_t camera);
     std::uint64_t PreviewCamera(std::uint32_t handle,const std::string& id)const;
     bool Focus(std::uint32_t handle,const std::string& id);

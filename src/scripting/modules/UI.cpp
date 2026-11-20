@@ -6,6 +6,7 @@
 #include <cmath>
 #include <map>
 #include <stdexcept>
+#include <utility>
 #include "../BindingContext.h"
 #include "../BindingRegistry.h"
 #include "../BindingValues.h"
@@ -18,6 +19,8 @@ using ScriptBindingValues::String;
 JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSValueConst *argv) {
     auto *c = context.js;
     auto &world = *context.world;
+    auto &ui = world.UI();
+    const auto &readUI = std::as_const(ui);
     const auto *assets = context.assets;
     const auto &owner = context.currentOwner;
     const auto &slot = context.currentSlot;
@@ -40,12 +43,11 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
     if (op == "uiControl") {
         uint32_t h = 0;
         JS_ToUint32(c, &h, arg(1));
-        auto &ui = world.UI();
-        auto *document = ui.Document(h);
+        const auto *document = readUI.Document(h);
         if (!document)
             return JS_ThrowReferenceError(c, "stale UI document");
         auto id = String(c, arg(2)), action = String(c, arg(3));
-        auto *element = id.empty() ? nullptr : ui.Element(h, id);
+        const auto *element = id.empty() ? nullptr : readUI.Element(h, id);
         if (!id.empty() && !element)
             return JS_ThrowReferenceError(c, "unknown UI element");
         try {
@@ -81,7 +83,7 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
             }
             if (action == "mapSampling" && element) {
                 require(write && element->kind==UIKind::Image,"map sampling requires an Image element");
-                if (value.is_null()) element->mapSampling.reset();
+                if (value.is_null()) require(ui.SetMapSampling(h,id,std::nullopt),"invalid map image");
                 else {
                     auto vector = [&](const char* key) {
                         const auto& point = value.at(key);
@@ -92,8 +94,7 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
                         return v;
                     };
                     UIMapSampling sampling{vector("origin"),vector("right"),vector("down"),value.at("circular").get<bool>()};
-                    require(ui.SetPreviewCamera(h,id,0),"invalid map image");
-                    element->mapSampling = sampling;
+                    require(ui.SetMapSampling(h,id,sampling),"invalid map image");
                 }
                 return JS_UNDEFINED;
             }
@@ -128,8 +129,8 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
                     require(std::isfinite(x) && std::isfinite(y) && x >= 64 && y >= 64 &&
                                 x <= 16384 && y <= 16384,
                             "referenceSize must be finite 64..16384");
-                    document->reference = {x, y};
-                    ui.InvalidateLayout();
+                    if (document->reference != glm::vec2(x,y))
+                        ui.Document(h)->reference = {x,y};
                 }
                 return result(
                     nlohmann::json{{"x", document->reference.x}, {"y", document->reference.y}}
@@ -237,8 +238,7 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
                     if (e.id == id)
                         e = candidate;
                 require(proof.Validate(error), error.c_str());
-                *element = std::move(candidate);
-                ui.InvalidateLayout();
+                *ui.Element(h,id) = std::move(candidate);
                 return JS_UNDEFINED;
             }
             throw std::runtime_error("unknown UI control operation");
@@ -250,7 +250,7 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
         uint32_t h = 0;
         JS_ToUint32(c, &h, arg(1));
         auto id = String(c, arg(2));
-        auto *e = world.UI().Element(h, id);
+        const auto *e = readUI.Element(h, id);
         if (!e)
             return JS_ThrowReferenceError(c, "stale UI document/element");
         if (argc > 3) {
@@ -276,9 +276,9 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
             }
             js_free(c, props);
             std::string error;
-            if (!valid || !world.UI().SetElementLayout(h, id, patch, error))
+            if (!valid || !ui.SetElementLayout(h, id, patch, error))
                 return JS_ThrowTypeError(c, "UI layout: %s", error.c_str());
-            e = world.UI().Element(h, id);
+            e = readUI.Element(h, id);
         }
         auto o = JS_NewObject(c);
         for (auto [key, v] : {std::pair<const char *, glm::vec2>{"offset", e->offset},
@@ -297,7 +297,7 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
     if (op == "uiGet" || op == "uiSet" || op == "uiUnload") {
         uint32_t h = 0;
         JS_ToUint32(c, &h, arg(1));
-        auto *d = world.UI().Document(h);
+        const auto *d = readUI.Document(h);
         if (!d)
             return JS_ThrowReferenceError(c, "stale/unloaded UI document");
         if (op == "uiUnload") {
@@ -305,26 +305,30 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
             return JS_TRUE;
         }
         auto id = String(c, arg(2)), key = String(c, arg(3));
-        UIElement *e = id.empty() ? nullptr : world.UI().Element(h, id);
+        const UIElement *e = id.empty() ? nullptr : readUI.Element(h, id);
         if (!id.empty() && !e)
             return JS_ThrowReferenceError(c, "unknown UI element %s", id.c_str());
-        bool *flag = key == "visible"       ? (e ? &e->visible : &d->visible)
-                     : key == "enabled"     ? (e ? &e->enabled : &d->enabled)
-                     : key == "modal" && !e ? &d->modal
-                                            : nullptr;
-        if (flag) {
-            if (op == "uiSet") {
-                if (!JS_IsBool(arg(4)))
-                    return JS_ThrowTypeError(c, "UI flag requires boolean");
-                *flag = JS_ToBool(c, arg(4));
+        const auto elementFlag = key == "visible" ? &UIElement::visible
+                               : key == "enabled" ? &UIElement::enabled : nullptr;
+        const auto documentFlag = key == "visible" ? &UIDocument::visible
+                                : key == "enabled" ? &UIDocument::enabled
+                                : key == "modal" ? &UIDocument::modal : nullptr;
+        if (e ? elementFlag != nullptr : documentFlag != nullptr) {
+            const bool current = e ? e->*elementFlag : d->*documentFlag;
+            if (op == "uiGet") return JS_NewBool(c, current);
+            if (!JS_IsBool(arg(4))) return JS_ThrowTypeError(c, "UI flag requires boolean");
+            const bool value = JS_ToBool(c, arg(4));
+            if (current != value) {
+                if (e) ui.Element(h, id)->*elementFlag = value;
+                else ui.Document(h)->*documentFlag = value;
             }
-            return JS_NewBool(c, *flag);
+            return JS_NewBool(c, value);
         }
         if (e && (key == "text" || key == "texture" || key == "font" || key == "textKey")) {
-            auto &value = key == "text"      ? e->text
-                          : key == "texture" ? e->texture
-                          : key == "font"    ? e->font
-                                             : e->textKey;
+            const auto member = key == "text" ? &UIElement::text
+                              : key == "texture" ? &UIElement::texture
+                              : key == "font" ? &UIElement::font : &UIElement::textKey;
+            const auto &value = e->*member;
             if (op == "uiSet") {
                 if (!JS_IsString(arg(4)))
                     return JS_ThrowTypeError(c, "UI string required");
@@ -357,13 +361,16 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
                 }
                 if (key == "textKey" && e->kind == UIKind::TextInput && !v.empty())
                     return JS_ThrowTypeError(c, "editable fields use literal text");
-                value = v;
-                if (key == "text") {
-                    e->textKey.clear();
-                    if (e->kind == UIKind::TextInput) {
-                        const auto n = TextGraphemes(v).size() - 1;
-                        world.UI().SelectText(h, id, {n, n});
-                    }
+                if (value != v || (key == "text" && !e->textKey.empty())) {
+                    auto* changed = ui.Element(h,id);
+                    changed->*member = v;
+                    if (key == "text") changed->textKey.clear();
+                }
+                // Setting editable text also places the caret, even when the
+                // bytes are identical. Keep that separate from layout edits.
+                if (key == "text" && e->kind == UIKind::TextInput) {
+                    const auto n = TextGraphemes(v).size() - 1;
+                    ui.SelectText(h, id, {n, n});
                 }
             }
             return JS_NewStringLen(c, value.data(), value.size());
@@ -381,11 +388,13 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
                 auto it = std::find(choices.begin(), choices.end(), v);
                 if (it == choices.end())
                     return JS_ThrowTypeError(c, "unsupported UI text direction/alignment");
-                index = int(it - choices.begin());
-                if (key == "direction")
-                    e->direction = TextDirection(index);
-                else
-                    e->textLogicalAlign = index;
+                const int next = int(it - choices.begin());
+                if (next != index) {
+                    auto* changed = ui.Element(h,id);
+                    if (key == "direction") changed->direction = TextDirection(next);
+                    else changed->textLogicalAlign = next;
+                    index = next;
+                }
             }
             return JS_NewString(c, index < 0 ? "" : choices[index].c_str());
         }
@@ -393,10 +402,15 @@ JSValue HandleUI(BindingContext &context, const std::string &op, int argc, JSVal
         if (e && key == "value") {
             if (op == "uiSet") {
                 double v;
-                if (JS_ToFloat64(c, &v, arg(4)) || !std::isfinite(v) || v < e->minimum ||
-                    v > e->maximum)
+                if (JS_ToFloat64(c, &v, arg(4)) || !std::isfinite(v))
                     return JS_ThrowTypeError(c, "UI value outside authored range");
-                e->value = float(v);
+                e = readUI.Element(h,id);
+                if (!e) return JS_ThrowReferenceError(c, "stale UI document/element");
+                if (v < e->minimum || v > e->maximum)
+                    return JS_ThrowTypeError(c, "UI value outside authored range");
+                const float next = static_cast<float>(v);
+                if (e->value != next || std::signbit(e->value) != std::signbit(next))
+                    ui.Element(h,id)->value = next;
             }
             return JS_NewFloat64(c, e->value);
         }

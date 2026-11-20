@@ -23,7 +23,7 @@ bool RuntimeUI::Focus(uint32_t h,const std::string& id){
  return true;
 }
 std::string RuntimeUI::Focused(uint32_t h)const{auto i=m_documents.find(h);return i==m_documents.end()?"":i->second.focus;}
-bool RuntimeUI::SetScale(uint32_t h,float value){auto i=m_documents.find(h);if(i==m_documents.end()||!std::isfinite(value)||value<.75f||value>2)return false;i->second.scale=value;InvalidateLayout();return true;}
+bool RuntimeUI::SetScale(uint32_t h,float value){auto i=m_documents.find(h);if(i==m_documents.end()||!std::isfinite(value)||value<.75f||value>2)return false;if(i->second.scale!=value){i->second.scale=value;InvalidateLayout();}return true;}
 float RuntimeUI::Scale(uint32_t h)const{auto i=m_documents.find(h);return i==m_documents.end()?1:i->second.scale;}
 glm::vec2 RuntimeUI::Scroll(uint32_t h,const std::string& id)const{auto i=m_documents.find(h);if(i==m_documents.end())return {};auto w=i->second.widgets.find(id);return w==i->second.widgets.end()?glm::vec2(0):w->second.scroll;}
 bool RuntimeUI::SetScroll(uint32_t h,const std::string& id,glm::vec2 value){auto i=m_documents.find(h);if(i==m_documents.end()||!std::isfinite(value.x)||!std::isfinite(value.y))return false;auto* e=FindElement(i->second.doc,id);if(!e||(e->kind!=UIKind::Scroll&&e->kind!=UIKind::List))return false;
