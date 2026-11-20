@@ -43,10 +43,11 @@ GLuint Compile(GLenum kind, const std::string& source) {
 
 std::string ProductionFunction() {
     const std::string text=JudasRender::Shaders::Source(JudasRender::Shaders::Builtin::MeshFragment);
-    const auto begin=text.find("float ComputeShadowFactor(");
-    const auto end=text.find("\n}",begin);
-    if(begin==std::string::npos||end==std::string::npos)
-        throw std::runtime_error("Production shadow function not found in ShaderLibrary");
+    const auto begin=text.find("float ShadowComparison(");
+    const auto sampler=text.find("float ComputeShadowFactor(",begin);
+    const auto end=text.find("\n}",sampler);
+    if(begin==std::string::npos||sampler==std::string::npos||end==std::string::npos)
+        throw std::runtime_error("Production shadow sampling functions not found in ShaderLibrary");
     return text.substr(begin,end+2-begin);
 }
 
@@ -76,6 +77,7 @@ void main() {
         const auto fragment = Compile(GL_FRAGMENT_SHADER, std::string(R"GLSL(#version 330 core
 uniform sampler2DArray uShadowMaps;
 uniform mat4 uLightSpaceMatrix[54];
+uniform int uFastShadows;
 uniform vec3 plane;
 uniform bool tiled, fixedPoint;
 uniform vec3 point;
@@ -273,6 +275,24 @@ void main() {
         }
         std::printf("MEASURE corner_max_error=%.9g\n", cornerError);
         Check(cornerError < 1e-4f, "two-axis shadow-corner coverage matches analytic intersection area");
+
+        // The fast filter uses a single texel-wide footprint. The same
+        // quadrant should retain a continuous but steeper two-axis edge.
+        glUniform1i(uniform("uFastShadows"), 1);
+        float fastCornerError = 0;
+        for (int y = 0; y <= 8; ++y) {
+            for (int x = 0; x <= 8; ++x) {
+                const float tx = 31.f + x * .25f;
+                const float ty = 31.f + y * .25f;
+                glUniform3f(uniform("point"), 2 * tx / kSize - 1, 2 * ty / kSize - 1, 0);
+                draw();
+                const float expected = std::clamp(32.5f - tx, 0.f, 1.f) *
+                                       std::clamp(32.5f - ty, 0.f, 1.f);
+                fastCornerError = std::max(fastCornerError, std::abs(pixels[0] - expected));
+            }
+        }
+        Check(fastCornerError < 1e-4f, "fast shadow filter matches a one-texel analytic footprint");
+        glUniform1i(uniform("uFastShadows"), 0);
 
         // Nine was the old atlas limit. It is now a valid chart, so exercise
         // both it and the last V2 chart against real depth before testing the
