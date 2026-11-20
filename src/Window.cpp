@@ -328,6 +328,7 @@ bool Window::SetVSync(bool enabled, std::string& error) {
         JudasVulkan::SetSwapInterval(enabled ? 1 : 0);
         return true;
     }
+    if (VSync() == enabled) return true;
     if (SDL_GL_SetSwapInterval(enabled ? 1 : 0) == 0 && VSync() == enabled) return true;
     error = "OpenGL swap interval change failed: " + std::string(SDL_GetError());
     return false;

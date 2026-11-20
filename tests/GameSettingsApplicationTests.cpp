@@ -58,10 +58,12 @@ export default class {
                 this.state.phase = "corrupt";
                 return;
             }
-            let rejected = false;
-            try { settings.applyVideo({fpsCap: 2001, shadows: false}); }
-            catch (_) { rejected = true; }
-            require(rejected && settings.read().shadows === state.shadows, "Invalid video patch partially applied");
+            for (const fpsCap of [1, 2001]) {
+                let rejected = false;
+                try { settings.applyVideo({fpsCap, shadows: false}); }
+                catch (_) { rejected = true; }
+                require(rejected && settings.read().shadows === state.shadows, "Invalid video patch partially applied");
+            }
             const map = input.getBindings();
             map.find(x => x.name === "jump").bindings[0].control = "key:K";
             audio.setGroup("master", {gain: 0.25, mute: true});

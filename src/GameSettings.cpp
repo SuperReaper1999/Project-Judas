@@ -42,6 +42,14 @@ int Integer(const Json& value, int min, int max, const char* name) {
     return value.get<int>();
 }
 
+int VideoFrameCap(const Json& value) {
+    const int cap = Integer(value, 0, 1000, "fpsCap");
+    // A very low cap can force the 60 Hz simulation to exceed its per-frame
+    // catch-up limit even when the machine can run the workload in real time.
+    Require(cap == 0 || cap >= 15, "fpsCap must be zero (uncapped) or at least 15");
+    return cap;
+}
+
 bool HasDesktopWindow() {
     const auto* driver = SDL_GetCurrentVideoDriver();
     return driver && (std::string_view(driver) == "x11" || std::string_view(driver) == "wayland");
@@ -103,7 +111,7 @@ GameSettings::GameSettings(const Project& project, int width, int height) {
         const auto shadows = unpack("shadows");
         const int budget = video.contains("localShadowBudget")
             ? Integer(video.at("localShadowBudget"), 0, 8, "localShadowBudget") : 8;
-        const int cap = video.contains("fpsCap") ? Integer(video.at("fpsCap"), 0, 1000, "fpsCap") : 0;
+        const int cap = video.contains("fpsCap") ? VideoFrameCap(video.at("fpsCap")) : 0;
         const auto backend = video.contains("backend") ? Backend(video.at("backend")) : "opengl";
         const auto& game = values.at("game");
         Require(game.is_object(), "Game preferences must be an object");
@@ -269,7 +277,7 @@ Json GameSettings::Invoke(const std::string& operation, const std::string& argum
     } else if (operation == "settingsApplyVideo") {
         const auto value = Parse(argument);
         Keys(value, {"vsync", "fpsCap", "shadows", "localShadowBudget", "backend"});
-        const auto cap = value.contains("fpsCap") ? Integer(value.at("fpsCap"), 0, 1000, "fpsCap") : m_fpsCap;
+        const auto cap = value.contains("fpsCap") ? VideoFrameCap(value.at("fpsCap")) : m_fpsCap;
         const auto budget = value.contains("localShadowBudget")
             ? unsigned(Integer(value.at("localShadowBudget"), 0, 8, "localShadowBudget")) : m_localShadowBudget;
         const auto backend = value.contains("backend") ? Backend(value.at("backend")) : m_backend;

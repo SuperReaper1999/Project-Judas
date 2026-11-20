@@ -24,7 +24,9 @@ Borderless fullscreen uses the current desktop mode and refresh rate.
 | Look sensitivity, invert and gameplay preferences | Game logic, or scale/invert a named input axis | Game-owned |
 
 `settings.applyVideo()` accepts a partial patch. An FPS cap of zero permits
-uncapped operation subject to VSync and compositor pacing. The cap measures
+uncapped operation subject to VSync and compositor pacing. Explicit caps range
+from 15 to 1000 FPS. Lower caps would leave too little room for the 60 Hz
+simulation to catch up. The cap measures
 elapsed wall time across the complete frame and waits for the remaining time.
 It leaves simulation stepping unchanged. `vsyncRequested` reports the pending or saved choice, while `vsync` reports the
 active mode when known. `canDisableVSync` reflects the Vulkan surface capability;
