@@ -1,14 +1,15 @@
 // Test the actual production shadow function against independently filled depth
 // planes, including real occluders and adjacent tiles selecting different lights.
-// PLAYWRIGHT_MODULE=... node shadow_plane.cjs OUT chromium|firefox [Renderer.cpp]
+// PLAYWRIGHT_MODULE=... node shadow_plane.cjs OUT chromium|firefox [ShaderLibrary.cpp]
 const fs = require('fs'), path = require('path');
 const {chromium, firefox} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
-const [out, name = 'firefox', file = path.join(__dirname, '../../src/Renderer.cpp')] = process.argv.slice(2);
+const [out, name = 'firefox', file = path.join(__dirname, '../../src/render/ShaderLibrary.cpp')] = process.argv.slice(2);
 fs.mkdirSync(out, {recursive: true});
 const source = fs.readFileSync(file, 'utf8');
-const start = source.indexOf('float ComputeShadowFactor(');
-const end = source.indexOf('\n}', start) + 2;
-if (start < 0 || end < 2) throw Error('Missing production shadow function');
+const start = source.indexOf('float ShadowComparison(');
+const sampler = source.indexOf('float ComputeShadowFactor(', start);
+const end = source.indexOf('\n}', sampler) + 2;
+if (start < 0 || sampler < 0 || end < 2) throw Error('Missing production shadow sampling functions');
 const shadow = source.slice(start, end);
 (async () => {
   let browser;
@@ -30,8 +31,9 @@ const shadow = source.slice(start, end);
         void main(){vec2 p=vec2((gl_VertexID==1)?3.0:-1.0,(gl_VertexID==2)?3.0:-1.0);uv=p*.5+.5;gl_Position=vec4(p,0,1);}`);
       const fragment = compile(gl.FRAGMENT_SHADER, `#version 300 es
         precision highp float; precision highp int; precision highp sampler2DArray;
-        uniform sampler2DArray uShadowMaps; uniform mat4 uLightSpaceMatrix[9];
+        uniform sampler2DArray uShadowMaps; uniform mat4 uLightSpaceMatrix[54];
         uniform vec3 plane; uniform bool tiled; in vec2 uv; out vec4 color;
+        uniform int uFastShadows;
         vec3 shadowWorldDx,shadowWorldDy;
         ${shadow}
         void main(){vec2 xy=uv*2.0-1.0;vec3 p=vec3(xy,dot(plane.xy,xy)+plane.z);
