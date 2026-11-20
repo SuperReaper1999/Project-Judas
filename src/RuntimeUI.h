@@ -44,7 +44,7 @@ struct UIDragState {
     glm::vec2 position{0};bool keyboard=false;std::uint64_t revision=0;
 };
 struct UILayout {UIRect rect,clip;bool visible=false,enabled=false;};
-struct UIStats {unsigned elements=0,draws=0,listRows=0;double updateUs=0,renderUs=0;std::uint64_t layoutPasses=0;};
+struct UIStats {unsigned elements=0,draws=0,listRows=0;double updateUs=0,renderUs=0;std::uint64_t layoutPasses=0,documentLayoutPasses=0;};
 // World-owned document instances; monotonically increasing handles never revive
 // after unload. Authored data is copied, never mutated by runtime edits.
 struct UIListItem {std::string id,text;bool enabled=true;};
@@ -65,7 +65,7 @@ public:
     const UILayout* LayoutOf(std::uint32_t handle,const std::string& id)const;
     void Layout(int width,int height);
     bool SetElementLayout(std::uint32_t handle,const std::string& id,const std::map<std::string,glm::vec2>& patch,std::string& error);
-    void InvalidateLayout(){++m_layoutRevision;}
+    void InvalidateLayout();
     void Input(InputSystem& input,glm::vec2 pointer,bool pointerAvailable,int width,int height,std::uint64_t player=0);
     void Draw(Renderer& renderer,int width,int height,const RuntimeWorld* world=nullptr);
     bool RequestStartupAssets(const std::vector<std::string>& assets,std::string& error);
@@ -101,7 +101,7 @@ public:
     const UIStats& Stats()const{return m_stats;}
 private:
     struct WidgetState {glm::vec2 scroll{0},extent{0};TextSelection selection;std::string composition;int compositionStart=0,compositionLength=0,selected=-1;std::vector<UIListItem> items;std::vector<std::pair<std::string,TextSelection>> undo,redo;std::vector<float> carets;float textPan=0;};
-    struct Instance {glm::vec2 dragStart{0},dragScroll{0};std::string dragging;bool dragged=false;float scale=1;std::map<std::string,WidgetState> widgets;UIDocument doc;std::string name,focus,pressed;std::uint64_t owner=0,slot=0,player=0,inputRevision=~std::uint64_t(0);glm::vec4 viewport{0,0,1,1};glm::vec2 lastPointer{-1};std::map<std::string,UILayout> layout;std::vector<std::string> refs;std::map<std::string,std::uint64_t> previews;};
+    struct Instance {glm::vec2 dragStart{0},dragScroll{0};std::string dragging;bool dragged=false;float scale=1;std::map<std::string,WidgetState> widgets;UIDocument doc;std::string name,focus,pressed;std::uint64_t owner=0,slot=0,player=0,inputRevision=~std::uint64_t(0);glm::vec4 viewport{0,0,1,1};glm::vec2 lastPointer{-1};std::map<std::string,UILayout> layout;bool layoutDirty=true;std::vector<std::string> refs;std::map<std::string,std::uint64_t> previews;};
     std::map<std::uint32_t,Instance> m_documents;std::uint32_t m_next=1;
     ResourceManager* m_resources=nullptr;std::vector<UIEvent> m_events;
     std::map<std::string,bool> m_startupAssets; // explicit world-owned references, true for fonts
@@ -111,6 +111,7 @@ private:
     uint64_t m_textSerial=0;uint32_t m_textDocument=0;std::string m_textElement;
     bool m_quit=false;UIStats m_stats;glm::vec2 m_lastPointer{-1};
     std::map<std::uint64_t,UIDragState> m_drags;
+    void InvalidateLayout(Instance& document){document.layoutDirty=true;++m_layoutRevision;}
     void DragEvent(const UIDragState&,const char* type,bool target=false);
     void EndDrag(std::uint64_t player,bool drop);
     void UpdateDrag(InputSystem&,glm::vec2,bool,int,int,std::uint64_t);

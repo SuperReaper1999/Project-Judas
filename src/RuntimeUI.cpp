@@ -106,23 +106,45 @@ std::uint32_t RuntimeUI::Add(const UIDocument& d,const std::string& name,std::ui
     }
     if (!d.Validate(error)) return 0;
     if (!m_next) { error="UI handle space exhausted"; return 0; }
-    InvalidateLayout();auto id=m_next++;Instance instance;instance.doc=d;instance.name=name;instance.owner=owner;instance.slot=slot;m_documents.emplace(id,std::move(instance));return id;}
-bool RuntimeUI::Unload(std::uint32_t h){if(m_textDocument==h){m_textDocument=0;m_textElement.clear();}InvalidateLayout();auto it=m_documents.find(h);if(it==m_documents.end())return false;CancelDrag(h);const auto name=it->second.name;for(auto i=m_localizedText.begin();i!=m_localizedText.end();)if(i->first.first==h)i=m_localizedText.erase(i);else ++i;if(m_resources)for(const auto& ref:it->second.refs)m_resources->ReleaseRef(ref);m_documents.erase(it);m_events.erase(std::remove_if(m_events.begin(),m_events.end(),[&](const auto& e){return e.document==name||e.sourceDocument==name;}),m_events.end());return true;}
+    ++m_layoutRevision;auto id=m_next++;Instance instance;instance.doc=d;instance.name=name;instance.owner=owner;instance.slot=slot;m_documents.emplace(id,std::move(instance));return id;}
+bool RuntimeUI::Unload(std::uint32_t h){if(m_textDocument==h){m_textDocument=0;m_textElement.clear();}auto it=m_documents.find(h);if(it==m_documents.end())return false;++m_layoutRevision;CancelDrag(h);const auto name=it->second.name;for(auto i=m_localizedText.begin();i!=m_localizedText.end();)if(i->first.first==h)i=m_localizedText.erase(i);else ++i;if(m_resources)for(const auto& ref:it->second.refs)m_resources->ReleaseRef(ref);m_documents.erase(it);m_events.erase(std::remove_if(m_events.begin(),m_events.end(),[&](const auto& e){return e.document==name||e.sourceDocument==name;}),m_events.end());return true;}
 void RuntimeUI::Clear(){while(!m_documents.empty())Unload(m_documents.begin()->first);m_events.clear();m_drags.clear();m_localizedText.clear();if(m_resources)for(const auto& [id,font]:m_startupAssets)m_resources->ReleaseRef(id);m_startupAssets.clear();m_quit=false;}
 void RuntimeUI::RemoveOwner(std::uint64_t id){std::vector<uint32_t> remove;for(auto& p:m_documents)if(p.second.owner==id)remove.push_back(p.first);for(auto h:remove)Unload(h);}
 std::uint32_t RuntimeUI::Find(const std::string& n)const{for(const auto& p:m_documents)if(p.second.name==n)return p.first;return 0;}
-UIDocument* RuntimeUI::Document(uint32_t h){InvalidateLayout();auto it=m_documents.find(h);return it==m_documents.end()?nullptr:&it->second.doc;}
+UIDocument* RuntimeUI::Document(uint32_t h){
+    auto it=m_documents.find(h);
+    if(it==m_documents.end())return nullptr;
+    InvalidateLayout(it->second);
+    return &it->second.doc;
+}
 const UIDocument* RuntimeUI::Document(uint32_t h)const{auto it=m_documents.find(h);return it==m_documents.end()?nullptr:&it->second.doc;}
 UIElement* RuntimeUI::Element(uint32_t h,const std::string& id){auto* d=Document(h);return d?ById(*d,id):nullptr;}
 const UIElement* RuntimeUI::Element(uint32_t h,const std::string& id)const{const auto* d=Document(h);return d?ById(*d,id):nullptr;}
 const UILayout* RuntimeUI::LayoutOf(uint32_t h,const std::string& id)const{auto it=m_documents.find(h);if(it==m_documents.end())return nullptr;auto p=it->second.layout.find(id);return p==it->second.layout.end()?nullptr:&p->second;}
 bool RuntimeUI::Paused(std::uint64_t player)const{for(auto& p:m_documents)if(p.second.player==player&&p.second.doc.visible&&p.second.doc.enabled&&p.second.doc.modal)return true;return false;}
 bool RuntimeUI::OwnsInput()const{return Paused();}
+void RuntimeUI::InvalidateLayout(){
+    ++m_layoutRevision;
+    for(auto& [handle,document]:m_documents)document.layoutDirty=true;
+}
 void RuntimeUI::Layout(int w,int h){
-    auto localeRevision=m_localization?m_localization->Revision():0;if(w==m_layoutWidth&&h==m_layoutHeight&&m_layoutRevision==m_computedRevision&&localeRevision==m_localeRevision)return;
+    const auto localeRevision=m_localization?m_localization->Revision():0;
+    const bool globalChange=w!=m_layoutWidth||h!=m_layoutHeight||localeRevision!=m_localeRevision;
+    if(!globalChange&&m_layoutRevision==m_computedRevision)return;
     m_layoutWidth=w;m_layoutHeight=h;m_computedRevision=m_layoutRevision;m_localeRevision=localeRevision;
-    JUDAS_PROFILE_SCOPE("Runtime UI layout");auto start=Clock::now();m_stats.elements=0;++m_stats.layoutPasses;
-    for(auto& p:m_documents){auto& in=p.second;in.layout.clear();for(auto& state:in.widgets)state.second.extent={0,0};auto& d=in.doc;glm::vec2 available=glm::vec2(w,h)*glm::vec2(in.viewport.z,in.viewport.w),offset=glm::vec2(w,h)*glm::vec2(in.viewport.x,in.viewport.y);float base=std::min(available.x/d.reference.x,available.y/d.reference.y),scale=base*in.scale;glm::vec2 origin=offset+(available-d.reference*base)*.5f;
+    JUDAS_PROFILE_SCOPE("Runtime UI layout");
+    const auto start=Clock::now();
+    unsigned rebuilt=0,rebuiltElements=0;
+    m_stats.elements=0;
+    ++m_stats.layoutPasses;
+    for(auto& p:m_documents){
+        auto& in=p.second;
+        m_stats.elements+=unsigned(in.doc.elements.size());
+        if(!globalChange&&!in.layoutDirty)continue;
+        in.layoutDirty=false;
+        ++rebuilt;
+        rebuiltElements+=unsigned(in.doc.elements.size());
+        in.layout.clear();for(auto& state:in.widgets)state.second.extent={0,0};auto& d=in.doc;glm::vec2 available=glm::vec2(w,h)*glm::vec2(in.viewport.z,in.viewport.w),offset=glm::vec2(w,h)*glm::vec2(in.viewport.x,in.viewport.y);float base=std::min(available.x/d.reference.x,available.y/d.reference.y),scale=base*in.scale;glm::vec2 origin=offset+(available-d.reference*base)*.5f;
         std::map<std::string,float> cursor;std::map<std::string,UIElement*> authored;for(auto& e:d.elements)authored[e.id]=&e;for(auto& e:d.elements){UILayout l;if(e.parent.empty()){l.rect={origin,d.reference*base};l.clip={offset,available};l.visible=d.visible&&e.visible;l.enabled=d.enabled&&e.enabled;}
             else {const auto& parent=in.layout.at(e.parent);auto* pe=authored.at(e.parent);UIRect content=parent.rect;content.position+=glm::vec2(pe->padding.x,pe->padding.y)*scale;content.size=glm::max(glm::vec2(0),content.size-glm::vec2(pe->padding.x+pe->padding.z,pe->padding.y+pe->padding.w)*scale);
                 l.rect.size=glm::max(glm::vec2(0),(e.anchorMax-e.anchorMin+e.relativeSize)*content.size+e.size*scale-glm::vec2(e.margin.x+e.margin.z,e.margin.y+e.margin.w)*scale);
@@ -131,8 +153,11 @@ void RuntimeUI::Layout(int w,int h){
                 auto& parentState=in.widgets[e.parent];l.rect.position-=parentState.scroll*scale;l.clip=(pe->clip||pe->kind==UIKind::Scroll||pe->kind==UIKind::List)?Intersect(parent.clip,parent.rect):parent.clip;l.visible=parent.visible&&e.visible;l.enabled=parent.enabled&&e.enabled;}
             if(e.parent.size()){auto* pe=authored.at(e.parent);if(pe->flow==UIFlow::Horizontal&&pe->mirrorRow&&m_localization&&m_localization->RTL()){const auto& parent=in.layout.at(e.parent);float left=parent.rect.position.x+pe->padding.x*scale;float right=parent.rect.position.x+parent.rect.size.x-pe->padding.z*scale;l.rect.position.x=right-(l.rect.position.x-left)-l.rect.size.x;}}
             if(!e.parent.empty()&&e.visible){auto& parent=in.layout.at(e.parent);auto& state=in.widgets[e.parent];state.extent=glm::max(state.extent,(l.rect.position+l.rect.size-parent.rect.position)/scale+state.scroll);}
-            in.layout[e.id]=l;++m_stats.elements;}
+            in.layout[e.id]=l;}
         for(auto& e:d.elements)if(e.kind==UIKind::Scroll||e.kind==UIKind::List){auto& state=in.widgets[e.id];SetScroll(p.first,e.id,state.scroll);}}
+    m_stats.documentLayoutPasses+=rebuilt;
+    JUDAS_PROFILE_COUNTER("Runtime UI documents rebuilt",double(rebuilt),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Runtime UI elements rebuilt",double(rebuiltElements),ProfileCounterMode::Sum);
     if(m_computedRevision!=m_layoutRevision){Layout(w,h);return;}
     m_stats.updateUs=Us(start);
 }
@@ -348,7 +373,7 @@ bool RuntimeUI::SetElementLayout(uint32_t h,const std::string& id,const std::map
         const auto a=candidate.*member,b=element->*member;
         if(!SameLayoutValue(a.x,b.x)||!SameLayoutValue(a.y,b.y)) {
             for(auto [name,field]:LayoutFields)element->*field=candidate.*field;
-            InvalidateLayout();
+            InvalidateLayout(document->second);
             break;
         }
     }
@@ -365,7 +390,7 @@ bool RuntimeUI::SetMapSampling(uint32_t h,const std::string& id,std::optional<UI
     return true;
 }
 
-bool RuntimeUI::SetPlayer(uint32_t h,uint64_t player){auto it=m_documents.find(h);if(it==m_documents.end())return false;CancelDrag(h);it->second.player=player;it->second.focus.clear();it->second.pressed.clear();it->second.viewport={0,0,1,1};InvalidateLayout();return true;}
+bool RuntimeUI::SetPlayer(uint32_t h,uint64_t player){auto it=m_documents.find(h);if(it==m_documents.end())return false;CancelDrag(h);it->second.player=player;it->second.focus.clear();it->second.pressed.clear();it->second.viewport={0,0,1,1};InvalidateLayout(it->second);return true;}
 uint64_t RuntimeUI::Player(uint32_t h)const{auto it=m_documents.find(h);return it==m_documents.end()?0:it->second.player;}
-void RuntimeUI::PlayerViewport(uint64_t player,glm::vec4 rect){for(auto& pair:m_documents)if(pair.second.player==player&&pair.second.viewport!=rect){pair.second.viewport=rect;InvalidateLayout();}}
+void RuntimeUI::PlayerViewport(uint64_t player,glm::vec4 rect){for(auto& pair:m_documents)if(pair.second.player==player&&pair.second.viewport!=rect){pair.second.viewport=rect;InvalidateLayout(pair.second);}}
 void RuntimeUI::RemovePlayer(uint64_t player){std::vector<uint32_t> remove;for(auto& pair:m_documents)if(pair.second.player==player)remove.push_back(pair.first);for(auto handle:remove)Unload(handle);}

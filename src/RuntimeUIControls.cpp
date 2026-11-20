@@ -23,17 +23,17 @@ bool RuntimeUI::Focus(uint32_t h,const std::string& id){
  return true;
 }
 std::string RuntimeUI::Focused(uint32_t h)const{auto i=m_documents.find(h);return i==m_documents.end()?"":i->second.focus;}
-bool RuntimeUI::SetScale(uint32_t h,float value){auto i=m_documents.find(h);if(i==m_documents.end()||!std::isfinite(value)||value<.75f||value>2)return false;if(i->second.scale!=value){i->second.scale=value;InvalidateLayout();}return true;}
+bool RuntimeUI::SetScale(uint32_t h,float value){auto i=m_documents.find(h);if(i==m_documents.end()||!std::isfinite(value)||value<.75f||value>2)return false;if(i->second.scale!=value){i->second.scale=value;InvalidateLayout(i->second);}return true;}
 float RuntimeUI::Scale(uint32_t h)const{auto i=m_documents.find(h);return i==m_documents.end()?1:i->second.scale;}
 glm::vec2 RuntimeUI::Scroll(uint32_t h,const std::string& id)const{auto i=m_documents.find(h);if(i==m_documents.end())return {};auto w=i->second.widgets.find(id);return w==i->second.widgets.end()?glm::vec2(0):w->second.scroll;}
 bool RuntimeUI::SetScroll(uint32_t h,const std::string& id,glm::vec2 value){auto i=m_documents.find(h);if(i==m_documents.end()||!std::isfinite(value.x)||!std::isfinite(value.y))return false;auto* e=FindElement(i->second.doc,id);if(!e||(e->kind!=UIKind::Scroll&&e->kind!=UIKind::List))return false;
  auto& in=i->second;auto& state=in.widgets[id];glm::vec2 visible=e->size;auto l=in.layout.find(id);if(l!=in.layout.end()){float scale=std::min(m_layoutWidth*in.viewport.z/in.doc.reference.x,m_layoutHeight*in.viewport.w/in.doc.reference.y)*in.scale;visible=l->second.rect.size/std::max(.001f,scale);}
- auto extent=state.extent;if(e->kind==UIKind::List)extent={visible.x,e->rowHeight*state.items.size()};value=glm::clamp(value,glm::vec2(0),glm::max(glm::vec2(0),extent-visible));if(value!=state.scroll){state.scroll=value;InvalidateLayout();}return true;
+ auto extent=state.extent;if(e->kind==UIKind::List)extent={visible.x,e->rowHeight*state.items.size()};value=glm::clamp(value,glm::vec2(0),glm::max(glm::vec2(0),extent-visible));if(value!=state.scroll){state.scroll=value;InvalidateLayout(in);}return true;
 }
 bool RuntimeUI::SetItems(uint32_t h,const std::string& id,const std::vector<UIListItem>& items,std::string& error){
  auto i=m_documents.find(h);auto* e=i==m_documents.end()?nullptr:FindElement(i->second.doc,id);if(!e||e->kind!=UIKind::List){error="stale/non-list UI element";return false;}if(items.size()>10000){error="UI list exceeds 10000 items";return false;}
  size_t bytes=0;std::set<std::string> ids;for(auto& item:items){bytes+=item.text.size()+item.id.size();if(item.id.empty()||item.id.size()>128||item.text.size()>512||bytes>2*1024*1024||!ids.insert(item.id).second||!ValidTextUTF8(item.text,error)||!ValidTextUTF8(item.id,error)||item.id.find('\0')!=std::string::npos||item.text.find_first_of("\r\n\0",0,3)!=std::string::npos){error="invalid/duplicate/bounded UI list item";return false;}}
- auto& state=i->second.widgets[id];std::string selected=state.selected>=0&&state.selected<int(state.items.size())?state.items[state.selected].id:"";state.items=items;state.selected=-1;for(size_t n=0;n<items.size();++n)if(items[n].id==selected&&items[n].enabled)state.selected=int(n);SetScroll(h,id,state.scroll);InvalidateLayout();error.clear();return true;
+ auto& state=i->second.widgets[id];std::string selected=state.selected>=0&&state.selected<int(state.items.size())?state.items[state.selected].id:"";state.items=items;state.selected=-1;for(size_t n=0;n<items.size();++n)if(items[n].id==selected&&items[n].enabled)state.selected=int(n);SetScroll(h,id,state.scroll);InvalidateLayout(i->second);error.clear();return true;
 }
 int RuntimeUI::Selected(uint32_t h,const std::string& id)const{auto i=m_documents.find(h);if(i==m_documents.end())return -1;auto w=i->second.widgets.find(id);return w==i->second.widgets.end()?-1:w->second.selected;}
 bool RuntimeUI::Select(uint32_t h,const std::string& id,int index){auto i=m_documents.find(h);if(i==m_documents.end())return false;auto* e=FindElement(i->second.doc,id);if(!e||e->kind!=UIKind::List)return false;auto& state=i->second.widgets[id];if(index< -1||index>=int(state.items.size())||(index>=0&&!state.items[index].enabled))return false;state.selected=index;if(index>=0){float visible=e->size.y;auto layout=i->second.layout.find(id);if(layout!=i->second.layout.end()){float scale=std::min(m_layoutWidth*i->second.viewport.z/i->second.doc.reference.x,m_layoutHeight*i->second.viewport.w/i->second.doc.reference.y)*i->second.scale;visible=layout->second.rect.size.y/std::max(.001f,scale);}
@@ -61,7 +61,7 @@ void RuntimeUI::Edit(Instance& in,UIElement& e,InputSystem& input,uint64_t playe
   else if(cmd=="submit"){m_events.push_back({in.name,e.id,"submit",0,in.player,e.text});state.composition.clear();}
   else if(cmd=="cancel")state.composition.clear();
  }
- if(original!=e.text){m_events.push_back({in.name,e.id,"change",0,in.player,e.text});InvalidateLayout();}
+ if(original!=e.text){m_events.push_back({in.name,e.id,"change",0,in.player,e.text});InvalidateLayout(in);}
 }
 std::string RuntimeUI::CaptureState(uint32_t h)const{
  auto it=m_documents.find(h);if(it==m_documents.end())return "null";const auto& in=it->second;json values=json::array();for(auto& e:in.doc.elements){json value={{"id",e.id},{"kind",int(e.kind)},{"text",e.text},{"value",e.value},{"visible",e.visible},{"enabled",e.enabled}};auto state=in.widgets.find(e.id);if(state!=in.widgets.end()){auto& w=state->second;value["scroll"]={w.scroll.x,w.scroll.y};value["selection"]={w.selection.anchor,w.selection.caret};value["selectedKey"]=w.selected>=0&&w.selected<int(w.items.size())?w.items[w.selected].id:"";}values.push_back(value);}return json{{"version",1},{"scale",in.scale},{"focus",Available(in.doc,FindElement(in.doc,in.focus))?in.focus:""},{"elements",values}}.dump();
@@ -76,8 +76,8 @@ bool RuntimeUI::RestoreState(uint32_t h,const std::string& source,std::string& e
  }
  if(!it->second.doc.Validate(error)||!Focus(h,j.at("focus").get<std::string>()))throw std::runtime_error(error.empty()?"invalid saved focus":error);
  if(m_textDocument==h)m_textSerial=textSerial++;
- InvalidateLayout();if(m_layoutWidth)Layout(m_layoutWidth,m_layoutHeight);m_events=std::move(events);CancelDrag(h);error.clear();return true;
- }catch(const std::exception& e){it->second=std::move(backup);m_textDocument=textDoc;m_textElement=textElement;m_events=std::move(events);InvalidateLayout();error=e.what();return false;}
+ InvalidateLayout(it->second);if(m_layoutWidth)Layout(m_layoutWidth,m_layoutHeight);m_events=std::move(events);CancelDrag(h);error.clear();return true;
+ }catch(const std::exception& e){it->second=std::move(backup);m_textDocument=textDoc;m_textElement=textElement;m_events=std::move(events);InvalidateLayout(it->second);error=e.what();return false;}
 }
 std::string RuntimeUI::Accessibility(uint32_t h)const{
  auto i=m_documents.find(h);if(i==m_documents.end())return "null";json rows=json::array();const char* roles[]={"group","group","text","image","button","slider","toggle","textbox","scroll","list"};for(auto& e:i->second.doc.elements)if(Available(i->second.doc,&e)){json row={{"id",e.id},{"role",roles[int(e.kind)]},{"label",e.accessibleLabel.empty()?e.text:e.accessibleLabel},{"description",e.description},{"focused",i->second.focus==e.id},{"value",e.value}};if(e.kind==UIKind::TextInput)row["text"]=e.text;if(e.kind==UIKind::List)row["selectedIndex"]=Selected(h,e.id);rows.push_back(row);}return rows.dump();

@@ -122,7 +122,9 @@ export default class {
     entry.kind=UIKind::TextInput;
     entry.text="abc";
     const auto handle=ui.Add(doc,"map",0,error);
-    if (!handle) {
+    doc.visible=false;
+    const auto closedMenu=ui.Add(doc,"closed-menu",0,error);
+    if (!handle || !closedMenu) {
         Check(false,"create map layout document");
         return;
     }
@@ -133,6 +135,8 @@ export default class {
     step();
     const auto initial=*ui.LayoutOf(handle,"marker");
     const auto initialPasses=ui.Stats().layoutPasses;
+    const auto initialDocumentPasses=ui.Stats().documentLayoutPasses;
+    const auto closedMenuPosition=ui.LayoutOf(closedMenu,"image")->rect.position;
     Check(initial.visible && initial.rect.position==glm::vec2(95,75),"initial marker uses centred anchors");
     step();
     Check(ui.Stats().layoutPasses==initialPasses &&
@@ -148,9 +152,14 @@ export default class {
     Check(ui.Stats().layoutPasses==initialPasses+1 && moved.rect.position==glm::vec2(245,145) &&
           moved.clip.position==glm::vec2(100,70) && moved.clip.size==glm::vec2(200,160),
           "moving the marker and its parent updates child geometry and clip");
+    Check(ui.Stats().documentLayoutPasses==initialDocumentPasses+1 &&
+          ui.LayoutOf(closedMenu,"image")->rect.position==closedMenuPosition,
+          "a moving marker rebuilds its document and leaves the independent menu cached");
     ui.Layout(640,360);
-    Check(ui.LayoutOf(handle,"marker")->rect.position==moved.rect.position*.5f,
-          "resize recomputes the marker position");
+    Check(ui.LayoutOf(handle,"marker")->rect.position==moved.rect.position*.5f &&
+          ui.Stats().documentLayoutPasses==initialDocumentPasses+3 &&
+          ui.LayoutOf(closedMenu,"image")->rect.size==glm::vec2(100,80),
+          "resize recomputes both document layouts and the marker position");
     step();
     Check(!ui.LayoutOf(handle,"marker")->visible && !ui.LayoutOf(handle,"marker")->enabled,
           "circular clipping hides an outlying marker and enabled prevents interaction");
