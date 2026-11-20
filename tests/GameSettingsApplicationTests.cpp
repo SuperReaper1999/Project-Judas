@@ -3,6 +3,7 @@
 #include "EngineHost.h"
 #include "Project.h"
 #include "RuntimeWorld.h"
+#include "WorldPresentation.h"
 #include "SceneSerialization.h"
 #include "ScriptSystem.h"
 #include "ToolProcess.h"
@@ -112,6 +113,8 @@ export default class {
                 require(state.quality.preset === "custom" &&
                         state.quality.effective.meshLodBias === (game.legacyQuality ? 1 : 1.25),
                         "Saved custom quality or legacy defaults were lost");
+                require(state.quality.effective.renderScale === (game.legacyQuality || game.qualityV1 ? 1 : .67),
+                        "Existing preferences changed the main view scale");
                 audio.setGroup("master", game.master);
                 input.setBindings(game.bindings);
                 this.state.phase = "restored";
@@ -152,7 +155,8 @@ export default class {
             settings.applyVideo(patch);
             require(state.quality.presets.ultra.shadowResolution === 1536, "Missing quality choices");
             for (const invalid of ["custom", {shadowResolution: 640}, {directionalCascades: 0},
-                                   {meshLodBias: null}, {weather: "maximum"}, {renderScale: 2}]) {
+                                   {meshLodBias: null}, {weather: "maximum"}, {renderScale: .8},
+                                   {heightfieldLodBias: .25}, {waterSurfaceLodBias: 2}, {materialAnisotropy: 3}]) {
                 let rejected = false;
                 try { settings.applyQuality(invalid); } catch (_) { rejected = true; }
                 require(rejected && settings.read().quality.pending === null, "Invalid quality changed pending settings");
@@ -161,6 +165,7 @@ export default class {
             settings.applyQuality({meshLodBias: 1.25});
             const queued = settings.read().quality;
             require(queued.pending.shadowResolution === 512 && queued.pending.meshLodBias === 1.25 &&
+                    queued.pending.renderScale === .67 && queued.pending.heightfieldLodBias === 1.5 &&
                     queued.effective.shadowResolution === 1024, "Quality patch did not queue at the frame boundary");
             let earlySave = false;
             try { settings.save(); } catch (_) { earlySave = true; }
@@ -234,6 +239,8 @@ export default class {
     AssetRecord meshRecord;
     Require(assets.Track(mesh.string(),meshRecord,error),error);
     Scene scene;
+    scene.Settings().linearRendering = true;
+    scene.Settings().backgroundColor = {.12f,.25f,.55f};
     auto& cube = scene.CreateObject("Shadow caster");
     cube.render = SceneRenderComponent{};
     cube.render->shape = SceneShape::Mesh;
@@ -249,6 +256,55 @@ export default class {
     Require(saved, error);
 }
 
+void CheckComposedPixels(Renderer& renderer, RuntimeWorld& world, std::uint32_t hud) {
+    // Xvfb and native fullscreen changes can leave the default drawable
+    // without readable pixels. Exercise the same scaled view and HUD into
+    // an owned output, with a complete native-resolution framebuffer.
+    constexpr int width=640,height=360;
+    GLint draw=0,read=0,viewport[4]{};
+    glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&draw);
+    glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING,&read);
+    glGetIntegerv(GL_VIEWPORT,viewport);
+    GLuint output=0,colour=0,depth=0;
+    glGenFramebuffers(1,&output);
+    glBindFramebuffer(GL_FRAMEBUFFER,output);
+    glGenTextures(1,&colour);
+    glBindTexture(GL_TEXTURE_2D,colour);
+    glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA8,width,height,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
+    glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,colour,0);
+    glGenRenderbuffers(1,&depth);
+    glBindRenderbuffer(GL_RENDERBUFFER,depth);
+    glRenderbufferStorage(GL_RENDERBUFFER,GL_DEPTH_COMPONENT24,width,height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER,GL_DEPTH_ATTACHMENT,GL_RENDERBUFFER,depth);
+    Require(glCheckFramebufferStatus(GL_FRAMEBUFFER)==GL_FRAMEBUFFER_COMPLETE,
+            "Incomplete scaled composition oracle output");
+    RenderWorldFrame(renderer,width,height,world,glm::mat4(1),glm::mat4(1),{},1,0,
+                     WorldRenderPurpose::GraphicsWarmup);
+    renderer.BeginUIFrame(width,height);
+    world.UI().Draw(renderer,width,height,&world);
+    renderer.EndUIFrame();
+    const auto* layout=world.UI().LayoutOf(hud,"native-marker");
+    std::vector<unsigned char> pixels;
+    renderer.CaptureFrame(width,height,pixels);
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER,GLuint(draw));
+    glBindFramebuffer(GL_READ_FRAMEBUFFER,GLuint(read));
+    glViewport(viewport[0],viewport[1],viewport[2],viewport[3]);
+    glDeleteFramebuffers(1,&output);
+    glDeleteRenderbuffers(1,&depth);
+    glDeleteTextures(1,&colour);
+    Require(layout&&layout->visible,"Missing native HUD marker layout");
+    const auto isMarker=[&](int x,int y) {
+        const auto i=(std::size_t(y)*width+x)*3;
+        return pixels.at(i)>240&&pixels.at(i+1)<15&&pixels.at(i+2)>240;
+    };
+    const int x=int(layout->rect.position.x+1);
+    const int y=int(layout->rect.position.y+layout->rect.size.y/2);
+    const auto corner=(std::size_t(height-8)*width+width-8)*3;
+    Require(isMarker(x,y)&&!isMarker(int(layout->rect.position.x)-1,y),
+            "Native-resolution HUD marker or edge is missing");
+    Require(pixels.at(corner+2)>pixels.at(corner),"Scaled HDR background is missing");
+}
+
 int RunChild(const std::string& project, const std::string& terminalPhase) {
     unsigned frames = 0;
     ApplicationControl control;
@@ -257,8 +313,9 @@ int RunChild(const std::string& project, const std::string& terminalPhase) {
     std::uint32_t hud = 0;
     if (terminalPhase == "live") {
         control.worldReady = [&](EngineHost&, RuntimeWorld& world, InteractivePlay&) {
+            world.view = RuntimeWorld::RuntimeView{};
             UIDocument document;
-            UIElement canvas, text;
+            UIElement canvas, text, mark;
             canvas.id = "canvas";
             canvas.kind = UIKind::Canvas;
             document.elements.push_back(canvas);
@@ -267,6 +324,12 @@ int RunChild(const std::string& project, const std::string& terminalPhase) {
             text.kind = UIKind::Text;
             text.text = "HUD stays live";
             document.elements.push_back(text);
+            mark.id = "native-marker";
+            mark.parent = "canvas";
+            mark.offset = {32,64};
+            mark.size = {5,40};
+            mark.background = {1,0,1,1};
+            document.elements.push_back(mark);
             std::string error;
             hud = world.UI().Add(document,"live-hud",0,error);
             Require(hud != 0,error);
@@ -274,7 +337,7 @@ int RunChild(const std::string& project, const std::string& terminalPhase) {
     }
     unsigned lastShadowPasses = 0;
     std::optional<double> transitionSimulationTime;
-    std::optional<unsigned> transitionShadowResolution;
+    std::optional<GraphicsQuality> transitionQuality;
 
     using Clock = std::chrono::steady_clock;
     Clock::time_point lastFrame;
@@ -285,8 +348,8 @@ int RunChild(const std::string& project, const std::string& terminalPhase) {
                     "HUD ownership or camera target was lost on a rebuilt backend");
             Require(world.SimulationTimeSeconds() == *transitionSimulationTime,
                     "Simulation advanced during graphics transition");
-            Require(host.GetRenderer().Quality().shadowResolution == *transitionShadowResolution,
-                    "Rebuilt renderer lost the selected shadow resolution");
+            Require(host.GetRenderer().Quality() == *transitionQuality,
+                    "Rebuilt renderer lost the selected visual quality");
             transitionSimulationTime.reset();
         }
         const auto now = Clock::now();
@@ -304,9 +367,27 @@ int RunChild(const std::string& project, const std::string& terminalPhase) {
         for (const auto& entry : scripts->Capture()) {
             const auto state = Json::parse(entry.json);
             const auto phase = state.at("phase").get<std::string>();
+            auto& renderer=host.GetRenderer();
+            auto& window=host.GetWindow();
+            const glm::ivec2 output{window.Width(),window.Height()};
+            const auto scale=renderer.Quality().renderScale;
+            const auto expected=glm::ivec2(glm::round(glm::vec2(output)*scale));
+            Require(renderer.MainViewSize()==expected,"Main view did not rasterize at the applied scale");
+            if (terminalPhase=="live") {
+                const auto& camera=world.view.value();
+                const auto native=BuildCameraFrame(camera.pose.position,camera.pose.rotation,camera.fov,
+                    camera.nearPlane,camera.farPlane,camera.lens,output.x,output.y);
+                Require(renderer.ProjectionMatrix()==native.projection,
+                        "Scaled raster changed the native mouse-ray projection");
+                Require(renderer.RenderTargetDiagnostics().liveTargets<=(scale<1.f?2u:1u),
+                        "Repeated quality changes left old scaled targets live");
+            }
             if (phase == "live-vulkan" || phase == "live-opengl" || phase == "live-fail") {
                 transitionSimulationTime = world.SimulationTimeSeconds();
-                transitionShadowResolution = host.GetRenderer().Quality().shadowResolution;
+                transitionQuality = renderer.Quality();
+                Require(world.PresentationCameras().front().targetSize==glm::ivec2(64),
+                        "Main resolution changed the secondary camera target");
+                CheckComposedPixels(renderer,world,hud);
                 if (phase == "live-fail") SDL_setenv("JUDAS_VULKAN_DEVICE","impossible-fixture-device-name",1);
             }
             if (phase != terminalPhase || frames < 3) continue;
@@ -380,6 +461,12 @@ int main(int argc, char** argv) try {
     legacy["video"].erase("quality");
     legacy["game"]["legacyQuality"] = true;
     std::ofstream(preferences) << legacy.dump();
+    run("restored");
+    auto qualityV1 = persisted;
+    for (const auto* key : {"renderScale","heightfieldLodBias","waterSurfaceLodBias","materialAnisotropy"})
+        qualityV1["video"]["quality"].erase(key);
+    qualityV1["game"]["qualityV1"] = true;
+    std::ofstream(preferences) << qualityV1.dump();
     run("restored");
     std::ofstream(preferences) << persisted.dump();
     const auto* launchBackend = std::getenv("JUDAS_GRAPHICS");

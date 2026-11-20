@@ -414,7 +414,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
         planetViews.push_back({origin+glm::dvec3(pose.position),std::clamp(fov,.011,3.12),unsigned(camera.settings.height),camera.settings.lens.projection==CameraProjectionKind::Orthographic?CameraVisibleHeight(camera.settings.lens):0});
     }
     world.PreparePlanets(renderer,planetViews,advancePresentation?frameSeconds:0);
-    world.PrepareRuntimeTerrain(planetViews,advancePresentation?frameSeconds:0);
+    world.PrepareRuntimeTerrain(planetViews,advancePresentation?frameSeconds:0,renderer.Quality().heightfieldLodBias);
     }
     if(auto* assets=world.Resources();assets&&assets->VisualStreaming()){
         struct Interest {Frustum frustum;CategoryMask mask;};std::vector<Interest> interests;
@@ -545,6 +545,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     }
     if(mainView) {
     if(auto* players=world.PlayersIfLoaded();!observer&&players&&players->HasViews()){
+        if(!destination)renderer.BeginMainView({width,height},false);
         players->BindRenderer(renderer);
         // Each view borrows the same immutable presented world and shadow maps.
         // No extra simulation, input dispatch or audio update occurs per camera.
@@ -566,11 +567,22 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
         renderer.EndUIFrame();
     }else{
     if(destination&&!renderer.BeginRenderTarget(*destination))return;
-    renderer.BeginFrame(width, height);
+    const bool scaledAllowed=(purpose==WorldRenderPurpose::Runtime||graphicsWarmup)&&
+        (!world.view||!world.view->lens.pixelPerfect);
+    const glm::ivec2 output{width,height};
+    const auto size=destination?output:renderer.BeginMainView(output,scaledAllowed);
+    renderer.BeginFrame(size.x,size.y);
     JUDAS_PROFILE_SCOPE("Main camera");
     RendererProfileScope mainGPU(renderer,"Main camera");
     if(!observer&&world.view){const auto& v=*world.view;auto q=v.pose.rotation;
-        renderer.SetCameraFrame(BuildCameraFrame(v.pose.position,q,v.fov,v.nearPlane,v.farPlane,v.lens,width,height));
+        auto frame=BuildCameraFrame(v.pose.position,q,v.fov,v.nearPlane,v.farPlane,v.lens,width,height);
+        if(size!=output){
+            // A perspective or ordinary orthographic view retains its native
+            // camera projection for mouse rays. Only raster dimensions change.
+            frame.viewport=size;
+            frame.content={0,0,size.x,size.y};
+        }
+        renderer.SetCameraFrame(frame);
     }else renderer.SetCamera(view, projection);
     world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(glm::inverse(renderer.ViewMatrix())[3]),observer?UINT64_MAX-1:0);
     renderer.SetRenderMask(settings.mainCameraRenderMask);
@@ -580,6 +592,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     DrawWorldTransparents(renderer, world, alpha);
     renderer.DrawWeather();
     renderer.EndFrame();
+    if(!destination)renderer.EndMainView(output);
     }
     if(destination)renderer.EndRenderTarget(/*restoreCamera=*/false);
     }

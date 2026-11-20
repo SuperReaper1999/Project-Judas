@@ -72,21 +72,32 @@ std::string Backend(const Json& value) {
 }
 
 constexpr unsigned ShadowResolutions[]{256,512,768,1024,1536};
+constexpr float RenderScales[]{.5f,.67f,.75f,.85f,1.f};
+constexpr unsigned AnisotropyLevels[]{1,2,4,8,16};
 using WeatherQuality = GraphicsQuality::Weather;
 constexpr std::pair<std::string_view,GraphicsQuality> QualityPresets[]{
-    {"low",      { 256, 1, 1.f,   false, 2.f,  WeatherQuality::Low,      0}},
-    {"medium",   { 512, 2, 1.f,   false, 1.5f, WeatherQuality::Low,      2}},
-    {"high",     { 768, 3, .85f,  true,  1.f,  WeatherQuality::Authored, 4}},
-    {"veryHigh", {1024, 3, 1.f,   true,  .75f, WeatherQuality::High,     6}},
-    {"ultra",    {1536, 3, 1.25f, true,  .5f,  WeatherQuality::High,     8}}
+    {"low",      { 256, 1, 1.f,   false, 2.f,  WeatherQuality::Low,      0, .5f,  2.f,  1,  1}},
+    {"medium",   { 512, 2, 1.f,   false, 1.5f, WeatherQuality::Low,      2, .67f, 1.5f, 1,  2}},
+    {"high",     { 768, 3, .85f,  true,  1.f,  WeatherQuality::Authored, 4, .85f, 1.f,  0,  4}},
+    {"veryHigh", {1024, 3, 1.f,   true,  .75f, WeatherQuality::High,     6, 1.f,  .75f, 0,  8}},
+    {"ultra",    {1536, 3, 1.25f, true,  .5f,  WeatherQuality::High,     8, 1.f,  .5f, -1, 16}}
 };
+
+GraphicsQuality PresetForDevice(GraphicsQuality values, unsigned anisotropyLimit) {
+    const auto cap=std::min(values.materialAnisotropy, anisotropyLimit);
+    values.materialAnisotropy=*std::prev(std::upper_bound(std::begin(AnisotropyLevels),std::end(AnisotropyLevels),cap));
+    return values;
+}
 
 Json QualityValues(const GraphicsQuality& quality) {
     const char* weather = quality.weather == WeatherQuality::Authored ? "authored" :
                           quality.weather == WeatherQuality::Low ? "low" : "high";
     return {{"shadowResolution", quality.shadowResolution}, {"directionalCascades", quality.directionalCascades},
             {"shadowDistanceScale", quality.shadowDistanceScale}, {"shadowFilter", quality.softShadows ? "soft" : "fast"},
-            {"meshLodBias", quality.meshLodBias}, {"weather", weather}, {"localShadowBudget", quality.localShadowBudget}};
+            {"meshLodBias", quality.meshLodBias}, {"weather", weather}, {"localShadowBudget", quality.localShadowBudget},
+            {"renderScale", double(std::lround(quality.renderScale*100))/100},
+            {"heightfieldLodBias", quality.heightfieldLodBias}, {"waterSurfaceLodBias", quality.waterSurfaceLodBias},
+            {"materialAnisotropy",quality.materialAnisotropy}};
 }
 
 float QualityNumber(const Json& value, float minimum, float maximum, const char* name) {
@@ -95,15 +106,16 @@ float QualityNumber(const Json& value, float minimum, float maximum, const char*
     return value.get<float>();
 }
 
-GraphicsQuality ParseQuality(const Json& input, GraphicsQuality quality) {
+GraphicsQuality ParseQuality(const Json& input, GraphicsQuality quality, unsigned anisotropyLimit=16) {
     if (input.is_string()) {
         if (input == "default") return {};
         for (const auto& preset : QualityPresets)
-            if (input == preset.first) return preset.second;
+            if (input == preset.first) return PresetForDevice(preset.second,anisotropyLimit);
         throw std::runtime_error("Unknown graphics quality preset");
     }
     Keys(input, {"shadowResolution", "directionalCascades", "shadowDistanceScale", "shadowFilter",
-                 "meshLodBias", "weather", "localShadowBudget"});
+                 "meshLodBias", "weather", "localShadowBudget", "renderScale", "heightfieldLodBias",
+                 "waterSurfaceLodBias", "materialAnisotropy"});
     if (input.contains("shadowResolution")) {
         const auto size = unsigned(Integer(input.at("shadowResolution"), 256, 1536, "shadowResolution"));
         Require(std::find(std::begin(ShadowResolutions), std::end(ShadowResolutions), size) != std::end(ShadowResolutions),
@@ -129,24 +141,49 @@ GraphicsQuality ParseQuality(const Json& input, GraphicsQuality quality) {
     }
     if (input.contains("localShadowBudget"))
         quality.localShadowBudget = unsigned(Integer(input.at("localShadowBudget"), 0, 8, "localShadowBudget"));
+    if (input.contains("renderScale")) {
+        const auto scale = QualityNumber(input.at("renderScale"), .5f, 1.f, "renderScale");
+        Require(std::find(std::begin(RenderScales),std::end(RenderScales),scale)!=std::end(RenderScales),
+                "Choose a supported render scale");
+        quality.renderScale = scale;
+    }
+    if (input.contains("heightfieldLodBias"))
+        quality.heightfieldLodBias = QualityNumber(input.at("heightfieldLodBias"), .5f, 2.f, "heightfieldLodBias");
+    if (input.contains("waterSurfaceLodBias"))
+        quality.waterSurfaceLodBias = Integer(input.at("waterSurfaceLodBias"), -1, 1, "waterSurfaceLodBias");
+    if (input.contains("materialAnisotropy")) {
+        const auto amount=unsigned(Integer(input.at("materialAnisotropy"),1,16,"materialAnisotropy"));
+        Require(amount<=anisotropyLimit &&
+                std::find(std::begin(AnisotropyLevels),std::end(AnisotropyLevels),amount)!=std::end(AnisotropyLevels),
+                "Choose a material anisotropy level supported by this device");
+        quality.materialAnisotropy=amount;
+    }
     return quality;
 }
 
-Json QualityState(const GraphicsQuality& effective, const std::optional<GraphicsQuality>& pending, int limit) {
+Json QualityState(const GraphicsQuality& effective, const std::optional<GraphicsQuality>& pending, int limit,
+                  glm::ivec2 mainView, unsigned anisotropyLimit) {
     std::string_view matching = "custom";
     auto presets = Json::object();
-    for (const auto& [name, values] : QualityPresets) {
+    for (const auto& [name, preset] : QualityPresets) {
+        const auto values=PresetForDevice(preset,anisotropyLimit);
         if (values == effective) matching = name;
         if (int(values.shadowResolution) <= limit) presets[std::string(name)] = QualityValues(values);
     }
     auto resolutions = Json::array();
     for (const auto size : ShadowResolutions) if (int(size) <= limit) resolutions.push_back(size);
+    auto anisotropy=Json::array();
+    for (const auto amount:AnisotropyLevels) if(amount<=anisotropyLimit)anisotropy.push_back(amount);
     return {{"preset", matching}, {"effective", QualityValues(effective)},
             {"pending", pending ? QualityValues(*pending) : Json(nullptr)}, {"presets", presets},
+            {"mainView", mainView.x > 0 ? Json{{"width",mainView.x},{"height",mainView.y}} : Json(nullptr)},
             {"choices", {{"shadowResolution", resolutions}, {"directionalCascades", {1,2,3}},
                          {"shadowDistanceScale", {{"min",.5},{"max",1.5}}},
                          {"shadowFilter", {"fast","soft"}}, {"meshLodBias", {{"min",.5},{"max",2}}},
-                         {"weather", {"authored","low","high"}}, {"localShadowBudget", {{"min",0},{"max",8}}}}}};
+                         {"weather", {"authored","low","high"}}, {"localShadowBudget", {{"min",0},{"max",8}}},
+                         {"renderScale", {.5,.67,.75,.85,1}},
+                         {"heightfieldLodBias", {{"min",.5},{"max",2}}},
+                         {"waterSurfaceLodBias", {-1,0,1}}, {"materialAnisotropy",anisotropy}}}};
 }
 }
 
@@ -260,7 +297,8 @@ void GameSettings::Attach(EngineHost& host) {
     }
     if (!m_shadowsOverride && m_shadows) host.GetRenderer().SetShadowsEnabled(*m_shadows);
     auto& renderer = host.GetRenderer();
-    if (renderer.SupportsGraphicsQuality()) renderer.SetGraphicsQuality(m_quality,m_qualityError);
+    if (renderer.SupportsGraphicsQuality())
+        renderer.SetGraphicsQuality(m_quality,m_qualityError,{host.GetWindow().Width(),host.GetWindow().Height()});
     else renderer.SetShadowBudget(m_quality.localShadowBudget);
 }
 
@@ -298,10 +336,11 @@ Json GameSettings::Read() const {
             {"fpsCap", m_fpsCap}, {"shadows", m_host->GetRenderer().ShadowsEnabled()},
             {"localShadowBudget", m_host->GetRenderer().ShadowBudget()}, {"activeBackend", active},
             {"quality", m_desktop && m_host->GetRenderer().SupportsGraphicsQuality()
-                ? QualityState(m_host->GetRenderer().Quality(),m_qualityRequest,m_host->GraphicsCaps().limits.textureSize)
+                ? QualityState(m_host->GetRenderer().Quality(),m_qualityRequest,m_host->GraphicsCaps().limits.textureSize,
+                               m_host->GetRenderer().MainViewSize(),m_host->GetRenderer().MaxMaterialAnisotropy())
                 : Json(nullptr)}, {"qualityError", m_qualityError.empty() && m_host->GetRenderer().ShadowStorageLimited()
                     ? "Shadow storage could not grow on this device. Choose a smaller shadow resolution or budget."
-                    : m_qualityError},
+                    : (m_qualityError.empty() ? m_host->GetRenderer().MainViewError() : m_qualityError)},
             {"requestedBackend", m_switchRequest ? (*m_switchRequest ? "vulkan" : "opengl") : m_backend}, {"backends", backends},
             {"restartRequired", !m_backendOverride && m_backend != active},
             {"liveBackendSwitch", CanSwitchBackend()}, {"backendTransition", m_switchState},
@@ -366,7 +405,8 @@ Json GameSettings::Invoke(const std::string& operation, const std::string& argum
         Require(!m_switchRequest, "Wait for the backend transition before changing graphics quality");
         auto& renderer = m_host->GetRenderer();
         Require(renderer.SupportsGraphicsQuality(), "Graphics quality requires the shared renderer");
-        const auto quality = ParseQuality(Parse(argument),m_qualityRequest.value_or(renderer.Quality()));
+        const auto quality = ParseQuality(Parse(argument),m_qualityRequest.value_or(renderer.Quality()),
+                                          renderer.MaxMaterialAnisotropy());
         Require(int(quality.shadowResolution)<=m_host->GraphicsCaps().limits.textureSize,
                 "Shadow resolution exceeds the current device texture limit");
         m_qualityError.clear();
@@ -439,7 +479,8 @@ Json GameSettings::Invoke(const std::string& operation, const std::string& argum
 
 void GameSettings::Advance() {
     if (m_qualityRequest) {
-        if (m_host->GetRenderer().SetGraphicsQuality(*m_qualityRequest,m_qualityError))
+        const auto& window=m_host->GetWindow();
+        if (m_host->GetRenderer().SetGraphicsQuality(*m_qualityRequest,m_qualityError,{window.Width(),window.Height()}))
             m_quality = *m_qualityRequest;
         m_qualityRequest.reset();
     }
@@ -539,8 +580,8 @@ bool GameSettings::AdvanceBackendSwitch(RuntimeWorld& world, const char* title, 
                 return false;
             auto& renderer = host.GetRenderer();
             renderer.SetShadowsEnabled(shadows);
-            if (!renderer.SetGraphicsQuality(quality,diagnostic)) return false;
             if (!ApplyDisplay(display,diagnostic) || (vsync && !window.SetVSync(*vsync,diagnostic)) ||
+                !renderer.SetGraphicsQuality(quality,diagnostic,{window.Width(),window.Height()}) ||
                 !world.RestoreGraphicsState(state,host.GraphicsCaps(),diagnostic)) return false;
             showTransition();
 

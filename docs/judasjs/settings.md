@@ -65,6 +65,14 @@ reports `quality: null`.
 | Very High (`veryHigh`) | 1024 | 3 | 1 | Soft | 0.75 | High | 6 |
 | Ultra (`ultra`) | 1536 | 3 | 1.25 | Soft | 0.5 | High | 8 |
 
+| Preset | Main 3D scale | Heightfield LOD bias | Advanced Water LOD bias | Material anisotropy ceiling |
+| --- | ---: | ---: | ---: | ---: |
+| Low | 0.50 | 2 | +1 | 1× |
+| Medium | 0.67 | 1.5 | +1 | 2× |
+| High | 0.85 | 1 | 0 | 4× |
+| Very High | 1.00 | 0.75 | 0 | 8× |
+| Ultra | 1.00 | 0.5 | −1 | 16× |
+
 - `shadowResolution` sets the square resolution of each depth layer. Sun, spot
   and point charts share the array. A point shadow consumes six layers. For
   budgeting, a layer is approximately four bytes per texel. Changing resolution
@@ -86,6 +94,28 @@ reports `quality: null`.
   visual precipitation budget. Secondary views retain their bounded policy.
   A game can still turn off visual weather with `weather.quality = 0`. Weather
   fields, physical forces and gameplay queries keep their authored behaviour.
+- `renderScale` accepts 0.50, 0.67, 0.75, 0.85 or 1.00. It sizes the main
+  standalone view's colour and depth work, including lighting, transparency,
+  weather and HDR resolve. The engine upscales the resolved colour before
+  drawing HUD and text at the full output resolution. Camera rays and pointer
+  coordinates keep their native coordinate system. Secondary camera targets
+  retain their authored dimensions. Split-screen, pixel-perfect views, and
+  editor outputs retain their existing raster dimensions.
+- `heightfieldLodBias` multiplies projected-error tolerance for ordinary
+  terrain heightfields by 0.5 to 2. Lower values use more detail. All views
+  still contribute to the shared visual selection and cave seams stay pinned.
+  Cave volume meshes, planet tiles, collision, streaming and saved terrain
+  retain their existing policies.
+- `waterSurfaceLodBias` selects −1 for finer, 0 for authored, or +1 for
+  coarser Advanced Water surface tessellation, within the existing three
+  mesh levels. It leaves the water field, optical solver and Basic Water alone.
+- `materialAnisotropy` selects 1×, 2×, 4×, 8× or 16×, subject to the
+  device's reported sampler limit. Named presets choose the highest supported
+  level at or below their ceiling. An explicit unsupported choice fails
+  validation. The control affects opaque draws with resident, prefiltered
+  mip chains and authored trilinear samplers. It preserves authored wrapping,
+  nearest sampling, texture overrides and alpha coverage. The renderer
+  reuses sampler state without uploading textures again.
 
 Fresh preferences and older preference files retain the previous renderer
 defaults. The standalone Linux default is 1024, three cascades, coverage scale
@@ -94,6 +124,11 @@ sources. A saved legacy local budget is retained. `applyQuality("default")`
 restores those quality defaults live. It leaves window settings, the global
 shadow toggle, and game preferences intact. Call `settings.save()` after the
 request completes to persist the new configuration.
+Preferences saved before the new controls keep native rendering resolution,
+authored heightfield and water detail, and authored texture filtering. They may
+then display as Custom. `quality.mainView` reports the most recently rendered
+main-view dimensions. Compare it with the output dimensions to detect a native
+view or allocation fallback. It is null before the first view.
 
 Use the preset dictionary to populate a menu and the choices to constrain
 individual inputs. The game owns presentation. The
@@ -116,11 +151,10 @@ over, including when the runtime recovers the old backend.
 | Area | Current engine boundary |
 | --- | --- |
 | Lighting and shadows | The global toggle and local source budget predate presets. The renderer now exposes shared depth size, directional coverage and filtering. Separate sun/local depth sizes would require separate arrays and sampling paths. Cache invalidation is automatic. |
-| Geometry and terrain | Existing cooked mesh LODs support the visual bias above. Terrain has a separate visual LOD for height pages alongside distinct cave and planet paths. There is no single qualified terrain control across those paths. Presets leave terrain residency, collision and authored scene visibility alone. |
-| Vegetation and texture filtering | Vegetation can be authored as ordinary scene meshes. There is no general decor-only density owner or game-wide material sampler policy. |
-| Particles and fluids | Current emitter budgets and grids can own gameplay state, including impacts and fluid coupling. Presets preserve that state. The water surface keeps its existing view-distance detail policy. |
+| Geometry and terrain | Mesh LOD bias and heightfield visual LOD are separate controls. Cave and planet paths retain their own contracts. There is no global draw-distance override. |
+| Vegetation | Vegetation can be authored as ordinary scene meshes. A density control needs an explicit decorative-instance owner with stable identities and matching colour and shadow visibility. |
+| Particles and fluids | Current emitter budgets and grids can own gameplay state, including impacts and fluid coupling. Presets preserve those budgets. Only Advanced Water surface tessellation is adjustable. |
 | Reflections and post-processing | Environment maps and scene exposure are authored controls. The renderer has no general quality ladder for dynamic reflections or post-processing. |
-| Render scale | Render targets exist for individual cameras. An independent main-view scale needs a qualified composition path that preserves native-resolution UI, depth copies, camera targets and presentation. Use display settings for window dimensions. |
 
 ## Backend selection and recovery
 

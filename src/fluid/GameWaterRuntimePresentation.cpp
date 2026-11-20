@@ -32,7 +32,8 @@ void WorldSystem::Draw(Renderer &renderer) const {
         // No field reconstruction, tessellation, upload or fine wave work for
         // an unseen region. Cameras share immutable revision caches and LODs.
         const float distance=glm::length(eye-region->grid.ToWorld(glm::vec3(c.cells)*c.cellSize*.5f));
-        const unsigned lod=distance<35?0:distance<100?1:2;
+        const int authoredLod=distance<35?0:distance<100?1:2;
+        const unsigned lod=unsigned(std::clamp(authoredLod+renderer.Quality().waterSurfaceLodBias,0,2));
         const unsigned subdivision=lod==0?4:lod==1?2:1;
         if(region->surfaceRevision!=region->revision){
             JUDAS_PROFILE_SCOPE("Grid water visual field");

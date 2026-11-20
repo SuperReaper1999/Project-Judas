@@ -11,12 +11,19 @@ struct GraphicsQuality {
     float meshLodBias = 1;
     Weather weather = Weather::Authored;
     unsigned localShadowBudget = 8;
+    float renderScale = 1;
+    float heightfieldLodBias = 1;
+    int waterSurfaceLodBias = 0;
+    unsigned materialAnisotropy = 1;
 
     bool operator==(const GraphicsQuality& other) const {
         return shadowResolution == other.shadowResolution &&
                directionalCascades == other.directionalCascades &&
                shadowDistanceScale == other.shadowDistanceScale &&
                softShadows == other.softShadows && meshLodBias == other.meshLodBias &&
-               weather == other.weather && localShadowBudget == other.localShadowBudget;
+               weather == other.weather && localShadowBudget == other.localShadowBudget &&
+               renderScale == other.renderScale && heightfieldLodBias == other.heightfieldLodBias &&
+               waterSurfaceLodBias == other.waterSurfaceLodBias &&
+               materialAnisotropy == other.materialAnisotropy;
     }
 };

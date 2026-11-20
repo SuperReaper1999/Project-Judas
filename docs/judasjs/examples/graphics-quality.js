@@ -10,6 +10,11 @@ export function chooseShadowFilter(filter) {
     if (settings.read()?.quality) settings.applyQuality({shadowFilter: filter});
 }
 
+/** @param {import("judas").GraphicsQuality["renderScale"]} scale */
+export function chooseRenderScale(scale) {
+    if (settings.read()?.quality?.choices.renderScale.includes(scale)) settings.applyQuality({renderScale: scale});
+}
+
 // Call once from update() when a menu request is awaiting completion.
 export function finishQualityChange() {
     const state = settings.read();

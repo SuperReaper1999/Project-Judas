@@ -43,7 +43,7 @@ class Runtime {
     std::vector<BodyHandle> Bodies() const;
     SolidSnapshot Solid() const;
     void Synchronize();
-    void PrepareViews(const std::vector<PlanetView> &, glm::dvec3 origin, float seconds = 0);
+    void PrepareViews(const std::vector<PlanetView> &, glm::dvec3 origin, float seconds = 0, float visualBias = 1);
     void BindAsset(std::string id, std::string fingerprint);
 
   private:

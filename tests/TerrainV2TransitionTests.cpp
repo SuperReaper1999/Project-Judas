@@ -1,4 +1,6 @@
 #include "EngineHost.h"
+#include "PlanetTerrain.h"
+#include "RuntimeWorld.h"
 #include "ScreenshotWriter.h"
 #include "terrain/TerrainLodTransition.h"
 #include <algorithm>
@@ -8,6 +10,7 @@
 #include <iostream>
 #include <limits>
 #include <stdexcept>
+#include <thread>
 
 namespace {
 unsigned checks = 0;
@@ -79,6 +82,68 @@ void History(const Selection &coarse, const Selection &fine) {
     observedFirst.Update(fine, 1.f / 60);
     Check(!observedFirst.Active() && observedFirst.Current().size() == fine.size(),
           "the first game view does not inherit an unrelated observer's starting detail");
+}
+
+void CheckHeightfieldQuality(EngineHost& host, const TerrainV2::Source& source) {
+    Scene scene;
+    auto& entity=scene.CreateObject("Scalable heightfield");
+    const auto id=entity.id;
+    entity.body=SceneBodyComponent{};
+    entity.render=SceneRenderComponent{};
+    RuntimeWorld world;
+    std::string error;
+    Check(world.Build(scene,&host.Resources(),error),"build quality heightfield world");
+    Check(world.LiveTerrain().CreateLandscape(id,source,error),"cook heightfield and collision");
+    for (unsigned i=0;i<3000&&world.RuntimeTerrainBusy(id);++i) {
+        world.AdvanceRuntimeTerrain();
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+    Check(world.HasRuntimeTerrain(id)&&!world.RuntimeTerrainBusy(id),"publish heightfield quality fixture");
+    const auto pin=world.Physics().Raycast({0,12,0},{0,-1,0},30);
+    std::string terrainBefore,terrainAfter;
+    Check(pin.hit&&world.CaptureRuntimeTerrain(id,terrainBefore,error),"capture authoritative terrain state");
+
+    const glm::vec3 eye{0,10,0};
+    TerrainV2::HeightLod oracle(source);
+    unsigned pixels=0;
+    for (const unsigned candidate : {16,32,64,128,256}) {
+        const std::vector<TerrainV2::View> views{{eye,0,candidate/16.}};
+        if (oracle.Select(views,{},1).size() > oracle.Select(views,{},4).size()) {
+            pixels=candidate;
+            break;
+        }
+    }
+    Check(pixels>0,"fixture exercises distinct visual heightfield selections at one camera");
+    auto& renderer=host.GetRenderer();
+    const auto target=renderer.CreateRenderTarget(128,128,error);
+    Check(target.IsValid(),"allocate heightfield quality capture");
+    const auto original=renderer.Quality();
+    const auto draw=[&](float bias){
+        auto quality=original;
+        quality.heightfieldLodBias=bias;
+        Check(renderer.SetGraphicsQuality(quality,error),"apply heightfield visual quality");
+        world.PrepareRuntimeTerrain({{eye,1.,pixels,16.}},0,renderer.Quality().heightfieldLodBias);
+        renderer.ResetStats();
+        Check(renderer.BeginRenderTarget(target),"capture prepared runtime terrain");
+        renderer.SetCamera(glm::lookAt(eye,{0,0,0},{0,0,-1}),glm::ortho(-7.f,7.f,-7.f,7.f,.1f,30.f));
+        renderer.SetLighting({.4f,1,.2f},{1,1,1},{.3f,.3f,.3f});
+        world.DrawRuntimeTerrain(renderer);
+        std::vector<unsigned char> rgb;
+        renderer.CaptureFrame(128,128,rgb);
+        renderer.EndRenderTarget();
+        return std::make_pair(renderer.Stats().triangles,std::move(rgb));
+    };
+    const auto fine=draw(.5f);
+    const auto coarse=draw(2.f);
+    Check(coarse.first>0&&fine.first>coarse.first&&fine.second!=coarse.second,
+          "heightfield bias changes actual submitted triangles and shaded surface pixels");
+    const auto pinAfter=world.Physics().Raycast({0,12,0},{0,-1,0},30);
+    Check(pinAfter.hit&&pinAfter.body.id==pin.body.id&&pinAfter.body.world==pin.body.world&&pinAfter.point==pin.point&&
+          world.CaptureRuntimeTerrain(id,terrainAfter,error)&&terrainAfter==terrainBefore,
+          "visual heightfield quality preserves collision and serialized terrain state");
+    std::cout<<"MEASURE heightfield triangles fine="<<fine.first<<" coarse="<<coarse.first<<'\n';
+    Check(renderer.SetGraphicsQuality(original,error),"restore authored heightfield quality");
+    renderer.DestroyRenderTarget(target);
 }
 } // namespace
 
@@ -202,6 +267,7 @@ int main(int argc, char **argv) {
         Check(glGetError() == GL_NO_ERROR, "transition draws produce no OpenGL error");
         renderer.DestroyRenderTarget(target);
         renderer.DestroyTexture(heights);
+        CheckHeightfieldQuality(host,source);
         if (argc > 1) {
             const std::filesystem::path output(argv[1]);
             Check(!std::filesystem::exists(output), "visual evidence directory is fresh");

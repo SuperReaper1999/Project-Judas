@@ -1298,11 +1298,16 @@ declare module "judas" {
     meshLodBias: number;
     weather: "authored" | "low" | "high";
     localShadowBudget: number;
+    renderScale: 0.5 | 0.67 | 0.75 | 0.85 | 1;
+    heightfieldLodBias: number;
+    waterSurfaceLodBias: -1 | 0 | 1;
+    materialAnisotropy: 1 | 2 | 4 | 8 | 16;
   }
   export interface GraphicsQualityState {
     preset: GraphicsPreset | "custom";
     effective: GraphicsQuality;
     pending: GraphicsQuality | null;
+    mainView: {width: number; height: number} | null;
     presets: Partial<Record<GraphicsPreset, GraphicsQuality>>;
     choices: {
       shadowResolution: GraphicsQuality["shadowResolution"][];
@@ -1312,6 +1317,10 @@ declare module "judas" {
       meshLodBias: {min: number; max: number};
       weather: GraphicsQuality["weather"][];
       localShadowBudget: {min: number; max: number};
+      renderScale: GraphicsQuality["renderScale"][];
+      heightfieldLodBias: {min: number; max: number};
+      waterSurfaceLodBias: GraphicsQuality["waterSurfaceLodBias"][];
+      materialAnisotropy: GraphicsQuality["materialAnisotropy"][];
     };
   }
   export type DisplayPreview = {fullscreen: true} | {fullscreen: false; width: number; height: number};

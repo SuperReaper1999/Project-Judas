@@ -304,6 +304,58 @@ int main(int argc, char **argv) {
   }
   Check(monotonic && reducesTriangles,"graphics quality selects fewer actual authored LOD triangles");
   Check(r.SetGraphicsQuality(originalQuality,error),"restore authored graphics quality");
+  if (r.MaxMaterialAnisotropy()>=2) {
+    TextureData stripes;
+    stripes.width=stripes.height=256;
+    for (unsigned y=0;y<256;++y)
+      for (unsigned x=0;x<256;++x) {
+        const auto value=uint8_t((x/2)%2?255:0);
+        stripes.pixels.insert(stripes.pixels.end(),{value,value,value,255});
+      }
+    AssetCookSettings samplerCook;
+    samplerCook.textureMode=1;
+    MaterialDefinition surface;
+    surface.model=MaterialModel::Unlit;
+    Bytes chain;
+    Check(CookTextureAsset(stripes,samplerCook,"anisotropy-stripes",chain,error)&&
+          DecodeCookedTexture(chain.data(),chain.size(),surface.maps[0].embedded,error),
+          "cook real mip levels for oblique material sampling");
+    MaterialBinding binding;
+    binding.handle=r.CreateMaterial(surface);
+    const auto resident=r.MaterialResidentBytes(binding.handle);
+    const auto target=r.CreateRenderTarget(256,256,error,true);
+    Check(resident>0&&target.IsValid(),"allocate opaque material and sampling capture");
+    r.SetSceneAppearance(true,1,{},1,{1,0,0,0},false);
+    const auto view=glm::lookAt(glm::vec3(0,1.5f,4),glm::vec3(0,0,-12),glm::vec3(0,1,0));
+    const auto project=glm::perspective(glm::radians(60.f),1.f,.1f,80.f);
+    const auto capture=[&](unsigned amount,bool masked) {
+      auto q=originalQuality;
+      q.materialAnisotropy=amount;
+      Check(r.SetGraphicsQuality(q,error)&&r.BeginRenderTarget(target),"apply selected sampler to resident material");
+      r.SetCamera(view,project);
+      r.SetLighting({0,1,0},{1,1,1},{.4f,.4f,.4f});
+      binding.overrides.alpha=masked?MaterialAlpha::Mask:MaterialAlpha::Opaque;
+      r.SetMaterialBindings({binding});
+      r.DrawBox({0,-.05f,-9},{1,0,0,0},{5,.05f,15},{1,1,1});
+      r.EndFrame();
+      Bytes image;
+      r.CaptureFrame(256,256,image);
+      r.EndRenderTarget();
+      return image;
+    };
+    const unsigned maximum=std::min(16u,r.MaxMaterialAnisotropy());
+    const auto authored=capture(1,false);
+    const auto filtered=capture(maximum,false);
+    Check(Rms(authored,filtered)>.15&&r.MaterialResidentBytes(binding.handle)==resident,
+          "anisotropic sampler changes oblique texture pixels without replacing the resident image");
+    Check(capture(1,true)==capture(maximum,true),
+          "material mask override keeps exact authored alpha sampling");
+    Check(r.SetGraphicsQuality(originalQuality,error),"restore authored material filtering");
+    r.SetMaterialBindings({});
+    r.SetSceneAppearance(false,1,{},1,{1,0,0,0},false);
+    r.DestroyRenderTarget(target);
+    r.DestroyMaterial(binding.handle);
+  }
   r.SetMeshLodMultiplier(1);
   MeshData diagnostic;
   Check(r.ReadMeshForDiagnostics(handle, diagnostic) &&

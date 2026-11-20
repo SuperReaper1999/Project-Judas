@@ -95,28 +95,45 @@ void Renderer::EndMeshBatch(){
  m_materialBindings=std::move(saved);m_renderLayer=layer;m_render->submission.Clear();
 }
 
-bool Renderer::SetGraphicsQuality(const GraphicsQuality& quality, std::string& error) {
- if(quality==m_graphicsQuality){m_rejectedShadowLayers=0;return true;}
- if(!SupportsGraphicsQuality()||m_shadowPassActive){
+bool Renderer::SetGraphicsQuality(const GraphicsQuality& quality, std::string& error, glm::ivec2 outputSize) {
+ if(!SupportsGraphicsQuality()||m_shadowPassActive||m_activeTarget.IsValid()){
   error="Graphics quality requires the shared renderer at a frame boundary";return false;
  }
  if(quality.shadowResolution>unsigned(std::max(0,m_capabilities.limits.textureSize))){
   error="Shadow resolution exceeds the current device texture limit";return false;
+ }
+ if(quality.materialAnisotropy>m_maxMaterialAnisotropy){
+  error="Material anisotropy exceeds the current device sampler limit";return false;
+ }
+ RenderTargetHandle stagedMain;
+ if(quality.renderScale!=1.f&&outputSize.x>0&&outputSize.y>0){
+  const auto size=ScaledMainViewSize(outputSize,quality.renderScale);
+  if(RenderTargetSize(m_scaledMainView)!=size){
+   stagedMain=CreateRenderTarget(size.x,size.y,error,true);
+   if(!stagedMain.IsValid())return false;
+  }
  }
  if(quality.shadowResolution!=m_graphicsQuality.shadowResolution&&m_shadowLayers){
   const unsigned limit=quality.localShadowBudget?unsigned(kLocalShadowBase)+6*quality.localShadowBudget:
                        quality.directionalCascades;
   const unsigned layers=std::min(m_shadowLayers,limit);
   if(!AllocateShadowLayers(layers,quality.shadowResolution,false)){
+   if(stagedMain.IsValid()){DestroyRenderTarget(stagedMain);m_targets.pop_back();}
    error="Could not allocate the requested shadow depth array";return false;
   }
   m_shadowContentValid.fill(false);
   m_render->shadowCache.Clear();
  }
+ if(stagedMain.IsValid()||quality.renderScale==1.f)ReplaceMainViewTarget(stagedMain);
+ m_mainViewError.clear();
+ m_failedMainViewSize={};
  if(quality.softShadows!=m_graphicsQuality.softShadows){
   glUseProgram(m_shaderProgram);
   glUniform1i(glGetUniformLocation(m_shaderProgram,"uFastShadows"),!quality.softShadows);
  }
+ if(quality.materialAnisotropy!=m_graphicsQuality.materialAnisotropy)
+  for(const auto& entry:m_anisotropicSamplers)
+   if(entry.second)glSamplerParameterf(entry.second,kMaterialAnisotropyParameter,float(quality.materialAnisotropy));
  m_graphicsQuality=quality;
  m_rejectedShadowLayers=0;
  return true;

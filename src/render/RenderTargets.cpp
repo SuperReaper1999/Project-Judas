@@ -1,7 +1,64 @@
 #include "../Renderer.h"
+#include "../PerformanceProfiler.h"
 
 // Context-owned target allocation and one-level offscreen pass scope. Scene
 // policy and draw submission remain with the caller.
+
+glm::ivec2 Renderer::ScaledMainViewSize(glm::ivec2 output, float scale) {
+    return glm::max(glm::ivec2(1), glm::ivec2(glm::round(glm::vec2(output)*scale)));
+}
+
+void Renderer::ReplaceMainViewTarget(RenderTargetHandle replacement) {
+    if (!m_scaledMainView.IsValid()) {
+        m_scaledMainView = replacement;
+        return;
+    }
+    DestroyRenderTarget(m_scaledMainView);
+    if (replacement.IsValid()) {
+        // The private slot has no external handles. Keep it across resizes
+        // and reclaim the append slot from CreateRenderTarget.
+        m_targets[m_scaledMainView.id] = m_targets[replacement.id];
+        m_targets.pop_back();
+    }
+}
+
+glm::ivec2 Renderer::BeginMainView(glm::ivec2 output, bool allowScale) {
+    m_mainViewSize = output;
+    if (!allowScale || m_graphicsQuality.renderScale == 1.f) return output;
+    const auto size = ScaledMainViewSize(output,m_graphicsQuality.renderScale);
+    if (RenderTargetSize(m_scaledMainView) != size) {
+        if (m_failedMainViewSize == size) return output;
+        auto target = CreateRenderTarget(size.x,size.y,m_mainViewError,true);
+        if (!target.IsValid()) {
+            m_failedMainViewSize = size;
+            return output;
+        }
+        ReplaceMainViewTarget(target);
+        m_failedMainViewSize = {};
+    }
+    if (!BeginRenderTarget(m_scaledMainView,true)) return output;
+    m_mainViewError.clear();
+    m_mainViewScaling = true;
+    m_mainViewSize = size;
+    JUDAS_PROFILE_COUNTER("Main view target pixels",double(size.x)*size.y,ProfileCounterMode::Latest);
+    return size;
+}
+
+void Renderer::EndMainView(glm::ivec2 output) {
+    if (!m_mainViewScaling) return;
+    m_mainViewScaling = false;
+    EndRenderTarget(false);
+    JUDAS_PROFILE_SCOPE("Main view upscale");
+    RendererProfileScope gpu(*this,"Main view upscale");
+    // Like split-screen composition, draw into the current attachment's
+    // render area. During a native resize its extent can lag window size.
+    // Only resolved colour leaves the target. HUD never samples scene depth.
+    BeginUIFrame(output.x,output.y,false);
+    glDisable(GL_BLEND);
+    DrawUIImage({0,0},glm::vec2(output),RenderTargetTexture(m_scaledMainView),
+                 glm::vec4(1),false,true);
+    EndUIFrame();
+}
 
 RenderTargetHandle Renderer::CreateRenderTarget(int width, int height, std::string& error,bool display) {
     error.clear();
@@ -88,7 +145,8 @@ bool Renderer::BeginRenderTarget(RenderTargetHandle target, bool preserveContent
     glBindFramebuffer(GL_FRAMEBUFFER, gpu.framebuffer);
     if (!preserveContents) BeginFrame(gpu.width, gpu.height);
     else glViewport(0, 0, gpu.width, gpu.height);
-    ++m_stats.offscreenPasses; return true;
+    if (target.id != m_scaledMainView.id) ++m_stats.offscreenPasses;
+    return true;
 }
 
 void Renderer::EndRenderTarget(bool restoreCamera) {

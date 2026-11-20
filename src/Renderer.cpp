@@ -160,6 +160,7 @@ MeshData GenerateUnitSphereMeshData(int latitudeSegments, int longitudeSegments)
 
 constexpr int kSphereLatitudeSegments = 16;
 constexpr int kSphereLongitudeSegments = 24;
+constexpr GLenum kMaterialAnisotropyParameter=0x84FE; // GL_TEXTURE_MAX_ANISOTROPY
 
 // Milestone 13: the UI overlay's own tiny shader — deliberately separate
 // from kVertexShaderSource/kFragmentShaderSource above rather than a
@@ -212,6 +213,22 @@ bool Renderer::Init() {
     m_rejectedShadowLayers=0;
     m_render->shadowCache.Clear();
     m_capabilities = QueryGraphicsCapabilities();
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    bool anisotropy = m_capabilities.version.major > 4 ||
+        (m_capabilities.version.major == 4 && m_capabilities.version.minor >= 6);
+    GLint extensions = 0;
+    glGetIntegerv(GL_NUM_EXTENSIONS,&extensions);
+    for (GLint i=0; !anisotropy && i<extensions; ++i) {
+        const auto* extension=reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS,GLuint(i)));
+        anisotropy=extension && (!std::strcmp(extension,"GL_EXT_texture_filter_anisotropic") ||
+                                 !std::strcmp(extension,"GL_ARB_texture_filter_anisotropic"));
+    }
+    if (anisotropy) {
+        GLint maximum=1;
+        glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY,&maximum);
+        m_maxMaterialAnisotropy=unsigned(std::max(1,maximum));
+    }
+#endif
     const char* lightPolicy=std::getenv("JUDAS_LIGHT_LISTS");
     if(lightPolicy&&std::strcmp(lightPolicy,"auto")&&std::strcmp(lightPolicy,"texture")&&std::strcmp(lightPolicy,"cpu")&&std::strcmp(lightPolicy,"compute")){
         std::fprintf(stderr,"Unknown JUDAS_LIGHT_LISTS policy; use auto, texture, cpu or compute\n");return false;
@@ -489,6 +506,8 @@ void Renderer::UploadPosePalette(const std::vector<glm::mat4>& pose) {
 }
 void Renderer::Shutdown() {
     m_nativeMesh.reset();
+    for (auto& entry : m_anisotropicSamplers) glDeleteSamplers(1,&entry.second);
+    m_anisotropicSamplers.clear();
     m_render->lightStorageReady=false;
     std::string lightingError;if(!m_render->lightLists.Shutdown(lightingError))std::fprintf(stderr,"Lighting shutdown: %s\n",lightingError.c_str());
     m_render->submission.Clear();m_render->skinnedBounds.Clear();if(m_instanceBuffer)glDeleteBuffers(1,&m_instanceBuffer);m_instanceBuffer=0;
@@ -1288,11 +1307,11 @@ bool Renderer::LoadFont(const char* path,float pixels,std::string& error){
     m_textFonts={it->second};m_fontPixelHeight=pixels;m_fontLoaded=true;return true;
 }
 
-void Renderer::BeginUIFrame(int windowWidth, int windowHeight) {
+void Renderer::BeginUIFrame(int windowWidth, int windowHeight, bool profileUI) {
     // UI coordinates cover the output, independently of a letterboxed world view.
     glViewport(0,0,std::max(1,windowWidth),std::max(1,windowHeight));
     glActiveTexture(GL_TEXTURE0);glBindSampler(0,0);glDisable(GL_CULL_FACE);
-    m_profileUI=BeginProfilePass("Runtime UI");
+    m_profileUI=profileUI?BeginProfilePass("Runtime UI"):0;
     m_uiDrawCalls=0;
     m_uiScreenSize = glm::vec2(static_cast<float>(std::max(windowWidth, 1)),
                                 static_cast<float>(std::max(windowHeight, 1)));

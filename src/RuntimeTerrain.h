@@ -21,7 +21,7 @@ public:
  bool IsLandscape(uint64_t id)const;
  void Synchronize();
  bool HasLandscapes()const;
- void PrepareViews(const std::vector<PlanetView>&,glm::dvec3 origin,float seconds=0);
+ void PrepareViews(const std::vector<PlanetView>&,glm::dvec3 origin,float seconds=0,float visualBias=1);
  std::vector<BodyHandle> Bodies(uint64_t id)const;
  std::vector<TerrainV2::SolidSnapshot> Solids(glm::vec3 minimum,glm::vec3 maximum)const;
  bool Brush(uint64_t,glm::vec3 worldPoint,const TerrainV2::Edit&,std::string&);

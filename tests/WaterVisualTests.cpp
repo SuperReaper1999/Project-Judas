@@ -56,10 +56,10 @@ void CheckGraphicsRecreation(EngineHost& host, const Project& project,
     const auto view = glm::lookAt(eye,target,config.rotation*glm::vec3(0,1,0));
     constexpr int width = 1280, height = 800;
     const auto projection = glm::perspective(glm::radians(70.f),1.6f,.05f,300.f);
-    auto pixels = [&](bool showWater) {
+    auto pixels = [&](bool showWater, WorldRenderPurpose purpose=WorldRenderPurpose::Observer) {
         world.SetRenderVisible(id,true,showWater);
         auto& renderer = host.GetRenderer();
-        RenderWorldFrame(renderer,width,height,world,view,projection,eye,1,0,WorldRenderPurpose::Observer);
+        RenderWorldFrame(renderer,width,height,world,view,projection,eye,1,0,purpose);
         std::vector<unsigned char> result;
         renderer.CaptureFrame(width,height,result);
         return result;
@@ -75,6 +75,33 @@ void CheckGraphicsRecreation(EngineHost& host, const Project& project,
     const auto initialQuantity = grid.Quantity();
     const auto initialTime = world.SimulationTimeSeconds();
     const auto initial = visibleWater("before graphics recreation");
+    {
+        auto& renderer=host.GetRenderer();
+        const auto original=renderer.Quality();
+        renderer.ResetStats();
+        pixels(true);
+        const auto authoredTriangles=renderer.Stats().triangles;
+        auto coarse=original;
+        coarse.waterSurfaceLodBias=1;
+        Check(renderer.SetGraphicsQuality(coarse,error),"apply coarser Advanced Water surface tessellation");
+        renderer.ResetStats();
+        const auto coarseImage=pixels(true);
+        const auto coarseTriangles=renderer.Stats().triangles;
+        Check(coarseTriangles<authoredTriangles&&coarseImage!=initial,
+              "water visual bias reduces actual submitted triangles and changes surface pixels");
+        std::cout<<"MEASURE water surface preset triangles authored="<<authoredTriangles
+                 <<" coarse="<<coarseTriangles<<'\n';
+        Check(coarseImage!=pixels(false)&&grid.Quantity()==initialQuantity&&world.SimulationTimeSeconds()==initialTime,
+              "coarser water stays visible and retains physical quantity and time");
+        coarse.renderScale=.5f;
+        Check(renderer.SetGraphicsQuality(coarse,error,{width,height}),"allocate half-resolution water and scene target");
+        const auto dryScaled=pixels(false,WorldRenderPurpose::Runtime);
+        const auto wetScaled=pixels(true,WorldRenderPurpose::Runtime);
+        Check(renderer.MainViewSize()==glm::ivec2(width/2,height/2)&&wetScaled!=dryScaled,
+              "water optics and transparent surface remain visible through scaled scene composition");
+        Check(renderer.SetGraphicsQuality(original,error)&&pixels(true)==initial,
+              "resetting water bias recovers the authored image");
+    }
     std::vector<bool> backends{startBackend};
     if (startBackend) backends = {false,true};
     for (const bool useVulkan : backends) {

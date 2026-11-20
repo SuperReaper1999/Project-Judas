@@ -22,7 +22,7 @@ void Runtime::CommitPresentation() {
     }
     drawPatches.Reset();
 }
-void Runtime::PrepareViews(const std::vector<PlanetView> &views, glm::dvec3 origin, float seconds) {
+void Runtime::PrepareViews(const std::vector<PlanetView> &views, glm::dvec3 origin, float seconds, float visualBias) {
     if (!source || !lod)
         return;
     if (source->chart) {
@@ -47,7 +47,7 @@ void Runtime::PrepareViews(const std::vector<PlanetView> &views, glm::dvec3 orig
     for (const auto &[k, r] : chunks)
         if (r.geometry.chunk.volumetric)
             volume.insert(k);
-    drawPatches.Update(lod->Select(localViews, volume), seconds);
+    drawPatches.Update(lod->Select(localViews, volume, 2*visualBias), seconds);
 }
 void Runtime::Draw(Renderer &renderer) const {
     if (!source || !world.IsPublished(owner) || !world.RenderVisible(owner) ||

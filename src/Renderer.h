@@ -203,7 +203,12 @@ public:
     const GraphicsQuality& Quality() const { return m_graphicsQuality; }
     bool SupportsGraphicsQuality() const { return !m_nativeMesh; }
     bool ShadowStorageLimited() const { return m_rejectedShadowLayers != 0; }
-    bool SetGraphicsQuality(const GraphicsQuality&, std::string& error);
+    bool SetGraphicsQuality(const GraphicsQuality&, std::string& error, glm::ivec2 outputSize = {});
+    glm::ivec2 BeginMainView(glm::ivec2 output, bool allowScale);
+    void EndMainView(glm::ivec2 output);
+    glm::ivec2 MainViewSize() const { return m_mainViewSize; }
+    const std::string& MainViewError() const { return m_mainViewError; }
+    unsigned MaxMaterialAnisotropy() const { return m_maxMaterialAnisotropy; }
     bool ReserveShadowLayers(unsigned layers);
     void SetDirectionalCascadeCount(unsigned);
     JudasRender::ShadowPassCache& ShadowCache();
@@ -369,7 +374,7 @@ public:
     // alpha blending (source-alpha, one-minus-source-alpha) so translucent
     // panels and anti-aliased glyph edges composite correctly over
     // whatever DrawMesh/DrawBox/DrawSphere already rendered this frame.
-    void BeginUIFrame(int windowWidth, int windowHeight);
+    void BeginUIFrame(int windowWidth, int windowHeight, bool profileUI = true);
 
     // Draws a solid (or translucent, via colorRgba's alpha) axis-aligned
     // rectangle, `position` = top-left corner in pixels, `size` in pixels.
@@ -484,6 +489,12 @@ private:
     struct GpuTarget { GLuint framebuffer = 0, depth = 0; TextureHandle color; int width = 0, height = 0; };
     std::vector<GpuTarget> m_targets;
     RenderTargetHandle m_activeTarget;
+    RenderTargetHandle m_scaledMainView;
+    glm::ivec2 m_mainViewSize{}, m_failedMainViewSize{};
+    bool m_mainViewScaling = false;
+    std::string m_mainViewError;
+    void ReplaceMainViewTarget(RenderTargetHandle replacement);
+    static glm::ivec2 ScaledMainViewSize(glm::ivec2 output, float scale);
     GLint m_savedDrawFramebuffer = 0, m_savedReadFramebuffer = 0;
     GLint m_savedViewport[4] = {0, 0, 0, 0};
     CategoryMask m_savedRenderMask=kAllCategories;
@@ -526,6 +537,9 @@ private:
     std::pair<TextureHandle,std::string> AcquireMaterialImage(const TextureData&,bool srgb);
     void ReleaseMaterialImage(TextureHandle,const std::string&);
     struct GpuMaterial {std::array<std::string,5> imageKeys;unsigned generation=0;bool alive=false;MaterialDefinition definition;std::array<TextureHandle,5> textures;std::array<GLuint,5> samplers{};};
+    GLuint MaterialMapSampler(const GpuMaterial*, unsigned map, TextureHandle, bool eligible);
+    std::map<std::pair<int,int>,GLuint> m_anisotropicSamplers;
+    unsigned m_maxMaterialAnisotropy=1;
     struct GpuEnvironment {bool alive=false;GLuint diffuse=0,specular=0,brdf=0;unsigned levels=0;std::size_t bytes=0;};
     std::vector<GpuMaterial> m_materials;std::vector<GpuEnvironment> m_environments;
     std::vector<MaterialBinding> m_materialBindings;

@@ -64,6 +64,29 @@ bool Renderer::UploadMeshMap(MeshHandle mesh,const MeshData& data,size_t materia
  glSamplerParameteri(m.samplers[map],GL_TEXTURE_MIN_FILTER,s.minFilter);glSamplerParameteri(m.samplers[map],GL_TEXTURE_MAG_FILTER,s.magFilter);return true;
 }
 void Renderer::DestroyMaterial(MaterialHandle handle){if(!ValidMaterial(handle))return;auto& m=m_materials[handle.id];for(size_t i=0;i<m.textures.size();++i)ReleaseMaterialImage(m.textures[i],m.imageKeys[i]);for(auto s:m.samplers)if(s)glDeleteSamplers(1,&s);auto generation=m.generation;m={};m.generation=generation;if(generation!=0xFFFFFFFFu){++m.generation;m_freeMaterials.push_back(handle.id);}}
+
+GLuint Renderer::MaterialMapSampler(const GpuMaterial* material, unsigned map,
+                                    TextureHandle texture, bool eligible) {
+ if(!material)return 0;
+ const auto authored=material->samplers[map];
+ if(!eligible||!authored||m_graphicsQuality.materialAnisotropy==1||
+    !ValidTexture(texture)||m_textures[texture.id].mipCount<=1)return authored;
+ const auto& settings=material->definition.maps[map].sampler;
+ if(settings.minFilter!=GL_LINEAR_MIPMAP_LINEAR||settings.magFilter!=GL_LINEAR)return authored;
+ const auto result=m_anisotropicSamplers.try_emplace({settings.wrapS,settings.wrapT},0);
+ auto& sampler=result.first->second;
+ if(result.second){
+  glGenSamplers(1,&sampler);
+  if(sampler){
+   glSamplerParameteri(sampler,GL_TEXTURE_WRAP_S,settings.wrapS);
+   glSamplerParameteri(sampler,GL_TEXTURE_WRAP_T,settings.wrapT);
+   glSamplerParameteri(sampler,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
+   glSamplerParameteri(sampler,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+   glSamplerParameterf(sampler,kMaterialAnisotropyParameter,float(m_graphicsQuality.materialAnisotropy));
+  }
+ }
+ return sampler?sampler:authored;
+}
 EnvironmentHandle Renderer::CreateEnvironment(const EnvironmentData& data){
  if(data.specular.empty()||data.diffuse.pixels.empty()||data.brdf.empty())return {};
  GpuEnvironment e;e.alive=true;e.levels=unsigned(data.specular.size());GLint previous;glGetIntegerv(GL_TEXTURE_BINDING_2D,&previous);
@@ -128,7 +151,9 @@ void Renderer::BindMaterial(const GpuMaterial* gpu, const MaterialBinding& bindi
  if(m_activeTarget.IsValid()&&base.IsValid()&&base.id==RenderTargetTexture(m_activeTarget).id){base={};++m_stats.feedbackFallbacks;}
  glActiveTexture(GL_TEXTURE0);
  glBindTexture(GL_TEXTURE_2D,ResolveTexture(base));
- glBindSampler(0,gpu&&(binding.textureOverrides[0]||!generated.IsValid())?gpu->samplers[0]:0);
+ const bool anisotropic=!shadow&&m.alpha==MaterialAlpha::Opaque;
+ glBindSampler(0,gpu&&(binding.textureOverrides[0]||!generated.IsValid())?
+     MaterialMapSampler(gpu,0,base,anisotropic&&!binding.textureOverrides[0]):0);
  if(shadow){
   uniforms.Int("uTexture",0);
   uniforms.Float("uAlphaFactor",m.baseColor.a*alpha);
@@ -146,7 +171,7 @@ void Renderer::BindMaterial(const GpuMaterial* gpu, const MaterialBinding& bindi
   for(unsigned i=1;i<5;++i){
    const auto texture=i==4?emissionTexture:mapTexture(i);
    glActiveTexture(GL_TEXTURE0+4+i); glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));
-   glBindSampler(4+i,gpu?gpu->samplers[i]:0);
+   glBindSampler(4+i,MaterialMapSampler(gpu,i,texture,anisotropic&&!binding.textureOverrides[i]));
    uniforms.Int(names[i-1],int(4+i)); uniforms.Int(present[i-1],texture.IsValid());
   }
   const GpuEnvironment* env=m_environment.IsValid()&&m_environment.id<m_environments.size()&&m_environments[m_environment.id].alive?&m_environments[m_environment.id]:nullptr;

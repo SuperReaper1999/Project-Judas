@@ -116,5 +116,6 @@ settings.applyQuality({directionalCascades: 2, shadowFilter: "fast"});
 settings.applyQuality("custom");
 // @ts-expect-error Shadow arrays use discrete validated chart sizes.
 settings.applyQuality({shadowResolution: 640});
-// @ts-expect-error The settings API has no internal resolution switch.
+settings.applyQuality({renderScale: .75, heightfieldLodBias: 1.5, materialAnisotropy: 4});
+// @ts-expect-error Main-view resolution uses a discrete list of qualified scales.
 settings.applyQuality({renderScale: .8});
