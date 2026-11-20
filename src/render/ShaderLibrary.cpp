@@ -178,7 +178,8 @@ ivec2 lightTile(){vec4 meta=lightTexel(0);ivec2 n=ivec2(meta.xy);ivec2 tile=clam
 vec3 shadowWorldDx, shadowWorldDy;
 bool samplingPointShadow=false;
 
-float ShadowComparison(int slot, ivec2 pixel, ivec2 size, vec3 projected, vec2 slope, float bias) {
+float ShadowComparison(sampler2DArray depthMaps, int layer, int slot, ivec2 pixel, ivec2 size,
+                       vec3 projected, vec2 slope, float bias) {
     vec2 uv=(vec2(pixel)+0.5)/vec2(size);
     float receiver=projected.z+dot(slope,uv-projected.xy);
     float stored;
@@ -186,23 +187,13 @@ float ShadowComparison(int slot, ivec2 pixel, ivec2 size, vec3 projected, vec2 s
     if(samplingPointShadow)stored=textureLod(uPointShadowMaps,vec4(cubeDirection((slot-6)%6,uv),float((slot-6)/6)),0.0).r;
     else
 #endif
-#ifdef JUDAS_SPLIT_SHADOWS
-    if(uSeparateShadowMaps && slot<6)stored=texelFetch(uDirectionalShadowMaps,ivec3(pixel,slot),0).r;
-    else
-#endif
-    {
-        int layer=slot;
-#ifdef JUDAS_SPLIT_SHADOWS
-        if(uSeparateShadowMaps)layer-=6;
-#endif
-        stored=texelFetch(uShadowMaps,ivec3(pixel,layer),0).r;
-    }
+    stored=texelFetch(depthMaps,ivec3(pixel,layer),0).r;
     return receiver-bias<=stored?1.0:0.0;
 }
 
 // A sloped receiver has a different depth at each shadow texel. Correct that
 // depth across the PCF footprint instead of hiding acne with more bias.
-float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
+float ComputeShadowFromChart(sampler2DArray depthMaps, int layer, int slot, vec3 worldPosition, float ndotl) {
     if(slot<0||slot>=54)return 1.0;
     vec4 clip=uLightSpaceMatrix[slot]*vec4(worldPosition,1.0);
     if(clip.w<=0.0)return 1.0;
@@ -221,10 +212,7 @@ float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
         slope=vec2(dx.z*dy.y-dy.z*dx.y,dx.x*dy.z-dy.x*dx.z)/determinant;
     }
     if(any(isnan(slope))||any(isinf(slope)))slope=vec2(0.0);
-    ivec2 size=textureSize(uShadowMaps,0).xy;
-#ifdef JUDAS_SPLIT_SHADOWS
-    if(uSeparateShadowMaps && slot<6)size=textureSize(uDirectionalShadowMaps,0).xy;
-#endif
+    ivec2 size=textureSize(depthMaps,0).xy;
     // Interpolate comparison results, never raw depths. A nearest 3x3 kernel
     // changes a whole row/column at a texel boundary and visibly snaps. Blend
     // its four adjacent placements continuously using their shared 4x4 taps.
@@ -239,7 +227,7 @@ float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
             for(int y=0;y<2;++y){
                 float wy=y==0?1.0-phase.y:phase.y;
                 ivec2 pixel=clamp(center+ivec2(x,y),ivec2(0),size-1);
-                lit+=wx*wy*ShadowComparison(slot,pixel,size,projected,slope,bias);
+                lit+=wx*wy*ShadowComparison(depthMaps,layer,slot,pixel,size,projected,slope,bias);
             }
         }
         return lit;
@@ -249,10 +237,21 @@ float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
         for(int y=-1;y<=2;++y){
             float wy=y==-1?1.0-phase.y:(y==2?phase.y:1.0);
             ivec2 pixel=clamp(center+ivec2(x,y),ivec2(0),size-1);
-            lit+=wx*wy*ShadowComparison(slot,pixel,size,projected,slope,bias);
+            lit+=wx*wy*ShadowComparison(depthMaps,layer,slot,pixel,size,projected,slope,bias);
         }
     }
     return lit/9.0;
+}
+
+float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
+#ifdef JUDAS_SPLIT_SHADOWS
+    if(uSeparateShadowMaps){
+        if(slot>=0 && slot<6)
+            return ComputeShadowFromChart(uDirectionalShadowMaps,slot,slot,worldPosition,ndotl);
+        return ComputeShadowFromChart(uShadowMaps,slot-6,slot,worldPosition,ndotl);
+    }
+#endif
+    return ComputeShadowFromChart(uShadowMaps,slot,slot,worldPosition,ndotl);
 }
 
 int PointFace(vec3 direction){
