@@ -51,28 +51,35 @@ may retain a reference after camera destruction without invalidating delta prefl
 Other targets may display their last completed image. Passes run in authored order;
 there is no recursive traversal, dependency scheduling or portal rendering.
 
-## Authoring and operator validation
+## Author a camera-fed surface
 
-1. Open `assets/scenes/camera_surfaces.judas` in `judas_editor`, or run it with
-   `./build/judas assets/scenes/camera_surfaces.judas`.
-2. Create a camera through **World → Create → Render camera**, or add its component
-   through the component registry. Edit its ordinary transform and camera settings.
-3. On a box, sphere or imported mesh, choose its **Camera texture** reference.
-   Selecting a camera clears the disk texture selection.
-4. Save/reopen, then Play. Live targets run in Play/runtime; edit mode shows the
-   ordinary material fallback rather than allocating a second runtime world.
-5. Stop restores authored state. Camera/material edits participate in undo/redo.
+1. Open an editable 3D project with a working player or main view. To start
+   from scratch, follow [First project](FIRST_PROJECT.md), then open its saved
+   scene in the editor.
+2. Create a subject and a separate display using **World → Create → Static
+   box**, or use existing scene objects. Give the subject a distinctive colour.
+   Put the display where the main view can see it.
+3. Choose **World → Create → Render camera**. Set its transform so local
+   **−Z** points at the subject and the display is outside its view. Set the
+   target size, for example 640×360, and leave the camera enabled.
+4. Select the display. In its **Render** component, choose the new camera
+   under **Camera texture**. This clears any disk texture assignment. The feed
+   uses the display's ordinary lit material.
+5. Save and Play. The target starts rendering in Play or the standalone game.
+   Edit mode shows the material fallback. Stop, adjust the camera or its
+   update cadence, then Play again to check the change. The main camera keeps
+   its own view and shadow policy. Camera and material edits support undo/redo.
 
-The demo uses a framed 640×360 display and a separate coloured stage. Its red
-body moves through ordinary rigid velocity/contact response; the stage camera
-looks away from the display, avoiding feedback in the main demonstration. An
-alternate camera is authored but disabled by default.
-The player/main camera is independent. No object-name logic or custom display shader
-exists. The displayed image is lit by the normal material shader, not emissive.
+The registered `render-cameras` case is separate automated evidence. It creates
+its own fixture and checks target rendering and readback, including the white
+fallback for self-feedback. From a configured source checkout, build and run it
+through the [validation manifest](../tools/validation/suites.json) runner in a
+graphics-capable session:
 
-Operator checks: confirm live subject motion on the surface, move an authored
-camera and replay, change cadence, disable it, and confirm the main camera remains
-independent. The automated fixture separately verifies the safe white self-feedback fallback. Screenshots are automated evidence, not human acceptance.
+```sh
+cmake --build build --target judas_render_camera_tests -j2
+python3 scripts/prealpha_validate.py --build-dir build --test render-cameras
+```
 
 ## Serialization and compatibility
 

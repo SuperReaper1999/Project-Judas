@@ -1,5 +1,7 @@
 """Positive and negative controls for current-reference navigation checks."""
 import importlib.util
+import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -57,6 +59,28 @@ class CurrentDocumentationTests(unittest.TestCase):
 
     def test_duplicate_inventory_rejected(self):
         self.assertFalse(docs.check(self.root, ['index.md', 'index.md'])['pass'])
+
+
+class MaintainedWalkthroughTests(unittest.TestCase):
+    def test_beacon_grove_generator_and_packaged_readmes_match(self):
+        project = docs.ROOT / 'projects/beacon_grove/README.md'
+        template = docs.ROOT / 'tools/demos/beacon_grove/README.md'
+        self.assertEqual(project.read_bytes(), template.read_bytes())
+
+    def test_documented_native_case_commands_use_registered_selectors(self):
+        manifest = json.loads((docs.ROOT / 'tools/validation/suites.json').read_text())
+        registered = {case['name'] for case in manifest['tests']}
+        for document in ('docs/CAMERA_TARGETS.md', 'docs/DEVELOPER_WORKFLOWS.md',
+                         'projects/beacon_grove/README.md'):
+            with self.subTest(document=document):
+                text = (docs.ROOT / document).read_text()
+                commands = [block for block in re.findall(r'```sh\n(.*?)```', text, re.DOTALL)
+                            if 'scripts/prealpha_validate.py' in block]
+                self.assertTrue(commands, 'missing native validation command')
+                for block in commands:
+                    selectors = set(re.findall(r'--test\s+([\w-]+)', block))
+                    self.assertTrue(selectors, 'missing explicit case selector')
+                    self.assertFalse(selectors - registered, selectors - registered)
 
 
 if __name__ == '__main__':

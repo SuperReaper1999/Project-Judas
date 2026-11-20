@@ -1,27 +1,35 @@
 # Standalone project exports
 
-Linux desktop packages use the existing Release `judas` runtime, not the editor.
-Open a project in the editor, save scene edits, then **Project settings → Package
-directory → Export project (Release)**. Set the startup scene in the same panel.
-Choose an output directory outside the source project. The editor saves current
-project settings; export consumes saved scenes. It reports the resulting path or
-an actionable error. A sibling Release `judas` must be available.
+Linux desktop packages include the standalone Release `judas` runtime. The
+editor exports the startup scene and settings saved on disk.
 
-Command line, from an existing Release CMake build:
+1. In Edit mode, open **File → Build & Export…**. Check the **Startup scene**
+   shown there. To choose one, use **Choose startup scene…** when none is set,
+   or select it in **Project Settings**. Save the scene and project settings.
+2. Enter the destination in **Package directory** or use **Browse package
+   folder…**. Choose a fresh folder outside the source project that does not
+   contain the source project.
+3. Select **Export desktop game**. If the editor reports unsaved scene or
+   project changes, choose **Save all and continue** to include those changes,
+   **Use saved version** to export the disk version, or **Cancel**. The
+   Build & Export panel reports the package path or the error.
 
-```
-./build/judas_export /path/to/Project/export_demo.judasproj /path/to/MyGame
+Use the editor, exporter and runnable Release runtime from the same build and
+channel. The editor and CLI default to a sibling `judas`. An optional third CLI
+argument selects another matching Release runtime. The exporter checks its
+build identity before packaging and rejects mismatched provenance. See
+[First project](FIRST_PROJECT.md#4-save-and-export) for the end-to-end workflow.
+
+Command line from an existing Release CMake build:
+
+```sh
+./build/judas_export /path/to/Project/MyGame.judasproj /path/to/MyGame ./build/judas
 /path/to/MyGame/judas
 ```
 
-An optional third argument selects a different Release runtime. The exporter
-queries that executable's `--build-info` without starting the engine. It rejects
-Debug/unrecognized executables. Build with the normal CMake Release configuration;
-there is no separate compilation pipeline.
-
-accepted adds an opt-in asset closure policy, explicit runtime roots and
-`DEPENDENCIES.json`; default conservative inclusion remains. See
-[Scalability](SCALABILITY.md#export-policy-and-inclusion-report).
+The [asset inclusion policy](SCALABILITY.md#export-policy-and-inclusion-report)
+describes the default conservative packaging, opt-in closure, explicit runtime
+roots and `DEPENDENCIES.json`.
 
 ## Package and resource ownership
 

@@ -120,5 +120,18 @@ on migration. Matching identity metadata is not certification of native state.
 
 Keep gameplay readiness, inventories and control policy in project code. Use the
 Runtime Inspector and existing script tools to observe engine boundaries instead
-of guessing them. Current limitations and measured validation are in
-`docs/evidence/prealpha-developer-workflows/REPORT.md` in source checkouts.
+of guessing them.
+
+The registered `developer-workflow` case runs the maintained lesson in an
+ordinary application and checks player movement, interaction, region
+publication and unload, vehicle control and a paused save. From a configured
+source checkout in a graphics-capable session:
+
+```sh
+cmake --build build --target judas_workflow_application_tests -j2
+python3 scripts/prealpha_validate.py --build-dir build --test developer-workflow
+```
+
+See the [validation manifest](../tools/validation/suites.json) for separate
+onboarding cases, including cold restore, and the
+[readiness matrix](DEVELOPMENT_READINESS.md) for qualified platform scope.

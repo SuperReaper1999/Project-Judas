@@ -13,11 +13,19 @@ as often as you like. A supply crate is an ordinary pushable physical object.
 - R: restart with full health and all cells restored.
 - Escape: pause/resume through the normal runtime.
 
-Open `Beacon_Grove.judasproj` in the editor and press Play. To run directly:
+Open `Beacon_Grove.judasproj` in the editor and press Play. For direct launch,
+run these commands from the directory containing `Beacon_Grove.judasproj`. Set
+`JUDAS_TOOLS` to the absolute directory containing your SDK binaries or matching
+source-build binaries:
 
 ```sh
-.cache/2d-stage1-build/judas projects/beacon_grove/Beacon_Grove.judasproj
+JUDAS_TOOLS=/absolute/path/to/judas-sdk
+"$JUDAS_TOOLS/judas" ./Beacon_Grove.judasproj
 ```
+
+For a source build, configure a Release build and build the `judas` and
+`judas_export` targets before setting `JUDAS_TOOLS` to its binary directory.
+SDK users can run the supplied project directly with the SDK tools.
 
 The three cells and east beacon lie along the central path. You must complete
 the restore animation near the beacon; merely pressing E elsewhere does nothing.
@@ -48,22 +56,40 @@ This small game's required cell count is three in `game.js`; update that rule an
 UI together when expanding the objective. To add hazards, use the danger tag on
 a sensor. These are ordinary project rules, not hardcoded engine behaviours.
 
-Art is original Judas starter/workshop art, reused locally with its generation
-sources preserved under `tools/demos/`. No downloaded/licensed third-party art.
-A source-reproduction helper is `judas_beacon_grove <repo-root> <fresh-destination>`;
-it refuses existing directories and uses the same starter/asset serializers as
-the editor. It doesn't clone an existing game. This delivered project is editable
-independently; rerunning the helper is not part of normal editing.
+The art comes from Judas starter and workshop assets. Its generation sources
+are under `tools/demos/` in the source repository.
 
 ## Export
 
+From the project directory with the same `JUDAS_TOOLS`, choose a fresh package
+path outside the project:
+
 ```sh
-.cache/2d-stage1-build/judas_export projects/beacon_grove/Beacon_Grove.judasproj /tmp/beacon-package .cache/2d-stage1-build/judas
+"$JUDAS_TOOLS/judas_export" ./Beacon_Grove.judasproj \
+  /absolute/path/to/BeaconGrovePackage "$JUDAS_TOOLS/judas"
 ```
 
-Move the entire package, then run its `judas` executable. Modern saves use its
-configured writable user-data location. Linux automated qualification is recorded
-in `docs/2D_GAME_WORKFLOW.md`; human, Windows and Android checks remain separate.
+Move the entire package, then run its `judas` executable. Saves use the configured
+writable user-data location.
+
+## Source regeneration and automated checks
+
+With a source checkout and a configured build, run these commands from the
+repository root. The generator creates a project from starter assets and refuses
+an existing destination. The supplied project is independently editable.
+
+```sh
+cmake --build build --target judas_beacon_grove judas_beacon_grove_application_tests -j2
+./build/judas_beacon_grove "$PWD" /absolute/path/to/fresh-beacon-grove
+python3 scripts/prealpha_validate.py --build-dir build \
+  --test beacon-grove-application --test beacon-grove-loss
+```
+
+The registered cases exercise the win and loss/restart flows in an ordinary
+Linux application. The runner needs a graphics-capable session. The source
+generator and native test runner are source-checkout workflows. See
+the [2D quick start](https://github.com/SuperReaper1999/Project-Judas/blob/Experimental/docs/2D_QUICKSTART.md)
+for authoring guidance.
 
 This is a small complete game for workflow qualification, not a large adventure:
 one level, no combat system or audio track, static tilemaps and bounded cell count.

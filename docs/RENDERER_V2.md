@@ -1,8 +1,15 @@
 # Rendering architecture and graphics policy
 
-Judas has one OpenGL renderer shared by engine, editor and native SDK applications.
-Desktop capability selection and GLES/WebGL adaptation are implementation policies,
-not separate engines. [Lighting and shadows](LUCIFER_V2.md),
+Judas shares one renderer across engine, editor and native SDK applications.
+OpenGL is the default backend. On qualified Linux builds with Vulkan enabled,
+`JUDAS_GRAPHICS=vulkan` selects native Vulkan execution through Judas's GLAD
+dispatch bridge. The shared renderer still submits through the same graphics
+interface. The historical explicit Vulkan mesh and shadow path requires
+`JUDAS_VULKAN_NATIVE_MESH=1` and remains experimental. See
+[Linux Vulkan integration](VULKAN_INTEGRATION.md) for setup and support scope.
+
+Desktop capability selection and GLES/WebGL adaptation use the same rendering
+architecture. [Lighting and shadows](LUCIFER_V2.md),
 [runtime appearance](RUNTIME_RENDERING.md), [materials](MATERIALS.md),
 [cameras](CAMERA_TARGETS.md), [particles](PARTICLES_V2.md) and
 [terrain](TERRAIN_V2.md) describe practical feature use.

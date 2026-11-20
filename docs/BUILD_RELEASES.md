@@ -49,8 +49,14 @@ binaries. [Windows](WINDOWS.md), [Android](ANDROID.md) and
 [Routine CI](CI.md) builds one Alpha-labelled V2 configuration, selected registered
 checks and the public SDK. Advanced Fluids remains project-opt-in in every V2
 channel; retired channel skip plans are not the current validation policy.
-Documentation/tooling-only changes use their corresponding lightweight checks.
-The existing path-routing controls verify those exclusions.
+The [focused workflow](../.github/workflows/prealpha.yml) applies its path
+exclusions to pushes. A push containing only excluded files can skip focused
+gates. Pull requests targeting Experimental or main and manual dispatch use
+their own triggers without that path filter. The
+[Vulkan and SDK workflow](../.github/workflows/linux-vulkan.yml) has no
+documentation-only path exclusion on Experimental pushes or pull requests
+targeting Experimental, so documentation changes can trigger full Linux
+qualification as well as the dedicated documentation checks.
 
 Main promotion requires operator acceptance of the exact candidate. The machine
 proof in `scripts/check_ci_promotion.py` currently accepts a completed successful
