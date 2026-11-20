@@ -78,11 +78,11 @@ EngineHost::~EngineHost() {
 }
 
 bool EngineHost::Init(const char* title, int width, int height, bool visible, std::string& outError,
-                      ResourceTrace trace, bool allowVulkanPlatformWindows) {
+                      ResourceTrace trace, bool allowVulkanPlatformWindows, std::optional<bool> useVulkan) {
     JUDAS_PROFILE_SCOPE("Host startup");
     m_resourceTrace = std::move(trace);
     m_renderer.SetResourceTrace(m_resourceTrace);
-    if (!m_window.Init(title, width, height, visible, allowVulkanPlatformWindows)) {
+    if (!m_window.Init(title, width, height, visible, allowVulkanPlatformWindows, useVulkan)) {
         outError = m_window.LastError().empty() ? "Window initialization failed." : m_window.LastError();
         return false;
     }

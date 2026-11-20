@@ -68,6 +68,17 @@ export const localization = {
     number: (value, options = {}) => call("localeNumber", value, options),
     reload: () => call("localeReload")
 };
+export const settings = {
+    read: () => call("settingsRead"),
+    applyVideo: patch => call("settingsApplyVideo", JSON.stringify(patch)),
+    previewDisplay: display => call("settingsDisplay", JSON.stringify(display)),
+    confirmDisplay: () => call("settingsConfirmDisplay"),
+    revertDisplay: () => call("settingsRevertDisplay"),
+    readGame: () => call("settingsGame"),
+    setGame: values => call("settingsSetGame", JSON.stringify(values)),
+    save: () => call("settingsSave"),
+    resetSaved: () => call("settingsResetSaved")
+};
 export const saves = {
     get busy() {
         return call("lifecycleBusy");

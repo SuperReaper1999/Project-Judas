@@ -20,6 +20,8 @@ Experimental native 2D Stages 1–4: [sprites, orthographic cameras and editor t
 
 ## Find an API
 
+[Game settings and preferences](judasjs/settings.md) covers video, audio and controls.
+
 ## Execution and ownership essentials
 
 - Use `update` for frame-relative mouse input, `fixedUpdate` for authoritative

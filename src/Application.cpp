@@ -18,6 +18,8 @@
 #include "InteractivePlay.h"
 #include "RuntimeDiagnostics.h"
 #include "RuntimeOptions.h"
+#include "GameSettings.h"
+#include <thread>
 #include "RuntimeWorld.h"
 #include "Scene.h"
 #include "SceneSession.h"
@@ -101,12 +103,35 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
     const WorldCoordinates worldCoordinates(
         options.worldOriginOverride ? *options.worldOriginOverride : scene.Settings().worldOrigin);
 
-    EngineHost host;
-    if (!host.Init(options.project.IsLoaded() ? options.project.Settings().name.c_str() : "Project Judas", options.windowWidth, options.windowHeight, !options.IsTestRun() && !(control && control->hidden), error,
-                   control ? control->resourceTrace : ResourceTrace{})) {
-        std::fprintf(stderr, "%s\n", error.c_str());
-        return 1;
+    std::unique_ptr<GameSettings> settings;
+    if (!options.IsTestRun() && options.project.IsLoaded())
+        settings = std::make_unique<GameSettings>(options.project, options.windowWidth, options.windowHeight);
+    const auto requestedBackend = settings ? settings->BackendRequest() : std::nullopt;
+    auto hostOwner = std::make_unique<EngineHost>();
+    const auto initHost = [&](std::optional<bool> backend) {
+        return hostOwner->Init(options.project.IsLoaded() ? options.project.Settings().name.c_str() : "Project Judas",
+                               options.windowWidth, options.windowHeight,
+                               !options.IsTestRun() && !(control && control->hidden), error,
+                               control ? control->resourceTrace : ResourceTrace{}, false, backend);
+    };
+    if (!initHost(requestedBackend)) {
+        if (requestedBackend == true) {
+            settings->BackendFailed(error);
+            std::fprintf(stderr, "Saved Vulkan preference could not start: %s. Trying OpenGL once.\n", error.c_str());
+            hostOwner.reset();
+            hostOwner = std::make_unique<EngineHost>();
+            error.clear();
+            if (!initHost(false)) {
+                std::fprintf(stderr, "%s\n", error.c_str());
+                return 1;
+            }
+        } else {
+            std::fprintf(stderr, "%s\n", error.c_str());
+            return 1;
+        }
     }
+    auto& host = *hostOwner;
+    if (settings) settings->Attach(host);
     Window& window = host.GetWindow();
     Renderer& renderer = host.GetRenderer();
     std::unique_ptr<StartupScreen> splash;
@@ -147,6 +172,7 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
 
     auto worldOwner=std::make_unique<RuntimeWorld>();
     auto sceneControl=std::make_shared<SceneSession>(options.project,options.scenePath);
+    sceneControl->gameSettings = settings.get();
     sceneControl->EnableSaves(options.project.IsLoaded());
     if(options.project.IsLoaded())worldOwner->audioGroups=options.project.Settings().audio;
     if(options.project.IsLoaded())worldOwner->ConfigureProject(options.project.Settings());
@@ -225,6 +251,8 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
     startupProfile.End();
     bool applicationSuspended=false;
     while (!window.ShouldClose() && !play.QuitRequested()) {
+        const int frameCap = settings ? settings->FrameCap() : 0;
+        const auto frameStart = frameCap ? std::chrono::steady_clock::now() : std::chrono::steady_clock::time_point{};
         ProfileFrame outerProfile("standalone");
         RuntimeWorld& world=*worldOwner;
         if (control && control->beforeFrame) control->beforeFrame(host, world, play);
@@ -270,8 +298,14 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
 
         if (control && control->afterFrame) control->afterFrame(host, world, play);
         { JUDAS_PROFILE_WAIT("Swap present wait"); window.SwapBuffers(); }
+        if (settings) settings->Advance();
         if(!sceneControl->AdvanceOuter(worldOwner,play,host.Resources(),window.Input(),error)||!error.empty()){
             std::fprintf(stderr,"Runtime outer services: %s\n",error.c_str());error.clear();
+        }
+        if (frameCap > 0) {
+            wholeGPU.End();
+            JUDAS_PROFILE_WAIT("Frame cap wait");
+            std::this_thread::sleep_until(frameStart + std::chrono::nanoseconds(1000000000 / frameCap));
         }
     }
     if(physicsDebugger)physicsDebugger->Export();

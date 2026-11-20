@@ -57,6 +57,8 @@ void SetSwapInterval(int interval);
 // 0 for IMMEDIATE/MAILBOX, 1 for FIFO. Before the first swapchain exists it is
 // the requested interval; -1 without a backend.
 int SwapInterval();
+int EffectiveSwapInterval();
+bool SupportsSwapInterval(int interval);
 // Drawable size of the default framebuffer in pixels.
 void DrawableSize(int &width, int &height);
 
@@ -94,6 +96,8 @@ inline Proc ProcAddress(const char *) { return nullptr; }
 inline void Present() {}
 inline void SetSwapInterval(int) {}
 inline int SwapInterval() { return -1; }
+inline int EffectiveSwapInterval() { return -1; }
+inline bool SupportsSwapInterval(int) { return false; }
 inline void DrawableSize(int &width, int &height) { width = height = 0; }
 struct PlatformWindow;
 inline bool PlatformWindowsAvailable() { return false; }

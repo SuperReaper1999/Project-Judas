@@ -2005,6 +2005,51 @@
       "maximum": 2
     },
     {
+      "symbol": "settings.applyVideo",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "settings.confirmDisplay",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "settings.previewDisplay",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "settings.read",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "settings.readGame",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "settings.resetSaved",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "settings.revertDisplay",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "settings.save",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "settings.setGame",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
       "symbol": "signals.emit",
       "minimum": 1,
       "maximum": 3
@@ -7378,6 +7423,114 @@
       "reference": "docs/judasjs/scenes-state.md"
     },
     {
+      "symbol": "settings",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:settings",
+      "reference": "docs/judasjs/settings.md"
+    },
+    {
+      "symbol": "settings.applyVideo",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "settingsApplyVideo"
+      ],
+      "type": "docs/judas.d.ts:settings.applyVideo",
+      "reference": "docs/judasjs/settings.md"
+    },
+    {
+      "symbol": "settings.confirmDisplay",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "settingsConfirmDisplay"
+      ],
+      "type": "docs/judas.d.ts:settings.confirmDisplay",
+      "reference": "docs/judasjs/settings.md"
+    },
+    {
+      "symbol": "settings.previewDisplay",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "settingsDisplay"
+      ],
+      "type": "docs/judas.d.ts:settings.previewDisplay",
+      "reference": "docs/judasjs/settings.md"
+    },
+    {
+      "symbol": "settings.read",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "settingsRead"
+      ],
+      "type": "docs/judas.d.ts:settings.read",
+      "reference": "docs/judasjs/settings.md"
+    },
+    {
+      "symbol": "settings.readGame",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "settingsGame"
+      ],
+      "type": "docs/judas.d.ts:settings.readGame",
+      "reference": "docs/judasjs/settings.md"
+    },
+    {
+      "symbol": "settings.resetSaved",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "settingsResetSaved"
+      ],
+      "type": "docs/judas.d.ts:settings.resetSaved",
+      "reference": "docs/judasjs/settings.md"
+    },
+    {
+      "symbol": "settings.revertDisplay",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "settingsRevertDisplay"
+      ],
+      "type": "docs/judas.d.ts:settings.revertDisplay",
+      "reference": "docs/judasjs/settings.md"
+    },
+    {
+      "symbol": "settings.save",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "settingsSave"
+      ],
+      "type": "docs/judas.d.ts:settings.save",
+      "reference": "docs/judasjs/settings.md"
+    },
+    {
+      "symbol": "settings.setGame",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "settingsSetGame"
+      ],
+      "type": "docs/judas.d.ts:settings.setGame",
+      "reference": "docs/judasjs/settings.md"
+    },
+    {
       "symbol": "signals",
       "kinds": [
         "namespace"
@@ -8090,6 +8243,15 @@
     "setTransform",
     "setVelocity",
     "setView",
+    "settingsApplyVideo",
+    "settingsConfirmDisplay",
+    "settingsDisplay",
+    "settingsGame",
+    "settingsRead",
+    "settingsResetSaved",
+    "settingsRevertDisplay",
+    "settingsSave",
+    "settingsSetGame",
     "signalEmit",
     "signalSend",
     "signalStats",

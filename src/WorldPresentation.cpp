@@ -467,7 +467,15 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     presentedObjects.statics.resize(world.StaticRenderables().size());
     presentedObjects.dynamics.resize(world.DynamicBodies().size());
     std::optional<JudasLighting::ShadowScene> shadowScene;
+    auto unshadowedLightPass = [&]() {
+        renderer.SetDirectionalCascadeCount(0);
+        renderer.SetDynamicLights(lights);
+    };
     auto lightPass = [&]() {
+        if (!renderer.ShadowsEnabled()) {
+            unshadowedLightPass();
+            return;
+        }
         if (!shadowScene) shadowScene.emplace(JudasLighting::RuntimeShadowScene(world,alpha));
         const bool reuse = settings.sunEnabled && world.Resources() && !world.Resources()->VisualStreaming();
         // One view's chart production borrows bindings from one presentation sample.
@@ -524,10 +532,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             if (c.shadows) {
                 lightPass();
             } else {
-                renderer.SetDirectionalCascadeCount(0);
-                // The world light list has no slots assigned. Keep its direct
-                // lighting without publishing this view's shadow assignments.
-                renderer.SetDynamicLights(lights);
+                unshadowedLightPass();
             }
             renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha,false));
             DrawWorldGeometry(renderer, world, alpha, WorldDrawOptions{}, &presentedObjects);

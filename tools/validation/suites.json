@@ -797,6 +797,19 @@
       ]
     },
     {
+      "name": "game-settings",
+      "target": "judas_game_settings_tests",
+      "groups": [
+        "application",
+        "input",
+        "lifecycle",
+        "rendering"
+      ],
+      "args": [
+        "{output}/game-settings"
+      ]
+    },
+    {
       "name": "ui-menu-workflow",
       "target": "judas_ui_menu_tests",
       "groups": [

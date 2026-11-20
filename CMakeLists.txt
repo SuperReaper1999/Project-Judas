@@ -425,6 +425,7 @@ add_library(judas_engine STATIC
     src/lighting/LightingWorld.cpp
     src/WorldPresentation.cpp
     src/EngineHost.cpp
+    src/GameSettings.cpp
     src/ScriptFaultNotice.cpp
     src/PhysicsEventDebugger.cpp
     src/RuntimePhysicsDebugView.cpp
@@ -1577,6 +1578,7 @@ judas_add_engine_test(judas_editor_preferences_tests tests/EditorPreferencesTest
 judas_add_engine_test(judas_editor_script_workflow_tests tests/EditorScriptWorkflowTests.cpp
     SOURCES src/editor/EditorAIWorkflow.cpp src/editor/UtilityAIEditor.cpp src/editor/EditorScriptWorkflow.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
 judas_add_engine_test(judas_input_rebinding_tests tests/InputRebindingTests.cpp)
+judas_add_engine_test(judas_game_settings_tests tests/GameSettingsApplicationTests.cpp APPLICATION)
 judas_add_engine_test(judas_pause_example_application_tests tests/PauseExampleApplicationTests.cpp
     SOURCES src/editor/EditorPauseExample.cpp src/editor/EditorAIWorkflow.cpp src/editor/UtilityAIEditor.cpp src/editor/EditorScriptWorkflow.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
 

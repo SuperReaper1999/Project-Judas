@@ -10,6 +10,7 @@ class ResourceManager;
 class InteractivePlay;
 class SaveService;
 class InputSystem;
+class GameSettings;
 // Project/session lifetime, independent of scene-owned JS heaps and entities.
 class SceneSession {
 public:
@@ -17,6 +18,7 @@ public:
     ~SceneSession();
     WorldStreaming* Streaming(RuntimeWorld&,std::string& error);
     void AdvanceStreaming(RuntimeWorld&,bool paused);
+    GameSettings* gameSettings = nullptr; // standalone Application owns this service
     bool networkActive=false; // transient world-owned session gate; never persisted
     const Project& ProjectConfig()const{return m_project;}
     bool Accepting()const{return m_accepting;}

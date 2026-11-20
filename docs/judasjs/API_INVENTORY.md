@@ -498,6 +498,16 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `session.delete` | `sessionDelete` | [declaration](../judas.d.ts) | [reference](scenes-state.md) |
 | `session.get` | `sessionGet` | [declaration](../judas.d.ts) | [reference](scenes-state.md) |
 | `session.set` | `sessionSet` | [declaration](../judas.d.ts) | [reference](scenes-state.md) |
+| `settings` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](settings.md) |
+| `settings.applyVideo` | `settingsApplyVideo` | [declaration](../judas.d.ts) | [reference](settings.md) |
+| `settings.confirmDisplay` | `settingsConfirmDisplay` | [declaration](../judas.d.ts) | [reference](settings.md) |
+| `settings.previewDisplay` | `settingsDisplay` | [declaration](../judas.d.ts) | [reference](settings.md) |
+| `settings.read` | `settingsRead` | [declaration](../judas.d.ts) | [reference](settings.md) |
+| `settings.readGame` | `settingsGame` | [declaration](../judas.d.ts) | [reference](settings.md) |
+| `settings.resetSaved` | `settingsResetSaved` | [declaration](../judas.d.ts) | [reference](settings.md) |
+| `settings.revertDisplay` | `settingsRevertDisplay` | [declaration](../judas.d.ts) | [reference](settings.md) |
+| `settings.save` | `settingsSave` | [declaration](../judas.d.ts) | [reference](settings.md) |
+| `settings.setGame` | `settingsSetGame` | [declaration](../judas.d.ts) | [reference](settings.md) |
 | `signals` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](signals.md) |
 | `signals.emit` | `signalEmit` | [declaration](../judas.d.ts) | [reference](signals.md) |
 | `signals.send` | `signalSend` | [declaration](../judas.d.ts) | [reference](signals.md) |

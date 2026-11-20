@@ -14,6 +14,7 @@
 #include <tuple>
 
 #include "../../SaveService.h"
+#include "../../GameSettings.h"
 #include "../../SceneSession.h"
 #include "../../WorldStreaming.h"
 
@@ -92,6 +93,22 @@ JSValue HandleWorld(BindingContext &context, const std::string &op, int argc, JS
         JS_FreeValue(c, scale);
         return ok;
     };
+
+    if (op == "settingsRead" || op == "settingsGame" || op == "settingsApplyVideo" ||
+        op == "settingsDisplay" || op == "settingsConfirmDisplay" || op == "settingsRevertDisplay" ||
+        op == "settingsSetGame" || op == "settingsSave" || op == "settingsResetSaved") {
+        const auto session = world.SceneControl();
+        if (!session || !session->gameSettings) {
+            if (op == "settingsRead" || op == "settingsGame") return JS_NULL;
+            return JS_ThrowTypeError(c, "Game preferences are available in standalone project sessions");
+        }
+        try {
+            const auto result = session->gameSettings->Invoke(op, String(c, arg(1))).dump();
+            return JS_ParseJSON(c, result.data(), result.size(), "<game settings>");
+        } catch (const std::exception& e) {
+            return JS_ThrowTypeError(c, "%s", e.what());
+        }
+    }
 
     if (op == "worldOrigin")
         return preciseVector(world.Settings().worldOrigin);
@@ -745,6 +762,15 @@ void RegisterWorldBindings(BindingRegistry &registry) {
                   "sceneList",
                   "sceneLoad",
                   "sceneReload",
+                  "settingsRead",
+                  "settingsGame",
+                  "settingsApplyVideo",
+                  "settingsDisplay",
+                  "settingsConfirmDisplay",
+                  "settingsRevertDisplay",
+                  "settingsSetGame",
+                  "settingsSave",
+                  "settingsResetSaved",
                   "sessionGet",
                   "sessionSet",
                   "sessionDelete",

@@ -338,6 +338,7 @@ public:
     // Makes an omitted light's old map unreachable without a GPU allocation.
     void InvalidateShadowSlot(int shadowSlot);
     bool ShadowsEnabled() const {return m_shadowsEnabled;}
+    void SetShadowsEnabled(bool enabled) {m_shadowsEnabled = enabled;}
 
     // --- Milestone 13: UI overlay rendering ---
     //

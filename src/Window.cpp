@@ -48,9 +48,9 @@ EM_ASYNC_JS(void, AwaitBrowserFrame, (), {
 #include <cstdlib>
 
 bool Window::CreateDesktopGraphicsWindow(const char* title, int width, int height, bool visible,
-                                         bool allowVulkanPlatformWindows) {
+                                         bool allowVulkanPlatformWindows, bool useVulkan) {
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
-    if (JudasVulkan::Requested()) {
+    if (useVulkan) {
         // Vulkan backend: no OpenGL context is created. The
         // requested profile selects the same renderer tier as it does for GL.
         if (!JudasVulkan::Compiled()) {
@@ -155,7 +155,8 @@ bool Window::CreateDesktopGraphicsWindow(const char* title, int width, int heigh
 }
 
 bool Window::Init(const char* title, int width, int height, bool visible,
-                  [[maybe_unused]] bool allowVulkanPlatformWindows) {
+                  [[maybe_unused]] bool allowVulkanPlatformWindows,
+                  [[maybe_unused]] std::optional<bool> useVulkan) {
     m_lastError.clear();
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     if (!ParseGraphicsProfile(std::getenv("JUDAS_GL_PROFILE"), m_graphicsProfile, m_lastError)) {
@@ -204,7 +205,8 @@ bool Window::Init(const char* title, int width, int height, bool visible,
         return false;
     }
 #else
-    if (!CreateDesktopGraphicsWindow(title, width, height, visible, allowVulkanPlatformWindows)) {
+    if (!CreateDesktopGraphicsWindow(title, width, height, visible, allowVulkanPlatformWindows,
+                                     useVulkan.value_or(JudasVulkan::Requested()))) {
         std::fprintf(stderr, "%s\n", m_lastError.c_str());
         Shutdown();
         return false;
@@ -290,6 +292,45 @@ bool Window::Resize(int width, int height, std::string& error) {
     }
     return true;
 #endif
+}
+
+bool Window::SetBorderlessFullscreen(bool enabled, std::string& error) {
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    if (m_window && SDL_SetWindowFullscreen(m_window, enabled ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) == 0) {
+        SDL_PumpEvents();
+        SDL_GetWindowSize(m_window, &m_width, &m_height);
+        if (bool(SDL_GetWindowFlags(m_window) & SDL_WINDOW_FULLSCREEN) == enabled) return true;
+        error = "Window manager did not apply the requested display mode";
+        return false;
+    }
+    error = SDL_GetError();
+#else
+    (void)enabled;
+    error = "Fullscreen is owned by this platform";
+#endif
+    return false;
+}
+
+std::optional<bool> Window::VSync() const {
+    if (!m_window) return std::nullopt;
+    if (!m_vulkan) return SDL_GL_GetSwapInterval() != 0;
+    const int interval = JudasVulkan::EffectiveSwapInterval();
+    if (interval < 0) return std::nullopt;
+    return interval != 0;
+}
+
+bool Window::SetVSync(bool enabled, std::string& error) {
+    if (m_vulkan) {
+        if (!JudasVulkan::SupportsSwapInterval(enabled ? 1 : 0)) {
+            error = "The Vulkan surface does not support the requested presentation mode";
+            return false;
+        }
+        JudasVulkan::SetSwapInterval(enabled ? 1 : 0);
+        return true;
+    }
+    if (SDL_GL_SetSwapInterval(enabled ? 1 : 0) == 0 && VSync() == enabled) return true;
+    error = "OpenGL swap interval change failed: " + std::string(SDL_GetError());
+    return false;
 }
 
 Window::~Window() {

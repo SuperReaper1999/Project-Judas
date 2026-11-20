@@ -1288,6 +1288,41 @@ declare module "judas" {
   export type PropertySchema = Record<string,
     { type: "number"; default?: number } | { type: "boolean"; default?: boolean } |
     { type: "string"; default?: string } | { type: "entity"; default?: {entity:EntityId} | null }>;
+  export type GraphicsBackend = "opengl" | "vulkan";
+  export type DisplayPreview = {fullscreen: true} | {fullscreen: false; width: number; height: number};
+  export interface VideoSettingsPatch {
+    vsync?: boolean;
+    fpsCap?: number;
+    shadows?: boolean;
+    localShadowBudget?: number;
+    backend?: GraphicsBackend;
+  }
+  export interface GameSettingsState {
+    width: number; height: number; fullscreen: boolean;
+    resolutions: {width: number; height: number}[];
+    displayModes: ("windowed" | "borderless")[];
+    vsync: boolean | null; vsyncRequested: boolean | null; canDisableVSync: boolean | null;
+    fpsCap: number; shadows: boolean; localShadowBudget: number;
+    activeBackend: GraphicsBackend; requestedBackend: GraphicsBackend;
+    backends: {name: GraphicsBackend; status: "active" | "candidate" | "failed"}[];
+    restartRequired: boolean;
+    desktop: boolean; persistent: boolean;
+    displayLocked: boolean; shadowsLocked: boolean; backendLocked: boolean;
+    displayPending: boolean; displayPreview: boolean; displayPreviewSeconds: number;
+    displayError: string; loadError: string; startupError: string; backendError: string;
+  }
+  export const settings: {
+    read(): GameSettingsState | null;
+    applyVideo(patch: VideoSettingsPatch): boolean;
+    previewDisplay(display: DisplayPreview): boolean;
+    confirmDisplay(): boolean;
+    revertDisplay(): boolean;
+    readGame(): {[key: string]: JSONValue} | null;
+    setGame(values: {[key: string]: JSONValue}): boolean;
+    save(): boolean;
+    /** Writes defaults for the next launch. The live session keeps its current choices. */
+    resetSaved(): boolean;
+  };
   export interface SaveOptions { name?: string; metadata?: { [key: string]: JSONValue } | JSONValue[] }
   export interface SaveLoadOptions { migrate?: boolean }
   export interface SaveSlot {

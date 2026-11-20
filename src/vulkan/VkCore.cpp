@@ -1465,10 +1465,30 @@ void SetSwapInterval(int interval) {
     g->swapchainDirty = true;
 }
 
+bool SupportsSwapInterval(int interval) {
+    if (!g || !g->surface) return false;
+    if (interval == 1) return true; // FIFO is required by Vulkan.
+    std::uint32_t count = 0;
+    if (vkGetPhysicalDeviceSurfacePresentModesKHR(g->physical, g->surface, &count, nullptr) != VK_SUCCESS)
+        return false;
+    std::vector<VkPresentModeKHR> modes(count);
+    if (vkGetPhysicalDeviceSurfacePresentModesKHR(g->physical, g->surface, &count, modes.data()) != VK_SUCCESS)
+        return false;
+    return std::any_of(modes.begin(), modes.end(), [](auto mode) {
+        return mode == VK_PRESENT_MODE_IMMEDIATE_KHR || mode == VK_PRESENT_MODE_MAILBOX_KHR;
+    });
+}
+
 int SwapInterval() {
     if (!g) return -1;
     if (!g->swapchain.handle || g->swapchainDirty) return g->swapInterval;
-    return g->swapchain.mode == VK_PRESENT_MODE_IMMEDIATE_KHR || g->swapchain.mode == VK_PRESENT_MODE_MAILBOX_KHR ? 0 : 1;
+    return EffectiveSwapInterval();
+}
+
+int EffectiveSwapInterval() {
+    if (!g || !g->swapchain.handle) return -1;
+    return g->swapchain.mode == VK_PRESENT_MODE_IMMEDIATE_KHR ||
+           g->swapchain.mode == VK_PRESENT_MODE_MAILBOX_KHR ? 0 : 1;
 }
 
 void DrawableSize(int &width, int &height) {
