@@ -45,7 +45,7 @@ initialize successfully.
 ## Graphics lifetime and backend changes
 
 The game-facing backend choice still applies at process restart. The
-`graphics-capabilities` gate can retire one graphics host and create another
+`graphics-context-lifecycle` gate can retire one graphics host and create another
 in the same process. When run with Vulkan selected in a dual-backend build,
 it alternates OpenGL and Vulkan and checks that each retired host clears
 its dispatch. That fixture has no running world.

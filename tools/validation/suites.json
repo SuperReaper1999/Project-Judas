@@ -383,6 +383,19 @@
       "parallel": true
     },
     {
+      "name": "graphics-context-lifecycle",
+      "target": "judas_graphics_capabilities_tests",
+      "groups": [
+        "rendering",
+        "platform",
+        "lifecycle"
+      ],
+      "args": [
+        "--native"
+      ],
+      "releaseOnly": true
+    },
+    {
       "name": "renderer-shader-library",
       "target": "judas_shader_library_tests",
       "groups": [
