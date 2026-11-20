@@ -200,6 +200,8 @@ bool Renderer::CompileShader(GLenum type, const char* source, GLuint& result) co
         if(source==kFragmentShaderSource&&m_capabilities.modernTier&&m_capabilities.textureViews&&m_capabilities.limits.fragmentTextureUnits>16)
             transformed.insert(transformed.find('\n')+1,"#define JUDAS_CUBE_ARRAY 1\n");
 #endif
+        if(source==kFragmentShaderSource&&SupportsIndependentShadowResolution())
+            transformed.insert(transformed.find('\n')+1,"#define JUDAS_SPLIT_SHADOWS 1\n");
         if(source==kFragmentShaderSource&&m_render->lightStorageVariant)
             transformed.insert(transformed.find('\n')+1,"#define JUDAS_LIGHT_STORAGE 1\n");
         return JudasRender::Shaders::CompileShader(type,transformed.c_str(),result,profile,"mesh-view-block");
@@ -293,6 +295,8 @@ bool Renderer::Init() {
     glUniform1i(m_uBones, 15);
     glUniform1i(glGetUniformLocation(m_shaderProgram,"uWeatherNoise"),13);
     glUniform1i(glGetUniformLocation(m_shaderProgram,"uShadowMaps"),1);
+    if(SupportsIndependentShadowResolution())
+        glUniform1i(glGetUniformLocation(m_shaderProgram,"uDirectionalShadowMaps"),17);
     glUniform1i(glGetUniformLocation(m_shaderProgram,"uLightGrid"),14);
 
     glClearColor(0.08f, 0.09f, 0.11f, 1.0f);
@@ -514,7 +518,8 @@ void Renderer::Shutdown() {
     if(m_lightTexture)glDeleteTextures(1,&m_lightTexture);
     m_lightTexture=0;m_lightTextureRows=0;
     if(m_shadowArray)glDeleteTextures(1,&m_shadowArray);
-    m_shadowArray=0;m_shadowLayers=0;
+    if(m_directionalShadowArray)glDeleteTextures(1,&m_directionalShadowArray);
+    m_shadowArray=0;m_directionalShadowArray=0;m_shadowLayers=0;
     ShutdownWeather();
     if(m_poseTexture){glDeleteTextures(1,&m_poseTexture);m_poseTexture=0;}
     if(m_poseBuffer){glDeleteBuffers(1,&m_poseBuffer);m_poseBuffer=0;}
@@ -696,7 +701,9 @@ void Renderer::BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProject
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_shadowFbo[shadowSlot]);
-    glViewport(0, 0, m_graphicsQuality.shadowResolution, m_graphicsQuality.shadowResolution);
+    const auto resolution=shadowSlot<kLocalShadowBase ? m_graphicsQuality.SunShadowResolution()
+                                                     : m_graphicsQuality.shadowResolution;
+    glViewport(0, 0, resolution, resolution);
     glClear(GL_DEPTH_BUFFER_BIT);
     glUseProgram(m_shadowShaderProgram);
     glUniformMatrix4fv(m_uShadowLightViewProj, 1, GL_FALSE, glm::value_ptr(lightViewProjection));
@@ -1224,6 +1231,10 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     }
     glBindTexture(GL_TEXTURE_2D, ResolveTexture(texture));
     glActiveTexture(GL_TEXTURE1);glBindTexture(GL_TEXTURE_2D_ARRAY,m_shadowArray);
+    if(SupportsIndependentShadowResolution()){
+        glActiveTexture(GL_TEXTURE17);
+        glBindTexture(GL_TEXTURE_2D_ARRAY,m_directionalShadowArray ? m_directionalShadowArray : m_shadowArray);
+    }
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     if(m_pointShadowView){glActiveTexture(GL_TEXTURE16);glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY,m_pointShadowView);glBindSampler(16,0);}
 #endif
@@ -1516,6 +1527,7 @@ void Renderer::DrawGridWater(MeshHandle handle,const JudasWater::SurfaceField& f
     camera.environmentIntensity=m_environmentIntensity;
     if(m_environment.IsValid()&&m_environment.id<m_environments.size()&&m_environments[m_environment.id].alive)
         camera.environment=m_environments[m_environment.id].specular;
+    camera.reflectionSteps=m_graphicsQuality.waterReflectionSteps;
     camera.linear=m_linearRendering;
     std::string error;
     const auto key=(std::uint64_t(handle.generation)<<32)|handle.id;

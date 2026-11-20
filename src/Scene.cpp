@@ -122,7 +122,8 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
         a.prefabAsset != b.prefabAsset || a.prefabRoot != b.prefabRoot ||
         a.prefabSource != b.prefabSource || a.prefabIds != b.prefabIds ||
         a.prefabOverrides != b.prefabOverrides) return false;
-    if(!OptEq(a.particleEmitter,b.particleEmitter,ParticleSettingsEqual))return false;
+    if(a.optionalParticlePresentation!=b.optionalParticlePresentation||
+       !OptEq(a.particleEmitter,b.particleEmitter,ParticleSettingsEqual))return false;
     if(!OptEq(a.landscape,b.landscape,[](const auto& x,const auto& y){return x.asset==y.asset&&x.planet==y.planet;}))return false;
     if (!Eq(a.transform.position, b.transform.position) ||
         !Eq(a.transform.rotation, b.transform.rotation) ||
@@ -132,6 +133,7 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
     if (!OptEq(a.render, b.render, [](const SceneRenderComponent& x, const SceneRenderComponent& y) {
             return x.shape == y.shape && x.spritePlayback.has_value()==y.spritePlayback.has_value() && (!x.spritePlayback||EncodeSpritePlayback(*x.spritePlayback)==EncodeSpritePlayback(*y.spritePlayback)) && (x.shape!=SceneShape::Sprite || x.sprite==y.sprite) && Eq(x.halfExtents, y.halfExtents) && x.radius == y.radius &&
                    Eq(x.color, y.color) && x.alpha == y.alpha && x.lodMultiplier==y.lodMultiplier &&
+                   x.decorative==y.decorative && x.decorativeDistance==y.decorativeDistance &&
                    Eq(x.secondaryColor, y.secondaryColor) && x.secondaryAlpha == y.secondaryAlpha &&
                    x.meshAsset == y.meshAsset && x.textureAsset == y.textureAsset && x.textureCamera == y.textureCamera &&
                    x.visible==y.visible&&x.hiddenParts==y.hiddenParts&&RenderSlotsEqual(x.materials,y.materials)&&

@@ -31,6 +31,7 @@ void Append(std::string& out,const MaterialSlot& m){Append(out,m.asset);Append(o
 void Append(std::string& out,const SceneRenderComponent& r){
     Append(out,r.shape);Append(out,r.visible);Append(out,r.halfExtents);Append(out,r.radius);Append(out,r.color);Append(out,r.alpha);
     Append(out,r.secondaryColor);Append(out,r.secondaryAlpha);Append(out,r.lodMultiplier);Append(out,r.meshAsset);Append(out,r.textureAsset);Append(out,r.textureCamera);
+    Append(out,r.decorative);
     Append(out,r.instanceOverrides);Append(out,std::uint64_t(r.materials.size()));for(const auto& m:r.materials)Append(out,m);
     Append(out,std::uint64_t(r.hiddenParts.size()));for(const auto& part:r.hiddenParts)Append(out,part);
     for(const auto* bindings:{&r.partMaterials,&r.runtimeMaterials}){Append(out,std::uint64_t(bindings->size()));for(const auto& [key,slot]:*bindings){Append(out,key);Append(out,slot);}}

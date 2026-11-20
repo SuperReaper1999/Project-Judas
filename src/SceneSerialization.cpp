@@ -220,6 +220,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
     if(o.tags) w.Line("tags", std::to_string(o.tags));
     if(o.renderLayer) w.Line("render-layer", std::to_string(o.renderLayer));
     if(!o.renderVisible)w.Line("render-visible","false");
+    if(o.optionalParticlePresentation)w.Line("particle.optional-presentation","true");
     w.Line("position", V(o.transform.position));
     w.Line("rotation", Q(o.transform.rotation));
     w.Line("scale", V(o.transform.scale));
@@ -231,6 +232,8 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("render.color", V(r.color));
         w.Line("render.alpha", F(r.alpha));
         if(r.lodMultiplier!=1)w.Line("render.lod-multiplier",F(r.lodMultiplier));
+        if(r.decorative)w.Line("render.decorative","true");
+        if(r.decorativeDistance!=0)w.Line("render.decorative-distance",F(r.decorativeDistance));
         w.Line("render.secondary-color", V(r.secondaryColor));
         w.Line("render.secondary-alpha", F(r.secondaryAlpha));
         w.Line("render.mesh-asset", Quote(r.meshAsset));
@@ -742,6 +745,8 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     if(p.Has("tags")&&!p.Mask("tags",o.tags))return false;
     if(p.Has("render-layer")&&!p.Layer("render-layer",o.renderLayer))return false;
     if(p.Has("render-visible")&&!p.Bool("render-visible",o.renderVisible))return false;
+    if(p.Has("particle.optional-presentation")&&
+       !p.Bool("particle.optional-presentation",o.optionalParticlePresentation))return false;
     if (p.Has("parent") && !p.Id("parent", o.parent)) return false;
     if (p.Has("prefab.root")) {
         std::string ids, overrides;
@@ -854,6 +859,10 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!p.Float("render.radius", r.radius)) return false;
         if (!p.Vec3("render.color", r.color)) return false;
         if (!p.Float("render.alpha", r.alpha)) return false;
+        if(p.Has("render.decorative")&&!p.Bool("render.decorative",r.decorative))return false;
+        if(p.Has("render.decorative-distance")&&(!p.Float("render.decorative-distance",r.decorativeDistance)||
+            r.decorativeDistance<0||r.decorativeDistance>1000000))
+            return reader.Fail("render.decorative-distance expects 0..1000000 metres");
         if(p.Has("render.lod-multiplier")&&(!p.Float("render.lod-multiplier",r.lodMultiplier)||r.lodMultiplier<0||r.lodMultiplier>32))return reader.Fail("render.lod-multiplier expects 0..32");
         if (!p.Vec3("render.secondary-color", r.secondaryColor)) return false;
         if (!p.Float("render.secondary-alpha", r.secondaryAlpha)) return false;

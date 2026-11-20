@@ -145,6 +145,68 @@ void CheckHeightfieldQuality(EngineHost& host, const TerrainV2::Source& source) 
     Check(renderer.SetGraphicsQuality(original,error),"restore authored heightfield quality");
     renderer.DestroyRenderTarget(target);
 }
+void CheckCaveQuality(EngineHost& host) {
+    namespace fs=std::filesystem;
+    const auto root=fs::current_path()/"cave-quality-fixture";
+    fs::create_directories(root/"Assets");
+    const auto image=root/"Assets/normal.png";
+    const std::vector<unsigned char> rgb{245,128,170,245,128,170,245,128,170,245,128,170};
+    Check(WriteRgbPng(image.string(),2,2,rgb),"create authored cave detail normal");
+    host.OpenProjectAssets(root.string(),(root/"Assets").string());
+    AssetRecord texture;
+    std::string error;
+    Check(host.Assets().Track(image.string(),texture,error),"register the cave detail normal");
+
+    auto source=TerrainV2::Create(33,33,.5f);
+    source.edits.push_back({TerrainV2::Edit::Kind::Remove,{0,0,0},3});
+    source.materialDetail.normalTexture=texture.id;
+    Scene scene;
+    auto& cave=scene.CreateObject("Cave quality fixture");
+    const auto id=cave.id;
+    cave.render=SceneRenderComponent{};
+    cave.body=SceneBodyComponent{};
+    RuntimeWorld world;
+    Check(world.Build(scene,&host.Resources(),error)&&world.LiveTerrain().CreateLandscape(id,source,error),
+          "cook cave visual and collision geometry");
+    for(unsigned i=0;i<3000&&world.RuntimeTerrainBusy(id);++i) {
+        world.AdvanceRuntimeTerrain();
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+    Check(world.HasRuntimeTerrain(id)&&!world.RuntimeTerrainBusy(id),"publish a carved cave");
+    host.Resources().RequestTexture(texture.id);
+    host.Resources().WaitForAll();
+    Check(host.Resources().TryGetTexture(texture.id).IsValid(),"visual cave normal is resident");
+    auto& renderer=host.GetRenderer();
+    const auto original=renderer.Quality();
+    const auto target=renderer.CreateRenderTarget(128,128,error);
+    const glm::vec3 eye{0,9,0};
+    const auto hit=world.Physics().Raycast(eye,{0,-1,0},20);
+    std::string before,after;
+    Check(hit.hit&&world.CaptureRuntimeTerrain(id,before,error),"capture original cave geometry state");
+    auto draw=[&](bool enabled) {
+        auto q=original;q.caveDetailNormals=enabled;
+        Check(renderer.SetGraphicsQuality(q,error)&&renderer.BeginRenderTarget(target),"apply cave detail normal policy");
+        renderer.SetCamera(glm::lookAt(eye,{0,0,0},{0,0,-1}),glm::ortho(-2.f,2.f,-2.f,2.f,.1f,30.f));
+        renderer.SetLighting({1,1,0},{1,1,1},{.2f,.2f,.2f});
+        world.PrepareRuntimeTerrain({{eye,1.,128,4.}},0,1);
+        world.DrawRuntimeTerrain(renderer);
+        renderer.EndMeshBatch();
+        std::vector<unsigned char> colour;
+        std::vector<float> depth(128*128);
+        renderer.CaptureFrame(128,128,colour);
+        glReadPixels(0,0,128,128,GL_DEPTH_COMPONENT,GL_FLOAT,depth.data());
+        renderer.EndRenderTarget();
+        return std::pair{colour,depth};
+    };
+    const auto authored=draw(true),reduced=draw(false);
+    Check(authored.first!=reduced.first&&authored.second==reduced.second,
+          "cave detail control changes colour and preserves exact rendered depth");
+    Check(world.Physics().Raycast(eye,{0,-1,0},20).point==hit.point&&
+          world.CaptureRuntimeTerrain(id,after,error)&&after==before,
+          "cave material quality leaves collision and persistent data intact");
+    Check(renderer.SetGraphicsQuality(original,error),"restore cave quality");
+    renderer.DestroyRenderTarget(target);
+}
 } // namespace
 
 int main(int argc, char **argv) {
@@ -268,6 +330,7 @@ int main(int argc, char **argv) {
         renderer.DestroyRenderTarget(target);
         renderer.DestroyTexture(heights);
         CheckHeightfieldQuality(host,source);
+        CheckCaveQuality(host);
         if (argc > 1) {
             const std::filesystem::path output(argv[1]);
             Check(!std::filesystem::exists(output), "visual evidence directory is fresh");

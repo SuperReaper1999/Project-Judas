@@ -423,10 +423,12 @@ void Transition(Image &image, VkImageLayout layout) {
     barrier.srcAccessMask = AccessForLayout(image.layout);
     barrier.dstAccessMask = AccessForLayout(layout);
     vkCmdPipelineBarrier(g->cmd, stages, stages, 0, 0, nullptr, 0, nullptr, 1, &barrier);
+    if(g->trace)++g->imageBarriers;
     image.layout = layout;
 }
 
 void MemoryBarrierAll() {
+    if(g->trace)++g->globalBarriers;
     if (g->pass.active) EndPass();
     VkMemoryBarrier barrier{VK_STRUCTURE_TYPE_MEMORY_BARRIER};
     barrier.srcAccessMask = VK_ACCESS_MEMORY_WRITE_BIT;
@@ -873,7 +875,18 @@ PresentTicket *AcquirePresentTicket(Swapchain &swapchain, bool wait) {
     return &ticket;
 }
 
+using TraceClock=std::chrono::steady_clock;
+template<class Call>
+auto TracePresentCall(std::uint64_t& elapsed, Call call) {
+    if(!g->trace)return call();
+    const auto start=TraceClock::now();
+    const auto result=call();
+    elapsed+=std::chrono::duration_cast<std::chrono::nanoseconds>(TraceClock::now()-start).count();
+    return result;
+}
+
 void RecordPresentBlit(Image &source, VkImage destination, VkExtent2D extent) {
+    if(g->trace)g->imageBarriers+=2;
     EndPass();
     Transition(source, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL);
     source.lastUse = g->serial;
@@ -917,8 +930,9 @@ VkResult PresentImage(Swapchain &swapchain, Image &source, bool wait, bool &subm
         g->freeAcquireSemaphores.pop_back();
     }
     std::uint32_t index = 0;
-    const auto acquired = vkAcquireNextImageKHR(g->device, swapchain.handle, wait ? UINT64_MAX : 0,
-                                                acquire, VK_NULL_HANDLE, &index);
+    const auto acquired=TracePresentCall(g->acquireNs,[&]{
+        return vkAcquireNextImageKHR(g->device,swapchain.handle,wait?UINT64_MAX:0,acquire,VK_NULL_HANDLE,&index);
+    });
     if (acquired != VK_SUCCESS && acquired != VK_SUBOPTIMAL_KHR) {
         g->freeAcquireSemaphores.push_back(acquire);
         return acquired;
@@ -940,7 +954,7 @@ VkResult PresentImage(Swapchain &swapchain, Image &source, bool wait, bool &subm
     present.swapchainCount = 1;
     present.pSwapchains = &swapchain.handle;
     present.pImageIndices = &index;
-    const auto result = vkQueuePresentKHR(g->queue, &present);
+    const auto result=TracePresentCall(g->presentNs,[&]{return vkQueuePresentKHR(g->queue,&present);});
     // WSI rejections still enqueue the semaphore wait and presentation fence.
     if (ticket && (result == VK_SUCCESS || result == VK_SUBOPTIMAL_KHR ||
                    result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_ERROR_SURFACE_LOST_KHR))
@@ -1603,10 +1617,13 @@ void Present() {
     // readbacks) must not force the CPU to wait for the previous frame, which
     // would serialise CPU and GPU work.
     g->frameSerials.push_back(g->serial - 1);
+    const auto throttleStart=g->trace?TraceClock::now():TraceClock::time_point{};
     while (g->frameSerials.size() > 2) {
         PollCompleted(true, g->frameSerials.front());
         g->frameSerials.pop_front();
     }
+    if(g->trace)g->frameThrottleNs+=std::chrono::duration_cast<std::chrono::nanoseconds>(
+        TraceClock::now()-throttleStart).count();
     PollCompleted(false);
     ResolveDispatchTiming(false);
     if (width != g->drawableWidth || height != g->drawableHeight)
@@ -1626,6 +1643,9 @@ Statistics Stats() {
     stats.bufferBytes = g->bufferBytes;
     stats.imageBytes = g->imageBytes;
     stats.platformPresents = g->platformPresents;
+    stats.imageBarriers=g->imageBarriers;stats.globalBarriers=g->globalBarriers;
+    stats.pipelinesCreated=g->pipelinesCreated;stats.presentMode=int(g->swapchain.mode);
+    stats.acquireNs=g->acquireNs;stats.presentNs=g->presentNs;stats.frameThrottleNs=g->frameThrottleNs;
     return stats;
 }
 

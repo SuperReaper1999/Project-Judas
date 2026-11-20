@@ -81,6 +81,13 @@ JSON overhead. Counters report actual clock loss even with detailed profiling of
 explicit light-list/graphics policies are diagnostic controls. Record them; do not
 mix them between supposedly matched runs. Use one implementation per responsibility.
 
+On Vulkan, set `JUDAS_VULKAN_TRACE=1` for attributed captures. Profiled
+`frames.jsonl` rows include the present mode, image and global barrier counts,
+pipeline creation, acquire and present API durations, and time spent throttling
+outstanding frames. These are CPU-side diagnostics. Correlate them with the
+same frame's GPU timestamps before assigning a stall to presentation. Compare
+against a lean run with tracing disabled to bound instrumentation overhead.
+
 ## Current scoped baseline
 
 The retained [qualification receipt](qualification/rendering.json) records all

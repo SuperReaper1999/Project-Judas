@@ -71,9 +71,9 @@ void Runtime::Draw(Renderer &renderer) const {
         world.Resources()->RequestTexture(source->materialDetail.normalTexture);
         normal = world.Resources()->TryGetTexture(source->materialDetail.normalTexture);
     }
-    renderer.BeginTerrainMaterial({}, layers, source->layerColours,
-                                  glm::inverse(glm::translate(glm::mat4(1), d->transform.position) *
-                                               glm::mat4_cast(d->transform.rotation)),
+    const auto worldToTerrain=glm::inverse(glm::translate(glm::mat4(1), d->transform.position) *
+                                           glm::mat4_cast(d->transform.rotation));
+    renderer.BeginTerrainMaterial({}, layers, source->layerColours, worldToTerrain,
                                   source->materialDetail, normal);
     RendererProfileScope gpu(renderer, "Terrain V2 geometry");
     std::vector<HeightPatch> fallback;
@@ -131,6 +131,7 @@ void Runtime::Draw(Renderer &renderer) const {
          {drawPatches.Active() ? drawPatches.Fraction() : 0, 1}, false);
     if (drawPatches.Active() && drawPatches.Fraction() > 0)
         draw(drawPatches.Incoming(), {0, drawPatches.Fraction()}, true);
+    bool omitCaveNormal=normal.IsValid()&&!renderer.Quality().caveDetailNormals;
     for (const auto &[_, r] : chunks) {
         const auto &c = r.geometry.chunk;
         if (!r.triangles || (!c.volumetric && !source->chart))
@@ -144,6 +145,11 @@ void Runtime::Draw(Renderer &renderer) const {
                                glm::mat4_cast(d->transform.rotation);
             if (!renderer.IsVisible(TransformBounds(bounds, frame)))
                 continue;
+        }
+        if(omitCaveNormal){
+            renderer.BeginTerrainMaterial({}, layers, source->layerColours, worldToTerrain,
+                                          source->materialDetail, {});
+            omitCaveNormal=false;
         }
         const auto &page = renderPages.Acquire(
             renderer, *source, {{c.key.x, c.key.z, 0}, glm::vec4(1), false}, [&] {

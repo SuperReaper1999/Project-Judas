@@ -143,6 +143,7 @@ bool WaterPass::Draw(std::uint64_t key,std::uint64_t revision,GLuint mesh,GLsize
     glUniform2f(Location(surface_,"resolution"),float(state.viewport[2]),float(state.viewport[3]));
     glUniform2f(Location(surface_,"captureScale"),float(state.viewport[2])/width_,float(state.viewport[3])/height_);
     glUniform2f(Location(surface_,"viewportOrigin"),float(state.viewport[0]),float(state.viewport[1]));
+    glUniform1i(Location(surface_,"reflectionSteps"),GLint(camera.reflectionSteps));
     glUniform1f(Location(surface_,"seconds"),camera.seconds);glUniform1f(Location(surface_,"opacity"),camera.opacity);
     glUniform1i(Location(surface_,"linearOutput"),camera.linear);glUniform1i(Location(surface_,"sceneColour"),0);glUniform1i(Location(surface_,"sceneDepth"),1);
     glDisable(GL_CULL_FACE);glDisable(GL_BLEND);glEnable(GL_DEPTH_TEST);glDepthMask(GL_TRUE);

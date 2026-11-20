@@ -81,6 +81,12 @@ void CheckGraphicsRecreation(EngineHost& host, const Project& project,
         renderer.ResetStats();
         pixels(true);
         const auto authoredTriangles=renderer.Stats().triangles;
+        auto reflections=original;
+        reflections.waterReflectionSteps=0;
+        Check(renderer.SetGraphicsQuality(reflections,error),"select sky-only reflection fallback");
+        const auto skyOnly=pixels(true);
+        Check(skyOnly!=initial&&skyOnly!=pixels(false)&&grid.Quantity()==initialQuantity,
+              "reflection trace changes rendered pixels while water and physical quantity remain");
         auto coarse=original;
         coarse.waterSurfaceLodBias=1;
         Check(renderer.SetGraphicsQuality(coarse,error),"apply coarser Advanced Water surface tessellation");

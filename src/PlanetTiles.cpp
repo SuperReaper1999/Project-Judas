@@ -161,7 +161,7 @@ std::vector<std::pair<PlanetTileKey,double>> PlanetTiles::Dependencies(PlanetTil
 void PlanetTiles::Upload(Tile& t){auto data=t.data;data.points=t.resolved;data.parentPoints=data.points;auto mesh=data.Mesh(1,0);if(t.mesh.IsValid())m_renderer->UpdateMeshVertices(t.mesh,mesh.vertices);else t.mesh=m_renderer->CreateMesh(mesh);}
 void PlanetTiles::Prepare(Renderer& renderer,V eye,V origin,double fov,unsigned pixels,double dt){Prepare(renderer,std::vector<PlanetView>{{eye,fov,pixels}},origin,dt);}
 void PlanetTiles::Prepare(Renderer& renderer,const std::vector<PlanetView>& views,V origin,double dt){(void)origin;const auto start=std::chrono::steady_clock::now();if(m_renderer&&m_renderer!=&renderer)throw std::logic_error("planet renderer owner changed");m_renderer=&renderer;
- auto selection=SelectPlanetTiles(surface,views,m_fixedRims);m_stats.selectionMs=ms(start);const auto buildStart=std::chrono::steady_clock::now();std::set<PlanetTileKey> desired(selection.leaves.begin(),selection.leaves.end());if(m_tiles.empty()||m_coverageDirty){
+ auto selection=SelectPlanetTiles(surface,views,m_fixedRims,renderer.Quality().planetLodBias);m_stats.selectionMs=ms(start);const auto buildStart=std::chrono::steady_clock::now();std::set<PlanetTileKey> desired(selection.leaves.begin(),selection.leaves.end());if(m_tiles.empty()||m_coverageDirty){
   std::set<PlanetTileKey> keep=desired;for(auto k:desired)if(k.level)keep.insert(k.Parent());
   for(auto it=m_tiles.begin();it!=m_tiles.end();)if(!keep.count(it->first)){
    if(it->second.mesh.IsValid()) renderer.DestroyMesh(it->second.mesh);

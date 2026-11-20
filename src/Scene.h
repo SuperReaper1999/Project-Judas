@@ -73,6 +73,8 @@ enum class SceneShape { Box, Sphere, Compound, Mesh, ConvexHull, TriangleMesh, S
 struct SceneRenderComponent {
     SpriteSettings sprite;
     bool visible=true;
+    bool decorative=false;
+    float decorativeDistance=0; // metres from camera to renderable origin; 0 is unlimited
     MaterialOverride instanceOverrides; // authored whole-renderable factors
     std::map<std::string,MaterialSlot> partMaterials; // stable imported part identity
     // Runtime intent is separate from authored defaults; clear restores the authored state.
@@ -329,6 +331,7 @@ struct SceneObject {
     std::optional<SceneRenderCameraComponent> renderCamera;
     std::optional<SceneAudioEmitterComponent> audioEmitter;
     std::optional<ParticleEmitterSettings> particleEmitter;
+    bool optionalParticlePresentation=false;
     std::optional<SceneAudioListenerComponent> audioListener;
     std::optional<SceneAudioZoneComponent> audioZone;
     std::optional<SceneBodyComponent> body;

@@ -26,6 +26,7 @@ std::vector<MaterialBinding> BuildRenderMaterialBindings(ResourceManager*,const 
 // Editor observers can present the same world through their own camera.
 struct WorldDrawOptions {
     bool includeTerrain = true;
+    bool limitDecorativeDistance = false;
 };
 
 // Opaque geometry only — safe inside a shadow pass.

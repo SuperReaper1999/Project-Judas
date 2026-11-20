@@ -1,6 +1,7 @@
 #include "PlanetTerrain.h"
 #include <stdexcept>
 #include <cstdio>
+#include <algorithm>
 #include <chrono>
 #include <set>
 #include <random>
@@ -27,4 +28,12 @@ int main(){using V=glm::dvec3;PlanetSettings config;std::string error;check(Vali
  size_t most=0;double time=0;for(auto altitude:{1.,100.,10000.,1e6,1e7}){auto start=std::chrono::steady_clock::now();auto selected=SelectPlanetTiles(detailed,{0,config.radius+altitude,0},1.,1080);time+=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count();most=std::max(most,selected.leaves.size());check(selected.leaves.size()<=config.maxTiles,"view-dependent leaf count obeys hard bound");
   for(unsigned face=0;face<6;++face){double area=0;for(auto k:selected.leaves)if(k.face==face)area+=std::ldexp(1.,-2*int(k.level));check(std::abs(area-1)<1e-12,"quadtree covers complete face without missing patches");}
   auto repeat=SelectPlanetTiles(detailed,{0,config.radius+altitude,0},1.,1080);check(repeat.leaves==selected.leaves,"same view gives deterministic selection");}
+ const std::vector<PlanetView> biasViews{{{0,config.radius+100000,0},1.,720}};
+ const auto fine=SelectPlanetTiles(detailed,biasViews,{},.5);
+ const auto coarse=SelectPlanetTiles(detailed,biasViews,{},2.);
+ check(coarse.leaves.size()<fine.leaves.size(),"planet quality changes visual refinement");
+ const auto pinned=SelectPlanetTiles(detailed,biasViews,{coarse.leaves.front()},2.);
+ check(std::find(pinned.leaves.begin(),pinned.leaves.end(),coarse.leaves.front())!=pinned.leaves.end(),
+       "visual refinement retains a fixed planetary landscape rim");
+ std::printf("MEASURE planet quality fine=%zu coarse=%zu\n",fine.leaves.size(),coarse.leaves.size());
  std::printf("MEASURE tile_float_reconstruction_m=%.12g same_face_seam_m=%.12g parent_morph_m=%.12g max_leaves=%zu five_view_selection_ms=%.6f\n",maxPosition,maxBoundary,maxMorph,most,time);std::printf("SUMMARY %u checks %u failures\n",checks,failures);return failures?1:0;}

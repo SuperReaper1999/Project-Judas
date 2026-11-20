@@ -9,7 +9,7 @@ void Renderer::SetDynamicLights(const std::vector<DynamicLight>& lights){
  glUseProgram(m_shaderProgram);glUniform4f(glGetUniformLocation(m_shaderProgram,"uLightViewport"),float(viewport[0]),float(viewport[1]),float(viewport[2]),float(viewport[3]));
  glUniform1i(glGetUniformLocation(m_shaderProgram,"uHasDynamicLights"),m_lightGrid.visible!=0);
  m_render->lightStorageReady=false;glUniform1i(glGetUniformLocation(m_shaderProgram,"uUseLightStorage"),0);
- m_stats.shadowBytes=m_shadowsEnabled?size_t(m_shadowLayers)*m_graphicsQuality.shadowResolution*m_graphicsQuality.shadowResolution*4:0;
+ m_stats.shadowBytes=ShadowStorageBytes();
  if(!m_lightGrid.visible){m_stats.dynamicLights=0;m_stats.lightRejected+=m_lightGrid.rejected;return;}
  m_stats.dynamicLights=m_lightGrid.visible;m_stats.lightRejected+=m_lightGrid.rejected;m_stats.lightTileOverflow+=m_lightGrid.overflow;m_stats.maxTileLights=std::max(m_stats.maxTileLights,m_lightGrid.maxPerTile);
  if(storage){
@@ -99,8 +99,12 @@ bool Renderer::SetGraphicsQuality(const GraphicsQuality& quality, std::string& e
  if(!SupportsGraphicsQuality()||m_shadowPassActive||m_activeTarget.IsValid()){
   error="Graphics quality requires the shared renderer at a frame boundary";return false;
  }
- if(quality.shadowResolution>unsigned(std::max(0,m_capabilities.limits.textureSize))){
+ if(std::max(quality.shadowResolution,quality.SunShadowResolution())>
+    unsigned(std::max(0,m_capabilities.limits.textureSize))){
   error="Shadow resolution exceeds the current device texture limit";return false;
+ }
+ if(quality.SunShadowResolution()!=quality.shadowResolution&&!SupportsIndependentShadowResolution()){
+  error="Independent shadow resolutions require 18 fragment texture units";return false;
  }
  if(quality.materialAnisotropy>m_maxMaterialAnisotropy){
   error="Material anisotropy exceeds the current device sampler limit";return false;
@@ -113,11 +117,12 @@ bool Renderer::SetGraphicsQuality(const GraphicsQuality& quality, std::string& e
    if(!stagedMain.IsValid())return false;
   }
  }
- if(quality.shadowResolution!=m_graphicsQuality.shadowResolution&&m_shadowLayers){
+ if(m_shadowLayers&&(quality.shadowResolution!=m_graphicsQuality.shadowResolution||
+                     quality.SunShadowResolution()!=m_graphicsQuality.SunShadowResolution())){
   const unsigned limit=quality.localShadowBudget?unsigned(kLocalShadowBase)+6*quality.localShadowBudget:
                        quality.directionalCascades;
   const unsigned layers=std::min(m_shadowLayers,limit);
-  if(!AllocateShadowLayers(layers,quality.shadowResolution,false)){
+  if(!AllocateShadowLayers(layers,quality,false)){
    if(stagedMain.IsValid()){DestroyRenderTarget(stagedMain);m_targets.pop_back();}
    error="Could not allocate the requested shadow depth array";return false;
   }
@@ -134,6 +139,8 @@ bool Renderer::SetGraphicsQuality(const GraphicsQuality& quality, std::string& e
  if(quality.materialAnisotropy!=m_graphicsQuality.materialAnisotropy)
   for(const auto& entry:m_anisotropicSamplers)
    if(entry.second)glSamplerParameterf(entry.second,kMaterialAnisotropyParameter,float(quality.materialAnisotropy));
+ if(quality.decorativeDensity!=m_graphicsQuality.decorativeDensity)
+  m_render->shadowCache.Clear();
  m_graphicsQuality=quality;
  m_rejectedShadowLayers=0;
  return true;
@@ -143,61 +150,110 @@ bool Renderer::ReserveShadowLayers(unsigned layers){
  layers=std::min(layers,unsigned(kShadowMapCount));
  if(!m_shadowsEnabled||layers<=m_shadowLayers)return true;
  if(m_rejectedShadowLayers&&layers>=m_rejectedShadowLayers)return false;
- if(AllocateShadowLayers(layers,m_graphicsQuality.shadowResolution,true))return true;
+ if(AllocateShadowLayers(layers,m_graphicsQuality,true))return true;
  m_rejectedShadowLayers=layers;
  std::fprintf(stderr,"Cannot grow shadow depth storage to %u layers at %u pixels\n",
               layers,m_graphicsQuality.shadowResolution);
  return false;
 }
 
-bool Renderer::AllocateShadowLayers(unsigned layers,unsigned resolution,bool preserve){
- // Grow only when a view actually needs more shadow sources. Existing depth
- // layers are copied, so low-level callers can add a layer after rendering one.
+std::size_t Renderer::ShadowStorageBytes() const {
+ const auto local=m_graphicsQuality.shadowResolution;
+ if(!m_directionalShadowArray)return size_t(m_shadowLayers)*local*local*4;
+ const auto sun=m_graphicsQuality.SunShadowResolution();
+ const auto directionalLayers=std::min(unsigned(kLocalShadowBase),m_shadowLayers);
+ return (size_t(directionalLayers)*sun*sun+size_t(m_shadowLayers-directionalLayers)*local*local)*4;
+}
+
+bool Renderer::AllocateShadowLayers(unsigned layers,const GraphicsQuality& quality,bool preserve){
+ const bool split=quality.SunShadowResolution()!=quality.shadowResolution;
  bool cubeViews=false;
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
  cubeViews=m_capabilities.modernTier&&m_capabilities.textureViews&&m_capabilities.limits.fragmentTextureUnits>16;
 #endif
  if(cubeViews&&layers>kLocalShadowBase)layers=std::min(unsigned(kShadowMapCount),((layers+5)/6)*6);
- if(layers>unsigned(std::max(0,m_capabilities.limits.arrayTextureLayers)))return false;
+ const unsigned directionalLayers=split?std::min(layers,unsigned(kLocalShadowBase)):0;
+ const unsigned localLayers=layers-directionalLayers;
+ if(std::max(localLayers,directionalLayers)>unsigned(std::max(0,m_capabilities.limits.arrayTextureLayers)))return false;
  GLint draw=0,read=0;
  glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&draw);
  glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING,&read);
- GLuint next=0;
- glGenTextures(1,&next);
- glBindTexture(GL_TEXTURE_2D_ARRAY,next);
+ GLuint temporary=0;
+ glGenFramebuffers(1,&temporary);
+ glBindFramebuffer(GL_FRAMEBUFFER,temporary);
+ const GLenum none=GL_NONE;
+ glDrawBuffers(1,&none);glReadBuffer(GL_NONE);
+ const auto allocate=[&](GLuint& texture,unsigned count,unsigned size,bool immutable) {
+  if(!count)return true;
+  glGenTextures(1,&texture);
+  glBindTexture(GL_TEXTURE_2D_ARRAY,texture);
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
- if(cubeViews)
-  glTexStorage3D(GL_TEXTURE_2D_ARRAY,1,GL_DEPTH_COMPONENT24,resolution,resolution,GLsizei(layers));
- else
+  if(immutable)glTexStorage3D(GL_TEXTURE_2D_ARRAY,1,GL_DEPTH_COMPONENT24,size,size,count);
+  else
 #endif
- {
-  glTexImage3D(GL_TEXTURE_2D_ARRAY,0,GL_DEPTH_COMPONENT24,resolution,resolution,GLsizei(layers),0,GL_DEPTH_COMPONENT,GL_UNSIGNED_INT,nullptr);
- }
- glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_MIN_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_MAG_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
- GLuint temporary=0;glGenFramebuffers(1,&temporary);glBindFramebuffer(GL_FRAMEBUFFER,temporary);const GLenum none=GL_NONE;glDrawBuffers(1,&none);glReadBuffer(GL_NONE);
- glFramebufferTextureLayer(GL_DRAW_FRAMEBUFFER,GL_DEPTH_ATTACHMENT,next,0,GLint(layers-1));
- const bool complete=glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER)==GL_FRAMEBUFFER_COMPLETE;
+   glTexImage3D(GL_TEXTURE_2D_ARRAY,0,GL_DEPTH_COMPONENT24,size,size,count,0,GL_DEPTH_COMPONENT,GL_UNSIGNED_INT,nullptr);
+  glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
+  glFramebufferTextureLayer(GL_DRAW_FRAMEBUFFER,GL_DEPTH_ATTACHMENT,texture,0,GLint(count-1));
+  return glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER)==GL_FRAMEBUFFER_COMPLETE;
+ };
+ GLuint next=0,nextDirectional=0;
+ const bool complete=allocate(next,localLayers,quality.shadowResolution,cubeViews)&&
+                     allocate(nextDirectional,directionalLayers,quality.SunShadowResolution(),false);
+ const auto attach=[&](GLenum target,unsigned slot){
+  const bool sun=slot<directionalLayers;
+  glFramebufferTextureLayer(target,GL_DEPTH_ATTACHMENT,sun?nextDirectional:next,0,
+                            GLint(sun?slot:slot-directionalLayers));
+ };
  if(complete&&preserve){
-  for(unsigned i=0;i<m_shadowLayers;++i){glBindFramebuffer(GL_READ_FRAMEBUFFER,m_shadowFbo[i]);glReadBuffer(GL_NONE);glFramebufferTextureLayer(GL_DRAW_FRAMEBUFFER,GL_DEPTH_ATTACHMENT,next,0,GLint(i));glBlitFramebuffer(0,0,resolution,resolution,0,0,resolution,resolution,GL_DEPTH_BUFFER_BIT,GL_NEAREST);}
+  for(unsigned i=0;i<m_shadowLayers;++i){
+   const auto size=i<directionalLayers?quality.SunShadowResolution():quality.shadowResolution;
+   glBindFramebuffer(GL_READ_FRAMEBUFFER,m_shadowFbo[i]);
+   glReadBuffer(GL_NONE);
+   attach(GL_DRAW_FRAMEBUFFER,i);
+   glBlitFramebuffer(0,0,size,size,0,0,size,size,GL_DEPTH_BUFFER_BIT,GL_NEAREST);
+  }
  }
  glDeleteFramebuffers(1,&temporary);
  if(!complete){
-  glDeleteTextures(1,&next);
+  glDeleteTextures(1,&next);glDeleteTextures(1,&nextDirectional);
   glBindFramebuffer(GL_DRAW_FRAMEBUFFER,GLuint(draw));glBindFramebuffer(GL_READ_FRAMEBUFFER,GLuint(read));
   return false;
  }
- for(unsigned i=0;i<layers;++i){if(!m_shadowFbo[i])glGenFramebuffers(1,&m_shadowFbo[i]);glBindFramebuffer(GL_FRAMEBUFFER,m_shadowFbo[i]);glFramebufferTextureLayer(GL_FRAMEBUFFER,GL_DEPTH_ATTACHMENT,next,0,GLint(i));glDrawBuffers(1,&none);glReadBuffer(GL_NONE);}
+ for(unsigned i=0;i<layers;++i){
+  if(!m_shadowFbo[i])glGenFramebuffers(1,&m_shadowFbo[i]);
+  glBindFramebuffer(GL_FRAMEBUFFER,m_shadowFbo[i]);
+  attach(GL_FRAMEBUFFER,i);
+  glDrawBuffers(1,&none);glReadBuffer(GL_NONE);
+ }
  if(m_pointShadowView){glDeleteTextures(1,&m_pointShadowView);m_pointShadowView=0;}
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
  if(cubeViews&&layers>kLocalShadowBase){
-  glGenTextures(1,&m_pointShadowView);glTextureView(m_pointShadowView,GL_TEXTURE_CUBE_MAP_ARRAY,next,GL_DEPTH_COMPONENT24,0,1,kLocalShadowBase,layers-kLocalShadowBase);
-  glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY,m_pointShadowView);glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_MIN_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_MAG_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_WRAP_R,GL_CLAMP_TO_EDGE);
+  glGenTextures(1,&m_pointShadowView);
+  glTextureView(m_pointShadowView,GL_TEXTURE_CUBE_MAP_ARRAY,next,GL_DEPTH_COMPONENT24,0,1,
+                kLocalShadowBase-directionalLayers,layers-kLocalShadowBase);
+  glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY,m_pointShadowView);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY,GL_TEXTURE_WRAP_R,GL_CLAMP_TO_EDGE);
   glActiveTexture(GL_TEXTURE16);glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY,m_pointShadowView);glActiveTexture(GL_TEXTURE0);
  }
 #endif
  for(unsigned i=layers;i<m_shadowLayers;++i){glDeleteFramebuffers(1,&m_shadowFbo[i]);m_shadowFbo[i]=0;}
- if(m_shadowArray)glDeleteTextures(1,&m_shadowArray);
- m_shadowArray=next;m_shadowLayers=layers;glBindFramebuffer(GL_DRAW_FRAMEBUFFER,GLuint(draw));glBindFramebuffer(GL_READ_FRAMEBUFFER,GLuint(read));glBindTexture(GL_TEXTURE_2D_ARRAY,0);
+ glDeleteTextures(1,&m_shadowArray);glDeleteTextures(1,&m_directionalShadowArray);
+ m_shadowArray=next;m_directionalShadowArray=nextDirectional;m_shadowLayers=layers;
+ if(SupportsIndependentShadowResolution()){
+  GLint previous=0;glGetIntegerv(GL_CURRENT_PROGRAM,&previous);
+  glUseProgram(m_shaderProgram);
+  glUniform1i(MaterialUniform("uSeparateShadowMaps"),split);
+  glUseProgram(GLuint(previous));
+ }
+ glBindFramebuffer(GL_DRAW_FRAMEBUFFER,GLuint(draw));glBindFramebuffer(GL_READ_FRAMEBUFFER,GLuint(read));
+ glBindTexture(GL_TEXTURE_2D_ARRAY,0);
  return true;
 }
 

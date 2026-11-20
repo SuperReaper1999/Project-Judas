@@ -73,11 +73,25 @@ reports `quality: null`.
 | Very High | 1.00 | 0.75 | 0 | 8× |
 | Ultra | 1.00 | 0.5 | −1 | 16× |
 
-- `shadowResolution` sets the square resolution of each depth layer. Sun, spot
-  and point charts share the array. A point shadow consumes six layers. For
-  budgeting, a layer is approximately four bytes per texel. Changing resolution
-  recreates the array and invalidates cached depth. Additional layers are
-  allocated on demand. A lower local budget changes source selection immediately.
+| Preset | Decoration density | Decoration distance scale | Planet LOD bias | Optional particle density | Cave detail normals | Water reflection steps |
+| --- | ---: | ---: | ---: | ---: | --- | ---: |
+| Low | 0.35 | 0.50 | 2.0 | 0.40 | Off | 0 |
+| Medium | 0.60 | 0.75 | 1.5 | 0.65 | Off | 4 |
+| High | 0.80 | 1.00 | 1.0 | 0.85 | Authored | 7 |
+| Very High | 1.00 | 1.00 | 0.75 | 1.00 | Authored | 10 |
+| Ultra | 1.00 | 1.50 | 0.50 | 1.00 | Authored | 10 |
+
+- `shadowResolution` remains the legacy control for setting both depths. On
+  capable devices, set `directionalShadowResolution` and
+  `localShadowResolution` independently to 256, 512, 768, 1024 or 1536.
+  The setting is exposed when `quality.independentShadowResolutions` is true
+  (at least 18 fragment texture units). The legacy read field reports the local
+  value. Presets use shared sizes to retain the same defaults on both device tiers.
+  A point shadow needs six local layers. Chart slot padding and on-demand
+  allocation mean allocated depth can exceed the currently visible charts.
+  `quality.shadowStorageBytes` estimates current depth storage at four bytes
+  per texel. It excludes driver overhead. Changing resolution rebuilds the
+  affected layout and invalidates cached depths.
 - `directionalCascades` chooses one to three charts. Their default orthographic
   half extents are 16, 48 and 144 world units. `shadowDistanceScale` multiplies
   these by 0.5 to 1.5. Actual coverage depends on light and camera direction.
@@ -117,6 +131,34 @@ reports `quality: null`.
   nearest sampling, texture overrides and alpha coverage. The renderer
   reuses sampler state without uploading textures again.
 
+- `decorativeDensity` accepts 0–1. Mark optional boxes, spheres, meshes or sprites
+  as **Optional decoration** in their Render inspector. Lower density selects a
+  stable subset by scene object ID in colour views and shadow passes. It never
+  changes entity visibility flags, physics, interaction, navigation, saves or
+  streaming policy. Leave gameplay landmarks and collision cues unmarked.
+- `decorativeDistanceScale` accepts 0.25–2 and multiplies the optional **Decorative
+  distance** in metres. At zero authored metres a renderable has no distance cap.
+  Distance is measured from the main camera to the renderable origin and applies
+  to main and local-player runtime colour only. This cutoff is hard. Secondary
+  views and shadow culling still use their own visibility policy.
+- `planetLodBias` accepts 0.5–2 and multiplies the authored projected-error
+  threshold for visual planet tiles. Smaller values refine sooner. Rim pins,
+  cutouts, resident limits, morphing, collision and the source's maximum level
+  stay authoritative.
+- `caveDetailNormals` retains or skips the authored terrain detail normal on
+  volumetric cave and planetary replacement meshes. It has an effect when a
+  detail normal is assigned. Geometry, seams and collision are unchanged.
+- `optionalParticleDensity` accepts 0–1. Mark supplementary emitters as
+  **Optional presentation** in the Particle Emitter inspector. The stable
+  fraction applies to whole emitters across all render views. An omitted emitter
+  continues to simulate, deliver impacts and retain its state on CPU or GPU.
+  Use multiple optional emitters to author a graded effect and keep essential
+  effects unmarked.
+- `waterReflectionSteps` accepts whole numbers from 0 to 10. It limits
+  Advanced Water screen-space reflection samples. Zero uses the existing sky
+  or environment fallback. Refraction, absorption, underwater composition and
+  fluid simulation are unaffected.
+
 Fresh preferences and older preference files retain the previous renderer
 defaults. The standalone Linux default is 1024, three cascades, coverage scale
 1, Soft filtering, mesh bias 1, authored visual weather and eight local shadow
@@ -150,11 +192,11 @@ over, including when the runtime recovers the old backend.
 
 | Area | Current engine boundary |
 | --- | --- |
-| Lighting and shadows | The global toggle and local source budget predate presets. The renderer now exposes shared depth size, directional coverage and filtering. Separate sun/local depth sizes would require separate arrays and sampling paths. Cache invalidation is automatic. |
-| Geometry and terrain | Mesh LOD bias and heightfield visual LOD are separate controls. Cave and planet paths retain their own contracts. There is no global draw-distance override. |
-| Vegetation | Vegetation can be authored as ordinary scene meshes. A density control needs an explicit decorative-instance owner with stable identities and matching colour and shadow visibility. |
-| Particles and fluids | Current emitter budgets and grids can own gameplay state, including impacts and fluid coupling. Presets preserve those budgets. Only Advanced Water surface tessellation is adjustable. |
-| Reflections and post-processing | Environment maps and scene exposure are authored controls. The renderer has no general quality ladder for dynamic reflections or post-processing. |
+| Cave geometry | Volume chunks and cutout rims use matching topology. Simplifying them would require an independent seam-aware render mesh pipeline. |
+| Unmarked world objects | Entity-wide distance and density changes need explicit authoring intent. Required objects and ground collision visuals should remain unmarked. |
+| Effects simulation | Quality does not reduce particle or water simulation. Optional particle density operates on whole emitters. |
+| Additional reflections and post-processing | The Advanced Water screen-space trace and the existing exposure controls are available. General scene reflections and a post-processing quality ladder require separate render passes. |
+
 
 ## Backend selection and recovery
 

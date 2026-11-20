@@ -38,6 +38,8 @@ void NonnegativeVector(EditorDocument &document, const char *label, glm::vec3 &v
 void DrawParticleEmitter(EditorDocument &document, SceneObject &object, EditorPanelState &state) {
     auto &settings = *object.particleEmitter;
     Checkbox(document, "Enabled", settings.enabled);
+    Checkbox(document, "Optional presentation", object.optionalParticlePresentation);
+    ImGui::TextDisabled("Quality may omit this emitter's draws. Simulation and impact events continue.");
     ImGui::TextDisabled("Visual effects; no rigid body is created for each particle.");
     if (settings.backend == ParticleBackend::Gpu &&
         (settings.localSpace || settings.response == ParticleResponse::Stick ||

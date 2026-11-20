@@ -67,11 +67,12 @@ int main() {
     // Mesh fragment advances from faf938a1e74d930d for the optional four-tap
     // shadow filter. ShadowSamplingRenderTests checks both filter footprints
     // against independent analytic results using the production functions.
+    // Optional split shadow storage retains the portable chart footprint.
     const std::array<Builtin, 8> builtins = {
         Builtin::MeshVertex, Builtin::MeshFragment, Builtin::ShadowVertex, Builtin::ShadowFragment,
         Builtin::UIVertex,   Builtin::UIFragment,   Builtin::DebugVertex,  Builtin::DebugFragment};
     const std::array<std::uint64_t, 8> approved = {
-        0x8e40d663fcf10b6bull, 0x0387058d133de351ull, 0x72cd5d86fbe7a639ull, 0x925b7b5dc8ab7d48ull,
+        0x8e40d663fcf10b6bull, 0xa5df0948e583b52dull, 0x72cd5d86fbe7a639ull, 0x925b7b5dc8ab7d48ull,
         0xee3dfe2e18412c0dull, 0x6f641e8eaa5da171ull, 0x0183210d9e1a752cull, 0xcabdf66de2492589ull};
     for (std::size_t i = 0; i < builtins.size(); ++i) {
         const auto *source = Source(builtins[i]);

@@ -29,6 +29,18 @@ inline bool Requested() {
                      std::strcmp(value, "VULKAN") == 0 || std::strcmp(value, "vk") == 0);
 }
 
+struct Statistics {
+    std::uint64_t frames = 0, submissions = 0, renderPasses = 0, draws = 0;
+    std::uint64_t pipelines = 0, descriptorSets = 0, validationMessages = 0;
+    std::uint64_t bufferBytes = 0, imageBytes = 0;
+    std::uint64_t platformPresents = 0;
+    // Optional JUDAS_VULKAN_TRACE diagnostics. These totals do not impose
+    // new synchronization; the benchmark publishes per-frame deltas.
+    std::uint64_t imageBarriers = 0, globalBarriers = 0, pipelinesCreated = 0;
+    std::uint64_t acquireNs = 0, presentNs = 0, frameThrottleNs = 0;
+    int presentMode = -1;
+};
+
 #if defined(JUDAS_VULKAN)
 // True when this build contains the backend.
 bool Compiled();
@@ -70,12 +82,6 @@ PlatformWindow *CreatePlatformWindow(SDL_Window *window, std::string &error);
 void DestroyPlatformWindow(PlatformWindow *window);
 bool PresentPlatformWindow(PlatformWindow &window, std::uint32_t colorTexture, std::string &error);
 
-struct Statistics {
-    std::uint64_t frames = 0, submissions = 0, renderPasses = 0, draws = 0;
-    std::uint64_t pipelines = 0, descriptorSets = 0, validationMessages = 0;
-    std::uint64_t bufferBytes = 0, imageBytes = 0;
-    std::uint64_t platformPresents = 0;
-};
 Statistics Stats();
 // Device description for logs and evidence ("Vulkan 1.4.x / llvmpipe ...").
 std::string DeviceSummary();
@@ -104,12 +110,6 @@ inline bool PlatformWindowsAvailable() { return false; }
 inline PlatformWindow *CreatePlatformWindow(SDL_Window *, std::string &) { return nullptr; }
 inline void DestroyPlatformWindow(PlatformWindow *) {}
 inline bool PresentPlatformWindow(PlatformWindow &, std::uint32_t, std::string &) { return false; }
-struct Statistics {
-    std::uint64_t frames = 0, submissions = 0, renderPasses = 0, draws = 0;
-    std::uint64_t pipelines = 0, descriptorSets = 0, validationMessages = 0;
-    std::uint64_t bufferBytes = 0, imageBytes = 0;
-    std::uint64_t platformPresents = 0;
-};
 inline Statistics Stats() { return {}; }
 inline std::string DeviceSummary() { return "Vulkan backend not built"; }
 // Opaque identity of the device for context-ownership checks (0 when inactive).

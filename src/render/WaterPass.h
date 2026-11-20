@@ -18,6 +18,7 @@ public:
         GLuint environment=0;
         float environmentIntensity=1;
         float seconds=0,opacity=.84f;
+        unsigned reflectionSteps=10;
         bool linear=false;
     };
     bool Draw(std::uint64_t key,std::uint64_t revision,GLuint vao,GLsizei vertices,

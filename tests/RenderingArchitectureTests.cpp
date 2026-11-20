@@ -11,9 +11,11 @@
 #include "ScreenshotWriter.h"
 #include "ShadowTransforms.h"
 #include "lighting/ShadowSystem.h"
+#include "particles/GpuParticles.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <filesystem>
 #include <cstdio>
+#include <cstring>
 #include <fstream>
 #include <algorithm>
 static unsigned checks=0,failures=0;
@@ -131,7 +133,146 @@ int main(int argc,char**argv){std::setvbuf(stdout,nullptr,_IOLBF,0);std::filesys
        WorldPersistence::SceneFrom(cameraSave,restoredCamera,error)&&
        !restoredCamera.Find(optionalCamera.id)->renderCamera->shadows,
        "world snapshot stores the runtime camera shadow setting");
+ if(r.SupportsIndependentShadowResolution()){
+  const auto original=r.Quality();
+  auto split=original;
+  split.shadowResolution=256;
+  split.directionalShadowResolution=768;
+  split.localShadowBudget=1;
+  Check(r.SetGraphicsQuality(split,error),"change directional and local sizes independently");
+  r.BeginShadowPass(0,glm::mat4(1));
+  Check(r.RenderTargetDiagnostics().viewport[2]==768,"directional pass uses directional extent");
+  GLint directionalFramebuffer=0;
+  glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&directionalFramebuffer);
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+  glClearDepthf(.25f);glClear(GL_DEPTH_BUFFER_BIT);glClearDepthf(1);
+#else
+  glClearDepth(.25);glClear(GL_DEPTH_BUFFER_BIT);glClearDepth(1);
+#endif
+  r.EndShadowPass();
+  for(int face=0;face<6;++face){
+      r.BeginShadowPass(kLocalShadowBase+6+face,glm::mat4(1));
+      Check(r.RenderTargetDiagnostics().viewport[2]==256,"each point chart uses local extent");
+      r.EndShadowPass();
+  }
+  GLint read=0;
+  glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING,&read);
+  glBindFramebuffer(GL_READ_FRAMEBUFFER,GLuint(directionalFramebuffer));
+  float sunDepth=0;
+  glReadPixels(384,384,1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&sunDepth);
+  glBindFramebuffer(GL_READ_FRAMEBUFFER,GLuint(read));
+  Check(std::abs(sunDepth-.25f)<1e-6f,"local growth preserves already-published sun depth");
+  Check(r.ShadowStorageBytes()==(size_t(6)*768*768+size_t(12)*256*256)*4,
+        "estimator counts directional and local depth separately");
+  RenderWorldFrame(r,640,360,cameraPolicy,view,projection,{0,0,0},1);
+  Pixels splitShadowed;r.CaptureFrame(640,360,splitShadowed);
+  config.castsShadow=false;cameraPolicy.SetLight(sunId,config);
+  RenderWorldFrame(r,640,360,cameraPolicy,view,projection,{0,0,0},1);
+  Pixels splitUnshadowed;r.CaptureFrame(640,360,splitUnshadowed);
+  Check(Diff(splitShadowed,splitUnshadowed)>.05,"spotlight sampling uses the remapped local depth");
+  Check(r.SetGraphicsQuality(original,error),"return to shared shadow storage");
+ }
  cameraPolicy.Destroy();
+ {
+  Scene decoration;
+  decoration.Settings().sunEnabled=false;
+  auto& essential=decoration.CreateObject("Required marker");
+  essential.render=SceneRenderComponent{};
+  essential.render->decorativeDistance=1;
+  essential.transform.position={0,1,0};
+  const auto essentialId=essential.id;
+  for(int i=0;i<16;++i){
+      auto& tree=decoration.CreateObject("Optional detail");
+      tree.render=SceneRenderComponent{};
+      tree.render->decorative=true;
+      tree.render->decorativeDistance=20;
+      tree.transform.position={float(i%8)-3.5f,0,float(i/8)*2};
+  }
+  for(bool optional:{false,true}){
+      auto& emitter=decoration.CreateObject(optional?"Optional atmosphere":"Required effect");
+      emitter.transform.position={optional?2.f:-2.f,2,0};
+      emitter.particleEmitter=ParticleEmitterSettings{};
+      emitter.optionalParticlePresentation=optional;
+  }
+  std::string encoded;
+  Scene roundTrip;
+  Check(SaveSceneToString(decoration,encoded)&&LoadSceneFromString(encoded,roundTrip,error)&&
+        ScenesEqual(decoration,roundTrip),"quality authoring metadata round trips");
+  RuntimeWorld visuals;
+  Check(visuals.Build(roundTrip,nullptr,error),"build opt-in decoration and particle fixture");
+  for(auto& emitter:visuals.VisualEmitters())emitter.pool.Burst(8,emitter.transform.position,{1,0,0,0},{1,1,1});
+  const auto original=r.Quality();
+  const auto sample=[&](const GraphicsQuality& q, WorldRenderPurpose purpose) {
+      Check(r.SetGraphicsQuality(q,error),"apply visual-only fixture quality");
+      r.ResetStats();
+      RenderWorldFrame(r,640,360,visuals,view,projection,{0,0,0},1,0,purpose);
+      Pixels pixels;
+      r.CaptureFrame(640,360,pixels);
+      return std::pair(pixels,r.Stats());
+  };
+  const auto [full,high]=sample(original,WorldRenderPurpose::Runtime);
+  auto reduced=original;
+  reduced.decorativeDensity=.5f;
+  reduced.optionalParticleDensity=0;
+  const auto [thinned,half]=sample(reduced,WorldRenderPurpose::Runtime);
+  const auto [repeat,again]=sample(reduced,WorldRenderPurpose::Runtime);
+  Check(full!=thinned&&thinned==repeat&&half.triangles==again.triangles&&half.triangles<high.triangles,
+        "decoration density is a deterministic rendered subset");
+  auto distance=original;
+  distance.decorativeDistanceScale=.25f;
+  const auto [nearOnly,near]=sample(distance,WorldRenderPurpose::Runtime);
+  const auto [editorView,editor]=sample(distance,WorldRenderPurpose::Observer);
+  Check(near.triangles<high.triangles&&high.triangles==editor.triangles&&nearOnly!=editorView&&
+        visuals.RuntimeDefinition(essentialId)&&visuals.RenderVisible(essentialId),
+        "distance affects opted-in runtime colour only");
+  Check(high.particlesSubmitted==16&&half.particlesSubmitted==8&&
+        std::all_of(visuals.VisualEmitters().begin(),visuals.VisualEmitters().end(),
+          [](auto& emitter){return emitter.pool.Particles().size()==8;})&&visuals.SimulationTimeSeconds()==0,
+        "optional emitters save draws without removing CPU particles or advancing gameplay");
+  std::map<std::string,SaveChunk> save;
+  Scene restored;
+  Check(WorldPersistence::Capture(visuals,save,error)&&WorldPersistence::SceneFrom(save,restored,error)&&
+        restored.Objects().size()==decoration.Objects().size(),
+        "quality has no effect on persisted entity ownership");
+  std::printf("MEASURE visual detail full=%u half=%u distance=%u cpu-particles=%u/%u\n",
+              high.triangles,half.triangles,near.triangles,high.particlesSubmitted,half.particlesSubmitted);
+  Check(r.SetGraphicsQuality(original,error),"restore full authored presentation");
+  visuals.Destroy();
+
+  if(host.GraphicsCaps().modernTier&&host.GraphicsCaps().compute){
+      Scene gpuScene;
+      gpuScene.Settings().sunEnabled=false;
+      auto& effect=gpuScene.CreateObject("Optional resident effect");
+      effect.transform.position={0,2,0};
+      effect.optionalParticlePresentation=true;
+      effect.particleEmitter=ParticleEmitterSettings{};
+      effect.particleEmitter->backend=ParticleBackend::Gpu;
+      effect.particleEmitter->burst=16;
+      effect.particleEmitter->rate=0;
+      effect.particleEmitter->maxParticles=32;
+      RuntimeWorld gpuWorld;
+      Check(gpuWorld.Build(gpuScene,&host.Resources(),error),"build optional GPU emitter");
+      gpuWorld.UpdateVisualParticles(1.f/60);
+      const auto &pool=gpuWorld.VisualEmitters().front().gpu;
+      if(pool){
+          std::vector<JudasParticles::GpuParticleState> before,after;
+          Check(pool->ReadStateForDiagnostics(before,error),"read original resident particle state");
+          r.ResetStats();
+          RenderWorldFrame(r,640,360,gpuWorld,view,projection,{0,0,0},1);
+          const auto shown=r.Stats().gpuParticleDraws;
+          auto hidden=original;
+          hidden.optionalParticleDensity=0;
+          Check(r.SetGraphicsQuality(hidden,error),"hide optional GPU draws only");
+          r.ResetStats();
+          RenderWorldFrame(r,640,360,gpuWorld,view,projection,{0,0,0},1);
+          Check(shown==1&&r.Stats().gpuParticleDraws==0&&pool->ReadStateForDiagnostics(after,error)&&
+                before.size()==after.size()&&std::memcmp(before.data(),after.data(),before.size()*sizeof(before[0]))==0,
+                "omitting GPU presentation preserves every resident particle");
+          Check(r.SetGraphicsQuality(original,error),"restore optional GPU draws");
+      } else Check(false,"optional GPU emitter remains resident");
+      gpuWorld.Destroy();
+  }
+ }
  Scene planetary;planetary.Settings().worldOrigin={0,1000,0};planetary.Settings().sunEnabled=false;planetary.Settings().ambientColor={1,1,1};auto& surface=planetary.CreateObject("Shared terrain");surface.planet=ps;auto planetId=surface.id;
  auto& opposite=planetary.CreateObject("Opposite hemisphere camera");opposite.transform.position={0,-2003,0};opposite.transform.rotation=glm::quatLookAt(glm::vec3(0,1,0),glm::vec3(0,0,-1));opposite.renderCamera=SceneRenderCameraComponent{};opposite.renderCamera->width=128;opposite.renderCamera->height=96;opposite.renderCamera->farPlane=10000;
  auto& unrelated=planetary.CreateObject("Offscreen material owner");unrelated.transform.position={100000,0,0};unrelated.render=SceneRenderComponent{};unrelated.render->instanceOverrides.baseColor=glm::vec4(1,0,0,1);auto unrelatedId=unrelated.id;

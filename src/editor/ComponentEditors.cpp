@@ -602,6 +602,11 @@ void DrawRender(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
     if (r.shape == SceneShape::Sphere) DragScalar(doc, "Radius", r.radius, 0.01f, 0.001f, 100000.0f);
     ColorEdit(doc, "Color", r.color);
     DragScalar(doc, "Alpha", r.alpha, 0.01f, 0.0f, 1.0f);
+    if(r.shape==SceneShape::Mesh||r.shape==SceneShape::Box||r.shape==SceneShape::Sphere||r.shape==SceneShape::Sprite){
+        Checkbox(doc,"Optional decoration",r.decorative);
+        if(r.decorative)
+            DragScalar(doc,"Decorative distance (m, 0 unlimited)",r.decorativeDistance,1,0,1000000);
+    }
     if(r.shape==SceneShape::Mesh){DragScalar(doc,"LOD tolerance multiplier",r.lodMultiplier,.1f,0,32);ImGui::TextDisabled("Cooked meshes: 0 forces full detail; 1 uses the cooked pixel error.");}
     if (r.shape == SceneShape::Box || r.shape == SceneShape::Sphere || r.shape == SceneShape::Mesh) {
         const auto* selected = doc.GetScene().Find(r.textureCamera);

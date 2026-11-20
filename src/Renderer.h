@@ -202,6 +202,11 @@ public:
     unsigned ShadowBudget()const{return m_graphicsQuality.localShadowBudget;}
     const GraphicsQuality& Quality() const { return m_graphicsQuality; }
     bool SupportsGraphicsQuality() const { return !m_nativeMesh; }
+    bool SupportsIndependentShadowResolution() const {
+        return SupportsGraphicsQuality() && m_capabilities.api==GraphicsApi::Desktop &&
+               m_capabilities.limits.fragmentTextureUnits>=18;
+    }
+    std::size_t ShadowStorageBytes() const;
     bool ShadowStorageLimited() const { return m_rejectedShadowLayers != 0; }
     bool SetGraphicsQuality(const GraphicsQuality&, std::string& error, glm::ivec2 outputSize = {});
     glm::ivec2 BeginMainView(glm::ivec2 output, bool allowScale);
@@ -609,8 +614,8 @@ private:
     GLint m_uAmbientColor = -1;
 
     RenderLightGrid m_lightGrid;
-    GLuint m_lightTexture=0,m_instanceBuffer=0,m_shadowArray=0,m_pointShadowView=0;
-    bool AllocateShadowLayers(unsigned layers, unsigned resolution, bool preserve);
+    GLuint m_lightTexture=0,m_instanceBuffer=0,m_shadowArray=0,m_directionalShadowArray=0,m_pointShadowView=0;
+    bool AllocateShadowLayers(unsigned layers, const GraphicsQuality&, bool preserve);
     GraphicsQuality m_graphicsQuality;
     unsigned m_lightTextureRows=0,m_shadowLayers=0;
     unsigned m_rejectedShadowLayers=0;

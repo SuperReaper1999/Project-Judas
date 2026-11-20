@@ -493,6 +493,8 @@ struct Context {
     double shaderSeconds = 0, pipelineSeconds = 0;
     std::uint64_t shaderCacheHits = 0, shaderCacheMisses = 0, pipelinesCreated = 0;
     std::deque<std::uint64_t> frameSerials; // last submission serial of each recent frame
+    std::uint64_t imageBarriers = 0, globalBarriers = 0;
+    std::uint64_t acquireNs = 0, presentNs = 0, frameThrottleNs = 0;
     bool validation = false, trace = false;
 };
 

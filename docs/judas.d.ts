@@ -1292,6 +1292,8 @@ declare module "judas" {
   export type GraphicsPreset = "low" | "medium" | "high" | "veryHigh" | "ultra";
   export interface GraphicsQuality {
     shadowResolution: 256 | 512 | 768 | 1024 | 1536;
+    directionalShadowResolution: GraphicsQuality["shadowResolution"];
+    localShadowResolution: GraphicsQuality["shadowResolution"];
     directionalCascades: 1 | 2 | 3;
     shadowDistanceScale: number;
     shadowFilter: "fast" | "soft";
@@ -1300,10 +1302,18 @@ declare module "judas" {
     localShadowBudget: number;
     renderScale: 0.5 | 0.67 | 0.75 | 0.85 | 1;
     heightfieldLodBias: number;
+    decorativeDensity: number;
+    decorativeDistanceScale: number;
+    planetLodBias: number;
+    optionalParticleDensity: number;
+    waterReflectionSteps: number;
+    caveDetailNormals: boolean;
     waterSurfaceLodBias: -1 | 0 | 1;
     materialAnisotropy: 1 | 2 | 4 | 8 | 16;
   }
   export interface GraphicsQualityState {
+    independentShadowResolutions: boolean;
+    shadowStorageBytes: number;
     preset: GraphicsPreset | "custom";
     effective: GraphicsQuality;
     pending: GraphicsQuality | null;
@@ -1311,6 +1321,8 @@ declare module "judas" {
     presets: Partial<Record<GraphicsPreset, GraphicsQuality>>;
     choices: {
       shadowResolution: GraphicsQuality["shadowResolution"][];
+      directionalShadowResolution: GraphicsQuality["shadowResolution"][];
+      localShadowResolution: GraphicsQuality["shadowResolution"][];
       directionalCascades: GraphicsQuality["directionalCascades"][];
       shadowDistanceScale: {min: number; max: number};
       shadowFilter: GraphicsQuality["shadowFilter"][];
@@ -1319,6 +1331,12 @@ declare module "judas" {
       localShadowBudget: {min: number; max: number};
       renderScale: GraphicsQuality["renderScale"][];
       heightfieldLodBias: {min: number; max: number};
+      decorativeDensity: {min: number; max: number};
+      decorativeDistanceScale: {min: number; max: number};
+      planetLodBias: {min: number; max: number};
+      optionalParticleDensity: {min: number; max: number};
+      waterReflectionSteps: {min: number; max: number};
+      caveDetailNormals: boolean[];
       waterSurfaceLodBias: GraphicsQuality["waterSurfaceLodBias"][];
       materialAnisotropy: GraphicsQuality["materialAnisotropy"][];
     };

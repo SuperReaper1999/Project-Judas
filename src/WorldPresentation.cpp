@@ -175,6 +175,29 @@ SceneTransform PresentedBody(const RuntimeWorld& world, SceneObjectId id,
 
 // These values belong to one presentation sample. Camera texture handles,
 // resource touches, culling and LOD still resolve in the individual pass.
+// Mix object IDs before applying a threshold. Each lower density is a
+// stable subset of the next one, including across saves and camera motion.
+bool KeepOptionalVisual(SceneObjectId id, float density) {
+    if(density==1.f)return true;
+    id ^= id >> 30; id *= 0xbf58476d1ce4e5b9ULL;
+    id ^= id >> 27; id *= 0x94d049bb133111ebULL;
+    id ^= id >> 31;
+    return float(id >> 40) < density * 16777216.f;
+}
+
+bool IsDecoration(const SceneRenderComponent& render) {
+    return render.decorative && (render.shape==SceneShape::Mesh || render.shape==SceneShape::Box ||
+                                 render.shape==SceneShape::Sphere || render.shape==SceneShape::Sprite);
+}
+
+bool InDecorativeRange(const SceneRenderComponent& render, const glm::vec3& position,
+                       const std::optional<glm::vec3>& eye, float scale) {
+    if(!eye||!render.decorativeDistance||!IsDecoration(render))return true;
+    const auto delta=position-*eye;
+    const float distance=render.decorativeDistance*scale;
+    return glm::dot(delta,delta)<=distance*distance;
+}
+
 struct PresentedObject {
     SceneTransform pose;
     const std::vector<glm::mat4>* skin;
@@ -199,14 +222,19 @@ static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, float alph
     JUDAS_PROFILE_SCOPE("World culling and opaque submission");
     RendererProfileScope opaqueGPU(r, r.IsShadowPass() ? nullptr : "World opaque geometry");
     r.BeginMeshBatch();
+    const auto& quality=r.Quality();
+    std::optional<glm::vec3> eye;
+    if(options.limitDecorativeDistance&&!r.IsShadowPass()) eye=glm::vec3(glm::inverse(r.ViewMatrix())[3]);
     const auto& statics = world.StaticRenderables();
     for (std::size_t i = 0; i < statics.size(); ++i) {
         const auto& s = statics[i];
         if(!world.IsPublished(s.id)||!world.RenderVisible(s.id)||world.RuntimeDefinition(s.id)->deformable||world.HasRuntimeTerrain(s.id))continue;
+        if(IsDecoration(s.render)&&!KeepOptionalVisual(s.id,quality.decorativeDensity))continue;
         r.SetRenderLayer(world.RenderLayerOf(s.id));
         const auto [t, skin] = SampleObject(world, s.id, alpha, objects ? &objects->statics[i] : nullptr, [&] {
             return world.PresentedTransform(s.id, {s.position, s.rotation, s.scale}, alpha);
         });
+        if(!InDecorativeRange(s.render,t.position,eye,quality.decorativeDistanceScale))continue;
         ShadowMeshBindings* reuse = prepared && s.render.shape == SceneShape::Mesh && !s.render.textureCamera &&
                                     s.render.hiddenParts.empty() && (!skin || skin->empty()) ? &(*prepared)[i] : nullptr;
         DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f,
@@ -236,9 +264,11 @@ static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, float alph
         const RuntimeWorld::DynamicVisual& v = visuals[i];
         r.SetRenderLayer(world.RenderLayerOf(v.id));
         if (!v.hasRender||!world.IsPublished(v.id)||!world.RenderVisible(v.id)) continue;
+        if(IsDecoration(v.render)&&!KeepOptionalVisual(v.id,quality.decorativeDensity))continue;
         const auto [pose, skin] = SampleObject(world, v.id, alpha, objects ? &objects->dynamics[i] : nullptr, [&] {
             return PresentedBody(world, v.id, bodies[i], alpha, v.scale);
         });
+        if(!InDecorativeRange(v.render,pose.position,eye,quality.decorativeDistanceScale))continue;
         const glm::vec3 position=pose.position;
         const glm::quat rotation=pose.rotation;
         if (v.render.shape == SceneShape::Compound) {
@@ -360,6 +390,9 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, float alpha) 
         if(!world.IsPublished(emitter.id)||!EntityRenderVisible(world,emitter.id))continue;
         r.SetRenderLayer(world.RenderLayerOf(emitter.id));
         if(!emitter.pool.settings.enabled)continue;
+        const auto* definition=world.RuntimeDefinition(emitter.id);
+        if(definition && definition->optionalParticlePresentation &&
+           !KeepOptionalVisual(emitter.id,r.Quality().optionalParticleDensity))continue;
         if(const auto* entity=world.FindEntity(emitter.id))if(entity->lifecycle==EntityLifecycle::Destroyed)continue;
         const auto t=world.PresentedTransform(emitter.id,emitter.transform,alpha);
         const auto texture=world.Resources()?world.Resources()->TryGetTexture(emitter.pool.settings.textureAsset):TextureHandle{};
@@ -559,7 +592,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(pose.position),p.id|(uint64_t(1)<<63));
             renderer.SetRenderMask(p.renderMask);lightPass();
             renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha,false));
-            DrawWorldGeometry(renderer,world,alpha,WorldDrawOptions{}, &presentedObjects);DrawWorldTransparents(renderer,world,alpha);renderer.DrawWeather(true);renderer.EndRenderTarget();
+            DrawWorldGeometry(renderer,world,alpha,WorldDrawOptions{true,gameInterest&&!observer}, &presentedObjects);DrawWorldTransparents(renderer,world,alpha);renderer.DrawWeather(true);renderer.EndRenderTarget();
         }
         if(destination&&!renderer.BeginRenderTarget(*destination))return;
         renderer.ClearWeather();renderer.BeginFrame(width,height);renderer.EndFrame();renderer.BeginUIFrame(width,height);
@@ -588,7 +621,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     renderer.SetRenderMask(settings.mainCameraRenderMask);
     lightPass();
     renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha,false));
-    DrawWorldGeometry(renderer, world, alpha, WorldDrawOptions{}, &presentedObjects);
+    DrawWorldGeometry(renderer, world, alpha, WorldDrawOptions{true,gameInterest&&!observer}, &presentedObjects);
     DrawWorldTransparents(renderer, world, alpha);
     renderer.DrawWeather();
     renderer.EndFrame();

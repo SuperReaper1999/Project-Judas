@@ -114,9 +114,14 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
         w.Vector(r.color); w.Number(r.alpha); w.Vector(r.secondaryColor); w.Number(r.secondaryAlpha);
         w.Text(r.meshAsset); w.Text(r.textureAsset); w.U64(r.textureCamera);
         if(r.spritePlayback){if(r.shape!=SceneShape::Sprite||!ValidSpritePlayback(*r.spritePlayback)||!IsValidAssetId(r.spritePlayback->sheet))w.Fail("invalid sprite playback");w.Text("SpritePlayback.1");w.Text(EncodeSpritePlayback(*r.spritePlayback));}
+        if(r.decorative||r.decorativeDistance!=0) {
+            if(r.decorativeDistance<0||r.decorativeDistance>1000000)w.Fail("invalid decorative distance");
+            w.Text("RenderDecoration.1");w.Boolean(r.decorative);w.Number(r.decorativeDistance);
+        }
         if(r.lodMultiplier!=1){w.Text("M93-render-lod");w.Number(r.lodMultiplier);}
         if(r.shape==SceneShape::Sprite){if(!ValidSprite(r.sprite))w.Fail("invalid sprite");w.Text("Sprite.1");w.Text(EncodeSprite(r.sprite));}
     }
+    if(o.optionalParticlePresentation)w.Text("OptionalParticlePresentation.1");
     w.Boolean(o.audioEmitter.has_value());
     if(o.audioEmitter){const auto& a=*o.audioEmitter;w.Context(object+" audio emitter");w.Text(a.asset);w.Boolean(a.enabled);w.Boolean(a.playOnStart);w.Boolean(a.loop);w.Boolean(a.spatial);
         w.Number(a.volume);w.Number(a.pitch);w.Number(a.referenceDistance);w.Number(a.maximumDistance);w.Number(a.rolloff);w.Enum(a.attenuation,2,"audio attenuation");

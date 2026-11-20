@@ -58,6 +58,7 @@ in float activity;
 flat in int closingFace;
 out vec4 result;
 uniform sampler2D sceneColour,sceneDepth;
+uniform int reflectionSteps;
 uniform mat4 vp,inverseVP,view;
 uniform mat3 basis;
 uniform vec3 eye,sun,sunColour,waterColour;
@@ -128,7 +129,7 @@ void main(){
     vec3 reflectionDirection=reflect(-v,n),reflection=sky(reflectionDirection);
     // Bounded screen-space reflection; offscreen rays use the sky fallback.
     // Start beyond the local surface to avoid reflecting the same depth texel.
-    for(int i=0;i<10;++i){
+    for(int i=0;i<reflectionSteps;++i){
         float distance=.28+float(i*i)*.11;
         vec3 samplePosition=world+reflectionDirection*distance;
         vec4 clip=vp*vec4(samplePosition,1);

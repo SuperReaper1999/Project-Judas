@@ -76,11 +76,11 @@ constexpr float RenderScales[]{.5f,.67f,.75f,.85f,1.f};
 constexpr unsigned AnisotropyLevels[]{1,2,4,8,16};
 using WeatherQuality = GraphicsQuality::Weather;
 constexpr std::pair<std::string_view,GraphicsQuality> QualityPresets[]{
-    {"low",      { 256, 1, 1.f,   false, 2.f,  WeatherQuality::Low,      0, .5f,  2.f,  1,  1}},
-    {"medium",   { 512, 2, 1.f,   false, 1.5f, WeatherQuality::Low,      2, .67f, 1.5f, 1,  2}},
-    {"high",     { 768, 3, .85f,  true,  1.f,  WeatherQuality::Authored, 4, .85f, 1.f,  0,  4}},
-    {"veryHigh", {1024, 3, 1.f,   true,  .75f, WeatherQuality::High,     6, 1.f,  .75f, 0,  8}},
-    {"ultra",    {1536, 3, 1.25f, true,  .5f,  WeatherQuality::High,     8, 1.f,  .5f, -1, 16}}
+    {"low",      { 256, 1, 1.f,   false, 2.f,  WeatherQuality::Low,      0, .5f,  2.f,  1,  1, .35f, .5f, 2.f, .4f, 0, false}},
+    {"medium",   { 512, 2, 1.f,   false, 1.5f, WeatherQuality::Low,      2, .67f, 1.5f, 1,  2, .6f, .75f, 1.5f, .65f, 4, false}},
+    {"high",     { 768, 3, .85f,  true,  1.f,  WeatherQuality::Authored, 4, .85f, 1.f,  0,  4, .8f, 1.f, 1.f, .85f, 7}},
+    {"veryHigh", {1024, 3, 1.f,   true,  .75f, WeatherQuality::High,     6, 1.f,  .75f, 0,  8, 1.f, 1.f, .75f, 1.f, 10}},
+    {"ultra",    {1536, 3, 1.25f, true,  .5f,  WeatherQuality::High,     8, 1.f,  .5f, -1, 16, 1.f, 1.5f, .5f, 1.f, 10}}
 };
 
 GraphicsQuality PresetForDevice(GraphicsQuality values, unsigned anisotropyLimit) {
@@ -92,12 +92,20 @@ GraphicsQuality PresetForDevice(GraphicsQuality values, unsigned anisotropyLimit
 Json QualityValues(const GraphicsQuality& quality) {
     const char* weather = quality.weather == WeatherQuality::Authored ? "authored" :
                           quality.weather == WeatherQuality::Low ? "low" : "high";
-    return {{"shadowResolution", quality.shadowResolution}, {"directionalCascades", quality.directionalCascades},
+    return {{"shadowResolution", quality.shadowResolution},
+            {"localShadowResolution",quality.shadowResolution},
+            {"directionalShadowResolution",quality.SunShadowResolution()},
+            {"directionalCascades", quality.directionalCascades},
             {"shadowDistanceScale", quality.shadowDistanceScale}, {"shadowFilter", quality.softShadows ? "soft" : "fast"},
             {"meshLodBias", quality.meshLodBias}, {"weather", weather}, {"localShadowBudget", quality.localShadowBudget},
             {"renderScale", double(std::lround(quality.renderScale*100))/100},
             {"heightfieldLodBias", quality.heightfieldLodBias}, {"waterSurfaceLodBias", quality.waterSurfaceLodBias},
-            {"materialAnisotropy",quality.materialAnisotropy}};
+            {"materialAnisotropy",quality.materialAnisotropy},
+            {"decorativeDensity",quality.decorativeDensity},
+            {"decorativeDistanceScale",quality.decorativeDistanceScale},
+            {"planetLodBias",quality.planetLodBias},
+            {"optionalParticleDensity",quality.optionalParticleDensity},
+            {"waterReflectionSteps",quality.waterReflectionSteps},{"caveDetailNormals",quality.caveDetailNormals}};
 }
 
 float QualityNumber(const Json& value, float minimum, float maximum, const char* name) {
@@ -113,15 +121,28 @@ GraphicsQuality ParseQuality(const Json& input, GraphicsQuality quality, unsigne
             if (input == preset.first) return PresetForDevice(preset.second,anisotropyLimit);
         throw std::runtime_error("Unknown graphics quality preset");
     }
-    Keys(input, {"shadowResolution", "directionalCascades", "shadowDistanceScale", "shadowFilter",
+    Keys(input, {"shadowResolution", "directionalShadowResolution", "localShadowResolution",
+                 "directionalCascades", "shadowDistanceScale", "shadowFilter",
                  "meshLodBias", "weather", "localShadowBudget", "renderScale", "heightfieldLodBias",
-                 "waterSurfaceLodBias", "materialAnisotropy"});
-    if (input.contains("shadowResolution")) {
-        const auto size = unsigned(Integer(input.at("shadowResolution"), 256, 1536, "shadowResolution"));
-        Require(std::find(std::begin(ShadowResolutions), std::end(ShadowResolutions), size) != std::end(ShadowResolutions),
-                "Choose a supported shadow resolution");
-        quality.shadowResolution = size;
+                 "waterSurfaceLodBias", "materialAnisotropy", "decorativeDensity",
+                 "decorativeDistanceScale", "planetLodBias", "optionalParticleDensity",
+                 "waterReflectionSteps", "caveDetailNormals"});
+    const auto sizeFor=[&](const char* key) {
+        const auto size=unsigned(Integer(input.at(key),256,1536,key));
+        Require(std::find(std::begin(ShadowResolutions),std::end(ShadowResolutions),size)!=std::end(ShadowResolutions),
+                std::string("Choose a supported size for ")+key);
+        return size;
+    };
+    unsigned sunSize=quality.SunShadowResolution();
+    if(input.contains("shadowResolution"))sunSize=quality.shadowResolution=sizeFor("shadowResolution");
+    if(input.contains("localShadowResolution")){
+        const auto localSize=sizeFor("localShadowResolution");
+        Require(!input.contains("shadowResolution")||localSize==quality.shadowResolution,
+                "Legacy shadowResolution and localShadowResolution disagree");
+        quality.shadowResolution=localSize;
     }
+    if(input.contains("directionalShadowResolution"))sunSize=sizeFor("directionalShadowResolution");
+    quality.directionalShadowResolution=sunSize==quality.shadowResolution?0:sunSize;
     if (input.contains("directionalCascades"))
         quality.directionalCascades = Integer(input.at("directionalCascades"), 1, 3, "directionalCascades");
     if (input.contains("shadowDistanceScale"))
@@ -158,11 +179,24 @@ GraphicsQuality ParseQuality(const Json& input, GraphicsQuality quality, unsigne
                 "Choose a material anisotropy level supported by this device");
         quality.materialAnisotropy=amount;
     }
+    if(input.contains("decorativeDensity"))
+        quality.decorativeDensity=QualityNumber(input.at("decorativeDensity"),0,1,"decorativeDensity");
+    if(input.contains("decorativeDistanceScale"))
+        quality.decorativeDistanceScale=QualityNumber(input.at("decorativeDistanceScale"),.25f,2,"decorativeDistanceScale");
+    if(input.contains("planetLodBias"))
+        quality.planetLodBias=QualityNumber(input.at("planetLodBias"),.5f,2,"planetLodBias");
+    if(input.contains("optionalParticleDensity"))
+        quality.optionalParticleDensity=QualityNumber(input.at("optionalParticleDensity"),0,1,"optionalParticleDensity");
+    if(input.contains("caveDetailNormals"))
+        quality.caveDetailNormals=Boolean(input.at("caveDetailNormals"));
+    if(input.contains("waterReflectionSteps"))
+        quality.waterReflectionSteps=Integer(input.at("waterReflectionSteps"),0,10,"waterReflectionSteps");
     return quality;
 }
 
 Json QualityState(const GraphicsQuality& effective, const std::optional<GraphicsQuality>& pending, int limit,
-                  glm::ivec2 mainView, unsigned anisotropyLimit) {
+                  glm::ivec2 mainView, unsigned anisotropyLimit, bool separateShadows,
+                  std::size_t shadowStorageBytes) {
     std::string_view matching = "custom";
     auto presets = Json::object();
     for (const auto& [name, preset] : QualityPresets) {
@@ -176,14 +210,23 @@ Json QualityState(const GraphicsQuality& effective, const std::optional<Graphics
     for (const auto amount:AnisotropyLevels) if(amount<=anisotropyLimit)anisotropy.push_back(amount);
     return {{"preset", matching}, {"effective", QualityValues(effective)},
             {"pending", pending ? QualityValues(*pending) : Json(nullptr)}, {"presets", presets},
+            {"independentShadowResolutions",separateShadows},{"shadowStorageBytes",shadowStorageBytes},
             {"mainView", mainView.x > 0 ? Json{{"width",mainView.x},{"height",mainView.y}} : Json(nullptr)},
             {"choices", {{"shadowResolution", resolutions}, {"directionalCascades", {1,2,3}},
+                         {"localShadowResolution",separateShadows?resolutions:Json::array()},
+                         {"directionalShadowResolution",separateShadows?resolutions:Json::array()},
                          {"shadowDistanceScale", {{"min",.5},{"max",1.5}}},
                          {"shadowFilter", {"fast","soft"}}, {"meshLodBias", {{"min",.5},{"max",2}}},
                          {"weather", {"authored","low","high"}}, {"localShadowBudget", {{"min",0},{"max",8}}},
                          {"renderScale", {.5,.67,.75,.85,1}},
                          {"heightfieldLodBias", {{"min",.5},{"max",2}}},
-                         {"waterSurfaceLodBias", {-1,0,1}}, {"materialAnisotropy",anisotropy}}}};
+                         {"waterSurfaceLodBias", {-1,0,1}}, {"materialAnisotropy",anisotropy},
+                         {"decorativeDensity", {{"min",0},{"max",1}}},
+                         {"decorativeDistanceScale", {{"min",.25},{"max",2}}},
+                         {"planetLodBias", {{"min",.5},{"max",2}}},
+                         {"optionalParticleDensity", {{"min",0},{"max",1}}},
+                         {"waterReflectionSteps", {{"min",0},{"max",10}}},
+                         {"caveDetailNormals", {false,true}}}}};
 }
 }
 
@@ -337,7 +380,9 @@ Json GameSettings::Read() const {
             {"localShadowBudget", m_host->GetRenderer().ShadowBudget()}, {"activeBackend", active},
             {"quality", m_desktop && m_host->GetRenderer().SupportsGraphicsQuality()
                 ? QualityState(m_host->GetRenderer().Quality(),m_qualityRequest,m_host->GraphicsCaps().limits.textureSize,
-                               m_host->GetRenderer().MainViewSize(),m_host->GetRenderer().MaxMaterialAnisotropy())
+                               m_host->GetRenderer().MainViewSize(),m_host->GetRenderer().MaxMaterialAnisotropy(),
+                               m_host->GetRenderer().SupportsIndependentShadowResolution(),
+                               m_host->GetRenderer().ShadowStorageBytes())
                 : Json(nullptr)}, {"qualityError", m_qualityError.empty() && m_host->GetRenderer().ShadowStorageLimited()
                     ? "Shadow storage could not grow on this device. Choose a smaller shadow resolution or budget."
                     : (m_qualityError.empty() ? m_host->GetRenderer().MainViewError() : m_qualityError)},
@@ -407,7 +452,9 @@ Json GameSettings::Invoke(const std::string& operation, const std::string& argum
         Require(renderer.SupportsGraphicsQuality(), "Graphics quality requires the shared renderer");
         const auto quality = ParseQuality(Parse(argument),m_qualityRequest.value_or(renderer.Quality()),
                                           renderer.MaxMaterialAnisotropy());
-        Require(int(quality.shadowResolution)<=m_host->GraphicsCaps().limits.textureSize,
+        Require(quality.SunShadowResolution()==quality.shadowResolution || renderer.SupportsIndependentShadowResolution(),
+                "Independent shadow resolutions are unavailable on this device");
+        Require(int(std::max(quality.shadowResolution,quality.SunShadowResolution()))<=m_host->GraphicsCaps().limits.textureSize,
                 "Shadow resolution exceeds the current device texture limit");
         m_qualityError.clear();
         m_qualityRequest = quality;

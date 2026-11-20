@@ -143,8 +143,12 @@ uniform float uWeatherFlash;
 float spotWeight(float outerCos,float innerCos,float angle){return innerCos<=outerCos+1e-7?step(outerCos,angle):smoothstep(outerCos,innerCos,angle);}
 float weatherCloud(vec3 p){return texture(uWeatherNoise,p/262144.0).r*.65+texture(uWeatherNoise,p/65536.0).r*.35;}
 
-// M92: one depth array; world-position projection selects the assigned layer.
+// Lighting keeps logical chart indices when depth storage is split.
 uniform sampler2DArray uShadowMaps;
+#ifdef JUDAS_SPLIT_SHADOWS
+uniform sampler2DArray uDirectionalShadowMaps;
+uniform bool uSeparateShadowMaps;
+#endif
 uniform int uSunCascadeCount;
 uniform int uFastShadows;
 #ifdef JUDAS_CUBE_ARRAY
@@ -182,7 +186,17 @@ float ShadowComparison(int slot, ivec2 pixel, ivec2 size, vec3 projected, vec2 s
     if(samplingPointShadow)stored=textureLod(uPointShadowMaps,vec4(cubeDirection((slot-6)%6,uv),float((slot-6)/6)),0.0).r;
     else
 #endif
-    stored=texelFetch(uShadowMaps,ivec3(pixel,slot),0).r;
+#ifdef JUDAS_SPLIT_SHADOWS
+    if(uSeparateShadowMaps && slot<6)stored=texelFetch(uDirectionalShadowMaps,ivec3(pixel,slot),0).r;
+    else
+#endif
+    {
+        int layer=slot;
+#ifdef JUDAS_SPLIT_SHADOWS
+        if(uSeparateShadowMaps)layer-=6;
+#endif
+        stored=texelFetch(uShadowMaps,ivec3(pixel,layer),0).r;
+    }
     return receiver-bias<=stored?1.0:0.0;
 }
 
@@ -208,6 +222,9 @@ float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
     }
     if(any(isnan(slope))||any(isinf(slope)))slope=vec2(0.0);
     ivec2 size=textureSize(uShadowMaps,0).xy;
+#ifdef JUDAS_SPLIT_SHADOWS
+    if(uSeparateShadowMaps && slot<6)size=textureSize(uDirectionalShadowMaps,0).xy;
+#endif
     // Interpolate comparison results, never raw depths. A nearest 3x3 kernel
     // changes a whole row/column at a texel boundary and visibly snaps. Blend
     // its four adjacent placements continuously using their shared 4x4 taps.

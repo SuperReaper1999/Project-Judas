@@ -59,9 +59,11 @@ export default class {
                 require(state.fullscreen && !state.displayPreview,"Fullscreen was not confirmed");
                 settings.applyVideo({shadows: true});
                 settings.applyQuality("medium");
+                this.splitShadows = state.quality.independentShadowResolutions;
+                if (this.splitShadows) settings.applyQuality({directionalShadowResolution: 768});
                 this.state.phase = "live-quality";
             } else if (this.state.phase === "live-quality") {
-                require(state.quality.preset === "medium" && state.shadows, state.qualityError || "Quality did not apply before switch");
+                require(state.quality.preset === (this.splitShadows ? "custom" : "medium") && state.shadows,  state.qualityError || "Quality did not apply before switch");
                 settings.switchBackend("vulkan");
                 require(settings.read().backendTransition === "pending" &&
                         settings.read().activeBackend === "opengl", "Queued candidate reported active early");
@@ -69,24 +71,26 @@ export default class {
             } else if (this.state.phase === "live-vulkan") {
                 require(state.activeBackend === "vulkan" && state.backendTransition === "completed" &&
                         state.fullscreen && this.continuity.value === 17, state.backendError || "Vulkan lost the script instance");
-                require(state.quality.preset === "medium", "Vulkan did not restore the selected quality");
+                require(state.quality.effective.directionalShadowResolution === (this.splitShadows ? 768 : 512),
+                        "Vulkan did not restore the directional resolution");
                 this.continuity.value++;
                 settings.applyQuality("high");
+                if (this.splitShadows) settings.applyQuality({localShadowResolution: 256});
                 this.state.phase = "live-vulkan-quality";
             } else if (this.state.phase === "live-vulkan-quality") {
-                require(state.quality.preset === "high", state.qualityError || "Quality did not apply on Vulkan");
+                require(state.quality.effective.localShadowResolution === (this.splitShadows ? 256 : 768), state.qualityError || "Quality did not apply on Vulkan");
                 settings.switchBackend("opengl");
                 this.state.phase = "live-opengl";
             } else if (this.state.phase === "live-opengl") {
                 require(state.activeBackend === "opengl" && state.backendTransition === "completed" &&
                         state.fullscreen && this.continuity.value === 18, state.backendError || "OpenGL lost the script instance");
-                require(state.quality.preset === "high", "OpenGL did not restore the selected quality");
+                require(state.quality.effective.localShadowResolution === (this.splitShadows ? 256 : 768), "OpenGL did not restore the selected quality");
                 settings.switchBackend("vulkan");
                 this.state.phase = "live-fail";
             } else if (this.state.phase === "live-fail") {
                 require(state.activeBackend === "opengl" && state.backendTransition === "recovered" &&
                         state.backendError && state.fullscreen && this.continuity.value === 18, "Previous backend failed to recover");
-                require(state.quality.preset === "high", "Recovery lost the selected quality");
+                require(state.quality.effective.localShadowResolution === (this.splitShadows ? 256 : 768), "Recovery lost the selected quality");
                 settings.applyVideo({shadows: false});
                 settings.previewDisplay({fullscreen: false, width: 800, height: 600});
                 this.state.phase = "live-windowed";
@@ -115,6 +119,11 @@ export default class {
                         "Saved custom quality or legacy defaults were lost");
                 require(state.quality.effective.renderScale === (game.legacyQuality || game.qualityV1 ? 1 : .67),
                         "Existing preferences changed the main view scale");
+                const legacy=game.legacyQuality||game.qualityV1||game.qualityV2;
+                require(state.quality.effective.decorativeDensity === (legacy ? 1 : .5) &&
+                        state.quality.effective.planetLodBias === (legacy ? 1 : .75) &&
+                        state.quality.effective.waterReflectionSteps === (legacy ? 10 : 5),
+                        "Scalability preferences failed to restore or migrate");
                 audio.setGroup("master", game.master);
                 input.setBindings(game.bindings);
                 this.state.phase = "restored";
@@ -156,13 +165,17 @@ export default class {
             require(state.quality.presets.ultra.shadowResolution === 1536, "Missing quality choices");
             for (const invalid of ["custom", {shadowResolution: 640}, {directionalCascades: 0},
                                    {meshLodBias: null}, {weather: "maximum"}, {renderScale: .8},
-                                   {heightfieldLodBias: .25}, {waterSurfaceLodBias: 2}, {materialAnisotropy: 3}]) {
+                                   {heightfieldLodBias: .25}, {waterSurfaceLodBias: 2}, {materialAnisotropy: 3},
+                                   {decorativeDensity: -1}, {decorativeDistanceScale: 0}, {optionalParticleDensity: 2},
+                                   {planetLodBias: 0}, {caveDetailNormals: 1}, {waterReflectionSteps: 2.5},
+                                   {shadowResolution: 512, localShadowResolution: 768}]) {
                 let rejected = false;
                 try { settings.applyQuality(invalid); } catch (_) { rejected = true; }
                 require(rejected && settings.read().quality.pending === null, "Invalid quality changed pending settings");
             }
             settings.applyQuality("medium");
-            settings.applyQuality({meshLodBias: 1.25});
+            settings.applyQuality({meshLodBias: 1.25, decorativeDensity: .5, planetLodBias: .75,
+                                   waterReflectionSteps: 5});
             const queued = settings.read().quality;
             require(queued.pending.shadowResolution === 512 && queued.pending.meshLodBias === 1.25 &&
                     queued.pending.renderScale === .67 && queued.pending.heightfieldLodBias === 1.5 &&
@@ -251,6 +264,12 @@ export default class {
     camera.renderCamera->width = 64;
     camera.renderCamera->height = 64;
     camera.renderCamera->updateEveryFrames = 8;
+    auto& point = scene.CreateObject("Continuity point lamp");
+    point.light = SceneLightComponent{};
+    point.light->kind = SceneLightKind::Point;
+    point.light->castsShadow = true;
+    point.light->range = 12;
+    point.transform.position = {1, 1, -3};
     scene.CreateObject("Settings Script").scripts.push_back({1, record.id, true, "{}"});
     const bool saved = SaveSceneToFile(scene, project.StartupScenePath(), error);
     Require(saved, error);
@@ -462,7 +481,16 @@ int main(int argc, char** argv) try {
     legacy["game"]["legacyQuality"] = true;
     std::ofstream(preferences) << legacy.dump();
     run("restored");
-    auto qualityV1 = persisted;
+    auto qualityV2 = persisted;
+    for (const auto* key : {"decorativeDensity","decorativeDistanceScale","optionalParticleDensity",
+                            "planetLodBias","caveDetailNormals","waterReflectionSteps",
+                            "directionalShadowResolution","localShadowResolution"})
+        qualityV2["video"]["quality"].erase(key);
+    qualityV2["game"]["qualityV2"] = true;
+    std::ofstream(preferences) << qualityV2.dump();
+    run("restored");
+    auto qualityV1 = qualityV2;
+    qualityV1["game"].erase("qualityV2");
     for (const auto* key : {"renderScale","heightfieldLodBias","waterSurfaceLodBias","materialAnisotropy"})
         qualityV1["video"]["quality"].erase(key);
     qualityV1["game"]["qualityV1"] = true;

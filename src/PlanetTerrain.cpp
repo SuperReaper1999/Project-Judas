@@ -101,8 +101,9 @@ PlanetSelection SelectPlanetTiles(const PlanetSurface &s, const std::vector<Plan
     return SelectPlanetTiles(s, views, {});
 }
 PlanetSelection SelectPlanetTiles(const PlanetSurface &s, const std::vector<PlanetView> &views,
-                                  const std::vector<PlanetTileKey> &fixedLeaves) {
+                                  const std::vector<PlanetTileKey> &fixedLeaves, double visualBias) {
     require(!views.empty(), "planet requires at least one view");
+    require(std::isfinite(visualBias)&&visualBias>0, "invalid planetary visual LOD bias");
     for (const auto &v : views)
         require(finite(v.eye) && std::isfinite(v.fov) && v.fov > .01 && v.fov < 3.13 &&
                     v.pixels > 0 && std::isfinite(v.orthographicHeight) &&
@@ -178,7 +179,7 @@ PlanetSelection SelectPlanetTiles(const PlanetSurface &s, const std::vector<Plan
     while (!q.empty()) {
         auto item = q.top();
         q.pop();
-        if (item.error <= s.settings.pixelError)
+        if (item.error <= s.settings.pixelError * visualBias)
             break;
         if (item.key.level == s.settings.maxLevel || fixed.count(item.key)) {
             limited = true;

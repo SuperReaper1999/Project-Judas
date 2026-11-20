@@ -56,6 +56,9 @@ int RunWholeEngineBenchmark(int argc,char** argv){try{
  std::ofstream pairData;if(pairProfile)pairData.open(std::filesystem::path(out)/"collision-spikes.jsonl");
  unsigned loadingFrames=0;uint64_t loadingBegin=0;bool loadingScreenshot=false;
  InteractivePlay::FrameClockState clockState;int clockSteps=0;
+ const char* tracePolicy=std::getenv("JUDAS_VULKAN_TRACE");
+ const bool traceVulkan=profile&&tracePolicy&&std::string_view(tracePolicy)!="0";
+ JudasVulkan::Statistics previousVulkan;
  ApplicationControl control;
  control.loadingFrame=[&](EngineHost& h,RuntimeWorld&){
   ++loadingFrames;const auto now=p.Now();if(!loadingBegin)loadingBegin=now;
@@ -73,6 +76,7 @@ int RunWholeEngineBenchmark(int argc,char** argv){try{
   // rather than silently continuing to profile the destroyed startup world.
   if(pairProfile&&tracedPhysics!=&world.Physics()){world.Physics().SetCollisionSearchObserver([&](const auto& sample){searchTrace.Observe(sample);});tracedPhysics=&world.Physics();searchTrace.Clear();}
   if(!sampleStart&&now-lastResourceCheck>100000000){const auto loading=h.Resources().Stats().loading;if(loading)quietSince=0;else if(!quietSince)quietSince=now;resourcesReady=quietSince&&now-quietSince>=1000000000;lastResourceCheck=now;}
+  const auto vulkan=traceVulkan&&vulkanBackend?JudasVulkan::Stats():JudasVulkan::Statistics{};
   const bool ready=screenshotDone&&resourcesReady&&(warmupSeconds>0?double(now-begin)/1e9>=warmupSeconds:count>warmup);const bool starting=ready&&!sampleStart;if(starting){sampleStart=now;first=h.Jobs().Stats();}const bool done=seconds>0?(sampleStart&&double(now-sampleStart)/1e9>=seconds):samples>=frames;
   // A completed interval crossing a timed deadline is still measured work,
   // especially when it is the very hitch this capture is intended to expose.
@@ -87,10 +91,23 @@ int RunWholeEngineBenchmark(int argc,char** argv){try{
     row["fixed_step_ms"]=std::move(fixed);
     if(p.FrameId()>10){auto old=p.Snapshot(p.FrameId()-8);Json passes=Json::array();for(const auto& g:old.gpu)passes.push_back({{"name",g.pass.c_str()},{"pending",g.pending},{"ms",g.milliseconds},{"submitted_cpu_ns",g.submitted},{"gpu_start_ns",g.gpuStart},{"gpu_end_ns",g.gpuEnd}});gpuData<<Json({{"frame_id",old.id},{"passes",passes}}).dump()<<'\n';}
    }
+   if(traceVulkan&&vulkanBackend){
+    const auto delta=[](auto current,auto prior){return current>=prior?current-prior:0;};
+    row["vulkan_trace"]={{"present_mode",vulkan.presentMode},
+     {"image_barriers",delta(vulkan.imageBarriers,previousVulkan.imageBarriers)},
+     {"global_barriers",delta(vulkan.globalBarriers,previousVulkan.globalBarriers)},
+     {"pipelines_created",delta(vulkan.pipelinesCreated,previousVulkan.pipelinesCreated)},
+     {"acquire_ms",delta(vulkan.acquireNs,previousVulkan.acquireNs)/1e6},
+     {"present_ms",delta(vulkan.presentNs,previousVulkan.presentNs)/1e6},
+     {"frame_throttle_ms",delta(vulkan.frameThrottleNs,previousVulkan.frameThrottleNs)/1e6},
+     {"submissions",delta(vulkan.submissions,previousVulkan.submissions)},
+     {"render_passes",delta(vulkan.renderPasses,previousVulkan.renderPasses)}};
+   }
    if(pairProfile && double(now-previous)/1e6>30)pairData<<Json({{"index",samples},{"frame_ms",double(now-previous)/1e6},{"collisionSearch",searchTrace.Encode()}}).dump()<<'\n';
    data<<row.dump()<<'\n';++samples;
   }
   if(pairProfile)searchTrace.Clear();
+  previousVulkan=vulkan;
   completedGameplayFrame=false;previous=now;++count;if(done){SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);}
   // Queue at the existing input boundary rather than setting state before
   // BeginFrame clears frame edges. Feed both ordinary and player-device input.
