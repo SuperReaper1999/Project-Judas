@@ -7,6 +7,7 @@
 #include "ScreenshotWriter.h"
 #include "ScriptSystem.h"
 #include "WorldPresentation.h"
+#include "WorldGraphicsState.h"
 #include "fluid/GameWaterRuntime.h"
 #include "fluid/GameWaterSurface.h"
 #include "WaterVisualGpuControls.h"
@@ -29,6 +30,72 @@ void Measure(std::vector<double> values,const std::string& label){
     std::cout<<"MEASURE "<<label<<" n="<<values.size()<<" median="<<values[values.size()/2]
              <<" p95="<<values[std::size_t(std::ceil(values.size()*.95))-1]<<" worst="<<values.back()<<" ms\n";
 }
+#if defined(__linux__) && !defined(__ANDROID__)
+void CheckGraphicsRecreation(EngineHost& host, const Project& project,
+                             const std::filesystem::path& root) {
+    std::string error;
+    Scene scene;
+    RuntimeWorld world;
+    world.ConfigureProject(project.Settings());
+    auto& assets = host.Resources();
+    if (!LoadSceneFromFile((root/"Scenes/pool.judas").string(),scene,error) ||
+        !world.Build(scene,&assets,error)) {
+        Check(false,"build advanced water transition fixture: "+error);
+        return;
+    }
+    assets.WaitForAll();
+    auto& water = *world.GridWater();
+    const auto id = water.Owners().front();
+    const auto& grid = *water.Find(id);
+    const auto& config = grid.Configuration();
+    const auto origin = grid.ToWorld({config.cells.x*.5f*config.cellSize,0,
+                                      config.cells.z*.5f*config.cellSize});
+    const float level = world.RuntimeDefinition(id)->fluidVolume->fillHeight;
+    const auto eye = origin+config.rotation*glm::vec3(-3,level+2,5.8f);
+    const auto target = origin+config.rotation*glm::vec3(-1,level-.4f,0);
+    const auto view = glm::lookAt(eye,target,config.rotation*glm::vec3(0,1,0));
+    constexpr int width = 1280, height = 800;
+    const auto projection = glm::perspective(glm::radians(70.f),1.6f,.05f,300.f);
+    auto pixels = [&](bool showWater) {
+        world.SetRenderVisible(id,true,showWater);
+        auto& renderer = host.GetRenderer();
+        RenderWorldFrame(renderer,width,height,world,view,projection,eye,1,0,WorldRenderPurpose::Observer);
+        std::vector<unsigned char> result;
+        renderer.CaptureFrame(width,height,result);
+        return result;
+    };
+    auto visibleWater = [&](const char* point) {
+        const auto dry = pixels(false);
+        auto wet = pixels(true);
+        Check(wet.size() == 3*width*height && dry.size() == wet.size() && wet != dry,
+              std::string("advanced water surface contributes visible pixels ")+point);
+        return wet;
+    };
+    const auto startBackend = host.GetWindow().UsesVulkan();
+    const auto initialQuantity = grid.Quantity();
+    const auto initialTime = world.SimulationTimeSeconds();
+    const auto initial = visibleWater("before graphics recreation");
+    std::vector<bool> backends{startBackend};
+    if (startBackend) backends = {false,true};
+    for (const bool useVulkan : backends) {
+        WorldGraphicsState state;
+        if (!world.CaptureGraphicsState(state,error) ||
+            !world.ReleaseWorldGraphics(host.GetRenderer(),error) || !assets.DetachGraphics(error) ||
+            !host.RebuildDesktopGraphics("Advanced water graphics recreation",width,height,false,useVulkan,error) ||
+            !world.RestoreGraphicsState(state,host.GraphicsCaps(),error)) {
+            Check(false,"recreate advanced water graphics: "+error);
+            return;
+        }
+        assets.WaitForAll();
+        const std::string backend = useVulkan ? "Vulkan" : "OpenGL";
+        const auto restored = visibleWater(useVulkan ? "after restoration on Vulkan" : "after restoration on OpenGL");
+        if (useVulkan == startBackend)
+            Check(restored==initial,"graphics recreation restores the same advanced water image on "+backend);
+        Check(grid.Quantity()==initialQuantity && world.SimulationTimeSeconds()==initialTime,
+              "graphics restoration preserves water quantity and simulation clock on "+backend);
+    }
+}
+#endif
 }
 int main(int argc,char** argv){
 
@@ -191,6 +258,9 @@ int main(int argc,char** argv){
     }
     const auto reused=RunWaterVisualGpuControls(renderer);
     Check(reused.passed,"small-camera optics remain correct after larger views: "+reused.details);
+#if defined(__linux__) && !defined(__ANDROID__)
+    CheckGraphicsRecreation(host,project,root);
+#endif
     std::cout<<checks<<" checks, "<<failures<<" failures\n";
     return failures?1:0;
 }

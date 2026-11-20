@@ -4,6 +4,17 @@
 #include "PerformanceProfiler.h"
 
 namespace JudasWater {
+void WorldSystem::ReleaseGraphics(Renderer& renderer) {
+    for (auto& entry : regions_) {
+        auto& region = *entry.second;
+        for (auto& mesh : region.meshes) {
+            renderer.DestroyMesh(mesh);
+            mesh = {};
+        }
+        region.meshRevisions = {};
+    }
+}
+
 void WorldSystem::Draw(Renderer &renderer) const {
     const auto eye=glm::vec3(glm::inverse(renderer.ViewMatrix())[3]);
     for (const auto &[id, region] : regions_) {

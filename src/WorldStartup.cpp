@@ -5,6 +5,7 @@
 #include "WorldPresentation.h"
 #include "CameraProjection.h"
 #include "PerformanceProfiler.h"
+#include "fluid/GameWaterRuntime.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <algorithm>
 
@@ -77,6 +78,7 @@ bool RuntimeWorld::ReleaseWorldGraphics(Renderer& renderer, std::string& error) 
         emitter.gpu.reset();
     }
     ReleasePresentationTargets();
+    if (m_gridWater) m_gridWater->ReleaseGraphics(renderer);
     if (m_runtimeTerrain) m_runtimeTerrain->ReleaseGraphics();
     for (auto& [id, planet] : m_planets) planet->ReleaseGraphics();
     for (auto& [id, deformable] : m_deformables) {

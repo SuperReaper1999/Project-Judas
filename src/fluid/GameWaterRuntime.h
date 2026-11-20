@@ -23,6 +23,7 @@ class WorldSystem {
     std::vector<glm::vec2> OpticalPaths(const glm::mat4 &, const glm::mat4 &, unsigned,
                                         unsigned) const;
     void Draw(Renderer &) const;
+    void ReleaseGraphics(Renderer &);
     void Persist(SaveArchive &);
     const Grid *Find(std::uint64_t) const;
     std::vector<std::uint64_t> Owners() const;
