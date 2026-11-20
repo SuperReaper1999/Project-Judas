@@ -99,7 +99,10 @@ void RuntimeWorld::UpdateWeather(float dt){
 void RuntimeWorld::PrepareWeather(Renderer& renderer,V eye,uint64_t camera)const{
     const auto sample=SampleWeather(eye);m_weatherListener=camera?m_weatherListener:eye;
     if(!sample.active||weatherQuality==0){renderer.ClearWeather();return;}
-    renderer.SetWeather(sample,eye,camera?std::min(1u,weatherQuality):weatherQuality);
+    const auto preference=renderer.Quality().weather;
+    const unsigned visuals=preference==GraphicsQuality::Weather::Authored?weatherQuality:
+        (preference==GraphicsQuality::Weather::High?2u:1u);
+    renderer.SetWeather(sample,eye,camera?1u:visuals);
     if(camera||sample.profile.rain+sample.profile.snow<.001){renderer.SetWeatherShelter({});return;}
     JUDAS_PROFILE_SCOPE("Weather shelter queries");
     auto& cache=m_weatherShelter;const auto up=glm::vec3(sample.up);

@@ -102,11 +102,19 @@ void PrepareShadows(Renderer& renderer,const SceneSettings& settings,const std::
     JUDAS_PROFILE_COUNTER("Shadow sources requested",requested,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Shadow sources selected",chosen,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Shadow requests not selected",requested-chosen,ProfileCounterMode::Sum);
-    unsigned layers=settings.sunEnabled?3:0;
+    const auto& quality=renderer.Quality();
+    const unsigned cascades=settings.sunEnabled?quality.directionalCascades:0;
+    unsigned layers=cascades;
     for(const auto& l:selected)if(l.shadowMapIndex>=0)layers=std::max(layers,unsigned(l.shadowMapIndex+(l.kind==LightKind::Point?6:1)));
-    renderer.ReserveShadowLayers(layers);
-    renderer.SetDirectionalCascadeCount(settings.sunEnabled?3:0);
     for(int i=0;i<kShadowMapCount;++i)renderer.InvalidateShadowSlot(i);
+    const bool allocated=renderer.ReserveShadowLayers(layers);
+    renderer.SetDirectionalCascadeCount(allocated?cascades:0);
+    if(!allocated){
+        JUDAS_PROFILE_COUNTER("Shadow allocation rejected",1,ProfileCounterMode::Sum);
+        for(auto& light:selected)light.shadowMapIndex=-1;
+        renderer.SetDynamicLights(selected);
+        return;
+    }
     const auto* reuse=std::getenv("JUDAS_SHADOW_REUSE");
     const bool cacheable=!scene.volatileContent&&!(reuse&&std::strcmp(reuse,"0")==0);
     auto render=[&](int slot,std::uint64_t identity,const glm::mat4& matrix){
@@ -147,8 +155,10 @@ void PrepareShadows(Renderer& renderer,const SceneSettings& settings,const std::
     if(renderer.ShadowsEnabled()){
         if(settings.sunEnabled){
             const auto eye=glm::vec3(glm::inverse(view)[3]);
-            for(int cascade=0;cascade<3;++cascade){const float extent=cascade==0?16.f:cascade==1?48.f:144.f;
-                render(cascade,0,ComputeStableDirectionalShadowMatrix(eye,settings.sunDirection,extent,extent*3,kDefaultShadowResolution));}
+            for(unsigned cascade=0;cascade<cascades;++cascade){
+                constexpr float extents[]{16,48,144};
+                const float extent=extents[cascade]*quality.shadowDistanceScale;
+                render(cascade,0,ComputeStableDirectionalShadowMatrix(eye,settings.sunDirection,extent,extent*3,quality.shadowResolution));}
         }
         for(const auto& l:selected)if(l.shadowMapIndex>=0){
             if(l.kind==LightKind::Spot)render(l.shadowMapIndex,l.identity,ComputeSpotShadowMatrix(l.position,l.direction,l.outerConeDegrees,l.range));

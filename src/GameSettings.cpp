@@ -70,6 +70,84 @@ std::string Backend(const Json& value) {
     Require(value == "opengl" || value == "vulkan", "Backend must be opengl or vulkan");
     return value.get<std::string>();
 }
+
+constexpr unsigned ShadowResolutions[]{256,512,768,1024,1536};
+using WeatherQuality = GraphicsQuality::Weather;
+constexpr std::pair<std::string_view,GraphicsQuality> QualityPresets[]{
+    {"low",      { 256, 1, 1.f,   false, 2.f,  WeatherQuality::Low,      0}},
+    {"medium",   { 512, 2, 1.f,   false, 1.5f, WeatherQuality::Low,      2}},
+    {"high",     { 768, 3, .85f,  true,  1.f,  WeatherQuality::Authored, 4}},
+    {"veryHigh", {1024, 3, 1.f,   true,  .75f, WeatherQuality::High,     6}},
+    {"ultra",    {1536, 3, 1.25f, true,  .5f,  WeatherQuality::High,     8}}
+};
+
+Json QualityValues(const GraphicsQuality& quality) {
+    const char* weather = quality.weather == WeatherQuality::Authored ? "authored" :
+                          quality.weather == WeatherQuality::Low ? "low" : "high";
+    return {{"shadowResolution", quality.shadowResolution}, {"directionalCascades", quality.directionalCascades},
+            {"shadowDistanceScale", quality.shadowDistanceScale}, {"shadowFilter", quality.softShadows ? "soft" : "fast"},
+            {"meshLodBias", quality.meshLodBias}, {"weather", weather}, {"localShadowBudget", quality.localShadowBudget}};
+}
+
+float QualityNumber(const Json& value, float minimum, float maximum, const char* name) {
+    Require(value.is_number() && value >= minimum && value <= maximum,
+            std::string(name) + " is outside the supported range");
+    return value.get<float>();
+}
+
+GraphicsQuality ParseQuality(const Json& input, GraphicsQuality quality) {
+    if (input.is_string()) {
+        if (input == "default") return {};
+        for (const auto& preset : QualityPresets)
+            if (input == preset.first) return preset.second;
+        throw std::runtime_error("Unknown graphics quality preset");
+    }
+    Keys(input, {"shadowResolution", "directionalCascades", "shadowDistanceScale", "shadowFilter",
+                 "meshLodBias", "weather", "localShadowBudget"});
+    if (input.contains("shadowResolution")) {
+        const auto size = unsigned(Integer(input.at("shadowResolution"), 256, 1536, "shadowResolution"));
+        Require(std::find(std::begin(ShadowResolutions), std::end(ShadowResolutions), size) != std::end(ShadowResolutions),
+                "Choose a supported shadow resolution");
+        quality.shadowResolution = size;
+    }
+    if (input.contains("directionalCascades"))
+        quality.directionalCascades = Integer(input.at("directionalCascades"), 1, 3, "directionalCascades");
+    if (input.contains("shadowDistanceScale"))
+        quality.shadowDistanceScale = QualityNumber(input.at("shadowDistanceScale"), .5f, 1.5f, "shadowDistanceScale");
+    if (input.contains("shadowFilter")) {
+        const auto& filter = input.at("shadowFilter");
+        Require(filter == "fast" || filter == "soft", "shadowFilter must be fast or soft");
+        quality.softShadows = filter == "soft";
+    }
+    if (input.contains("meshLodBias"))
+        quality.meshLodBias = QualityNumber(input.at("meshLodBias"), .5f, 2.f, "meshLodBias");
+    if (input.contains("weather")) {
+        const auto& weather = input.at("weather");
+        Require(weather == "authored" || weather == "low" || weather == "high", "weather must be authored, low or high");
+        quality.weather = weather == "authored" ? WeatherQuality::Authored :
+                          weather == "low" ? WeatherQuality::Low : WeatherQuality::High;
+    }
+    if (input.contains("localShadowBudget"))
+        quality.localShadowBudget = unsigned(Integer(input.at("localShadowBudget"), 0, 8, "localShadowBudget"));
+    return quality;
+}
+
+Json QualityState(const GraphicsQuality& effective, const std::optional<GraphicsQuality>& pending, int limit) {
+    std::string_view matching = "custom";
+    auto presets = Json::object();
+    for (const auto& [name, values] : QualityPresets) {
+        if (values == effective) matching = name;
+        if (int(values.shadowResolution) <= limit) presets[std::string(name)] = QualityValues(values);
+    }
+    auto resolutions = Json::array();
+    for (const auto size : ShadowResolutions) if (int(size) <= limit) resolutions.push_back(size);
+    return {{"preset", matching}, {"effective", QualityValues(effective)},
+            {"pending", pending ? QualityValues(*pending) : Json(nullptr)}, {"presets", presets},
+            {"choices", {{"shadowResolution", resolutions}, {"directionalCascades", {1,2,3}},
+                         {"shadowDistanceScale", {{"min",.5},{"max",1.5}}},
+                         {"shadowFilter", {"fast","soft"}}, {"meshLodBias", {{"min",.5},{"max",2}}},
+                         {"weather", {"authored","low","high"}}, {"localShadowBudget", {{"min",0},{"max",8}}}}}};
+}
 }
 
 GameSettings::GameSettings(const Project& project, int width, int height) {
@@ -103,7 +181,7 @@ GameSettings::GameSettings(const Project& project, int width, int height) {
         Require(values.at("version").is_number_integer() && values.at("version") == 1,
                 "Unsupported preferences version");
         const auto& video = values.at("video");
-        Keys(video, {"width", "height", "fullscreen", "vsync", "shadows", "localShadowBudget", "fpsCap", "backend"});
+        Keys(video, {"width", "height", "fullscreen", "vsync", "shadows", "localShadowBudget", "fpsCap", "backend", "quality"});
         Display display = m_display;
         if (video.contains("width")) {
             display = {Boolean(video.at("fullscreen")), Integer(video.at("width"), 1, 8192, "width"),
@@ -117,6 +195,12 @@ GameSettings::GameSettings(const Project& project, int width, int height) {
         const auto shadows = unpack("shadows");
         const int budget = video.contains("localShadowBudget")
             ? Integer(video.at("localShadowBudget"), 0, 8, "localShadowBudget") : 8;
+        GraphicsQuality quality;
+        quality.localShadowBudget = budget;
+        if (video.contains("quality")) {
+            Require(video.at("quality").is_object(), "Saved graphics quality must be an object");
+            quality = ParseQuality(video.at("quality"), quality);
+        }
         const int cap = video.contains("fpsCap") ? VideoFrameCap(video.at("fpsCap")) : 0;
         const auto backend = video.contains("backend") ? Backend(video.at("backend")) : "opengl";
         const auto& game = values.at("game");
@@ -125,7 +209,7 @@ GameSettings::GameSettings(const Project& project, int width, int height) {
         m_display = display;
         m_vsync = vsync;
         m_shadows = shadows;
-        m_localShadowBudget = budget;
+        m_quality = quality;
         m_fpsCap = cap;
         m_backend = backend;
     } catch (const std::exception& e) {
@@ -175,7 +259,9 @@ void GameSettings::Attach(EngineHost& host) {
         }
     }
     if (!m_shadowsOverride && m_shadows) host.GetRenderer().SetShadowsEnabled(*m_shadows);
-    host.GetRenderer().SetShadowBudget(m_localShadowBudget);
+    auto& renderer = host.GetRenderer();
+    if (renderer.SupportsGraphicsQuality()) renderer.SetGraphicsQuality(m_quality,m_qualityError);
+    else renderer.SetShadowBudget(m_quality.localShadowBudget);
 }
 
 Json GameSettings::Read() const {
@@ -210,7 +296,12 @@ Json GameSettings::Read() const {
             {"vsyncRequested", m_vsync ? Json(*m_vsync) : Json(nullptr)},
             {"canDisableVSync", window.UsesVulkan() ? Json(JudasVulkan::SupportsSwapInterval(0)) : Json(nullptr)},
             {"fpsCap", m_fpsCap}, {"shadows", m_host->GetRenderer().ShadowsEnabled()},
-            {"localShadowBudget", m_localShadowBudget}, {"activeBackend", active},
+            {"localShadowBudget", m_host->GetRenderer().ShadowBudget()}, {"activeBackend", active},
+            {"quality", m_desktop && m_host->GetRenderer().SupportsGraphicsQuality()
+                ? QualityState(m_host->GetRenderer().Quality(),m_qualityRequest,m_host->GraphicsCaps().limits.textureSize)
+                : Json(nullptr)}, {"qualityError", m_qualityError.empty() && m_host->GetRenderer().ShadowStorageLimited()
+                    ? "Shadow storage could not grow on this device. Choose a smaller shadow resolution or budget."
+                    : m_qualityError},
             {"requestedBackend", m_switchRequest ? (*m_switchRequest ? "vulkan" : "opengl") : m_backend}, {"backends", backends},
             {"restartRequired", !m_backendOverride && m_backend != active},
             {"liveBackendSwitch", CanSwitchBackend()}, {"backendTransition", m_switchState},
@@ -227,10 +318,14 @@ void GameSettings::Write(bool reset) {
     Require(reset || m_loadError.empty(), "Preferences could not be loaded; explicitly reset before replacing them");
     Require(!m_request && !m_previous, "Confirm or revert the display preview before saving preferences");
     Require(!m_switchRequest, "Wait for the backend transition before saving preferences");
+    Require(!m_qualityRequest, "Wait for graphics quality to apply before saving preferences");
     Json video = Json::object();
     if (!reset) {
         video = {{"width", m_display.width}, {"height", m_display.height}, {"fullscreen", m_display.fullscreen},
-                 {"fpsCap", m_fpsCap}, {"localShadowBudget", m_localShadowBudget}, {"backend", m_backend}};
+                 {"fpsCap", m_fpsCap}, {"localShadowBudget", m_quality.localShadowBudget}, {"backend", m_backend}};
+        auto quality = QualityValues(m_quality);
+        quality.erase("localShadowBudget"); // Preserve the existing on-disk budget key.
+        video["quality"] = std::move(quality);
         if (m_vsync) video["vsync"] = *m_vsync;
         if (m_shadows) video["shadows"] = *m_shadows;
     }
@@ -260,12 +355,22 @@ Json GameSettings::Invoke(const std::string& operation, const std::string& argum
         Require(CanSwitchBackend(), "Live backend switching is unavailable in this session");
         Require(!m_request && !m_previous, "Finish the display preview before changing backend");
         Require(!m_switchRequest, "A graphics backend change is already queued");
+        Require(!m_qualityRequest, "Wait for graphics quality to apply before switching backend");
         const bool requested = Backend(Parse(argument)) == "vulkan";
         if (m_host->GetWindow().UsesVulkan() != requested) {
             m_switchRequest = requested;
             m_switchState = "pending";
             m_backendError.clear();
         }
+    } else if (operation == "settingsApplyQuality") {
+        Require(!m_switchRequest, "Wait for the backend transition before changing graphics quality");
+        auto& renderer = m_host->GetRenderer();
+        Require(renderer.SupportsGraphicsQuality(), "Graphics quality requires the shared renderer");
+        const auto quality = ParseQuality(Parse(argument),m_qualityRequest.value_or(renderer.Quality()));
+        Require(int(quality.shadowResolution)<=m_host->GraphicsCaps().limits.textureSize,
+                "Shadow resolution exceeds the current device texture limit");
+        m_qualityError.clear();
+        m_qualityRequest = quality;
     } else if (operation == "settingsSetGame") {
         const auto value = Parse(argument);
         Require(value.is_object(), "Game preferences must be an object");
@@ -297,8 +402,10 @@ Json GameSettings::Invoke(const std::string& operation, const std::string& argum
         const auto value = Parse(argument);
         Keys(value, {"vsync", "fpsCap", "shadows", "localShadowBudget", "backend"});
         const auto cap = value.contains("fpsCap") ? VideoFrameCap(value.at("fpsCap")) : m_fpsCap;
+        if (value.contains("localShadowBudget"))
+            Require(!m_qualityRequest, "Wait for graphics quality to apply before changing the local shadow budget");
         const auto budget = value.contains("localShadowBudget")
-            ? unsigned(Integer(value.at("localShadowBudget"), 0, 8, "localShadowBudget")) : m_localShadowBudget;
+            ? unsigned(Integer(value.at("localShadowBudget"), 0, 8, "localShadowBudget")) : m_quality.localShadowBudget;
         const auto backend = value.contains("backend") ? Backend(value.at("backend")) : m_backend;
         auto shadows = m_shadows;
         if (value.contains("shadows")) {
@@ -317,8 +424,10 @@ Json GameSettings::Invoke(const std::string& operation, const std::string& argum
             m_vsync = sync;
         }
         if (shadows && !m_shadowsOverride) m_host->GetRenderer().SetShadowsEnabled(*shadows);
-        m_host->GetRenderer().SetShadowBudget(budget);
-        m_localShadowBudget = budget;
+        if (value.contains("localShadowBudget")) {
+            m_host->GetRenderer().SetShadowBudget(budget);
+            m_quality.localShadowBudget = budget;
+        }
         m_shadows = shadows;
         m_fpsCap = cap;
         m_backend = backend;
@@ -329,6 +438,11 @@ Json GameSettings::Invoke(const std::string& operation, const std::string& argum
 }
 
 void GameSettings::Advance() {
+    if (m_qualityRequest) {
+        if (m_host->GetRenderer().SetGraphicsQuality(*m_qualityRequest,m_qualityError))
+            m_quality = *m_qualityRequest;
+        m_qualityRequest.reset();
+    }
     if (m_request) {
         const auto prior = CurrentDisplay();
         const auto request = *m_request;
@@ -385,6 +499,7 @@ bool GameSettings::AdvanceBackendSwitch(RuntimeWorld& world, const char* title, 
     auto& window = host.GetWindow();
     const bool originalBackend = window.UsesVulkan();
     const bool shadows = host.GetRenderer().ShadowsEnabled();
+    const auto quality = host.GetRenderer().Quality();
     const auto vsync = window.VSync();
     auto display = CurrentDisplay();
     if (display.fullscreen) { display.width = m_display.width; display.height = m_display.height; }
@@ -424,7 +539,7 @@ bool GameSettings::AdvanceBackendSwitch(RuntimeWorld& world, const char* title, 
                 return false;
             auto& renderer = host.GetRenderer();
             renderer.SetShadowsEnabled(shadows);
-            renderer.SetShadowBudget(m_localShadowBudget);
+            if (!renderer.SetGraphicsQuality(quality,diagnostic)) return false;
             if (!ApplyDisplay(display,diagnostic) || (vsync && !window.SetVSync(*vsync,diagnostic)) ||
                 !world.RestoreGraphicsState(state,host.GraphicsCaps(),diagnostic)) return false;
             showTransition();

@@ -499,6 +499,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `session.get` | `sessionGet` | [declaration](../judas.d.ts) | [reference](scenes-state.md) |
 | `session.set` | `sessionSet` | [declaration](../judas.d.ts) | [reference](scenes-state.md) |
 | `settings` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](settings.md) |
+| `settings.applyQuality` | `settingsApplyQuality` | [declaration](../judas.d.ts) | [reference](settings.md) |
 | `settings.applyVideo` | `settingsApplyVideo` | [declaration](../judas.d.ts) | [reference](settings.md) |
 | `settings.confirmDisplay` | `settingsConfirmDisplay` | [declaration](../judas.d.ts) | [reference](settings.md) |
 | `settings.previewDisplay` | `settingsDisplay` | [declaration](../judas.d.ts) | [reference](settings.md) |

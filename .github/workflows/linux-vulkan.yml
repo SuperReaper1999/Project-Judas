@@ -78,6 +78,7 @@ jobs:
             --expected-channel Experimental --output "$RUNNER_TEMP/vulkan-native" \
             --test renderer-v2-submission --test rendering-architecture --test renderer-shadow-reuse \
             --test render-cameras --test terrain-v2-transition --test particle-gpu-resident --test asset-residency \
+            --test asset-pipeline --test weather-rendering \
             --test water-visuals --test editor-application-lifecycle --test editor-v2-viewports \
             --test renderer-pass-state --test shadow-sampling --test renderer-compute \
             --test terrain-v2-editor-preview-rendering --test terrain-v2-planet-render \

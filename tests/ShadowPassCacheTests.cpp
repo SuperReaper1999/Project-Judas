@@ -405,6 +405,46 @@ void Native(const std::filesystem::path &output) {
         WriteRgbPng((output / "unshadowed.png").string(), 320, 240, unshadowed);
     }
     world.Destroy();
+
+    // Observe the live quality settings through the same world colour and depth
+    // passes that consume the resized array. Keep lamp and simulation intact.
+    scene.Settings().sunEnabled = true;
+    scene.Find(objectId)->render->textureCamera = kInvalidSceneObjectId;
+    if (!world.Build(scene, nullptr, error)) {
+        Check(false, error.c_str());
+        return;
+    }
+    const auto defaults = renderer.Quality();
+    const auto defaultPixels = frame(false);
+    const auto defaultStats = renderer.Stats();
+    auto quality = defaults;
+    quality.softShadows = false;
+    Check(renderer.SetGraphicsQuality(quality,error),"select four-tap filtering on the existing shadow maps");
+    const auto fastPixels = frame(false);
+    Check(fastPixels != defaultPixels && renderer.Stats().shadowBytes == defaultStats.shadowBytes,
+          "filter quality changes visible shadow edges without changing depth storage");
+    quality.directionalCascades = 1;
+    quality.localShadowBudget = 0;
+    quality.shadowResolution = 256;
+    quality.shadowDistanceScale = .5f;
+    Check(renderer.SetGraphicsQuality(quality,error),"rebuild smaller depth storage and invalidate cached charts");
+    frame(true);
+    const auto low = renderer.Stats();
+    Check(defaultStats.shadowPasses == 4 && low.shadowPasses == 1 && low.reusedShadowPasses == 0 &&
+          low.dynamicLights == defaultStats.dynamicLights && low.shadowBytes == 256u*256u*4u,
+          "one redrawn small cascade and zero local charts retain direct lighting");
+    frame(true);
+    Check(renderer.Stats().reusedShadowPasses == 1,"the reconstructed depth chart can be reused");
+    quality.shadowDistanceScale = 1.5f;
+    Check(renderer.SetGraphicsQuality(quality,error),"extend directional shadow coverage");
+    frame(true);
+    Check(renderer.Stats().shadowPasses == 1 && renderer.Stats().reusedShadowPasses == 0,
+          "a range change invalidates the cached light-space projection");
+    const auto clock = world.SimulationTimeSeconds();
+    Check(renderer.SetGraphicsQuality(defaults,error) && frame(false) == defaultPixels &&
+          world.SimulationTimeSeconds() == clock,
+          "restoring default quality recovers exact pixels with the same simulation clock");
+    world.Destroy();
 }
 } // namespace
 int main(int argc, char **argv) {

@@ -72,6 +72,7 @@ export const settings = {
     read: () => call("settingsRead"),
     switchBackend: backend => call("settingsSwitchBackend", JSON.stringify(backend)),
     applyVideo: patch => call("settingsApplyVideo", JSON.stringify(patch)),
+    applyQuality: quality => call("settingsApplyQuality", JSON.stringify(quality)),
     previewDisplay: display => call("settingsDisplay", JSON.stringify(display)),
     confirmDisplay: () => call("settingsConfirmDisplay"),
     revertDisplay: () => call("settingsRevertDisplay"),

@@ -146,6 +146,7 @@ float weatherCloud(vec3 p){return texture(uWeatherNoise,p/262144.0).r*.65+textur
 // M92: one depth array; world-position projection selects the assigned layer.
 uniform sampler2DArray uShadowMaps;
 uniform int uSunCascadeCount;
+uniform int uFastShadows;
 #ifdef JUDAS_CUBE_ARRAY
 uniform samplerCubeArray uPointShadowMaps;
 #endif
@@ -172,6 +173,18 @@ ivec2 lightTile(){vec4 meta=lightTexel(0);ivec2 n=ivec2(meta.xy);ivec2 tile=clam
 // Capture geometric derivatives in uniform flow before material/light branches.
 vec3 shadowWorldDx, shadowWorldDy;
 bool samplingPointShadow=false;
+
+float ShadowComparison(int slot, ivec2 pixel, ivec2 size, vec3 projected, vec2 slope, float bias) {
+    vec2 uv=(vec2(pixel)+0.5)/vec2(size);
+    float receiver=projected.z+dot(slope,uv-projected.xy);
+    float stored;
+#ifdef JUDAS_CUBE_ARRAY
+    if(samplingPointShadow)stored=textureLod(uPointShadowMaps,vec4(cubeDirection((slot-6)%6,uv),float((slot-6)/6)),0.0).r;
+    else
+#endif
+    stored=texelFetch(uShadowMaps,ivec3(pixel,slot),0).r;
+    return receiver-bias<=stored?1.0:0.0;
+}
 
 // A sloped receiver has a different depth at each shadow texel. Correct that
 // depth across the PCF footprint instead of hiding acne with more bias.
@@ -203,20 +216,23 @@ float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
     vec2 phase=fract(texel);
     float bias=slot>=6?max(0.00004*(1.0-ndotl),0.00001):max(0.006*(1.0-ndotl),0.0015); // Existing numerical bias, unchanged.
     float lit=0.0;
+    if(uFastShadows!=0){
+        for(int x=0;x<2;++x){
+            float wx=x==0?1.0-phase.x:phase.x;
+            for(int y=0;y<2;++y){
+                float wy=y==0?1.0-phase.y:phase.y;
+                ivec2 pixel=clamp(center+ivec2(x,y),ivec2(0),size-1);
+                lit+=wx*wy*ShadowComparison(slot,pixel,size,projected,slope,bias);
+            }
+        }
+        return lit;
+    }
     for(int x=-1;x<=2;++x){
         float wx=x==-1?1.0-phase.x:(x==2?phase.x:1.0);
         for(int y=-1;y<=2;++y){
             float wy=y==-1?1.0-phase.y:(y==2?phase.y:1.0);
             ivec2 pixel=clamp(center+ivec2(x,y),ivec2(0),size-1);
-            vec2 offset=(vec2(pixel)+0.5)/vec2(size)-projected.xy;
-            float receiver=projected.z+dot(slope,offset);
-            float stored;
-#ifdef JUDAS_CUBE_ARRAY
-            if(samplingPointShadow)stored=textureLod(uPointShadowMaps,vec4(cubeDirection((slot-6)%6,(vec2(pixel)+0.5)/vec2(size)),float((slot-6)/6)),0.0).r;
-            else
-#endif
-            stored=texelFetch(uShadowMaps,ivec3(pixel,slot),0).r;
-            lit+=wx*wy*(receiver-bias<=stored?1.0:0.0);
+            lit+=wx*wy*ShadowComparison(slot,pixel,size,projected,slope,bias);
         }
     }
     return lit/9.0;

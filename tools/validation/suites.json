@@ -1275,6 +1275,12 @@
       ]
     },
     {
+      "name": "weather-rendering",
+      "target": "judas_weather_render_tests",
+      "groups": ["rendering"],
+      "args": ["{output}/weather-rendering", "--correctness-only"]
+    },
+    {
       "name": "pointer-harness",
       "target": "judas_pointer_harness_tests",
       "groups": [

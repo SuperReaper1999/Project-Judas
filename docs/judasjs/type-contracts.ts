@@ -2,7 +2,7 @@
  * Positive calls must remain accepted; @ts-expect-error calls must remain errors.
  * Actual execution/value validation is covered by native tests and the cookbook.
  */
-import {world, physics, Entity, LocalPlayer, engine} from 'judas';
+import {world, physics, Entity, LocalPlayer, engine, settings} from 'judas';
 
 declare const owner: Entity;
 declare const player: LocalPlayer;
@@ -109,3 +109,12 @@ owner.terrain.surfaceBrush(origin,{kind:'paint',radius:2,layer:3});
 owner.terrain.surfaceBrush(origin,{kind:'flatten',radius:3,height:1,strength:.5});
 // @ts-expect-error Surface layers are the four authored slots.
 owner.terrain.surfaceBrush(origin,{kind:'paint',radius:2,layer:4});
+
+settings.applyQuality("veryHigh");
+settings.applyQuality({directionalCascades: 2, shadowFilter: "fast"});
+// @ts-expect-error Custom reports the result of an individual patch.
+settings.applyQuality("custom");
+// @ts-expect-error Shadow arrays use discrete validated chart sizes.
+settings.applyQuality({shadowResolution: 640});
+// @ts-expect-error The settings API has no internal resolution switch.
+settings.applyQuality({renderScale: .8});

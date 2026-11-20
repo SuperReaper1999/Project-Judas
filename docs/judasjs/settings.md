@@ -17,6 +17,7 @@ Borderless fullscreen uses the current desktop mode and refresh rate.
 | Window size and borderless fullscreen | Window via `settings.previewDisplay()` | At the frame boundary, with 15 seconds to keep or revert |
 | VSync and FPS cap | Presentation and standalone frame loop via `settings.applyVideo()` | Live. Vulkan changes present mode on swapchain recreation |
 | Global shadows and local shadow chart budget | Renderer via `settings.applyVideo()` | Live. Direct lighting stays enabled |
+| Graphics quality | `settings.applyQuality(presetOrPatch)` | Live at the end of the frame |
 | Exposure and weather effects | `world.setAppearance({exposure})` and `weather.quality` | Live. Store the chosen values in game preferences |
 | Rendering backend | `settings.switchBackend(backend)` or `settings.applyVideo({backend})` | Explicit live request, or next launch after saving the restart preference |
 | Master gain, mute and audio categories | `audio.setGroup("master", patch)` or a project-defined group | Live. Store user choices in game preferences |
@@ -34,9 +35,9 @@ OpenGL reports null because SDL must try the change to establish support. VSync
 can be rejected by the current
 driver or surface. Vulkan uses FIFO for VSync on and a supported mailbox or
 immediate mode for off. `localShadowBudget` ranges from zero to eight and changes
-the number of local lights that can receive shadow maps. Directional cascade
-count and shadow-map resolution retain their engine defaults. Exclusive display
-mode switching and a general graphics preset have no public controls.
+the number of local lights that can receive shadow maps. It addresses the same
+setting as the individual quality control. Exclusive display mode switching has
+no public control.
 
 For display changes, call `settings.previewDisplay({fullscreen: true})` or
 `settings.previewDisplay({fullscreen: false, width: 1280, height: 720})`. Wait
@@ -45,6 +46,81 @@ for `displayPending` to clear. A successful preview reports
 it or `settings.revertDisplay()` to restore the previous mode. The engine reverts
 an expired preview at a frame boundary. Display errors appear in
 `displayError`. Wait for the confirmation boundary before saving.
+
+## Graphics quality
+
+On standalone Linux, `settings.read().quality` lists the supported presets and
+individual choices for the active shared renderer. Its `effective` object
+contains the applied values. Its `pending` object is the requested configuration
+and becomes null once the application attempts it. A matching preset is named
+in `preset`. Any other combination is `"custom"`. A different backend can
+report different available texture sizes. A session without this contract
+reports `quality: null`.
+
+| Preset | Shared shadow size | Sun cascades | Coverage scale | Filter | Mesh LOD bias | Weather | Local shadow sources |
+| --- | ---: | ---: | ---: | --- | ---: | --- | ---: |
+| Low (`low`) | 256 | 1 | 1 | Fast | 2 | Low | 0 |
+| Medium (`medium`) | 512 | 2 | 1 | Fast | 1.5 | Low | 2 |
+| High (`high`) | 768 | 3 | 0.85 | Soft | 1 | Authored | 4 |
+| Very High (`veryHigh`) | 1024 | 3 | 1 | Soft | 0.75 | High | 6 |
+| Ultra (`ultra`) | 1536 | 3 | 1.25 | Soft | 0.5 | High | 8 |
+
+- `shadowResolution` sets the square resolution of each depth layer. Sun, spot
+  and point charts share the array. A point shadow consumes six layers. For
+  budgeting, a layer is approximately four bytes per texel. Changing resolution
+  recreates the array and invalidates cached depth. Additional layers are
+  allocated on demand. A lower local budget changes source selection immediately.
+- `directionalCascades` chooses one to three charts. Their default orthographic
+  half extents are 16, 48 and 144 world units. `shadowDistanceScale` multiplies
+  these by 0.5 to 1.5. Actual coverage depends on light and camera direction.
+  Local shadow range comes from the authored light. Both controls leave ordinary
+  lighting and the gameplay light-query API intact.
+- `shadowFilter` chooses a four-comparison bilinear (`fast`) or sixteen-comparison
+  soft (`soft`) filter. It changes how shadow edges are sampled.
+- `meshLodBias` multiplies authored screen-space error tolerance in colour
+  passes. Values run from 0.5 for finer detail to 2 for coarser detail. A mesh
+  needs authored or cooked LODs. Materials, collisions, shadow caster selection
+  policy, and explicit per-object LOD opt-outs retain their authored behaviour.
+- `weather` leaves authored visual quality in place or selects `low` / `high`
+  for main views. High increases the cloud target resolution, ray steps and
+  visual precipitation budget. Secondary views retain their bounded policy.
+  A game can still turn off visual weather with `weather.quality = 0`. Weather
+  fields, physical forces and gameplay queries keep their authored behaviour.
+
+Fresh preferences and older preference files retain the previous renderer
+defaults. The standalone Linux default is 1024, three cascades, coverage scale
+1, Soft filtering, mesh bias 1, authored visual weather and eight local shadow
+sources. A saved legacy local budget is retained. `applyQuality("default")`
+restores those quality defaults live. It leaves window settings, the global
+shadow toggle, and game preferences intact. Call `settings.save()` after the
+request completes to persist the new configuration.
+
+Use the preset dictionary to populate a menu and the choices to constrain
+individual inputs. The game owns presentation. The
+[settings example](examples/graphics-quality.js) shows how a HUD event can
+request a preset or an individual setting and how a later `update()` can save it.
+
+Call `finishQualityChange` once per request after the pending value clears.
+Invalid values throw synchronously. A failed frame-boundary reallocation leaves
+the previous settings active and reports `qualityError`. Runtime shadow-array
+growth depends on the visible lights and available device memory. If allocation
+fails during view preparation, that view keeps direct lighting and skips shadow
+sampling. The error is reported and the renderer waits for a quality request
+before retrying the rejected allocation size. Finish pending quality changes
+before saving or switching backends.
+An in-process OpenGL/Vulkan switch carries the effective quality configuration
+over, including when the runtime recovers the old backend.
+
+### Other rendering controls
+
+| Area | Current engine boundary |
+| --- | --- |
+| Lighting and shadows | The global toggle and local source budget predate presets. The renderer now exposes shared depth size, directional coverage and filtering. Separate sun/local depth sizes would require separate arrays and sampling paths. Cache invalidation is automatic. |
+| Geometry and terrain | Existing cooked mesh LODs support the visual bias above. Terrain has a separate visual LOD for height pages alongside distinct cave and planet paths. There is no single qualified terrain control across those paths. Presets leave terrain residency, collision and authored scene visibility alone. |
+| Vegetation and texture filtering | Vegetation can be authored as ordinary scene meshes. There is no general decor-only density owner or game-wide material sampler policy. |
+| Particles and fluids | Current emitter budgets and grids can own gameplay state, including impacts and fluid coupling. Presets preserve that state. The water surface keeps its existing view-distance detail policy. |
+| Reflections and post-processing | Environment maps and scene exposure are authored controls. The renderer has no general quality ladder for dynamic reflections or post-processing. |
+| Render scale | Render targets exist for individual cameras. An independent main-view scale needs a qualified composition path that preserves native-resolution UI, depth copies, camera targets and presentation. Use display settings for window dimensions. |
 
 ## Backend selection and recovery
 

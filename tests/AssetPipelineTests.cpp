@@ -288,6 +288,22 @@ int main(int argc, char **argv) {
         "triangles");
   Check(near >= reduced && highResolution >= reduced,
         "closer and higher-resolution views never select less detail");
+  const auto originalQuality = r.Quality();
+  auto quality = originalQuality;
+  bool reducesTriangles = false;
+  bool monotonic = true;
+  for (const float distance : {10.f,20.f,40.f,80.f,160.f,320.f,640.f}) {
+    quality.meshLodBias = .5f;
+    Check(r.SetGraphicsQuality(quality,error),"apply finer game-facing mesh LOD bias");
+    const auto fine = draw(distance,1);
+    quality.meshLodBias = 2.f;
+    Check(r.SetGraphicsQuality(quality,error),"apply coarser game-facing mesh LOD bias");
+    const auto coarse = draw(distance,1);
+    monotonic &= coarse <= fine;
+    reducesTriangles |= coarse < fine;
+  }
+  Check(monotonic && reducesTriangles,"graphics quality selects fewer actual authored LOD triangles");
+  Check(r.SetGraphicsQuality(originalQuality,error),"restore authored graphics quality");
   r.SetMeshLodMultiplier(1);
   MeshData diagnostic;
   Check(r.ReadMeshForDiagnostics(handle, diagnostic) &&

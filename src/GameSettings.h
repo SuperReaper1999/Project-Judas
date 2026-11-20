@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <optional>
 #include <string>
+#include "render/GraphicsQuality.h"
 
 #include "../third_party/nlohmann/json.hpp"
 
@@ -47,7 +48,9 @@ private:
     bool m_backendOverride = false;
     bool m_desktop = false;
     std::optional<bool> m_vsync, m_shadows;
-    unsigned m_localShadowBudget = 8;
+    GraphicsQuality m_quality;
+    std::optional<GraphicsQuality> m_qualityRequest;
+    std::string m_qualityError;
     int m_fpsCap = 0;
     bool CanSwitchBackend() const;
     bool m_switchAllowed = false;

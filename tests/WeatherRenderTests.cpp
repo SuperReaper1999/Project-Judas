@@ -5,6 +5,7 @@
 #include "PerformanceProfiler.h"
 #include "ScreenshotWriter.h"
 #include "CameraProjection.h"
+#include "RuntimeWorld.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <algorithm>
 #include <chrono>
@@ -123,6 +124,35 @@ int main(int argc,char** argv){
  Frame(r,clouds,1,view);small();Frame(r,clouds,1,view);small();const auto allocations=r.WeatherStats().allocations;
  for(int i=0;i<8;++i){Frame(r,clouds,1,view);small();}
  Check(r.WeatherStats().allocations==allocations&&r.WeatherStats().cachedTargets==2,"alternating secondary/main sizes reuse a bounded two-slot cache without frame allocations");r.DestroyRenderTarget(target);
+ {
+  Scene scene;
+  auto& sky=scene.CreateObject("Quality fixture clouds");
+  sky.weather=WeatherSettings{};
+  sky.weather->profile=clouds.profile;
+  RuntimeWorld world;
+  if(!world.Build(scene,nullptr,error)){std::fprintf(stderr,"%s\n",error.c_str());return 1;}
+  const auto original=r.Quality();
+  auto quality=original;
+  auto drawQuality=[&]{
+   r.BeginFrame(Width,Height);
+   r.SetCamera(glm::lookAt(view.eye,view.eye+view.direction,{0,1,0}),view.projection);
+   world.PrepareWeather(r,view.absolute,0);
+   r.DrawWeather(false);
+   r.EndFrame();
+   return r.WeatherStats();
+  };
+  const auto authored=drawQuality();
+  quality.weather=GraphicsQuality::Weather::High;
+  Check(r.SetGraphicsQuality(quality,error),"apply visual weather quality through the renderer");
+  const auto detailed=drawQuality();
+  Check(authored.marchSteps==28&&detailed.marchSteps==44&&detailed.cloudWidth==2*authored.cloudWidth,
+        "game quality increases actual weather ray steps and target resolution");
+  world.weatherQuality=0;
+  Check(!drawQuality().enabled,"user quality honours the world's weather visual opt-out");
+  Check(world.SampleWeather(view.absolute).active && world.SimulationTimeSeconds()==0,
+        "visual weather quality leaves the authoritative field and simulation clock intact");
+  Check(r.SetGraphicsQuality(original,error),"restore authored visual weather policy");
+ }
  Frame(r,sunny,0,view);Check(Difference(off,Capture(r))<.01,"disabling weather restores the original renderer output");Check(glGetError()==GL_NO_ERROR,"weather depth copies, GL state, HDR and shader samplers produce no GL errors");
  std::ofstream measurements(out/"measurements.json");measurements<<"{\"correctness_only\":"<<(correctnessOnly?"true":"false")<<",\"width\":"<<Width<<",\"height\":"<<Height<<",\"boxes\":61,\"scenarios\":[";
  const char* labels[]={"off","sunny","cloudy","thunderstorm","tornado","blizzard"};bool comma=false;

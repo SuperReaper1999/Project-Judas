@@ -56,6 +56,11 @@ export default class {
                 this.state.phase = "live-apply";
             } else if (this.state.phase === "live-apply") {
                 require(state.fullscreen && !state.displayPreview,"Fullscreen was not confirmed");
+                settings.applyVideo({shadows: true});
+                settings.applyQuality("medium");
+                this.state.phase = "live-quality";
+            } else if (this.state.phase === "live-quality") {
+                require(state.quality.preset === "medium" && state.shadows, state.qualityError || "Quality did not apply before switch");
                 settings.switchBackend("vulkan");
                 require(settings.read().backendTransition === "pending" &&
                         settings.read().activeBackend === "opengl", "Queued candidate reported active early");
@@ -63,22 +68,37 @@ export default class {
             } else if (this.state.phase === "live-vulkan") {
                 require(state.activeBackend === "vulkan" && state.backendTransition === "completed" &&
                         state.fullscreen && this.continuity.value === 17, state.backendError || "Vulkan lost the script instance");
+                require(state.quality.preset === "medium", "Vulkan did not restore the selected quality");
                 this.continuity.value++;
+                settings.applyQuality("high");
+                this.state.phase = "live-vulkan-quality";
+            } else if (this.state.phase === "live-vulkan-quality") {
+                require(state.quality.preset === "high", state.qualityError || "Quality did not apply on Vulkan");
                 settings.switchBackend("opengl");
                 this.state.phase = "live-opengl";
             } else if (this.state.phase === "live-opengl") {
                 require(state.activeBackend === "opengl" && state.backendTransition === "completed" &&
                         state.fullscreen && this.continuity.value === 18, state.backendError || "OpenGL lost the script instance");
+                require(state.quality.preset === "high", "OpenGL did not restore the selected quality");
                 settings.switchBackend("vulkan");
                 this.state.phase = "live-fail";
             } else if (this.state.phase === "live-fail") {
                 require(state.activeBackend === "opengl" && state.backendTransition === "recovered" &&
                         state.backendError && state.fullscreen && this.continuity.value === 18, "Previous backend failed to recover");
+                require(state.quality.preset === "high", "Recovery lost the selected quality");
+                settings.applyVideo({shadows: false});
                 settings.previewDisplay({fullscreen: false, width: 800, height: 600});
                 this.state.phase = "live-windowed";
             } else if (this.state.phase === "live-windowed") {
                 require(!state.fullscreen && state.displayPreview, state.displayError || "Windowed preview did not open");
                 settings.confirmDisplay();
+                settings.applyQuality("default");
+                this.state.phase = "live-reset";
+            } else if (this.state.phase === "live-reset") {
+                require(state.quality.pending === null && state.quality.preset === "custom" &&
+                        state.quality.effective.shadowResolution === 1024 &&
+                        state.quality.effective.localShadowBudget === 8 &&
+                        !state.shadows && state.fpsCap === 30, "Quality reset changed unrelated preferences or missed defaults");
                 this.state.phase = "live-save";
             } else if (this.state.phase === "live-save") {
                 settings.save();
@@ -89,6 +109,9 @@ export default class {
         if (this.state.phase === "start") {
             if (game.committed) {
                 require(state.fpsCap === 30 && !state.shadows && state.localShadowBudget === 2, "Video restoration");
+                require(state.quality.preset === "custom" &&
+                        state.quality.effective.meshLodBias === (game.legacyQuality ? 1 : 1.25),
+                        "Saved custom quality or legacy defaults were lost");
                 audio.setGroup("master", game.master);
                 input.setBindings(game.bindings);
                 this.state.phase = "restored";
@@ -127,6 +150,21 @@ export default class {
             const patch = {fpsCap: 30, shadows: false, localShadowBudget: 2};
             if (!state.backendLocked) patch.backend = state.activeBackend;
             settings.applyVideo(patch);
+            require(state.quality.presets.ultra.shadowResolution === 1536, "Missing quality choices");
+            for (const invalid of ["custom", {shadowResolution: 640}, {directionalCascades: 0},
+                                   {meshLodBias: null}, {weather: "maximum"}, {renderScale: 2}]) {
+                let rejected = false;
+                try { settings.applyQuality(invalid); } catch (_) { rejected = true; }
+                require(rejected && settings.read().quality.pending === null, "Invalid quality changed pending settings");
+            }
+            settings.applyQuality("medium");
+            settings.applyQuality({meshLodBias: 1.25});
+            const queued = settings.read().quality;
+            require(queued.pending.shadowResolution === 512 && queued.pending.meshLodBias === 1.25 &&
+                    queued.effective.shadowResolution === 1024, "Quality patch did not queue at the frame boundary");
+            let earlySave = false;
+            try { settings.save(); } catch (_) { earlySave = true; }
+            require(earlySave, "Quality persisted before application");
             this.state.vsyncChanged = false;
             if (state.vsync !== null && !state.displayLocked && state.canDisableVSync !== false) {
                 try {
@@ -139,10 +177,14 @@ export default class {
                 }
             }
             settings.setGame({committed: true, master: {gain: 0.25, mute: true}, bindings: map});
-            this.state.phase = state.resolutions.length ? "display" : "save";
+            this.state.phase = "quality-applied";
             return;
         }
-        if (this.state.phase === "display") {
+        if (this.state.phase === "quality-applied") {
+            require(state.quality.pending === null && state.quality.preset === "custom" &&
+                    state.quality.effective.meshLodBias === 1.25, state.qualityError || "Custom quality did not apply");
+            this.state.phase = state.resolutions.length ? "display" : "save";
+        } else if (this.state.phase === "display") {
             if (this.state.vsyncChanged) require(state.vsync === this.state.vsyncTarget, "Presentation did not adopt the accepted swap interval");
             if (state.displayLocked) { this.state.phase = "save"; return; }
             require(state.resolutions.length > 0, "No reported display modes");
@@ -232,16 +274,19 @@ int RunChild(const std::string& project, const std::string& terminalPhase) {
     }
     unsigned lastShadowPasses = 0;
     std::optional<double> transitionSimulationTime;
+    std::optional<unsigned> transitionShadowResolution;
 
     using Clock = std::chrono::steady_clock;
     Clock::time_point lastFrame;
     auto minimumPacedFrame = Clock::duration::max();
-    control.beforeFrame = [&](EngineHost&, RuntimeWorld& world, InteractivePlay&) {
+    control.beforeFrame = [&](EngineHost& host, RuntimeWorld& world, InteractivePlay&) {
         if (transitionSimulationTime) {
             Require(world.UI().Find("live-hud") == hud && world.CameraTexture(2).IsValid(),
                     "HUD ownership or camera target was lost on a rebuilt backend");
             Require(world.SimulationTimeSeconds() == *transitionSimulationTime,
                     "Simulation advanced during graphics transition");
+            Require(host.GetRenderer().Quality().shadowResolution == *transitionShadowResolution,
+                    "Rebuilt renderer lost the selected shadow resolution");
             transitionSimulationTime.reset();
         }
         const auto now = Clock::now();
@@ -261,6 +306,7 @@ int RunChild(const std::string& project, const std::string& terminalPhase) {
             const auto phase = state.at("phase").get<std::string>();
             if (phase == "live-vulkan" || phase == "live-opengl" || phase == "live-fail") {
                 transitionSimulationTime = world.SimulationTimeSeconds();
+                transitionShadowResolution = host.GetRenderer().Quality().shadowResolution;
                 if (phase == "live-fail") SDL_setenv("JUDAS_VULKAN_DEVICE","impossible-fixture-device-name",1);
             }
             if (phase != terminalPhase || frames < 3) continue;
@@ -328,6 +374,14 @@ int main(int argc, char** argv) try {
     run("restored");
     const auto settingsRoot = path / "user/Judas/settings";
     const auto preferences = fs::directory_iterator(settingsRoot)->path() / "preferences.json";
+    Json persisted;
+    { std::ifstream in(preferences); in >> persisted; }
+    auto legacy = persisted;
+    legacy["video"].erase("quality");
+    legacy["game"]["legacyQuality"] = true;
+    std::ofstream(preferences) << legacy.dump();
+    run("restored");
+    std::ofstream(preferences) << persisted.dump();
     const auto* launchBackend = std::getenv("JUDAS_GRAPHICS");
     if (launchBackend && std::string(launchBackend) == "vulkan") {
         Json saved;

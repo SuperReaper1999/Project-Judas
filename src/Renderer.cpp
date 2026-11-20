@@ -161,17 +161,6 @@ MeshData GenerateUnitSphereMeshData(int latitudeSegments, int longitudeSegments)
 constexpr int kSphereLatitudeSegments = 16;
 constexpr int kSphereLongitudeSegments = 24;
 
-// Milestone 15: shadow-map resolution, shared by Init (texture creation)
-// and BeginShadowPass (viewport sizing) — see docs/ARCHITECTURE.md,
-// "Milestone 15," for why 1024x1024 was judged sufficient (and not
-// excessive) for this demo's world scale, for all three shadow slots
-// alike (no separate resolution per light).
-#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
-constexpr int kShadowMapResolution = kDefaultShadowResolution;
-#else
-constexpr int kShadowMapResolution = kDefaultShadowResolution;
-#endif
-
 // Milestone 13: the UI overlay's own tiny shader — deliberately separate
 // from kVertexShaderSource/kFragmentShaderSource above rather than a
 // reused/branching variant of them. The 3D shader's whole shape (a
@@ -220,6 +209,7 @@ bool Renderer::CompileShader(GLenum type, const char* source, GLuint& result) co
 bool Renderer::Init() {
     m_render->lightStorageReady=false;m_render->lightStorageUnavailable=false;
     m_shadowContentValid.fill(false);
+    m_rejectedShadowLayers=0;
     m_render->shadowCache.Clear();
     m_capabilities = QueryGraphicsCapabilities();
     const char* lightPolicy=std::getenv("JUDAS_LIGHT_LISTS");
@@ -352,7 +342,7 @@ bool Renderer::Init() {
     // GL_CLAMP_TO_BORDER with a border color) keeps this to GL surface
     // this engine already has — see ComputeShadowFactor's own "outside
     // the shadow map's coverage counts as fully lit" comment.
-    ReserveShadowLayers(1);
+    if (!ReserveShadowLayers(1)) return false;
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -667,7 +657,7 @@ void Renderer::BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProject
         std::fprintf(stderr,"Shadow chart rejected: matrix must be finite\n");return;
     }
     m_render->shadowCache.Forget(unsigned(shadowSlot));
-    ReserveShadowLayers(unsigned(shadowSlot+1));
+    if (!ReserveShadowLayers(unsigned(shadowSlot+1))) return;
     glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&m_shadowSavedFramebuffer);glGetIntegerv(GL_VIEWPORT,&m_shadowSavedViewport.x);
     m_profileShadow=BeginProfilePass("Shadow",std::uint64_t(shadowSlot));
     m_shadowLightSpaceMatrix[shadowSlot] = lightViewProjection;
@@ -682,12 +672,12 @@ void Renderer::BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProject
         // inspects a shadow pass through the graphics API (gates read its depth
         // mid-pass). Drawing does not depend on this binding.
         glBindFramebuffer(GL_FRAMEBUFFER, m_shadowFbo[shadowSlot]);
-        glViewport(0, 0, kShadowMapResolution, kShadowMapResolution);
+        glViewport(0, 0, m_graphicsQuality.shadowResolution, m_graphicsQuality.shadowResolution);
         NativeBeginShadowPass(shadowSlot,lightViewProjection);return;
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_shadowFbo[shadowSlot]);
-    glViewport(0, 0, kShadowMapResolution, kShadowMapResolution);
+    glViewport(0, 0, m_graphicsQuality.shadowResolution, m_graphicsQuality.shadowResolution);
     glClear(GL_DEPTH_BUFFER_BIT);
     glUseProgram(m_shadowShaderProgram);
     glUniformMatrix4fv(m_uShadowLightViewProj, 1, GL_FALSE, glm::value_ptr(lightViewProjection));
@@ -1114,7 +1104,8 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
             float distance=std::max(.001f,glm::length(centre-glm::vec3(glm::inverse(m_view)[3]))-glm::length(gpuMesh->bounds.max-gpuMesh->bounds.min)*.5f*maxScale);
             float projected=maxScale*float(viewport[3])*std::abs(m_projection[1][1])*.5f;
             if(std::abs(m_projection[3][3])<.5f)projected/=distance;
-            for(unsigned i=1;i<gpuMesh->lods.size();++i)if(gpuMesh->lods[i].error*projected<=gpuMesh->lodPixels*m_meshLodMultiplier)lod=i;
+            const float bias = m_shadowPassActive ? 1.f : m_graphicsQuality.meshLodBias;
+            for(unsigned i=1;i<gpuMesh->lods.size();++i)if(gpuMesh->lods[i].error*projected<=gpuMesh->lodPixels*m_meshLodMultiplier*bias)lod=i;
         }
     }
     const auto& primitives=lod?gpuMesh->lods[lod].primitives:gpuMesh->primitives;

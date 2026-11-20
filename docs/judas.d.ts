@@ -1289,6 +1289,31 @@ declare module "judas" {
     { type: "number"; default?: number } | { type: "boolean"; default?: boolean } |
     { type: "string"; default?: string } | { type: "entity"; default?: {entity:EntityId} | null }>;
   export type GraphicsBackend = "opengl" | "vulkan";
+  export type GraphicsPreset = "low" | "medium" | "high" | "veryHigh" | "ultra";
+  export interface GraphicsQuality {
+    shadowResolution: 256 | 512 | 768 | 1024 | 1536;
+    directionalCascades: 1 | 2 | 3;
+    shadowDistanceScale: number;
+    shadowFilter: "fast" | "soft";
+    meshLodBias: number;
+    weather: "authored" | "low" | "high";
+    localShadowBudget: number;
+  }
+  export interface GraphicsQualityState {
+    preset: GraphicsPreset | "custom";
+    effective: GraphicsQuality;
+    pending: GraphicsQuality | null;
+    presets: Partial<Record<GraphicsPreset, GraphicsQuality>>;
+    choices: {
+      shadowResolution: GraphicsQuality["shadowResolution"][];
+      directionalCascades: GraphicsQuality["directionalCascades"][];
+      shadowDistanceScale: {min: number; max: number};
+      shadowFilter: GraphicsQuality["shadowFilter"][];
+      meshLodBias: {min: number; max: number};
+      weather: GraphicsQuality["weather"][];
+      localShadowBudget: {min: number; max: number};
+    };
+  }
   export type DisplayPreview = {fullscreen: true} | {fullscreen: false; width: number; height: number};
   export interface VideoSettingsPatch {
     vsync?: boolean;
@@ -1303,6 +1328,8 @@ declare module "judas" {
     displayModes: ("windowed" | "borderless")[];
     vsync: boolean | null; vsyncRequested: boolean | null; canDisableVSync: boolean | null;
     fpsCap: number; shadows: boolean; localShadowBudget: number;
+    quality: GraphicsQualityState | null;
+    qualityError: string;
     activeBackend: GraphicsBackend; requestedBackend: GraphicsBackend;
     backends: {name: GraphicsBackend; status: "active" | "candidate" | "failed"}[];
     restartRequired: boolean;
@@ -1316,6 +1343,8 @@ declare module "judas" {
   export const settings: {
     read(): GameSettingsState | null;
     applyVideo(patch: VideoSettingsPatch): boolean;
+    /** Queues a live preset, default reset or partial quality update at the end of the frame. */
+    applyQuality(quality: GraphicsPreset | "default" | Partial<GraphicsQuality>): boolean;
     switchBackend(backend: GraphicsBackend): boolean;
     previewDisplay(display: DisplayPreview): boolean;
     confirmDisplay(): boolean;

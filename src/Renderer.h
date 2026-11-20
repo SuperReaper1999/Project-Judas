@@ -25,6 +25,7 @@
 #include "VisualParticles.h"
 #include "GraphicsApi.h"
 #include "render/GraphicsCapabilities.h"
+#include "render/GraphicsQuality.h"
 #include "render/MaterialUniformBatch.h"
 
 namespace JudasRender {class ShadowPassCache;struct RendererInfrastructure;struct MeshInstance;}
@@ -197,9 +198,13 @@ public:
     void BeginMeshBatch();
     void EndMeshBatch();
     void SetBatchingEnabled(bool value){m_batchingEnabled=value;}
-    void SetShadowBudget(unsigned n){m_shadowBudget=std::min(n,8u);}
-    unsigned ShadowBudget()const{return m_shadowBudget;}
-    void ReserveShadowLayers(unsigned layers);
+    void SetShadowBudget(unsigned n){m_graphicsQuality.localShadowBudget=std::min(n,8u);}
+    unsigned ShadowBudget()const{return m_graphicsQuality.localShadowBudget;}
+    const GraphicsQuality& Quality() const { return m_graphicsQuality; }
+    bool SupportsGraphicsQuality() const { return !m_nativeMesh; }
+    bool ShadowStorageLimited() const { return m_rejectedShadowLayers != 0; }
+    bool SetGraphicsQuality(const GraphicsQuality&, std::string& error);
+    bool ReserveShadowLayers(unsigned layers);
     void SetDirectionalCascadeCount(unsigned);
     JudasRender::ShadowPassCache& ShadowCache();
     std::uint64_t ShadowResourceRevision()const{return m_shadowResourceRevision;}
@@ -591,7 +596,10 @@ private:
 
     RenderLightGrid m_lightGrid;
     GLuint m_lightTexture=0,m_instanceBuffer=0,m_shadowArray=0,m_pointShadowView=0;
-    unsigned m_lightTextureRows=0,m_shadowBudget=8,m_shadowLayers=0;
+    bool AllocateShadowLayers(unsigned layers, unsigned resolution, bool preserve);
+    GraphicsQuality m_graphicsQuality;
+    unsigned m_lightTextureRows=0,m_shadowLayers=0;
+    unsigned m_rejectedShadowLayers=0;
     GLint m_uInstanced=-1,m_uShadowInstanced=-1;
     bool m_batchingEnabled=true,m_collectingBatch=false,m_submittingBatch=false;
     using Instance=JudasRender::MeshInstance;

@@ -2005,6 +2005,11 @@
       "maximum": 2
     },
     {
+      "symbol": "settings.applyQuality",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
       "symbol": "settings.applyVideo",
       "minimum": 1,
       "maximum": 1
@@ -7437,6 +7442,17 @@
       "reference": "docs/judasjs/settings.md"
     },
     {
+      "symbol": "settings.applyQuality",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "settingsApplyQuality"
+      ],
+      "type": "docs/judas.d.ts:settings.applyQuality",
+      "reference": "docs/judasjs/settings.md"
+    },
+    {
       "symbol": "settings.applyVideo",
       "kinds": [
         "call"
@@ -8259,6 +8275,7 @@
     "setTransform",
     "setVelocity",
     "setView",
+    "settingsApplyQuality",
     "settingsApplyVideo",
     "settingsConfirmDisplay",
     "settingsDisplay",
