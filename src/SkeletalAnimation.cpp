@@ -3,6 +3,7 @@
 #include "SkeletalAnimation.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <stdexcept>
 SkeletalPose SampleClip(const Skeleton& skeleton,const AnimationClip& clip,float time){
@@ -23,12 +24,35 @@ SkeletalPose SampleClip(const Skeleton& skeleton,const AnimationClip& clip,float
  }
  return pose;
 }
+namespace {
+glm::mat4 LocalJointMatrix(const Skeleton& skeleton,const SkeletalPose& pose,int joint) {
+ const auto& local=pose.local[joint];
+ const auto trs=glm::translate(glm::mat4(1),local.translation)*glm::mat4_cast(local.rotation)*glm::scale(glm::mat4(1),local.scale);
+ return skeleton.affine.empty()?trs:skeleton.affine.at(joint)*trs;
+}
+}
+
 std::vector<glm::mat4> ResolveJointMatrices(const Skeleton& s,const SkeletalPose& pose){
  JUDAS_PROFILE_SCOPE("Pose skin matrices");
  if(pose.local.size()!=s.parents.size())throw std::invalid_argument("pose does not match skeleton");
  std::vector<glm::mat4> global(pose.local.size());
- for(int i:s.order){const auto& p=pose.local[i];auto local=glm::translate(glm::mat4(1),p.translation)*glm::mat4_cast(p.rotation)*glm::scale(glm::mat4(1),p.scale);if(!s.affine.empty())local=s.affine.at(i)*local;global[i]=s.parents[i]<0?local:global[s.parents[i]]*local;}
+ for(int i:s.order){const auto local=LocalJointMatrix(s,pose,i);global[i]=s.parents[i]<0?local:global[s.parents[i]]*local;}
  return global;
+}
+glm::mat4 ResolveJointMatrix(const Skeleton& skeleton,const SkeletalPose& pose,int joint) {
+ if(pose.local.size()!=skeleton.parents.size()||joint<0||size_t(joint)>=pose.local.size())
+  throw std::invalid_argument("joint does not match pose and skeleton");
+ std::array<int,kModelNodeLimit> ancestors;
+ size_t count=0;
+ for(int node=joint;node>=0;node=skeleton.parents[node]){
+  if(count>=pose.local.size()||count>=ancestors.size()||size_t(node)>=pose.local.size())
+   throw std::invalid_argument("invalid skeleton ancestor chain");
+  ancestors[count++]=node;
+ }
+ // Keep the same root-to-leaf multiplication order as the full pose.
+ auto matrix=LocalJointMatrix(skeleton,pose,ancestors[--count]);
+ while(count)matrix=matrix*LocalJointMatrix(skeleton,pose,ancestors[--count]);
+ return matrix;
 }
 std::vector<glm::mat4> ResolveSkinMatricesFromGlobals(const Skeleton& s,const std::vector<glm::mat4>& global){
  if(global.size()!=s.parents.size())throw std::invalid_argument("global matrices do not match skeleton");

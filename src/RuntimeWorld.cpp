@@ -462,7 +462,9 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
             m_basicWaterOwners.insert(o.id);
         }
         if(o.body&&m_assets){std::vector<std::string> ids;if(!o.body->collisionAsset.empty())ids.push_back(o.body->collisionAsset);for(auto& c:o.body->compoundBoxes)if(!c.assetId.empty())ids.push_back(c.assetId);for(auto& id:ids){m_assets->AddRef(id);m_referencedAssets.push_back(id);m_assets->RequestCollision(id,JobPriority::High);}}
-        m_hasNavigation|=o.navigationSurface.has_value()||o.navigationAgent.has_value()||o.navigationObstacle.has_value()||o.navigationLink.has_value()||o.navigationModifier.has_value();
+        const bool ownsNavigation=o.navigationSurface||o.navigationAgent||o.navigationObstacle||o.navigationLink;
+        if(ownsNavigation)m_navigationOwners.insert(o.id);
+        m_hasNavigation|=ownsNavigation||o.navigationModifier.has_value();
         if(o.hairGroom){
             if(!JudasHair::Validate(*o.hairGroom,outError))return fail(o,outError);
             m_hair.try_emplace(o.id);
@@ -1020,6 +1022,7 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     ReleaseRenderResources(id);
     m_basicWaterOwners.erase(id);
     RemoveHair(id);
+    m_navigationOwners.erase(id);
     e->lifecycle = EntityLifecycle::Destroyed;
     if (m_cameraRenderer) for (auto& camera : m_renderCameras) {
         if (camera.id == id) { m_cameraRenderer->DestroyRenderTarget(camera.target); camera.target = {}; }
@@ -1249,7 +1252,7 @@ SceneTransform RuntimeWorld::ResolveTransform(SceneObjectId id,const SceneTransf
         const auto& socket=*d->socket;auto it=m_animationInstances.find(socket.target);
         if(it!=m_animationInstances.end()&&it->second.asset){const auto& s=it->second.asset->skeleton;int n=FindSkeletonJoint(s,socket.joint);
             if(n>=0&&size_t(n)<it->second.finalPose.local.size())if(const auto* target=RuntimeDefinition(socket.target)){
-                auto root=ResolveTransform(socket.target,target->transform,alpha,remotePresentation);auto model=glm::translate(glm::mat4(1),root.position)*glm::mat4_cast(root.rotation)*glm::scale(glm::mat4(1),root.scale);auto matrix=model*PoseGlobalMatrices(s,PresentedAnimationPose(socket.target,alpha))[n];JointTransform joint;std::string error;
+                auto root=ResolveTransform(socket.target,target->transform,alpha,remotePresentation);auto model=glm::translate(glm::mat4(1),root.position)*glm::mat4_cast(root.rotation)*glm::scale(glm::mat4(1),root.scale);auto matrix=model*ResolveJointMatrix(s,PresentedAnimationPose(socket.target,alpha),n);JointTransform joint;std::string error;
                 if(DecomposeRigidPose(matrix,joint,error)){SceneTransform t;t.position=joint.translation+joint.rotation*(joint.scale*socket.offset.position);t.rotation=glm::normalize(joint.rotation*socket.offset.rotation);t.scale=joint.scale*socket.offset.scale;return t;}
             }
         }
@@ -1361,7 +1364,7 @@ void RuntimeWorld::Destroy() {
     ClearCharacters();
     m_spriteAnimationOwners.clear();m_spriteSteps.clear();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();m_animationOwners.clear();
     m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();m_wheels.clear();m_wheelOwners.clear();m_wheelParticipants.clear();m_powertrains.clear();m_powertrainOwners.clear();m_powertrainParticipants.clear();
-    m_runtimeTerrain.reset();m_basicWaterOwners.clear();m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;m_hasPlanarPhysics=false;
+    m_runtimeTerrain.reset();m_basicWaterOwners.clear();m_navigation.reset();m_navigationOwners.clear();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;m_hasPlanarPhysics=false;
     EndAudio();
     ShutdownParticleEmitter(0);
     m_particleEmitters.clear();

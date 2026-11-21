@@ -420,6 +420,7 @@ public:
     bool CaptureRuntimeTerrain(EntityId id,std::string& data,std::string& error)const{data.clear();return !m_runtimeTerrain||m_runtimeTerrain->Capture(id,data,error);}
     NavigationSystem& Navigation(){return *m_navigation;}
     const NavigationSystem& Navigation()const{return *m_navigation;}
+    const std::set<EntityId>& NavigationOwners()const{return m_navigationOwners;}
     bool SetNavigationEnabled(EntityId id,const std::string& kind,bool enabled);
     bool SetNavigationObstacleSettings(EntityId,const NavigationObstacleSettings&,std::string& error);
     bool SetNavigationLinkSettings(EntityId,const NavigationLinkSettings&);
@@ -715,6 +716,7 @@ private:
     std::unique_ptr<LocalPlayers> m_players;
     std::unique_ptr<LocalizationSession> m_localization;
     std::map<EntityId,SceneObject> m_scriptDefinitions;
+    std::set<EntityId> m_navigationOwners;
     std::set<EntityId> m_characterOwners;
     std::set<EntityId> m_scriptOwners; // Ordered membership; inert scenery is not copied into callback phases.
     std::vector<EntityRecord> m_extraEntities; // normal non-dynamic runtime components

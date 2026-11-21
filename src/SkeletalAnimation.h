@@ -27,6 +27,7 @@ struct AnimationClip {std::string name;float duration=0;std::vector<AnimationTra
 struct SkeletalAsset {Skeleton skeleton;std::vector<AnimationClip> clips;};
 SkeletalPose SampleClip(const Skeleton&,const AnimationClip&,float time);
 std::vector<glm::mat4> ResolveJointMatrices(const Skeleton&,const SkeletalPose&);
+glm::mat4 ResolveJointMatrix(const Skeleton&,const SkeletalPose&,int joint);
 std::vector<glm::mat4> ResolveSkinMatrices(const Skeleton&,const SkeletalPose&);
 // Reuse one validated hierarchy evaluation for skinning and joint-motion data.
 std::vector<glm::mat4> ResolveSkinMatricesFromGlobals(const Skeleton&,const std::vector<glm::mat4>&);

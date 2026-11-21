@@ -218,7 +218,7 @@ bool RuntimeWorld::JointPose(EntityId id,const std::string& key,const std::strin
  auto presented=PresentedAnimationPose(id,alpha);
  if(space=="local"){const auto& t=presented.local[n];out={t.translation,t.rotation,t.scale};return true;}
  if(space!="model"&&space!="world")return false;
- auto matrix=PoseGlobalMatrices(s,presented)[n];
+ auto matrix=ResolveJointMatrix(s,presented,n);
  if(space=="world"){auto* d=RuntimeDefinition(id);auto t=PresentedTransform(id,d->transform,alpha);matrix=glm::translate(glm::mat4(1),t.position)*glm::mat4_cast(t.rotation)*glm::scale(glm::mat4(1),t.scale)*matrix;}
  JointTransform t;std::string error;if(!DecomposeRigidPose(matrix,t,error))return false;out={t.translation,t.rotation,t.scale};return true;
 }

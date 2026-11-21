@@ -76,7 +76,15 @@ struct Surface {
  struct Obstacle{dtObstacleRef ref=0;SceneTransform pose;NavigationObstacleSettings settings;SceneTransform frame;};std::map<SceneObjectId,Obstacle> obstacles;
  ~Surface(){dtFreeTileCache(cache);dtFreeNavMeshQuery(query);dtFreeNavMesh(mesh);}
  glm::vec3 local(glm::vec3 p)const{return glm::inverse(frame.rotation)*(p-frame.position);}glm::vec3 world(glm::vec3 p)const{return frame.position+frame.rotation*p;}
- struct CarveBounds {glm::vec3 min,max;};
+ struct CarveBounds {
+    glm::vec3 min,max;
+    bool operator==(const CarveBounds& other)const{return min==other.min&&max==other.max;}
+ };
+ enum class Footprint {Outside, Fits, TooManyLayers};
+ struct FootprintCheck {CarveBounds bounds;Footprint result;};
+ // Compressed layers are immutable for the lifetime of a Surface. A full
+ // Detour queue or obstacle pool can leave the same footprint pending.
+ std::map<SceneObjectId,FootprintCheck> pendingFootprints;
  CarveBounds obstacleBounds(const SceneTransform& pose,const NavigationObstacleSettings& settings)const{
     const auto center=local(pose.position);
     if(settings.cylinder){
@@ -96,7 +104,7 @@ struct Surface {
     }
     return {center-extent,center+extent};
  }
- bool accepts(const CarveBounds& bounds)const{
+ Footprint checkFootprint(const CarveBounds& bounds)const{
     // Detour's queryTiles silently truncates at its supplied output capacity.
     // Count actual compressed layers with the same tight bounds instead.
     unsigned count=0;
@@ -106,9 +114,17 @@ struct Surface {
         float minimum[3],maximum[3];
         cache->calcTightTileBounds(tile->header,minimum,maximum);
         if(dtOverlapBounds(&bounds.min.x,&bounds.max.x,minimum,maximum)&&++count>DT_MAX_TOUCHED_TILES)
-            return false;
+            return Footprint::TooManyLayers;
     }
-    return true;
+    return count?Footprint::Fits:Footprint::Outside;
+ }
+ Footprint pendingFootprint(SceneObjectId id,const CarveBounds& bounds){
+    const auto previous=pendingFootprints.find(id);
+    if(previous!=pendingFootprints.end()&&previous->second.bounds==bounds)
+        return previous->second.result;
+    const auto result=checkFootprint(bounds);
+    pendingFootprints.insert_or_assign(id,FootprintCheck{bounds,result});
+    return result;
  }
  bool nearest(glm::vec3 point,float range,const Filter& f,dtPolyRef& ref,glm::vec3& result)const{glm::vec3 p=local(point),ext(range);return dtStatusSucceed(query->findNearestPoly(&p.x,&ext.x,&f,&ref,&result.x))&&ref;}
  NavigationPath path(glm::vec3 start,glm::vec3 end,const NavigationFilter& options)const{NavigationPath out;Filter f(options);dtPolyRef a=0,b=0;glm::vec3 p,q;if(!nearest(start,2,f,a,p)||!nearest(end,2,f,b,q))return out;dtPolyRef corridor[512];int n=0;auto status=query->findPath(a,b,&p.x,&q.x,&f,corridor,&n,512);if(dtStatusFailed(status)||!n)return out;out.status=(corridor[n-1]==b&&!dtStatusDetail(status,DT_BUFFER_TOO_SMALL))?NavigationPath::Status::Complete:NavigationPath::Status::Partial;if(corridor[n-1]!=b)query->closestPointOnPoly(corridor[n-1],&q.x,&q.x,nullptr);float points[512*3];unsigned char flags[512];dtPolyRef refs[512];int count=0;auto straight=query->findStraightPath(&p.x,&q.x,corridor,n,points,flags,refs,&count,512,DT_STRAIGHTPATH_ALL_CROSSINGS);if(dtStatusFailed(straight))return {};if(dtStatusDetail(straight,DT_BUFFER_TOO_SMALL))out.status=NavigationPath::Status::Partial;for(int i=0;i<count;++i){NavigationCorner c;c.position=world(glm::vec3(points[i*3],points[i*3+1],points[i*3+2]));if(i){float distance=glm::distance(out.corners.back().position,c.position);out.distance+=distance;const dtMeshTile* tile=nullptr;const dtPoly* poly=nullptr;out.cost+=distance*(refs[i-1]&&dtStatusSucceed(mesh->getTileAndPolyByRef(refs[i-1],&tile,&poly))?f.getAreaCost(poly->getArea()):1);}out.corners.push_back(c);}for(int i=0;i<n;++i){const dtMeshTile* t;const dtPoly* poly;if(dtStatusSucceed(mesh->getTileAndPolyByRef(corridor[i],&t,&poly))){unsigned area=poly->getArea()-1;if(std::find(out.areas.begin(),out.areas.end(),area)==out.areas.end())out.areas.push_back(area);}}return out;}
@@ -246,7 +262,7 @@ bool NavigationSystem::CompleteLink(SceneObjectId id){auto a=Agent(id);if(!a||!a
 bool NavigationSystem::CanCarveObstacle(const SceneTransform& pose,const NavigationObstacleSettings& settings)const{
     if(!settings.enabled)return true;
     for(const auto& entry:m->surfaces)
-        if(!entry.second->accepts(entry.second->obstacleBounds(pose,settings)))return false;
+        if(entry.second->checkFootprint(entry.second->obstacleBounds(pose,settings))==Surface::Footprint::TooManyLayers)return false;
     return true;
 }
 
@@ -278,11 +294,11 @@ void NavigationSystem::PrepareStartup(RuntimeWorld& world) {
 void NavigationSystem::Update(RuntimeWorld& world,float dt){
     JUDAS_PROFILE_SCOPE("Navigation update");
     std::vector<const SceneObject*> objects;
-    for (auto id : world.DefinitionIds()) {
-        const auto* o = world.RuntimeDefinition(id);
-        if (o && (o->navigationSurface || o->navigationAgent || o->navigationLink || o->navigationObstacle))
-            objects.push_back(o);
-    }
+    objects.reserve(world.NavigationOwners().size());
+    // Owner membership survives enable/disable and region hiding. Resolve the
+    // definition at the tick boundary to preserve publication and ID order.
+    for (auto id : world.NavigationOwners())
+        if (const auto* o = world.RuntimeDefinition(id)) objects.push_back(o);
     // A bake needs all its source geometry. Routine agent and obstacle updates
     // only read the live navigation definitions, in the same entity order.
     std::optional<Scene> geometry;
@@ -319,7 +335,8 @@ void NavigationSystem::Update(RuntimeWorld& world,float dt){
  for(auto it=m->links.begin();it!=m->links.end();)if(!liveLinks.count(it->first)){it=m->links.erase(it);++m->revision;}else ++it;
  JUDAS_PROFILE_COUNTER("Navigation agents",double(m->agents.size()),ProfileCounterMode::Latest);
  for(auto& [id,s]:m->surfaces){JUDAS_PROFILE_SCOPE("Navigation obstacles and tile cache"); JUDAS_PROFILE_COUNTER("Navigation obstacle batches",1,ProfileCounterMode::Sum);std::set<SceneObjectId> present;for(const auto* object:objects)if(const auto& o=*object;o.navigationObstacle&&o.navigationObstacle->enabled){present.insert(o.id);auto p=o.transform;EntityPhysicalState state;if(world.GetEntityState(o.id,state)){p.position=state.position;p.rotation=state.rotation;}auto settings=*o.navigationObstacle;auto it=s->obstacles.find(o.id);if(it!=s->obstacles.end()&&it->second.frame.position==s->frame.position&&it->second.frame.rotation==s->frame.rotation&&glm::distance(p.position,it->second.pose.position)<settings.updateDistance&&std::abs(glm::dot(p.rotation,it->second.pose.rotation))>.9999f&&it->second.settings.enabled==settings.enabled&&it->second.settings.cylinder==settings.cylinder&&it->second.settings.halfExtents==settings.halfExtents&&it->second.settings.radius==settings.radius&&it->second.settings.height==settings.height)continue;const auto bounds=s->obstacleBounds(p,settings);
-   if(!s->accepts(bounds)){
+   const auto footprint=s->pendingFootprint(o.id,bounds);
+   if(footprint==Surface::Footprint::TooManyLayers){
        m->errors[o.id]="navigation obstacle exceeds Detour's eight tile layers";
        continue;
    }
@@ -327,6 +344,10 @@ void NavigationSystem::Update(RuntimeWorld& world,float dt){
        if(dtStatusFailed(s->cache->removeObstacle(it->second.ref)))continue;
        s->obstacles.erase(it);
    }
+   // Detour entries with no touched tiles reserve a pool slot and can wait
+   // indefinitely for a tile update to retire. Outside obstacles only need
+   // their checked bounds so they can enter normally when moved onto tiles.
+   if(footprint==Surface::Footprint::Outside)continue;
    dtObstacleRef ref=0;
    dtStatus status;
    if(settings.cylinder){
@@ -334,8 +355,10 @@ void NavigationSystem::Update(RuntimeWorld& world,float dt){
        base.y=bounds.min.y;
        status=s->cache->addObstacle(&base.x,settings.radius,settings.height,&ref);
    }else status=s->cache->addBoxObstacle(&bounds.min.x,&bounds.max.x,&ref);
-   if(dtStatusSucceed(status)){s->obstacles[o.id]={ref,p,settings,s->frame};++m->revision;}else m->errors[o.id]="tile cache obstacle queue/capacity exceeded";}
+   if(dtStatusSucceed(status)){s->obstacles[o.id]={ref,p,settings,s->frame};s->pendingFootprints.erase(o.id);++m->revision;}else m->errors[o.id]="tile cache obstacle queue/capacity exceeded";}
   for(auto it=s->obstacles.begin();it!=s->obstacles.end();)if(!present.count(it->first)&&dtStatusSucceed(s->cache->removeObstacle(it->second.ref))){it=s->obstacles.erase(it);++m->revision;}else ++it;
+  for(auto it=s->pendingFootprints.begin();it!=s->pendingFootprints.end();)
+      if(!present.count(it->first))it=s->pendingFootprints.erase(it);else ++it;
   bool ready=false;auto status=s->cache->update(dt,s->mesh,&ready);if(dtStatusFailed(status))m->errors[id]="tile cache update failed";if(!ready)m->pending.insert(id);else if(m->pending.erase(id))++m->revision;
  }
  for(auto it=m->pending.begin();it!=m->pending.end();){

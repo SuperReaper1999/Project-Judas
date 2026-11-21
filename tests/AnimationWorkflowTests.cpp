@@ -67,6 +67,26 @@ int main(){namespace fs=std::filesystem;std::string error;bool overflow=false;
  // each result with the former two independent hierarchy evaluations, checking
  // raw float components rather than a loose visual tolerance.
  {
+  Skeleton skeleton;
+  skeleton.parents={2,2,-1,0};
+  skeleton.order={2,0,1,3};
+  skeleton.affine.assign(4,glm::mat4(1));
+  skeleton.affine[2]=glm::scale(glm::mat4(1),glm::vec3(.25f));
+  SkeletalPose pose;
+  pose.local.resize(4);
+  pose.local[0].translation={1.f,.25f,0.f};
+  pose.local[1].translation={9.f,0.f,0.f};
+  pose.local[2].rotation=glm::angleAxis(.67f,glm::vec3(0,1,0));
+  pose.local[3].rotation=glm::angleAxis(-.42f,glm::vec3(1,0,0));
+  const auto full=ResolveJointMatrices(skeleton,pose);
+  bool identical=true;
+  for(int joint:skeleton.order){
+   const auto single=ResolveJointMatrix(skeleton,pose,joint);
+   identical&=std::memcmp(&single[0][0],&full[joint][0][0],sizeof(glm::mat4))==0;
+  }
+  Check(identical,"individual joints match the full pose for branching, reordered affine skeletons");
+ }
+ {
   Scene crowd;auto definition=*scene.Find(10);definition.characterMotor.reset();definition.scripts.clear();
   for(int i=0;i<32;++i){auto copy=definition;copy.id=2000+i;copy.animation->clip="Walk";crowd.InsertObject(copy);}
   {

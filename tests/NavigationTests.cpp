@@ -42,6 +42,36 @@ int main(){std::string error;auto scene=fixture();auto* source=scene.Find(2);Pro
  }
  check(fractionalGeometry.fingerprint==SceneFingerprintSha256(legacy.str()),
        "numeric formatting preserves the legacy baked navigation fingerprint");
+ {
+  Scene scenery;
+  for(EntityId id=1;id<=256;++id){SceneObject object;object.id=id;scenery.InsertObject(object);}
+  RuntimeWorld indexed;
+  check(indexed.Build(scenery,nullptr,error),"scenery-only world builds for navigation membership checks");
+  SceneObject agent;agent.id=300;agent.navigationAgent=NavigationAgentSettings{};
+  check(indexed.StageRegionObject(agent,agent,error),"stage a navigation agent privately");
+  indexed.UpdateNavigation(.02f);
+  check(!indexed.Navigation().Agent(agent.id),"staged navigation owner remains private");
+  indexed.PublishRegion({agent.id});
+  const auto before=indexed.MetadataStats().lookups;
+  indexed.UpdateNavigation(.02f);
+  check(indexed.Navigation().Agent(agent.id)&&indexed.MetadataStats().lookups-before<16,
+        "published agent updates without walking inert scenery");
+  check(indexed.SetNavigationEnabled(agent.id,"agent",false),"disable a published agent");
+  indexed.UpdateNavigation(.02f);
+  check(!indexed.Navigation().Agent(agent.id),"disabled agent retires from navigation");
+  check(indexed.SetNavigationEnabled(agent.id,"agent",true),"enable the same navigation owner");
+  indexed.UpdateNavigation(.02f);
+  check(indexed.Navigation().Agent(agent.id)!=nullptr,"re-enabled agent registers again");
+  indexed.HideRegion({agent.id});
+  indexed.UpdateNavigation(.02f);
+  check(!indexed.Navigation().Agent(agent.id),"hidden agent retires from navigation");
+  indexed.PublishRegion({agent.id});
+  indexed.UpdateNavigation(.02f);
+  check(indexed.Navigation().Agent(agent.id)!=nullptr,"republished agent registers again");
+  indexed.RemoveRegionObject(agent.id);
+  indexed.UpdateNavigation(.02f);
+  check(indexed.NavigationOwners().empty()&&!indexed.Navigation().Agent(agent.id),"regional removal clears navigation ownership");
+ }
  auto disabledModifier=fixture();disabledModifier.Find(1)->navigationModifier=NavigationModifierSettings{};disabledModifier.Find(1)->navigationModifier->enabled=false;disabledModifier.Find(1)->navigationModifier->excludeSource=true;NavigationGeometry disabledGeometry;check(CollectNavigationGeometry(disabledModifier,*disabledModifier.Find(2),ProjectNavigation{},disabledGeometry,error)&&disabledGeometry.fingerprint==original.fingerprint,"disabled modifier cannot exclude physical source");
  auto blocked=fixture();SceneObject wall;wall.id=3;wall.navigationModifier=NavigationModifierSettings{};wall.navigationModifier->halfExtents={.5f,2,3};wall.navigationModifier->blocked=true;blocked.Objects().push_back(wall);NavigationData block;check(BakeNavigation(blocked,*blocked.Find(2),ProjectNavigation{},block,error),"blocked modifier bake");NavigationSystem detour;detour.LoadSurface(2,{},std::make_shared<NavigationData>(block),error);auto around=detour.FindPath({-5,0,0},{5,0,0});check(around.status==NavigationPath::Status::Complete&&around.distance>10.5f,"route around nonwalkable volume");check(!detour.Sample({0,0,0},.2f),"blocked region not sampleable");
  auto costScene=fixture();ProjectNavigation costConfig;costConfig.areas.Add("Expensive",area);wall.navigationModifier->blocked=false;wall.navigationModifier->area=area;costScene.Objects().push_back(wall);NavigationData costs;check(BakeNavigation(costScene,*costScene.Find(2),costConfig,costs,error),"area modifier bake");NavigationSystem costsSystem(costConfig);costsSystem.LoadSurface(2,{},std::make_shared<NavigationData>(costs),error);auto cheap=costsSystem.FindPath({-5,0,0},{5,0,0});NavigationFilter expensive;expensive.costs[area]=30;auto avoid=costsSystem.FindPath({-5,0,0},{5,0,0},expensive);check(cheap.status==NavigationPath::Status::Complete&&avoid.distance>cheap.distance+.2f,"per-area cost chooses alternate route");expensive.exclude=CategoryBit(area);check(costsSystem.FindPath({-5,0,0},{5,0,0},expensive).status==NavigationPath::Status::Complete,"area exclusion still finds alternate");
@@ -206,6 +236,41 @@ int main(){std::string error;auto scene=fixture();auto* source=scene.Find(2);Pro
  auto sphere=fixture();sphere.Find(1)->body->shape=SceneShape::Sphere;sphere.Find(1)->body->radius=3;sphere.Find(1)->transform.position={0,-3,0};NavigationData spherical;check(BakeNavigation(sphere,*sphere.Find(2),ProjectNavigation{},spherical,error),"real sphere collision surface tessellation");NavigationSystem sphereSystem;sphereSystem.LoadSurface(2,{},std::make_shared<NavigationData>(spherical),error);check(sphereSystem.Sample({0,0,0},.5f).has_value(),"sphere upper cap walkable without global gravity assumption");
  auto bytes=std::vector<unsigned char>{1,2,3};check(!DecodeNavigation(bytes,loaded,error),"malformed nav data fails safely");NavigationData repeat;BakeNavigation(scene,*source,ProjectNavigation{},repeat,error);check(repeat.layers==data.layers&&repeat.fingerprint==data.fingerprint,"identical bake is repeatable");
  Scene prefab;auto authored=fixture();authored.Find(1)->navigationAgent=NavigationAgentSettings{};check(CreatePrefab(authored,1,prefab,error)&&prefab.Find(1)->navigationAgent.has_value(),"generic prefab retains navigation component");std::string f1,f2;ComputeSceneFingerprint(authored,f1,error);authored.Find(1)->navigationAgent->speed=6;ComputeSceneFingerprint(authored,f2,error);check(f1!=f2,"authored navigation configuration contributes to baseline");
+ {
+  RuntimeWorld capacity;
+  check(capacity.Build(runtimeScene,&resources,error),"build navigation obstacle capacity fixture");
+  resources.WaitForAll();
+  capacity.UpdateNavigation(.02f);
+  SceneObject outside;
+  outside.navigationObstacle=NavigationObstacleSettings{};
+  outside.transform.position={100.f,0.f,100.f};
+  const auto outsideId=capacity.CreateEntity(outside,nullptr,&error);
+  capacity.UpdateNavigation(.02f);
+  check(outsideId&&capacity.Navigation().Statistics().obstacles==0,"off-mesh obstacle uses no Detour slot");
+  auto placement=outside.transform;
+  placement.position={0.f,.3f,0.f};
+  check(capacity.SetRuntimeTransform(outsideId,placement),"move off-mesh obstacle onto the surface");
+  capacity.UpdateNavigation(.02f);
+  check(capacity.Navigation().Statistics().obstacles==1,"previously off-mesh obstacle registers when it reaches tiles");
+  check(capacity.SetRuntimeTransform(outsideId,outside.transform),"move the carving obstacle off the surface again");
+  capacity.UpdateNavigation(.02f);
+  check(capacity.Navigation().Statistics().obstacles==0,"leaving the surface retires the previous carving");
+  std::vector<EntityId> ids;
+  for(int i=0;i<257;++i){
+   SceneObject obstacle;
+   obstacle.navigationObstacle=NavigationObstacleSettings{};
+   obstacle.transform=placement;
+   ids.push_back(capacity.CreateEntity(obstacle,nullptr,&error));
+  }
+  for(int i=0;i<48;++i)capacity.UpdateNavigation(.02f);
+  check(ids.front()&&ids.back()&&capacity.Navigation().Statistics().obstacles==256&&
+        capacity.Navigation().Errors().count(ids.back()),"overflow stays pending at the Detour pool limit");
+  check(capacity.SetNavigationEnabled(ids.front(),"obstacle",false),"retire an obstacle to release its Detour slot");
+  capacity.UpdateNavigation(.02f);
+  check(capacity.Navigation().Statistics().obstacles==255,"disabled obstacle frees a slot after tile-cache update");
+  for(int i=0;i<12;++i)capacity.UpdateNavigation(.02f);
+  check(capacity.Navigation().Statistics().obstacles==256,"unchanged pending footprint retries after a slot becomes available");
+ }
  for(int n:{1,10,100}){RuntimeWorld measure;measure.Build(runtimeScene,&resources,error);resources.WaitForAll();for(int i=0;i<n;++i){SceneObject e;e.navigationAgent=NavigationAgentSettings{};e.characterMotor=CharacterMotorSettings{};e.transform.position={-5.5f+(i%10)*1.1f,.9f,-5.5f+(i/10)*1.1f};auto id=measure.CreateEntity(e,nullptr,&error);measure.UpdateNavigation(.02f);measure.Navigation().SetDestination(id,{5,0,5});}std::vector<double> samples;for(int i=0;i<150;++i){auto t=std::chrono::steady_clock::now();measure.UpdateNavigation(.02f);samples.push_back(std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-t).count());}std::sort(samples.begin(),samples.end());double sum=0;for(auto t:samples)sum+=t;std::printf("NAV %d agents: mean %.4f ms p95 %.4f ms max %.4f ms\n",n,sum/samples.size(),samples[samples.size()*95/100],samples.back());measure.Destroy();}
  auto begin=std::chrono::steady_clock::now();for(int i=0;i<1000;++i)system.FindPath({-5,0,0},{5,0,0});std::printf("1000 paths: %.3f ms\n",std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-begin).count());std::printf("M53 focused %d checks, %d failures\n",checks,failures);
  return failures?1:0;
