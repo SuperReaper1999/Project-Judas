@@ -89,7 +89,8 @@ jobs:
         run: |
           xvfb-run -a python3 scripts/prealpha_validate.py --graphics-backend vulkan --graphics-profile modern \
             --expected-channel Experimental --output "$RUNNER_TEMP/vulkan-synchronization" \
-            --test portal-camera --test lighting-lists --test runtime-ui --test game-settings --test graphics-context-lifecycle
+            --test portal-camera --test lighting-lists --test runtime-ui --test game-settings --test graphics-context-lifecycle \
+            --test basic-water-preview
       - name: Exercise native detached editor windows on both APIs
         env:
           VK_LAYER_ENABLES: VK_VALIDATION_FEATURE_ENABLE_SYNCHRONIZATION_VALIDATION_EXT

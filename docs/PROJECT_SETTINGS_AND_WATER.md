@@ -19,6 +19,11 @@ Open **File → Project Settings**. Save project settings separately from the sc
 
 ## Basic Water
 
+Basic Water's optical tint uses the part of each visible fragment's viewing ray
+that crosses a finite water volume. Flat open water seen from shore has a
+continuous surface. Visual wave displacement remains independent of the
+prescribed volume used for swimming.
+
 `basic-water "true"` and `water-swimming "true"` are defaults. Create a Basic Water component from Create or the Inspector. Configure bounds, colour, waves and current. This is prescribed visual/swimming water: no conserved flow, pressure solver or particle solver is allocated. Disabling swimming leaves the surface visible.
 
 Try [Stillwater](../projects/basic_water_lab/README.md). Its project-owned controls provide movement, pause, Space to swim up and Q to dive.

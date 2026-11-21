@@ -33,6 +33,6 @@ bool DecodeBasicWater(const std::string&, BasicWaterSettings&, std::string& erro
 BasicWaterSample SampleBasicWater(const std::vector<BasicWaterInstance>&,
                                  glm::vec3 center, glm::vec3 up,
                                  float halfHeight, float radius);
-// Near-plane distance intervals consumed by the existing underwater optical pass.
+// CPU reference for near-plane distance intervals in prescribed water volumes.
 std::vector<glm::vec2> BasicWaterOpticalPaths(const std::vector<BasicWaterInstance>&,
     const glm::mat4& view, const glm::mat4& projection, unsigned columns, unsigned rows);

@@ -57,7 +57,7 @@ bool Renderer::InitNativeMeshPass(){
         set.uColor=Gfx::Param(set.shader,"uColor");set.uLightViewProj=Gfx::Param(set.shader,"uLightViewProj");
         set.tBase=Gfx::TextureSlot(set.shader,"uTexture");set.tShadow=Gfx::TextureSlot(set.shader,"uShadowMaps");
         set.tPointShadow=Gfx::TextureSlot(set.shader,"uPointShadowMaps");set.tLightGrid=Gfx::TextureSlot(set.shader,"uLightGrid");
-        set.tWeather=Gfx::TextureSlot(set.shader,"uWeatherNoise");set.tWater=Gfx::TextureSlot(set.shader,"uWaterPaths");
+        set.tWeather=Gfx::TextureSlot(set.shader,"uWeatherNoise");set.tWater=Gfx::TextureSlot(set.shader,"uWaterVolumes");
         set.tTerrainDetail=Gfx::TextureSlot(set.shader,"uTerrainDetailNormal");set.tTerrainHeights=Gfx::TextureSlot(set.shader,"uTerrainHeights");
         const char* maps[]={"uMR","uNormal","uOcclusion","uEmissive"};for(int i=0;i<4;++i)set.tMaps[i]=Gfx::TextureSlot(set.shader,maps[i]);
         const char* env[]={"uEnvDiffuse","uEnvSpecular","uBRDF"};for(int i=0;i<3;++i)set.tEnv[i]=Gfx::TextureSlot(set.shader,env[i]);
@@ -283,7 +283,7 @@ void Renderer::NativeSubmitMesh(GpuMesh& gpuMesh,const std::vector<MeshPrimitive
         if(set.tPointShadow>=0)bound.textures[set.tPointShadow]={m_pointShadowView,0};
         if(set.tLightGrid>=0)bound.textures[set.tLightGrid]={m_lightTexture,0};
         if(set.tWeather>=0)bound.textures[set.tWeather]={m_weather.noise,0};
-        if(set.tWater>=0)bound.textures[set.tWater]={m_waterPathTexture,0};
+        if(set.tWater>=0)bound.textures[set.tWater]={m_waterVolumeTexture,0};
     }
     const bool blendedPass=!shadow&&m_nativeTransparent;
     const std::size_t parts=std::max(std::size_t(1),primitives.size());

@@ -123,8 +123,8 @@ uniform sampler2D uTexture;
 in vec4 vTint;
 uniform bool uBasicWater;
 uniform vec3 uBasicWaterUp;
-uniform bool uWaterEnabled;
-uniform sampler2D uWaterPaths;
+uniform int uWaterVolumeCount;
+uniform sampler2D uWaterVolumes;
 uniform mat4 uWaterViewProjection;
 uniform mat4 uWaterInverseViewProjection;
 uniform vec3 uLightDirection;  // world-space, normalized, points FROM the surface TOWARD the light
@@ -402,15 +402,45 @@ void main() {
         FragColor=vec4(mix(water,sky,fresnel*.8)+uLightColor*glint*.85,
                        mix(base.a,1.0,fresnel*.65));
     }
-    if (uWaterEnabled) {
-        vec4 clip = uWaterViewProjection * vec4(vWorldPos,1.0);
-        vec2 uv = clip.xy / clip.w * .5 + .5;
-        vec2 path = texture(uWaterPaths,uv).rg;
-        vec4 nearPoint = uWaterInverseViewProjection * vec4(uv*2.0-1.0,-1.0,1.0);
-        float distance = length(vWorldPos-nearPoint.xyz/nearPoint.w);
-        float waterLength = max(0.0,min(distance,path.y)-path.x);
-        vec3 transmission = exp(-vec3(.32,.12,.075)*waterLength);
-        FragColor.rgb = FragColor.rgb*transmission + vec3(.025,.18,.24)*(vec3(1.0)-transmission);
+    if(uWaterVolumeCount>0){
+        vec4 clip=uWaterViewProjection*vec4(vWorldPos,1.0);
+        vec4 nearPoint=uWaterInverseViewProjection*vec4(clip.xy/clip.w,-1.0,1.0);
+        vec3 origin=nearPoint.xyz/nearPoint.w;
+        vec3 segment=vWorldPos-origin;
+        float first=1.0,last=0.0;
+        for(int i=0;i<uWaterVolumeCount;++i){
+            ivec2 texel=ivec2(4*(i%64),i/64);
+            vec4 x=texelFetch(uWaterVolumes,texel,0);
+            vec4 y=texelFetch(uWaterVolumes,texel+ivec2(1,0),0);
+            vec4 z=texelFetch(uWaterVolumes,texel+ivec2(2,0),0);
+            vec3 extent=texelFetch(uWaterVolumes,texel+ivec2(3,0),0).xyz;
+            vec4 start=vec4(origin,1.0);
+            vec3 p=vec3(dot(x,start),dot(y,start),dot(z,start));
+            vec3 d=vec3(dot(x.xyz,segment),dot(y.xyz,segment),dot(z.xyz,segment));
+            vec3 upper=vec3(extent.x,0.0,extent.z);
+            float enter=0.0,leave=1.0;
+            for(int axis=0;axis<3;++axis){
+                if(abs(d[axis])<1e-7){
+                    if(p[axis]<-extent[axis]||p[axis]>upper[axis])leave=-1.0;
+                }else{
+                    float a=(-extent[axis]-p[axis])/d[axis];
+                    float b=(upper[axis]-p[axis])/d[axis];
+                    enter=max(enter,min(a,b));
+                    leave=min(leave,max(a,b));
+                }
+            }
+            // Preserve the nearest-volume rule for overlapping water. A
+            // surface seen from air ends the segment at its actual entry.
+            if(leave>enter && enter<first){
+                first=enter;
+                last=leave;
+            }
+        }
+        if(last>first){
+            float waterLength=(last-first)*length(segment);
+            vec3 transmission=exp(-vec3(.32,.12,.075)*waterLength);
+            FragColor.rgb=FragColor.rgb*transmission+vec3(.025,.18,.24)*(vec3(1.0)-transmission);
+        }
     }
     if(uWeatherEnabled){
         vec3 relative=vWorldPos-uWeatherEye;

@@ -551,7 +551,10 @@ void Renderer::Shutdown() {
     m_textures.clear();m_freeTextures.clear();
 
     if (m_shaderProgram) {
-        if(m_waterPathTexture){glDeleteTextures(1,&m_waterPathTexture);m_waterPathTexture=0;m_waterColumns=m_waterRows=0;}
+        if(m_waterVolumeTexture)glDeleteTextures(1,&m_waterVolumeTexture);
+        m_waterVolumeTexture=0;
+        m_waterVolumeCapacity=0;
+        m_waterVolumeRows.clear();
         glDeleteProgram(m_shaderProgram);
         m_shaderProgram = 0;
     }
@@ -637,23 +640,58 @@ void Renderer::SetCamera(const glm::mat4& view, const glm::mat4& projection) {
     m_view = view;
     m_projection = projection;
     m_frustum=Frustum(projection*view);
-    if(m_shaderProgram){glUseProgram(m_shaderProgram);glUniform1i(glGetUniformLocation(m_shaderProgram,"uWaterEnabled"),0);}
+    if(m_shaderProgram){glUseProgram(m_shaderProgram);glUniform1i(glGetUniformLocation(m_shaderProgram,"uWaterVolumeCount"),0);}
 }
 
-void Renderer::SetWaterPaths(unsigned columns,unsigned rows,const std::vector<glm::vec2>& paths){
- JUDAS_PROFILE_SCOPE("Water boundary upload");
-    if(!m_shaderProgram)return;
-    if(paths.empty()){glUseProgram(m_shaderProgram);glUniform1i(glGetUniformLocation(m_shaderProgram,"uWaterEnabled"),0);return;}
-    if(paths.size()!=size_t(columns)*rows||!columns||!rows)return;
-    if(!m_waterPathTexture){glGenTextures(1,&m_waterPathTexture);}
-    glActiveTexture(GL_TEXTURE4);glBindTexture(GL_TEXTURE_2D,m_waterPathTexture);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
-    if(columns!=m_waterColumns||rows!=m_waterRows){glTexImage2D(GL_TEXTURE_2D,0,GL_RG32F,columns,rows,0,GL_RG,GL_FLOAT,paths.data());m_waterColumns=columns;m_waterRows=rows;}
-    else glTexSubImage2D(GL_TEXTURE_2D,0,0,0,columns,rows,GL_RG,GL_FLOAT,paths.data());
-    glUseProgram(m_shaderProgram);glUniform1i(glGetUniformLocation(m_shaderProgram,"uWaterEnabled"),1);
-    glUniform1i(glGetUniformLocation(m_shaderProgram,"uWaterPaths"),4);
-    glm::mat4 matrix=m_projection*m_view,inverse=glm::inverse(matrix);
+void Renderer::SetBasicWaterVolumes(const std::vector<BasicWaterInstance>& waters) {
+    JUDAS_PROFILE_SCOPE("Water boundary upload");
+    if(!m_shaderProgram||waters.empty())return;
+
+    // Four RGBA texels per visible box: world-to-water affine rows, then
+    // extents. A reusable table avoids a uniform-array limit on older tiers.
+    m_waterVolumeRows.clear();
+    for(const auto& water:waters){
+        if(!water.settings.enabled)continue;
+        const auto extents=water.settings.halfExtents;
+        const auto& pose=water.rotation;
+        const auto transform=glm::translate(glm::mat4(1),water.position)*glm::mat4_cast(pose);
+        VisualBounds bounds;
+        bounds.Include({-extents.x,-extents.y,-extents.z});
+        bounds.Include({extents.x,0,extents.z});
+        if(!m_frustum.IsVisible(TransformBounds(bounds,transform)))continue;
+
+        const auto worldToLocal=glm::transpose(glm::mat3_cast(glm::inverse(pose)));
+        for(unsigned axis=0;axis<3;++axis){
+            const auto row=worldToLocal[axis];
+            m_waterVolumeRows.emplace_back(row,-glm::dot(row,water.position));
+        }
+        m_waterVolumeRows.emplace_back(extents,0);
+    }
+    constexpr unsigned volumesPerRow=64;
+    constexpr unsigned width=4*volumesPerRow;
+    const auto count=unsigned(m_waterVolumeRows.size()/4);
+    if(!count)return;
+    const unsigned rows=(count+volumesPerRow-1)/volumesPerRow;
+    const unsigned maxRows=unsigned(m_capabilities.limits.textureSize);
+    if(rows>maxRows){
+        std::fprintf(stderr,"Basic Water optical volume table exceeds device texture limit\n");
+        return;
+    }
+    m_waterVolumeRows.resize(size_t(rows)*width);
+    if(!m_waterVolumeTexture)glGenTextures(1,&m_waterVolumeTexture);
+    glActiveTexture(GL_TEXTURE4);
+    glBindTexture(GL_TEXTURE_2D,m_waterVolumeTexture);
+    if(rows>m_waterVolumeCapacity){
+        m_waterVolumeCapacity=std::min(maxRows,std::max(rows,m_waterVolumeCapacity*2));
+        glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA32F,width,m_waterVolumeCapacity,0,GL_RGBA,GL_FLOAT,nullptr);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    }
+    glTexSubImage2D(GL_TEXTURE_2D,0,0,0,width,rows,GL_RGBA,GL_FLOAT,m_waterVolumeRows.data());
+    glUseProgram(m_shaderProgram);
+    glUniform1i(glGetUniformLocation(m_shaderProgram,"uWaterVolumeCount"),GLint(count));
+    glUniform1i(glGetUniformLocation(m_shaderProgram,"uWaterVolumes"),4);
+    const auto matrix=m_projection*m_view,inverse=glm::inverse(matrix);
     glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram,"uWaterViewProjection"),1,GL_FALSE,glm::value_ptr(matrix));
     glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram,"uWaterInverseViewProjection"),1,GL_FALSE,glm::value_ptr(inverse));
     glActiveTexture(GL_TEXTURE0);

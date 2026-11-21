@@ -76,6 +76,8 @@ struct RenderStats {
 // API. Callers (Application, gameplay code, model/texture loaders) never
 // touch OpenGL directly — see docs/ARCHITECTURE.md, "Milestone 9," for why
 // this boundary held even once textures/lighting/indexed meshes arrived.
+struct BasicWaterInstance;
+
 class Renderer {
 public:
     Renderer();
@@ -159,7 +161,7 @@ public:
     WeatherDiagnostics WeatherStats()const;
     const glm::mat4& ViewMatrix()const{return m_view;}
     const glm::mat4& ProjectionMatrix()const{return m_projection;}
-    void SetWaterPaths(unsigned columns,unsigned rows,const std::vector<glm::vec2>& paths);
+    void SetBasicWaterVolumes(const std::vector<BasicWaterInstance>& waters);
     void SetCullingEnabled(bool enabled){m_cullingEnabled=enabled;}
     void SetRenderMask(CategoryMask mask){m_renderMask=mask;}
     void SetRenderLayer(unsigned layer){m_renderLayer=layer;}
@@ -591,7 +593,9 @@ private:
     GLint m_outputFramebuffer=0;int m_hdrWidth=0,m_hdrHeight=0;unsigned m_textureUnitLimit=0;
     struct BlendDraw {MeshHandle mesh;glm::vec3 position,scale,tint;glm::quat rotation;TextureHandle texture;float alpha;std::vector<glm::mat4> skin;std::vector<MaterialBinding> materials;float depth;unsigned layer;std::vector<std::string> hiddenParts;};
     std::vector<BlendDraw> m_blendDraws;bool m_flushingBlends=false;
-    GLuint m_waterPathTexture=0;unsigned m_waterColumns=0,m_waterRows=0;
+    GLuint m_waterVolumeTexture=0;
+    unsigned m_waterVolumeCapacity=0;
+    std::vector<glm::vec4> m_waterVolumeRows;
     GLuint m_shaderProgram = 0;
 
     MeshHandle m_cubeMesh;

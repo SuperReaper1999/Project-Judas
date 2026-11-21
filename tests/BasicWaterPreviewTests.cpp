@@ -28,6 +28,64 @@ glm::vec3 Probe(const Pixels& pixels,const glm::vec3& point,const glm::mat4& vie
     for(int j=-1;j<=1;++j)for(int i=-1;i<=1;++i){auto index=size_t((y+j)*Width+x+i)*3;sum+=glm::vec3(pixels.at(index),pixels.at(index+1),pixels.at(index+2));}
     return sum/9.f;
 }
+
+void CheckWaterOptics(Renderer& renderer) {
+    BasicWaterInstance sea;
+    sea.settings.halfExtents={1110,49,1110};
+    sea.settings.waveAmplitude=0;
+    sea.settings.opacity=1;
+    sea.position={96,-5,0};
+    const auto view=glm::lookAt(glm::vec3(473,6,233),glm::vec3(526,-6,265),glm::vec3(0,1,0));
+    const auto projection=glm::perspective(glm::radians(60.f),float(Width)/Height,.05f,600.f);
+    auto seaFrame=[&](bool surface,bool optics){
+        renderer.BeginFrame(Width,Height);
+        renderer.SetCamera(view,projection);
+        renderer.SetLighting({0,1,0},{0,0,0},{1,1,1});
+        if(optics)renderer.SetBasicWaterVolumes({sea});
+        if(surface){
+            renderer.BeginTransparentPass();
+            renderer.DrawBasicWater(sea.settings,sea.position,sea.rotation,0);
+            renderer.EndTransparentPass();
+        }
+        renderer.EndFrame();
+        Pixels pixels;
+        renderer.CaptureFrame(Width,Height,pixels);
+        return pixels;
+    };
+    const auto reference=seaFrame(true,false);
+    Check(Difference(reference,seaFrame(false,false))>5,"shoreline fixture renders the flat sea");
+    Check(Difference(reference,seaFrame(true,true))<.1f,"flat sea seen from shore has no spurious water attenuation");
+
+    BasicWaterInstance pool;
+    pool.settings.halfExtents={3,4,3};
+    pool.position={8,-3,2};
+    pool.rotation=glm::angleAxis(.65f,glm::normalize(glm::vec3(1,1,0)));
+    const auto toWorld=[&](glm::vec3 p){return pool.position+pool.rotation*p;};
+    const auto poolView=glm::lookAt(toWorld({0,5,0}),pool.position,pool.rotation*glm::vec3(0,0,-1));
+    const auto poolProjection=glm::ortho(-5.f,5.f,-3.75f,3.75f,.1f,30.f);
+    auto poolFrame=[&](bool optics){
+        renderer.BeginFrame(Width,Height);
+        renderer.SetCamera(poolView,poolProjection);
+        renderer.SetLighting({0,1,0},{0,0,0},{1,1,1});
+        if(optics)renderer.SetBasicWaterVolumes({pool});
+        for(glm::vec3 point: {glm::vec3(-1,-2,0),glm::vec3(1,1,0),glm::vec3(4,-2,0)})
+            renderer.DrawBox(toWorld(point),pool.rotation,{.4f,.2f,.4f},{.8f,.5f,.2f});
+        renderer.EndFrame();
+        Pixels pixels;
+        renderer.CaptureFrame(Width,Height,pixels);
+        return pixels;
+    };
+    const auto unattenuated=poolFrame(false),attenuated=poolFrame(true);
+    auto differenceAt=[&](glm::vec3 point){
+        const auto world=toWorld(point);
+        return glm::length(Probe(attenuated,world,poolView,poolProjection)-
+                           Probe(unattenuated,world,poolView,poolProjection));
+    };
+    Check(differenceAt({-1,-2,0})>30,"rotated water attenuates geometry viewed through the volume");
+    Check(differenceAt({1,1,0})<1,"geometry above the rotated surface remains untinted");
+    Check(differenceAt({4,-2,0})<1,"geometry beyond the finite water boundary remains untinted");
+    Check(Difference(unattenuated,poolFrame(false))<.1f,"a later camera starts without the previous water volumes");
+}
 }
 int main(int argc,char** argv){
     std::string error;EngineHost host;if(!host.Init("Basic Water editor depth",Width,Height,false,error)){std::puts(error.c_str());return 1;}
@@ -93,5 +151,6 @@ int main(int argc,char** argv){
         r.DestroyMesh(physicalMesh);r.DestroyMesh(wrongHeightMesh);
 
     }
+    CheckWaterOptics(r);
     std::printf("BasicWaterPreviewTests: %u checks, %u failures\n",checks,failures);return failures?1:0;
 }

@@ -176,12 +176,12 @@ void Qualify(Target &target, const GraphicsCapabilities &caps) {
         glUniformMatrix4fv(glGetUniformLocation(mesh, "uModel"), 1, GL_FALSE, glm::value_ptr(identity));
         const auto normal = glm::mat3(1);
         glUniformMatrix3fv(glGetUniformLocation(mesh, "uNormalMatrix"), 1, GL_FALSE, glm::value_ptr(normal));
-        for (const auto *name : {"uSkinned", "uInstanced", "uBasicWater", "uWaterEnabled",
+        for (const auto *name : {"uSkinned", "uInstanced", "uBasicWater", "uWaterVolumeCount",
                                  "uWeatherEnabled", "uHasDynamicLights", "uModern", "uEnvironmentEnabled",
                                  "uHasMR", "uHasNormal", "uHasOcclusion", "uHasEmissive", "uFlipV"})
             glUniform1i(glGetUniformLocation(mesh, name), 0);
         for (const auto *name : {"uTexture", "uBones", "uMR", "uNormal", "uOcclusion", "uEmissive",
-                                 "uEnvDiffuse", "uEnvSpecular", "uBRDF", "uWaterPaths", "uLightGrid"})
+                                 "uEnvDiffuse", "uEnvSpecular", "uBRDF", "uWaterVolumes", "uLightGrid"})
             glUniform1i(glGetUniformLocation(mesh, name), 0);
         glUniform1i(glGetUniformLocation(mesh, "uMaterialModel"), 0);
         glUniform1i(glGetUniformLocation(mesh, "uAlphaMode"), 0);

@@ -68,11 +68,13 @@ int main() {
     // shadow filter. ShadowSamplingRenderTests checks both filter footprints
     // against independent analytic results using the production functions.
     // Optional split shadow storage retains the portable chart footprint.
+    // Mesh fragment advances for exact Basic Water ray segments. The native
+    // BasicWaterPreviewTests check a flat sea and a finite rotated volume.
     const std::array<Builtin, 8> builtins = {
         Builtin::MeshVertex, Builtin::MeshFragment, Builtin::ShadowVertex, Builtin::ShadowFragment,
         Builtin::UIVertex,   Builtin::UIFragment,   Builtin::DebugVertex,  Builtin::DebugFragment};
     const std::array<std::uint64_t, 8> approved = {
-        0x8e40d663fcf10b6bull, 0xc780f9cf1472653bull, 0x72cd5d86fbe7a639ull, 0x925b7b5dc8ab7d48ull,
+        0x8e40d663fcf10b6bull, 0x397ed6b06c6346c7ull, 0x72cd5d86fbe7a639ull, 0x925b7b5dc8ab7d48ull,
         0xee3dfe2e18412c0dull, 0x6f641e8eaa5da171ull, 0x0183210d9e1a752cull, 0xcabdf66de2492589ull};
     for (std::size_t i = 0; i < builtins.size(); ++i) {
         const auto *source = Source(builtins[i]);

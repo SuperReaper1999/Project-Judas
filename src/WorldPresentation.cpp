@@ -493,6 +493,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     renderer.SetSceneAppearance(settings.linearRendering,settings.exposure,world.Resources()?world.Resources()->TryGetEnvironment(settings.environmentAsset):EnvironmentHandle{},settings.environmentIntensity,settings.environmentRotation,settings.environmentBackground,settings.backgroundColor);
     renderer.SetLighting(settings.sunDirection, settings.sunEnabled?settings.sunColor*settings.sunIntensity:glm::vec3(0), settings.ambientColor);
     const std::vector<DynamicLight> lights = BuildWorldLights(world, alpha);
+    const auto waterVolumes=world.BasicWaters(alpha);
 
     // Each camera receives its own relevance decision and actual shadow chart.
     // Targets/viewport are restored by Renderer; no pass borrows another eye's
@@ -569,7 +570,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             } else {
                 unshadowedLightPass();
             }
-            renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha,false));
+            renderer.SetBasicWaterVolumes(waterVolumes);
             DrawWorldGeometry(renderer, world, alpha, WorldDrawOptions{}, &presentedObjects);
             DrawWorldTransparents(renderer, world, alpha);
             renderer.DrawWeather(true);
@@ -591,7 +592,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             renderer.SetCameraFrame(BuildCameraFrame(pose.position,q,p.fov,p.nearPlane,p.farPlane,p.lens,vw,vh));
             world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(pose.position),p.id|(uint64_t(1)<<63));
             renderer.SetRenderMask(p.renderMask);lightPass();
-            renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha,false));
+            renderer.SetBasicWaterVolumes(waterVolumes);
             DrawWorldGeometry(renderer,world,alpha,WorldDrawOptions{true,gameInterest&&!observer}, &presentedObjects);DrawWorldTransparents(renderer,world,alpha);renderer.DrawWeather(true);renderer.EndRenderTarget();
         }
         if(destination&&!renderer.BeginRenderTarget(*destination))return;
@@ -620,7 +621,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(glm::inverse(renderer.ViewMatrix())[3]),observer?UINT64_MAX-1:0);
     renderer.SetRenderMask(settings.mainCameraRenderMask);
     lightPass();
-    renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha,false));
+    renderer.SetBasicWaterVolumes(waterVolumes);
     DrawWorldGeometry(renderer, world, alpha, WorldDrawOptions{true,gameInterest&&!observer}, &presentedObjects);
     DrawWorldTransparents(renderer, world, alpha);
     renderer.DrawWeather();
