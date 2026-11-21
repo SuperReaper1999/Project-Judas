@@ -76,6 +76,7 @@ ShadowScene RuntimeShadowScene(const RuntimeWorld& world,float alpha) {
     // Keep active physics rigs and deformables on the conservative redraw path.
     for(const auto& e:world.Entities())
         if(world.IsPublished(e.id)&&e.definition.deformable)result.volatileContent=true;
+    world.AppendHairShadowCasters(result.casters);
     return result;
 }
 ShadowScene AuthoredShadowScene(const Scene& scene,ResourceManager& resources){

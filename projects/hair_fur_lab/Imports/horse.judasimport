@@ -1,0 +1,14 @@
+{
+  "assetId": "0fb9291ce755b1ac4a84d7554e77d5fb",
+  "format": "JudasImport",
+  "motions": [],
+  "output": "Assets/models/horse.judasmodel",
+  "settings": {
+    "allowBaseMesh": false,
+    "dependencyRemaps": {},
+    "sampleRate": 60,
+    "unitMeters": 0
+  },
+  "source": "Sources/0fb9291ce755b1ac4a84d7554e77d5fb/horse.gltf",
+  "version": 1
+}

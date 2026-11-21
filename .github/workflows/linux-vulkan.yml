@@ -90,7 +90,7 @@ jobs:
           xvfb-run -a python3 scripts/prealpha_validate.py --graphics-backend vulkan --graphics-profile modern \
             --expected-channel Experimental --output "$RUNNER_TEMP/vulkan-synchronization" \
             --test portal-camera --test lighting-lists --test runtime-ui --test game-settings --test graphics-context-lifecycle \
-            --test basic-water-preview
+            --test basic-water-preview --test hair-groom
       - name: Exercise native detached editor windows on both APIs
         env:
           VK_LAYER_ENABLES: VK_VALIDATION_FEATURE_ENABLE_SYNCHRONIZATION_VALIDATION_EXT
@@ -114,6 +114,21 @@ jobs:
           sdk="$RUNNER_TEMP/relocated-sdk"
           VK_DRIVER_FILES=/dev/null xvfb-run -a python3 scripts/qualify_sdk.py --sdk "$sdk" --work "$RUNNER_TEMP/sdk-opengl"
           xvfb-run -a python3 scripts/qualify_sdk.py --vulkan --sdk "$sdk" --work "$RUNNER_TEMP/sdk-vulkan"
+      - name: Export and run the packaged Hair and Fur Lab
+        run: |
+          sdk="$RUNNER_TEMP/relocated-sdk"
+          cp -a "$sdk/projects/hair_fur_lab" "$RUNNER_TEMP/hair-project"
+          "$sdk/judas_export" "$RUNNER_TEMP/hair-project/hair_fur_lab.judasproj" \
+            "$RUNNER_TEMP/hair-export" "$sdk/judas"
+          mv "$RUNNER_TEMP/hair-export" "$RUNNER_TEMP/hair-relocated"
+          cd "$RUNNER_TEMP/hair-relocated"
+          for backend in opengl vulkan; do
+            printf 'FRAMES 95\nSCREENSHOT 85 %s/hair-%s.png\n' "$RUNNER_TEMP" "$backend" > "$RUNNER_TEMP/hair.test"
+            JUDAS_TEST_SCRIPT="$RUNNER_TEMP/hair.test" JUDAS_GRAPHICS="$backend" \
+              JUDAS_VULKAN_VALIDATION=1 timeout 120 xvfb-run -a ./judas > "$RUNNER_TEMP/hair-$backend.log" 2>&1
+            test -s "$RUNNER_TEMP/hair-$backend.png"
+            ! grep -E 'SCRIPT STOPPED|\[Vulkan validation\]' "$RUNNER_TEMP/hair-$backend.log"
+          done
       - name: Reject a Vulkan request without a usable driver
         run: |
           sdk="$RUNNER_TEMP/relocated-sdk"

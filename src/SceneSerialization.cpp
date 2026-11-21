@@ -143,6 +143,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
     }
     if(o.landscape){w.Line("terrain.asset",Quote(o.landscape->asset));if(o.landscape->planet)w.Line("terrain.planet",std::to_string(o.landscape->planet));}
     if(o.planet)w.Line("planet.surface",Quote(EncodePlanetSettings(*o.planet)));
+    if(o.hairGroom)w.Line("hair.groom",Quote(JudasHair::Encode(*o.hairGroom)));
     if(o.basicWater)w.Line("water.basic",Quote(EncodeBasicWater(*o.basicWater)));
     if(o.weather)w.Line("weather.region",Quote(EncodeWeatherSettings(*o.weather)));
     if(o.weatherResponse)w.Line("weather.response",Quote(EncodeWeatherResponseSettings(*o.weatherResponse)));
@@ -781,6 +782,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
             return reader.Fail("terrain.planet requires a different planet owner and a terrain asset");
     }
     if(p.Has("planet.surface")){std::string value,error;PlanetSettings settings;if(!p.String("planet.surface",value)||!DecodePlanetSettings(value,settings,error))return reader.Fail(error);o.planet=std::move(settings);}
+    if(p.Has("hair.groom")){std::string value,error;JudasHair::Groom groom;if(!p.String("hair.groom",value)||!JudasHair::Decode(value,groom,error))return reader.Fail(error);o.hairGroom=std::move(groom);}
     if(p.Has("water.basic")){std::string value,error;BasicWaterSettings water;if(!p.String("water.basic",value)||!DecodeBasicWater(value,water,error))return reader.Fail(error);o.basicWater=water;}
     if(p.Has("weather.region")){std::string value,error;WeatherSettings settings;if(!p.String("weather.region",value)||!DecodeWeatherSettings(value,settings,error))return reader.Fail(error);o.weather=std::move(settings);}
     if(p.Has("weather.response")){std::string value,error;WeatherResponseSettings settings;if(!p.String("weather.response",value)||!DecodeWeatherResponseSettings(value,settings,error))return reader.Fail(error);o.weatherResponse=std::move(settings);}

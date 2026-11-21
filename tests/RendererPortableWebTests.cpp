@@ -176,7 +176,7 @@ void Qualify(Target &target, const GraphicsCapabilities &caps) {
         glUniformMatrix4fv(glGetUniformLocation(mesh, "uModel"), 1, GL_FALSE, glm::value_ptr(identity));
         const auto normal = glm::mat3(1);
         glUniformMatrix3fv(glGetUniformLocation(mesh, "uNormalMatrix"), 1, GL_FALSE, glm::value_ptr(normal));
-        for (const auto *name : {"uSkinned", "uInstanced", "uBasicWater", "uWaterVolumeCount",
+        for (const auto *name : {"uSkinned", "uInstanced", "uBasicWater", "uWaterVolumeCount", "uHairShading",
                                  "uWeatherEnabled", "uHasDynamicLights", "uModern", "uEnvironmentEnabled",
                                  "uHasMR", "uHasNormal", "uHasOcclusion", "uHasEmissive", "uFlipV"})
             glUniform1i(glGetUniformLocation(mesh, name), 0);

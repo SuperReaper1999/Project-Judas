@@ -34,6 +34,7 @@ owns tested configurations; guide contents alone do not certify every platform.
 - [Collision authoring](COLLISION_AUTHORING.md), [continuity](COLLISION_CONTINUITY.md), [events](COLLISION_EVENTS.md), [queries](PHYSICS_QUERIES.md), [batches](BATCHED_QUERIES.md), [sleep/scaling](PHYSICS_SCALING.md).
 - [Character motor](CHARACTER_MOTOR.md), [kinematic bodies](KINEMATIC_BODIES.md), [joints](JOINTS.md), [gravity](GRAVITY_SELECTION.md).
 - [Animation/pose composition](ANIMATION.md), [timeline/root motion/events](ANIMATION_WORKFLOW.md), [retargeting](ANIMATION_RETARGETING.md), [IK](MULTI_TARGET_IK.md), [ragdolls/physical modes](RAGDOLLS.md), [balance limits](BALANCE.md).
+- [Hair and fur](HAIR_AND_FUR.md), [Hair and Fur Lab](../projects/hair_fur_lab/README.md).
 - [Vehicles/wheels](VEHICLES_V2.md), [powertrains](POWERTRAINS.md), [structures](STRUCTURES.md), [mechanical damage](MECHANICAL_DAMAGE.md), [finite crash sections](COARSE_CRASH.md).
 - [Deformable authoring](DEFORMABLES_V2_AUTHORING.md), [numerical ownership](DEFORMABLES.md), [bending](BENDING.md), [fracture](FRACTURE.md), [optional native constraint participants](PHYSICAL_CONSTRAINT_BATCH.md).
 - [Terrain](TERRAIN_V2.md), [residency](TERRAIN_V2_RESIDENCY.md), [planetary precision](PLANETARY_TERRAIN.md), [origin/assembly travel](ASSEMBLY_TRAVEL.md).

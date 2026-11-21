@@ -291,6 +291,7 @@ static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, float alph
     // constantly rebuilt surface does not occupy the depth maps.
 
     r.EndMeshBatch();
+    world.DrawHair(r);
 }
 
 void DrawWorldGeometry(Renderer& renderer, const RuntimeWorld& world,                        float alpha, const WorldDrawOptions& options) {
@@ -494,6 +495,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     renderer.SetLighting(settings.sunDirection, settings.sunEnabled?settings.sunColor*settings.sunIntensity:glm::vec3(0), settings.ambientColor);
     const std::vector<DynamicLight> lights = BuildWorldLights(world, alpha);
     const auto waterVolumes=world.BasicWaters(alpha);
+    world.PrepareHair(renderer,alpha,planetEye);
 
     // Each camera receives its own relevance decision and actual shadow chart.
     // Targets/viewport are restored by Renderer; no pass borrows another eye's

@@ -34,4 +34,5 @@ struct MaterialBinding {
     MaterialHandle handle;MaterialOverride overrides;bool explicitAsset=false,failed=false;
     std::array<TextureHandle,5> textures{};
     std::array<bool,5> textureOverrides{};
+    bool hairShading=false;
 };

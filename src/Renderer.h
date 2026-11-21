@@ -240,10 +240,12 @@ public:
     bool UploadMeshMap(MeshHandle, const MeshData&, size_t material, size_t map);
     // Replaces a non-indexed mesh's vertices without changing its handle.
     // Used for a surface derived each presentation frame from simulated
-    // fluid positions. Returns false for indexed or invalid handles.
+    // fluid positions. Pass false for shadow invalidation only when the owner
+    // supplies a separate exact caster key (or never casts shadows).
     // Independent section/override state sharing frozen geometry storage.
     MeshHandle CloneImmutableMesh(MeshHandle);
-    bool UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVertex>& vertices);
+    bool UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVertex>& vertices,
+                            bool invalidateShadowResources = true);
     // Deforming detailed exteriors retain rest vertices and materials. Only
     // section weights and visible topology change when connections tear.
     bool UpdateMeshSkinTopology(MeshHandle,const std::vector<uint32_t>& indices,

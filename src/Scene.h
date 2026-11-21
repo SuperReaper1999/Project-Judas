@@ -4,6 +4,7 @@
 #include "terrain/TerrainComponent.h"
 #include "Weather.h"
 #include "BasicWater.h"
+#include "hair/Groom.h"
 #include "Classification.h"
 #include "Material.h"
 #include "Sprite.h"
@@ -292,6 +293,7 @@ struct SceneJointComponent {SceneObjectId bodyA=0,bodyB=0;JointSettings settings
 struct SceneObject {
     std::optional<SceneLandscapeSettings> landscape;
     std::optional<BasicWaterSettings> basicWater;
+    std::optional<JudasHair::Groom> hairGroom;
     std::optional<PlanetSettings> planet;
     // M86 profiles are ordinary authored components. Runtime interpolation,
     // storms and sampled wind belong to RuntimeWorld's WeatherSystem.

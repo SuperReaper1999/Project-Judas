@@ -418,6 +418,9 @@ add_library(judas_engine STATIC
     src/RuntimeWorld.cpp
     src/Simulation.cpp
     src/BasicWater.cpp
+    src/hair/Groom.cpp
+    src/hair/GuideSimulation.cpp
+    src/WorldHair.cpp
     src/WorldWater.cpp
     src/lighting/ShadowSystem.cpp
     src/lighting/LightLists.cpp

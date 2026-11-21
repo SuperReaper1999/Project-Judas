@@ -852,7 +852,8 @@ MeshHandle Renderer::BeginMeshUpload(const MeshData& data) {
     return handle;
 }
 
-bool Renderer::UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVertex>& vertices) {
+bool Renderer::UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVertex>& vertices,
+                                  bool invalidateShadowResources) {
     GpuMesh* mesh = GetMesh(handle);
     // Indexed deformables keep immutable topology; only their vertex stream
     // changes. Existing non-indexed transient surfaces may still resize.
@@ -861,7 +862,7 @@ bool Renderer::UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVerte
     glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(vertices.size() * sizeof(MeshVertex)),
                  vertices.empty() ? nullptr : vertices.data(), GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    ++m_shadowResourceRevision;
+    if(invalidateShadowResources)++m_shadowResourceRevision;
     mesh->vertexCount = static_cast<GLsizei>(vertices.size());
     if(!mesh->lods.empty())mesh->lodPixels=0; // changed geometry invalidates offline error estimates
     mesh->bounds={};for(const auto& v:vertices)mesh->bounds.Include(v.position);

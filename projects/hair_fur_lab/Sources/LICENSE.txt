@@ -1,0 +1,2 @@
+The original stylised horse and performer meshes and motions in this workshop
+are CC0-1.0. The associated glTF sources and Judas import recipes are included.

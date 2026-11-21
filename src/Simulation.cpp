@@ -122,6 +122,7 @@ void StepWorld(RuntimeWorld& world, const InputSystem& input,
     world.UpdateSpriteAnimations(fixedDeltaTime);
     world.UpdateRagdolls(fixedDeltaTime);
     world.UpdateSockets();
+    world.UpdateHair(fixedDeltaTime);
     physics.DebugPoint(PhysicsWorld::DebugPhase::DeformableBegin);
     world.UpdateDeformables(fixedDeltaTime);
     physics.DebugPoint(PhysicsWorld::DebugPhase::DeformableEnd);

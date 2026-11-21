@@ -1,0 +1,48 @@
+{
+  "assetId": "0fb9291ce755b1ac4a84d7554e77d5fb",
+  "clips": [
+    {
+      "duration": 2.4000000953674316,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Restless"
+    }
+  ],
+  "diagnostics": [],
+  "hierarchyNodes": 4,
+  "importRecord": "{\"digest\":\"bea6aaa22f64cbe53586d855e2296df87180383de6eeef415091ba617871dffb\",\"inputs\":{\"Sources/0fb9291ce755b1ac4a84d7554e77d5fb/horse.gltf\":\"9dcb3ea6fb2de5afe5e1d73f57f8e15ae63c77694d4c772553acbaa5f9cae210\"},\"manifest\":{\"assetId\":\"0fb9291ce755b1ac4a84d7554e77d5fb\",\"clips\":[{\"duration\":2.4000000953674316,\"loop\":false,\"motionExtracted\":false,\"name\":\"Restless\"}],\"diagnostics\":[],\"hierarchyNodes\":4,\"inputs\":{\"Sources/0fb9291ce755b1ac4a84d7554e77d5fb/horse.gltf\":\"9dcb3ea6fb2de5afe5e1d73f57f8e15ae63c77694d4c772553acbaa5f9cae210\"},\"joints\":[\"Barrel\",\"Barrel/Neck\",\"Barrel/TailDock\",\"Horse exterior\",\"__JudasMotionRoot\"],\"materialKeys\":[\"Chestnut\",\"Dark leather tones\"],\"parts\":[{\"identity\":\"Horse exterior/material/Chestnut\",\"node\":3,\"triangles\":1512},{\"identity\":\"Horse exterior/material/Dark leather tones\",\"node\":3,\"triangles\":1008}],\"recipeDigest\":\"bea6aaa22f64cbe53586d855e2296df87180383de6eeef415091ba617871dffb\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-12-M74-retarget-1-model-1-M95-events-1\",\"skinPaletteEntries\":3,\"sourceBones\":0,\"sourceUnitMeters\":1.0,\"vertices\":7560},\"recipe\":\"Imports/horse.judasimport\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-12-M74-retarget-1-model-1-M95-events-1\"}",
+  "inputs": {
+    "Sources/0fb9291ce755b1ac4a84d7554e77d5fb/horse.gltf": "9dcb3ea6fb2de5afe5e1d73f57f8e15ae63c77694d4c772553acbaa5f9cae210"
+  },
+  "joints": [
+    "Barrel",
+    "Barrel/Neck",
+    "Barrel/TailDock",
+    "Horse exterior",
+    "__JudasMotionRoot"
+  ],
+  "materialKeys": [
+    "Chestnut",
+    "Dark leather tones"
+  ],
+  "outputHash": "d3483d62e289f83a397cb0864588f321419289738c3996b79a776e510f99ab7e",
+  "parts": [
+    {
+      "identity": "Horse exterior/material/Chestnut",
+      "node": 3,
+      "triangles": 1512
+    },
+    {
+      "identity": "Horse exterior/material/Dark leather tones",
+      "node": 3,
+      "triangles": 1008
+    }
+  ],
+  "recipeDigest": "bea6aaa22f64cbe53586d855e2296df87180383de6eeef415091ba617871dffb",
+  "recordHash": "05b126ed491ae930730c6f8829510271c91ca28cf2ffc5ecd9e541453e9b72bb",
+  "revision": "M66-ufbx-0.23.1-cgltf-1.15-cook-12-M74-retarget-1-model-1-M95-events-1",
+  "skinPaletteEntries": 3,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "vertices": 7560
+}

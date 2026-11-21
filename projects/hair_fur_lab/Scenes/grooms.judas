@@ -1,0 +1,368 @@
+JudasScene 3
+settings
+ name "Hair and Fur Lab"
+ world-origin 0 0 0
+ linear-rendering true
+ sun-direction -0.6 0.85 -0.5
+ sun-color 1.18 1.02 .82
+ ambient .47 .52 .63
+ background-color .21 .32 .44
+ fidelity-policy none
+ next-id 800
+end
+object 1 "Floor"
+ position 0 -0.18 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 13 0.16 11
+ render.radius 0.5
+ render.color 0.18 0.24 0.31
+ render.alpha 1
+ render.secondary-color .7 .7 .7
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 13 0.16 11
+ body.radius .5
+ body.mass 1
+ body.friction .7
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 2 "Arbitrary gravity source"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ gravity uniform 9.81
+ gravity.region sphere 10000
+end
+object 3 "Showcase camera and motion"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ scripts 1
+ script.0.id 1
+ script.0.asset "7f44fcbf4fbf4276a31ec2060f25de87"
+ script.0.enabled true
+ script.0.properties "{}"
+end
+object 10 "Stylised fox body"
+ position -2.55 0.63 0
+ rotation 1 0 0 0
+ scale 1.05 0.59 0.68
+ render sphere
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 0.36 0.135 0.075
+ render.alpha 1
+ render.secondary-color .7 .7 .7
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 11 "Fox head"
+ position -2.12 0.92 0.09
+ rotation 1 0 0 0
+ scale 0.52 0.52 0.48
+ render sphere
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 0.52 0.26 0.13
+ render.alpha 1
+ render.secondary-color .7 .7 .7
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 12 "Fox muzzle"
+ position -1.88 0.89 0.11
+ rotation 1 0 0 0
+ scale 0.34 0.24 0.27
+ render sphere
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 0.52 0.34 0.2
+ render.alpha 1
+ render.secondary-color .7 .7 .7
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 13 "Fox ear"
+ position -2.2 1.12 -0.06
+ rotation 1 0 0 0
+ scale 0.18 0.37 0.14
+ render sphere
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 0.42 0.17 0.07
+ render.alpha 1
+ render.secondary-color .7 .7 .7
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 14 "Fox ear"
+ position -2.2 1.12 0.17
+ rotation 1 0 0 0
+ scale 0.18 0.37 0.14
+ render sphere
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 0.42 0.17 0.07
+ render.alpha 1
+ render.secondary-color .7 .7 .7
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 15 "Fox leg"
+ position -2.88 0.28 -0.21
+ rotation 1 0 0 0
+ scale 0.16 0.46 0.155
+ render sphere
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 0.33 0.12 0.065
+ render.alpha 1
+ render.secondary-color .7 .7 .7
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 16 "Fox leg"
+ position -2.88 0.28 0.21
+ rotation 1 0 0 0
+ scale 0.16 0.46 0.155
+ render sphere
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 0.33 0.12 0.065
+ render.alpha 1
+ render.secondary-color .7 .7 .7
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 17 "Fox leg"
+ position -2.26 0.28 -0.21
+ rotation 1 0 0 0
+ scale 0.16 0.46 0.155
+ render sphere
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 0.33 0.12 0.065
+ render.alpha 1
+ render.secondary-color .7 .7 .7
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 18 "Fox leg"
+ position -2.26 0.28 0.21
+ rotation 1 0 0 0
+ scale 0.16 0.46 0.155
+ render sphere
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 0.33 0.12 0.065
+ render.alpha 1
+ render.secondary-color .7 .7 .7
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 19 "Fox brushed short coat"
+ position -2.55 0.63 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ hair.groom "{\"version\":1,\"extent\":[0.533,0.305,0.349],\"flow\":[-1,-0.25,0.05],\"length\":0.049,\"width\":0.0065,\"color\":[0.56,0.19,0.055],\"strands\":512,\"comb\":0.76,\"segments\":2,\"coverageDegrees\":157,\"undercoat\":1,\"wave\":0.13}"
+end
+object 20 "Horse with neck and tail joints"
+ position -0.28 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render mesh
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color .7 .7 .7
+ render.secondary-alpha 1
+ render.mesh-asset "0fb9291ce755b1ac4a84d7554e77d5fb"
+ render.texture-asset ""
+ animation.enabled true
+ animation.play-on-start true
+ animation.loop true
+ animation.speed 1
+ animation.clip "Restless"
+ animation.time 0
+end
+object 21 "Horse mane"
+ position 0 1.75 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ socket.target 20
+ socket.joint "Neck"
+ socket.enabled true
+ socket.position 0.04 0.54 0.095
+ socket.rotation 1 0 0 0
+ socket.scale 1 1 1
+ hair.groom "{\"version\":1,\"extent\":[0.235,0.11,0.07],\"flow\":[-0.6,-0.71,0.29],\"length\":0.46,\"width\":0.023,\"color\":[0.099,0.057,0.029],\"simulated\":true,\"strands\":240,\"segments\":6,\"comb\":0.87,\"colliders\":[{\"start\":[-0.08,-0.34,0],\"end\":[0.02,-0.1,0],\"radius\":0.2}],\"coverageDegrees\":67,\"undercoat\":0,\"wave\":0.44}"
+end
+object 22 "Horse tail"
+ position 0 1.16 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ socket.target 20
+ socket.joint "TailDock"
+ socket.enabled true
+ socket.position -0.02 0 0
+ socket.rotation 1 0 0 0
+ socket.scale 1 1 1
+ hair.groom "{\"version\":1,\"extent\":[0.08,0.04,0.09],\"flow\":[-0.64,-0.72,0],\"length\":0.87,\"width\":0.024,\"color\":[0.098,0.056,0.028],\"simulated\":true,\"strands\":216,\"segments\":8,\"comb\":0.93,\"stiffness\":0.29,\"worldCollision\":true,\"coverageDegrees\":76,\"undercoat\":0,\"wave\":0.36}"
+end
+object 30 "Performer"
+ position 2.1 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render mesh
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 1 1 1
+ render.alpha 1
+ render.secondary-color .7 .7 .7
+ render.secondary-alpha 1
+ render.mesh-asset "a620254f980b7120576ff18801ddf06b"
+ render.texture-asset ""
+ animation.enabled true
+ animation.play-on-start true
+ animation.loop true
+ animation.speed 1
+ animation.clip "Head turn"
+ animation.time 0
+end
+object 31 "Long hair on cranial socket"
+ position 2.1 1.9 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ socket.target 30
+ socket.joint "Cranial"
+ socket.enabled true
+ socket.position 0 0.022 -0.02
+ socket.rotation 0.95882 -0.284015 0 0
+ socket.scale 1 1 1
+ hair.groom "{\"version\":1,\"extent\":[0.15,0.194,0.142],\"flow\":[0.16,-0.65,-0.75],\"length\":0.37,\"width\":0.013,\"color\":[0.53,0.255,0.105],\"simulated\":true,\"strands\":480,\"segments\":8,\"stiffness\":0.49,\"comb\":0.9,\"colliders\":[{\"start\":[0,-0.1,0],\"end\":[0,-0.01,0],\"radius\":0.132},{\"start\":[-0.187,-0.35,-0.017],\"end\":[0.187,-0.35,-0.017],\"radius\":0.11}],\"coverageDegrees\":67,\"undercoat\":0.8,\"wave\":0.36,\"clump\":0.58}"
+end
+object 32 "Beard on cranial socket"
+ position 2.1 1.7 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ socket.target 30
+ socket.joint "Cranial"
+ socket.enabled true
+ socket.position 0 -0.125 0.12
+ socket.rotation 1 0 0 0
+ socket.scale 1 1 1
+ hair.groom "{\"version\":1,\"extent\":[0.087,0.044,0.042],\"flow\":[0,-1,0.16],\"length\":0.103,\"width\":0.0075,\"color\":[0.33,0.125,0.045],\"simulated\":true,\"strands\":110,\"segments\":4,\"comb\":0.91,\"coverageDegrees\":99,\"undercoat\":0,\"wave\":0.32}"
+end
+object 50 "Gusty crosswind"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ weather.region "{\"version\":1,\"seed\":31,\"profile\":{\"wind\":[6,0,1.5],\"gust\":3.0,\"cloudCoverage\":0.05,\"cloudDensity\":0.1}}"
+end
+object 51 "Tail sweep obstacle"
+ position -1.55 0.63 -0.12
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.085 0.64 0.08
+ render.radius 0.5
+ render.color 0.36 0.26 0.15
+ render.alpha 1
+ render.secondary-color 0.5 0.5 0.5
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.085 0.64 0.08
+ body.radius 0.5
+ body.mass 1
+ body.friction 0.7
+ body.restitution 0
+ body.initial-velocity 0 0 0
+ body.managed false
+ body.compound-count 0
+end
+object 52 "Cool rim and point shadows"
+ position -0.8 2.6 -2.25
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 0.54 0.74 1
+ light.intensity 5
+ light.range 7
+ light.shadows true
+end
+object 53 "Warm soft front fill"
+ position 1.3 3.1 3.3
+ rotation 1 0 0 0
+ scale 1 1 1
+ light point
+ light.color 1 0.72 0.48
+ light.intensity 9
+ light.range 9
+end
+object 23 "Fox directional head coat"
+ position -2.12 0.92 0.09
+ rotation 1 0 0 0
+ scale 1 1 1
+ hair.groom "{\"version\":1,\"extent\":[0.265,0.265,0.245],\"coverageDegrees\":155,\"undercoat\":1,\"flow\":[-1,-0.3,0],\"color\":[0.55,0.175,0.047],\"length\":0.032,\"width\":0.0045,\"strands\":384,\"comb\":0.73,\"segments\":2}"
+end
+object 24 "Fox nose"
+ position -1.728 0.886 0.12
+ rotation 1 0 0 0
+ scale 0.14 0.12 0.15
+ render sphere
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 0.049 0.022 0.014
+ render.alpha 1
+ render.secondary-color 0.5 0.5 0.5
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 25 "Fox left eye"
+ position -2.026 1.007 0.317
+ rotation 1 0 0 0
+ scale 0.06 0.06 0.042
+ render sphere
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 0.049 0.022 0.014
+ render.alpha 1
+ render.secondary-color 0.5 0.5 0.5
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+object 26 "Fox right eye"
+ position -2.026 1.007 -0.136
+ rotation 1 0 0 0
+ scale 0.06 0.06 0.042
+ render sphere
+ render.half-extents 0.5 0.5 0.5
+ render.radius 0.5
+ render.color 0.049 0.022 0.014
+ render.alpha 1
+ render.secondary-color 0.5 0.5 0.5
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end

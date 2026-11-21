@@ -44,7 +44,7 @@ struct KeyWriter {
 BindingKey Key(const MaterialBinding& binding) {
     KeyWriter k;
     k.Add(binding.handle.id); k.Add(binding.handle.generation);
-    k.Add(binding.explicitAsset); k.Add(binding.failed);
+    k.Add(binding.explicitAsset); k.Add(binding.failed); k.Add(binding.hairShading);
     for (unsigned i = 0; i < 5; ++i) {
         k.Add(binding.textures[i].id); k.Add(binding.textures[i].generation);
         k.Add(binding.textureOverrides[i]);

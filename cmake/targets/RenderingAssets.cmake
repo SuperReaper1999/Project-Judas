@@ -21,3 +21,4 @@ judas_add_engine_test(judas_asset_pipeline_tests tests/AssetPipelineTests.cpp)
 
 judas_add_engine_test(judas_asset_residency_tests tests/AssetResidencyTests.cpp)
 
+judas_add_engine_test(judas_hair_groom_tests tests/HairGroomTests.cpp)

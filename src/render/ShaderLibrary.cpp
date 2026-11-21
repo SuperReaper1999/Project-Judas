@@ -283,6 +283,7 @@ float SunShadow(vec3 position,float ndotl){
 
 
 uniform int uMaterialModel,uAlphaMode;
+uniform bool uHairShading;
 uniform bool uTerrain;
 uniform sampler2D uMR,uNormal,uOcclusion,uEmissive,uEnvDiffuse,uEnvSpecular,uBRDF;
 )" JUDAS_TERRAIN_MATERIAL_GLSL R"(
@@ -308,17 +309,28 @@ vec3 BRDF(vec3 base,float metal,float rough,vec3 n,vec3 v,vec3 l){
  vec3 f0=mix(vec3(0.04),base,metal),f=f0+(vec3(1.0)-f0)*pow(1.0-vh,5.0);
  return ((vec3(1.0)-f)*(1.0-metal)*base/PI+D*visibility*f)*nl;
 }
+// Tangent lobe for the procedural fibres. Lighting, shadow visibility and
+// ambient/environment contributions stay owned by the shared material pass.
+vec3 SurfaceReflectance(vec3 base,float metal,float rough,vec3 n,vec3 v,vec3 l){
+    if(!uHairShading)return BRDF(base,metal,rough,n,v,l);
+    vec3 tangent=normalize(vWorldTangent.xyz);
+    float normalLight=max(dot(n,l),0.0);
+    float tf=dot(tangent,l);
+    float aniso=dot(tangent,normalize(v+l));
+    float broad=pow(max(0.0,1.0-aniso*aniso),mix(50.0,7.0,rough));
+    return base*(.23+.27*sqrt(max(0.0,1.0-tf*tf)))*normalLight+vec3(.10*broad*normalLight);
+}
 vec3 pbrLight(vec3 base,float metal,float rough,vec3 n,vec3 v,vec2 uv){
  // BRDF returns zero here. Avoid projecting and filtering the shadow when
  // sunlight cannot contribute. The receiver derivatives are captured in main.
  float sunDiffuse=max(dot(n,uLightDirection),0.0);
  vec3 result=sunDiffuse==0.0?vec3(0.0):
-     BRDF(base,metal,rough,n,v,uLightDirection)*uLightColor*SunShadow(vWorldPos,sunDiffuse);
+     SurfaceReflectance(base,metal,rough,n,v,uLightDirection)*uLightColor*SunShadow(vWorldPos,sunDiffuse);
  ivec2 tileInfo=uHasDynamicLights?lightTile():ivec2(0);vec4 tileHeader=uHasDynamicLights?lightTexel(1+tileInfo.x):vec4(0);
  for(int item=0;item<int(tileHeader.y);++item){int record=tileInfo.y+int(lightTexel(int(tileHeader.x)+item).x)*4;
  vec4 lp=lightTexel(record),lc=lightTexel(record+1),ld=lightTexel(record+2),ls=lightTexel(record+3);
  vec3 lightPosition=lp.xyz,lightColor=lc.xyz,lightDirection=ld.xyz;
- float lightRange=lp.w,innerCos=ld.w,outerCos=ls.x;int isSpot=int(lc.w),shadowSlot=int(ls.y);vec3 to=lightPosition-vWorldPos;float distance=length(to);vec3 l=distance>0.00001?to/distance:n;float f=clamp(distance/max(lightRange,0.0001),0.0,1.0),w=clamp(1.0-f*f*f*f,0.0,1.0);float attenuation=w*w/(distance*distance+1.0);float spot=isSpot!=0?spotWeight(outerCos,innerCos,dot(-l,lightDirection)):1.0;if(attenuation<=0.0||spot<=0.0||dot(n,l)<=0.0)continue;float shadow=1.0;shadow=LocalShadow(shadowSlot,isSpot,lightPosition,vWorldPos,max(dot(n,l),0.0));result+=BRDF(base,metal,rough,n,v,l)*lightColor*attenuation*spot*shadow;}
+ float lightRange=lp.w,innerCos=ld.w,outerCos=ls.x;int isSpot=int(lc.w),shadowSlot=int(ls.y);vec3 to=lightPosition-vWorldPos;float distance=length(to);vec3 l=distance>0.00001?to/distance:n;float f=clamp(distance/max(lightRange,0.0001),0.0,1.0),w=clamp(1.0-f*f*f*f,0.0,1.0);float attenuation=w*w/(distance*distance+1.0);float spot=isSpot!=0?spotWeight(outerCos,innerCos,dot(-l,lightDirection)):1.0;if(attenuation<=0.0||spot<=0.0||dot(n,l)<=0.0)continue;float shadow=1.0;shadow=LocalShadow(shadowSlot,isSpot,lightPosition,vWorldPos,max(dot(n,l),0.0));result+=SurfaceReflectance(base,metal,rough,n,v,l)*lightColor*attenuation*spot*shadow;}
  float ao=(uHasOcclusion&&!uTerrain)?mix(1.0,texture(uOcclusion,mapUV(3)).r,uOcclusionStrength):1.0;
  vec3 f0=mix(vec3(0.04),base,metal);
  if(uEnvironmentEnabled){float nv=max(dot(n,v),0.0);vec3 f=f0+(max(vec3(1.0-rough),f0)-f0)*pow(1.0-nv,5.0);vec3 diffuse=texture(uEnvDiffuse,envUV(uEnvironmentInverse*n)).rgb*base*(vec3(1.0)-f)*(1.0-metal);vec3 reflection=reflect(-v,n);vec3 spec=textureLod(uEnvSpecular,envUV(uEnvironmentInverse*reflection),rough*(uEnvLevels-1.0)).rgb;vec2 brdf=texture(uBRDF,vec2(nv,rough)).rg;result+=(diffuse+spec*(f0*brdf.x+brdf.y))*uEnvironmentIntensity*ao;
@@ -389,6 +401,18 @@ void main() {
     vec4 base=vec4((uMaterialModel==0||uBaseLinear)?texColor.rgb:decodeSRGB(texColor.rgb),texColor.a)*uBaseFactor*vTint;
     if(uAlphaMode==1&&base.a<uAlphaCutoff)discard;
     if(uTerrain)base.rgb*=terrainBase(terrainGeometricNormal,terrainLayerWeights);
+    if(uHairShading&&vUV1.x<-.5){
+        // Undercoat fibres are too fine for additional geometry at distance.
+        // Fade their comb-aligned variation as the projected width shrinks.
+        float u=vUV.x+.005*sin(vUV.y*19.0+vUV.x*25.132741)+.0025*sin(vUV.y*37.0-vUV.x*62.831853);
+        float across=u*233.0;
+        float visible=1.0-smoothstep(.17,.72,fwidth(across));
+        float grain=.56*cos(across*6.2831853+sin(vUV.y*45.0+u*75.398224))
+                   +.44*cos(u*1935.2211+sin(vUV.y*52.0)*.6);
+        float tufts=sin(u*144.513262+sin(vUV.y*21.0))*sin(vUV.y*34.0+u*81.681409);
+        // Angular grain converges at the tip of the dome; fade it there.
+        base.rgb*=1.0+smoothstep(0.0,.19,vUV.y)*(grain*.24*visible+tufts*.095);
+    }
     if(uMaterialModel==0){FragColor=vec4(lighting*base.rgb,base.a);if(uModern)FragColor.rgb=decodeSRGB(FragColor.rgb);}
     else {vec3 emission=uEmission*(uHasEmissive?(uEmissiveLinear?texture(uEmissive,mapUV(4)).rgb:decodeSRGB(texture(uEmissive,mapUV(4)).rgb)):vec3(1.0))*uEmissionIntensity;float metal=uMetallic,rough=uRoughness;if(uTerrain)rough*=dot(terrainLayerWeights,uTerrainRoughness);if(uHasMR&&!uTerrain){vec4 mr=texture(uMR,mapUV(1));rough*=mr.g;metal*=mr.b;}vec3 v=normalize(uCameraPosition-vWorldPos);FragColor=vec4((uMaterialModel==2?base.rgb:pbrLight(base.rgb,metal,clamp(rough,0.05,1.0),normal,v,materialUV))+emission,uAlphaMode==0?1.0:base.a);}
 

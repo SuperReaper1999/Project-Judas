@@ -463,6 +463,10 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         }
         if(o.body&&m_assets){std::vector<std::string> ids;if(!o.body->collisionAsset.empty())ids.push_back(o.body->collisionAsset);for(auto& c:o.body->compoundBoxes)if(!c.assetId.empty())ids.push_back(c.assetId);for(auto& id:ids){m_assets->AddRef(id);m_referencedAssets.push_back(id);m_assets->RequestCollision(id,JobPriority::High);}}
         m_hasNavigation|=o.navigationSurface.has_value()||o.navigationAgent.has_value()||o.navigationObstacle.has_value()||o.navigationLink.has_value()||o.navigationModifier.has_value();
+        if(o.hairGroom){
+            if(!JudasHair::Validate(*o.hairGroom,outError))return fail(o,outError);
+            m_hair.try_emplace(o.id);
+        }
         m_scriptDefinitions[o.id]=o;
         if(!RegisterWeather(o,outError))return fail(o,outError);
         if(!o.scripts.empty())m_scriptOwners.insert(o.id);
@@ -733,6 +737,7 @@ void RuntimeWorld::RestoreAuthoredState() {
     for(auto id:articulations){std::string error;LeaveRagdoll(id,0,error);}
     // Destroy callbacks may still inspect lazy runtime components. Retire
     // scripts before clearing them so callbacks cannot recreate reset state.
+    ReleaseHairGraphics();m_hair.clear();
     m_scripts.reset();m_network.reset();m_players.reset();spawnStates.clear();
     EndWeatherAudio();m_weather.clear();m_weatherResponses.clear();m_weatherShelter={};
     m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_wheels.clear();m_powertrains.clear();m_spriteAnimationOwners.clear();m_spriteSteps.clear();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();
@@ -1014,6 +1019,7 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     m_spriteAnimationOwners.erase(id);m_spriteSteps.erase(id);
     ReleaseRenderResources(id);
     m_basicWaterOwners.erase(id);
+    RemoveHair(id);
     e->lifecycle = EntityLifecycle::Destroyed;
     if (m_cameraRenderer) for (auto& camera : m_renderCameras) {
         if (camera.id == id) { m_cameraRenderer->DestroyRenderTarget(camera.target); camera.target = {}; }

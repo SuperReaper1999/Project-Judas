@@ -159,6 +159,7 @@ void Renderer::BindMaterial(const GpuMaterial* gpu, const MaterialBinding& bindi
   uniforms.Float("uAlphaFactor",m.baseColor.a*alpha);
  } else {
   uniforms.Int("uMaterialModel",int(m.model));
+  uniforms.Int("uHairShading",binding.hairShading);
   uniforms.Int("uModern",m_linearRendering);
   uniforms.Int("uBaseLinear",ValidTexture(base)&&(m_textures[base.id].sceneLinear||m_textures[base.id].srgb));
   uniforms.Vec4("uBaseFactor",glm::value_ptr(m.baseColor));

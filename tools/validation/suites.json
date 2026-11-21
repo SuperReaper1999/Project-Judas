@@ -584,6 +584,12 @@
       ]
     },
     {
+      "name": "hair-groom",
+      "target": "judas_hair_groom_tests",
+      "groups": ["animation", "rendering", "lifecycle"],
+      "args": ["{output}/hair-groom"]
+    },
+    {
       "name": "asset-residency",
       "target": "judas_asset_residency_tests",
       "groups": [

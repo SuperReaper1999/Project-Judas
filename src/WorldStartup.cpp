@@ -78,6 +78,7 @@ bool RuntimeWorld::ReleaseWorldGraphics(Renderer& renderer, std::string& error) 
         emitter.gpu.reset();
     }
     ReleasePresentationTargets();
+    ReleaseHairGraphics();
     if (m_gridWater) m_gridWater->ReleaseGraphics(renderer);
     if (m_runtimeTerrain) m_runtimeTerrain->ReleaseGraphics();
     for (auto& [id, planet] : m_planets) planet->ReleaseGraphics();

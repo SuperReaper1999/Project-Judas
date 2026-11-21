@@ -559,6 +559,31 @@ void EditorSceneViewport::FrameEditMode(EditorContext &context, float deltaSecon
     }
     renderer.DrawWeather();
     DrawEditOverlay(context, renderer, scene);
+    if (const auto* selected = scene.Find(context.document.Selected()); selected && selected->hairGroom) {
+        const auto& groom = *selected->hairGroom;
+        std::string groomError;
+        if (groom.enabled && JudasHair::Validate(groom,groomError)) {
+            JudasHair::Frame frame{selected->transform.position,selected->transform.rotation,selected->transform.scale};
+            JudasHair::Guides guides;
+            JudasHair::Seed(guides,groom,frame);
+            DebugLineList preview;
+            for (const auto& guide : guides.strands)
+                preview.Line(guide.points.front(),guide.points[groom.segments],{1,.65f,.28f});
+            for (const auto& capsule : groom.colliders) {
+                const auto a=frame.position+frame.rotation*(capsule.start*frame.scale);
+                const auto b=frame.position+frame.rotation*(capsule.end*frame.scale);
+                const auto span=b-a;
+                if(glm::length(span)>.0001f) {
+                    const auto n=glm::normalize(span);
+                    const auto orientation=n.y<-.99999f ? glm::quat(0,1,0,0):
+                        glm::normalize(glm::quat(1+n.y,n.z,0,-n.x));
+                    preview.Capsule((a+b)*.5f,orientation,capsule.radius,glm::length(span)*.5f,{.32f,.86f,.92f});
+                } else preview.Sphere(a,capsule.radius,{.32f,.86f,.92f});
+            }
+            renderer.DrawDebugLines(preview.Lines(), false);
+        }
+    }
+
     if (terrain)
         renderer.DrawDebugLines(terrain->Footprint().Lines(), true);
     if (tilemapEditor && tilemapEditor->painting)

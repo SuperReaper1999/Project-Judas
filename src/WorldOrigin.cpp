@@ -199,6 +199,7 @@ bool RuntimeWorld::CommitOrigin() {
         ++record.revision;
     }
     ShiftParticleOrigin(delta);
+    ShiftHair(delta);
     for (auto &emitter : m_audioEmitters) {
         shift(emitter.transform.position);
         shift(emitter.lastPosition);

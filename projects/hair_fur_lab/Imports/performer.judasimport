@@ -1,0 +1,14 @@
+{
+  "assetId": "a620254f980b7120576ff18801ddf06b",
+  "format": "JudasImport",
+  "motions": [],
+  "output": "Assets/models/performer.judasmodel",
+  "settings": {
+    "allowBaseMesh": false,
+    "dependencyRemaps": {},
+    "sampleRate": 60,
+    "unitMeters": 0
+  },
+  "source": "Sources/a620254f980b7120576ff18801ddf06b/performer.gltf",
+  "version": 1
+}

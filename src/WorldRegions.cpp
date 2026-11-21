@@ -52,6 +52,7 @@ bool RuntimeWorld::StageRegionObject(const SceneObject& definition,const SceneOb
     }
     if(stage.body)m_physics.SetBodySimulationSuspended(m_entityCategories.at(definition.id).body,true);
     m_scriptDefinitions[definition.id]=definition;
+    if(definition.hairGroom)m_hair.try_emplace(definition.id);
     if(auto* e=FindEntity(definition.id))e->definition=definition;
     m_hierarchy.InsertObject(local);
     return ok;
@@ -144,6 +145,7 @@ void RuntimeWorld::RemoveRegionObject(EntityId id) {
     m_powertrains.erase(id);m_powertrainOwners.erase(id);RefreshPowertrainParticipants();
     RemoveDeformable(id);m_deformableOwners.erase(id);m_characters.erase(id);m_animationInstances.erase(id);m_physicalAnimations.erase(id);CancelPhysicalBalance(id);m_balances.erase(id);m_spriteAnimationOwners.erase(id);m_spriteSteps.erase(id);m_animationOwners.erase(id);m_jointOwners.erase(id);m_jointParticipants.erase(id);
     m_basicWaterOwners.erase(id);
+    RemoveHair(id);
     m_scriptDefinitions.erase(id);m_scriptOwners.erase(id);m_characterOwners.erase(id);m_entityCategories.erase(id);m_hierarchy.DestroyObject(id);
     if(auto it=m_regionAssets.find(id);it!=m_regionAssets.end()){
         if(m_assets)for(auto& a:it->second){m_assets->ReleaseRef(a);auto ref=std::find(m_referencedAssets.begin(),m_referencedAssets.end(),a);if(ref!=m_referencedAssets.end())m_referencedAssets.erase(ref);}

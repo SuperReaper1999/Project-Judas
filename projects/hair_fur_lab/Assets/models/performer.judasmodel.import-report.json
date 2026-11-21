@@ -1,0 +1,71 @@
+{
+  "assetId": "a620254f980b7120576ff18801ddf06b",
+  "clips": [
+    {
+      "duration": 2.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Head turn"
+    }
+  ],
+  "diagnostics": [],
+  "hierarchyNodes": 3,
+  "importRecord": "{\"digest\":\"6251872bde93142892b7e2d969284cf99ef534fb49721d88743158b014062102\",\"inputs\":{\"Sources/a620254f980b7120576ff18801ddf06b/performer.gltf\":\"ebcd815c888927c1f5c0f6b6bfa1d0daa5009708401402b2b0c944567303484e\"},\"manifest\":{\"assetId\":\"a620254f980b7120576ff18801ddf06b\",\"clips\":[{\"duration\":2.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"Head turn\"}],\"diagnostics\":[],\"hierarchyNodes\":3,\"inputs\":{\"Sources/a620254f980b7120576ff18801ddf06b/performer.gltf\":\"ebcd815c888927c1f5c0f6b6bfa1d0daa5009708401402b2b0c944567303484e\"},\"joints\":[\"Root\",\"Root/Cranial\",\"Performer exterior\",\"__JudasMotionRoot\"],\"materialKeys\":[\"Eye white\",\"Iris and boots\",\"Lip\",\"Sage jacket\",\"Skin\",\"Slate trousers\"],\"parts\":[{\"identity\":\"Performer exterior/material/Eye white\",\"node\":2,\"triangles\":336},{\"identity\":\"Performer exterior/material/Iris and boots\",\"node\":2,\"triangles\":672},{\"identity\":\"Performer exterior/material/Lip\",\"node\":2,\"triangles\":168},{\"identity\":\"Performer exterior/material/Sage jacket\",\"node\":2,\"triangles\":1008},{\"identity\":\"Performer exterior/material/Skin\",\"node\":2,\"triangles\":1176},{\"identity\":\"Performer exterior/material/Slate trousers\",\"node\":2,\"triangles\":840}],\"recipeDigest\":\"6251872bde93142892b7e2d969284cf99ef534fb49721d88743158b014062102\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-12-M74-retarget-1-model-1-M95-events-1\",\"skinPaletteEntries\":2,\"sourceBones\":0,\"sourceUnitMeters\":1.0,\"vertices\":12600},\"recipe\":\"Imports/performer.judasimport\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-12-M74-retarget-1-model-1-M95-events-1\"}",
+  "inputs": {
+    "Sources/a620254f980b7120576ff18801ddf06b/performer.gltf": "ebcd815c888927c1f5c0f6b6bfa1d0daa5009708401402b2b0c944567303484e"
+  },
+  "joints": [
+    "Root",
+    "Root/Cranial",
+    "Performer exterior",
+    "__JudasMotionRoot"
+  ],
+  "materialKeys": [
+    "Eye white",
+    "Iris and boots",
+    "Lip",
+    "Sage jacket",
+    "Skin",
+    "Slate trousers"
+  ],
+  "outputHash": "3960d15b0f7d8b9120d1f31b0c30d4e03f08cf270d638f204846a41967d94618",
+  "parts": [
+    {
+      "identity": "Performer exterior/material/Eye white",
+      "node": 2,
+      "triangles": 336
+    },
+    {
+      "identity": "Performer exterior/material/Iris and boots",
+      "node": 2,
+      "triangles": 672
+    },
+    {
+      "identity": "Performer exterior/material/Lip",
+      "node": 2,
+      "triangles": 168
+    },
+    {
+      "identity": "Performer exterior/material/Sage jacket",
+      "node": 2,
+      "triangles": 1008
+    },
+    {
+      "identity": "Performer exterior/material/Skin",
+      "node": 2,
+      "triangles": 1176
+    },
+    {
+      "identity": "Performer exterior/material/Slate trousers",
+      "node": 2,
+      "triangles": 840
+    }
+  ],
+  "recipeDigest": "6251872bde93142892b7e2d969284cf99ef534fb49721d88743158b014062102",
+  "recordHash": "bf051b9446e1a229249ec521349b485134e24ab633dfdfec7089cad0e75dfdb7",
+  "revision": "M66-ufbx-0.23.1-cgltf-1.15-cook-12-M74-retarget-1-model-1-M95-events-1",
+  "skinPaletteEntries": 2,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "vertices": 12600
+}

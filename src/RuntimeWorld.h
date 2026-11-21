@@ -23,6 +23,7 @@
 #include "FidelityPolicy.h"
 #include "GravityContextMap.h"
 #include "GravityField.h"
+#include "hair/GuideSimulation.h"
 #include "GravityVolume.h"
 #include "PhysicsWorld.h"
 #include "ReferenceFrame.h"
@@ -36,6 +37,7 @@
 #include "LocalMultiplayer.h"
 
 class NetworkSession;
+namespace JudasLighting { struct ShadowCaster; }
 class PlanetTiles;
 struct PlanetView;
 class SceneSession;
@@ -446,6 +448,13 @@ public:
     bool SetSocket(EntityId,const SceneSocketComponent&,bool remove,std::string&);
     const std::vector<glm::mat4>* AnimationSkin(EntityId,float alpha=1) const;
     void UpdateAnimations(float dt);
+    void UpdateHair(float dt);
+    void PrepareHair(Renderer&,float alpha,glm::vec3 eye) const;
+    void DrawHair(Renderer&) const;
+    void ReleaseHairGraphics();
+    void AppendHairShadowCasters(std::vector<JudasLighting::ShadowCaster>&) const;
+    const JudasHair::Guides* HairGuides(EntityId id) const;
+
     struct FractureRigidState {std::vector<EntityId> parts;std::vector<JointHandle> bonds,supports;bool initialized=false;};
     struct DeformableRecord {FractureRigidState rigid;mutable uint64_t meshTopology=0;
         // Detailed exterior topology depends on component ownership/removal,
@@ -766,6 +775,23 @@ private:
 
     mutable std::vector<RenderCamera> m_renderCameras;
     mutable Renderer* m_cameraRenderer = nullptr;
+    struct HairInstance {
+        JudasHair::Guides simulation;
+        MeshHandle mesh;
+        JudasHair::Frame rendered;
+        float alpha = -1;
+        unsigned density = 0;
+        uint64_t geometryRevision = 0;
+        VisualBounds bounds;
+        bool dirty = true;
+    };
+    mutable std::map<EntityId, HairInstance> m_hair;
+    mutable std::vector<MeshVertex> m_hairVertices;
+    mutable Renderer* m_hairRenderer = nullptr;
+    mutable MaterialHandle m_hairMaterial;
+    void RemoveHair(EntityId);
+    void ShiftHair(glm::dvec3);
+
     mutable std::uint64_t m_cameraFrame = 0;
     std::vector<DynamicBody> m_dynamicBodies;
     std::vector<DynamicVisual> m_dynamicVisuals;

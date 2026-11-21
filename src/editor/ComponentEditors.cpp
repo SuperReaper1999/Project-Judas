@@ -996,6 +996,83 @@ void DrawFluidVolume(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
 
 
 
+void DrawHairGroom(EditorDocument& doc, SceneObject& object, EditorPanelState& state) {
+    auto candidate = *object.hairGroom;
+    bool changed = false;
+    const char* presets[] = {"Animal coat", "Mane", "Tail", "Human hair", "Beard"};
+    if (ImGui::BeginCombo("Starting preset", "Choose preset")) {
+        for (unsigned i = 0; i < 5; ++i)
+            if (ImGui::Selectable(presets[i])) {
+                candidate = JudasHair::MakePreset(static_cast<JudasHair::Preset>(i));
+                changed = true;
+            }
+        ImGui::EndCombo();
+    }
+    changed |= ImGui::Checkbox("Enabled", &candidate.enabled);
+    changed |= ImGui::Checkbox("Simulate guides", &candidate.simulated);
+    changed |= ImGui::Checkbox("Cast shadows", &candidate.castsShadow);
+    changed |= ImGui::Checkbox("Sweep guide tips against world", &candidate.worldCollision);
+    changed |= ImGui::DragFloat3("Patch centre", &candidate.center.x, .005f, -64, 64, "%.3f", ImGuiSliderFlags_AlwaysClamp);
+    changed |= ImGui::DragFloat3("Patch extent", &candidate.extent.x, .005f, .001f, 32, "%.3f", ImGuiSliderFlags_AlwaysClamp);
+    changed |= ImGui::DragFloat3("Comb direction", &candidate.flow.x, .025f, -1, 1, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+    changed |= ImGui::ColorEdit3("Groom colour", &candidate.color.x);
+    const auto scalar = [&](const char* label, float& value, float step, float low, float high) {
+        changed |= ImGui::DragFloat(label, &value, step, low, high, "%.3f", ImGuiSliderFlags_AlwaysClamp);
+    };
+    scalar("Strand length (m)",candidate.length,.002f,.003f,8);
+    scalar("Root width (m)",candidate.width,.0005f,.0001f,.3f);
+    scalar("Length variation",candidate.variation,.02f,0,.9f);
+    scalar("Comb strength",candidate.comb,.02f,0,1);
+    scalar("Clumping",candidate.clump,.02f,0,1);
+    scalar("Patch coverage (degrees)",candidate.coverageDegrees,1,18,165);
+    scalar("Base coat coverage",candidate.undercoat,.02f,0,1);
+    scalar("Strand wave",candidate.wave,.02f,0,1);
+    scalar("Stiffness",candidate.stiffness,.02f,0,1);
+    scalar("Damping",candidate.damping,.02f,0,1);
+    scalar("Wind response",candidate.wind,.02f,0,2);
+    scalar("LOD start (m)",candidate.lodStart,.25f,.1f,std::min(5000.f,candidate.lodEnd));
+    scalar("LOD end (m)",candidate.lodEnd,.25f,candidate.lodStart,10000);
+    int guides=int(candidate.guides), segments=int(candidate.segments), strands=int(candidate.strands);
+    if (ImGui::SliderInt("Guides", &guides, 4, 32)) {
+        candidate.guides=unsigned(guides);
+        candidate.strands=std::max(candidate.strands,candidate.guides);
+        changed=true;
+    }
+    if (ImGui::SliderInt("Guide segments", &segments, 2, 8)) {
+        candidate.segments=unsigned(segments); changed=true;
+    }
+    if (ImGui::SliderInt("Rendered fibres", &strands, guides, 512)) {
+        candidate.strands=unsigned(strands); changed=true;
+    }
+    for (size_t i=0;i<candidate.colliders.size();++i) {
+        ImGui::PushID(int(i));
+        auto& collider=candidate.colliders[i];
+        changed |= ImGui::DragFloat3("Capsule start", &collider.start.x, .005f, -64, 64, "%.3f", ImGuiSliderFlags_AlwaysClamp);
+        changed |= ImGui::DragFloat3("Capsule end", &collider.end.x, .005f, -64, 64, "%.3f", ImGuiSliderFlags_AlwaysClamp);
+        scalar("Capsule radius (m)", collider.radius, .005f, .001f, 16);
+        const bool remove=ImGui::Button("Remove capsule");
+        ImGui::PopID();
+        if (remove) {
+            candidate.colliders.erase(candidate.colliders.begin()+i);
+            changed=true;
+            break;
+        }
+    }
+    if (candidate.colliders.size()<4 && ImGui::Button("Add collision capsule")) {
+        candidate.colliders.emplace_back();
+        changed=true;
+    }
+    if (changed) {
+        std::string error;
+        if (JudasHair::Validate(candidate,error)) {
+            doc.BeginEdit();
+            object.hairGroom=std::move(candidate);
+            doc.CommitEdit();
+        } else state.status=error;
+    }
+    ImGui::TextWrapped("Select the groom owner to preview roots and capsules. Use a parent or bone socket to place its local growth patch. Enter Play to see simulated hair.");
+}
+
 void DrawBasicWater(EditorDocument& doc,SceneObject& o,EditorPanelState&){
     auto& w=*o.basicWater;Checkbox(doc,"Enabled",w.enabled);
     DragVec3(doc,"Half width / depth / half length",w.halfExtents,.1f);
@@ -1182,6 +1259,7 @@ const std::vector<ComponentEditor>& ComponentEditorRegistry() {
         Make<WeatherResponseSettings>("Weather wind response",'W',&SceneObject::weatherResponse,DrawWeatherResponse),
         Make<PlanetSettings>("Planet terrain",'T',&SceneObject::planet,DrawPlanet),
         Make<DeformableSettings>("Deformable",'D',&SceneObject::deformable,DrawDeformable),
+        Make<JudasHair::Groom>("Hair and fur",'H',&SceneObject::hairGroom,DrawHairGroom),
         Make<BasicWaterSettings>("Basic water",'W',&SceneObject::basicWater,DrawBasicWater),
         Make<NavigationSurfaceSettings>("Navigation surface",'N',&SceneObject::navigationSurface,DrawNavSurface),
         Make<NavigationAgentSettings>("Navigation agent",'N',&SceneObject::navigationAgent,DrawNavAgent),
