@@ -3,16 +3,20 @@
 #include "ModelLoader.h"
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
+#include "ScreenshotWriter.h"
 #include "WorldPersistence.h"
 #include "WorldPresentation.h"
 #include "ScriptSystem.h"
 #include "WorldGraphicsState.h"
+#include "terrain/TerrainSource.h"
 #include "vulkan/VulkanBackend.h"
 #include "fixtures/M93AssetFixtures.h"
 #include <cstdio>
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
+#include <thread>
+#include <chrono>
 #include <glm/gtc/matrix_transform.hpp>
 static int checks = 0, failures = 0;
 static void Check(bool yes, const char *message) {
@@ -20,6 +24,90 @@ static void Check(bool yes, const char *message) {
   failures += !yes;
   printf("%s %s\n", yes ? "PASS" : "FAIL", message);
 }
+static void CheckTerrainStartup(EngineHost& host, const std::filesystem::path& root) {
+  auto& assets = host.Resources();
+  assets.ConfigureVisualStreaming(0);
+  assets.SetBudgetBytes(1);
+  assets.SetBlockingMode(false);
+  std::string error;
+  AssetRecord layer, normal;
+  auto track = [&](const char* file, const glm::u8vec3& color, AssetRecord& asset) {
+    const auto path = root / "Assets" / file;
+    std::vector<unsigned char> rgb;
+    for (int i = 0; i < 16; ++i)
+      rgb.insert(rgb.end(), {color.r, color.g, color.b});
+    return WriteRgbPng(path.string(), 4, 4, rgb) &&
+           host.Assets().Track(path.string(), asset, error);
+  };
+  if (!track("terrain-layer.png", {160, 70, 20}, layer) ||
+      !track("terrain-normal.png", {128, 128, 255}, normal)) {
+    Check(false, "register terrain layer and detail normal");
+    return;
+  }
+  Scene scene;
+  auto& terrain = scene.CreateObject("Terrain under startup cache pressure");
+  const auto id = terrain.id;
+  terrain.body.emplace();
+  terrain.render.emplace();
+  RuntimeWorld world;
+  auto source = TerrainV2::Create(17, 17, .5f);
+  source.layerTextures[0] = source.layerTextures[1] = layer.id;
+  source.materialDetail.normalTexture = normal.id;
+  if (!world.Build(scene, &assets, error) ||
+      !world.LiveTerrain().CreateLandscape(id, std::move(source), error) ||
+      !world.LiveTerrain().Wait(id, error)) {
+    Check(false, error.c_str());
+    return;
+  }
+  auto& renderer = host.GetRenderer();
+  SceneTransform view;
+  view.position = {0, 5, 6};
+  view.rotation = glm::quatLookAt(glm::normalize(-view.position), glm::vec3(0, 1, 0));
+  Check(world.SetRuntimeView(view, 60), "startup uses a camera looking at the terrain");
+  const auto before = assets.Stats().misses;
+  unsigned stable = 0;
+  bool ok = true;
+  for (unsigned pass = 0; pass < 180 && stable < 2; ++pass) {
+    host.PumpResources();
+    bool ready = false;
+    if (!world.PrepareStartup(renderer, 640, 360, ready, error)) {
+      ok = false;
+      break;
+    }
+    stable = ready ? stable + 1 : 0;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  }
+  Check(ok && stable == 2, "async terrain startup reaches two stable passes below the working set budget");
+  Check(assets.RefCount(layer.id) == 1 && assets.RefCount(normal.id) == 1 &&
+        assets.TryGetTexture(layer.id).IsValid() && assets.TryGetTexture(normal.id).IsValid(),
+        "duplicate layer slots and the detail normal hold one reference per texture owner");
+  bool ready = false;
+  host.PumpResources();
+  Check(world.PrepareStartup(renderer, 640, 360, ready, error) && ready &&
+        assets.Stats().misses - before == 2 && assets.Stats().overBudgetBytes > 0,
+        "subsequent prep keeps both textures without more loads under cache pressure");
+  std::vector<unsigned char> visible, hidden;
+  renderer.CaptureFrame(640, 360, visible);
+  world.SetRenderVisible(id, true, false);
+  Check(world.PrepareStartup(renderer, 640, 360, ready, error) && ready,
+        "hidden terrain no longer participates in the startup draw");
+  renderer.CaptureFrame(640, 360, hidden);
+  Check(!visible.empty() && visible.size() == hidden.size() && visible != hidden,
+        "prepared terrain produced visible pixels");
+  host.PumpResources();
+  Check(assets.RefCount(layer.id) == 0 && assets.RefCount(normal.id) == 0 &&
+        assets.StateOf(layer.id) == ResourceState::Unloaded &&
+        assets.StateOf(normal.id) == ResourceState::Unloaded,
+        "hidden terrain releases residency and both textures can be evicted");
+  world.SetRenderVisible(id, true, true);
+  world.PrepareRuntimeTerrain({});
+  Check(assets.RefCount(layer.id) == 1 && assets.RefCount(normal.id) == 1,
+        "showing terrain again restores exactly one residency reference per texture");
+  world.Destroy();
+  Check(assets.RefCount(layer.id) == 0 && assets.RefCount(normal.id) == 0,
+        "terrain teardown releases both material references");
+}
+
 int main(int argc, char **argv) {
   std::setvbuf(stdout, nullptr, _IOLBF, 0);
   auto root =
@@ -314,6 +402,8 @@ int main(int argc, char **argv) {
     Check(scripts->Capture()[0].json != scriptState, "the same script instance resumes ticking after graphics recreation");
   }
   legacy.Destroy();
+  assets.ReleaseAll();
+  CheckTerrainStartup(host, root);
   assets.ReleaseAll();
   std::filesystem::create_directories(root / "SourceArt");
   auto source = root / "SourceArt/image.png";

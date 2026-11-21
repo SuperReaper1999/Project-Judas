@@ -22,7 +22,38 @@ void Runtime::CommitPresentation() {
     }
     drawPatches.Reset();
 }
+void Runtime::SyncMaterialDemand(bool sourceChanged) {
+    auto *resources = world.Resources();
+    if (!resources)
+        return;
+    const auto *definition = Definition();
+    const bool active = source && definition && definition->render && world.IsPublished(owner) &&
+                        world.RenderVisible(owner) && (!source->chart || bindingPublished);
+    if (!sourceChanged && active == materialDemandActive)
+        return;
+
+    // Startup pumps can evict ready, unreferenced textures between hidden
+    // frames. Keep the published terrain's material working set resident,
+    // including between the refreshes of a low-cadence secondary camera.
+    std::set<AssetId> next;
+    if (active) {
+        for (const auto &id : source->layerTextures)
+            if (!id.empty())
+                next.insert(id);
+        if (!source->materialDetail.normalTexture.empty())
+            next.insert(source->materialDetail.normalTexture);
+    }
+    for (const auto &id : next)
+        if (!materialDemand.count(id))
+            resources->AddRef(id);
+    for (const auto &id : materialDemand)
+        if (!next.count(id))
+            resources->ReleaseRef(id);
+    materialDemand = std::move(next);
+    materialDemandActive = active;
+}
 void Runtime::PrepareViews(const std::vector<PlanetView> &views, glm::dvec3 origin, float seconds, float visualBias) {
+    SyncMaterialDemand();
     if (!source || !lod)
         return;
     if (source->chart) {
@@ -57,20 +88,21 @@ void Runtime::Draw(Renderer &renderer) const {
     if (!d || !d->render)
         return;
     renderer.SetRenderLayer(world.RenderLayerOf(owner));
-    renderer.SetMaterialBindings(BuildRenderMaterialBindings(world.Resources(), *d->render));
-    auto texture = world.Resources() ? world.Resources()->TryGetTexture(d->render->textureAsset)
-                                     : TextureHandle{};
-    std::array<TextureHandle, 4> layers;
+    if (!renderer.AcceptsCurrentLayer())
+        return;
+    auto *resources = world.Resources();
+    renderer.SetMaterialBindings(BuildRenderMaterialBindings(resources, *d->render));
+    auto texture = resources ? resources->TryGetTexture(d->render->textureAsset) : TextureHandle{};
+    auto materialTexture = [&](const AssetId& id) {
+        if (!resources || id.empty())
+            return TextureHandle{};
+        resources->RequestTexture(id);
+        return resources->TryGetTexture(id);
+    };
+    std::array<TextureHandle, 4> layers{};
     for (unsigned i = 0; i < 4; ++i)
-        if (!source->layerTextures[i].empty()) {
-            world.Resources()->RequestTexture(source->layerTextures[i]);
-            layers[i] = world.Resources()->TryGetTexture(source->layerTextures[i]);
-        }
-    TextureHandle normal;
-    if (!source->materialDetail.normalTexture.empty()) {
-        world.Resources()->RequestTexture(source->materialDetail.normalTexture);
-        normal = world.Resources()->TryGetTexture(source->materialDetail.normalTexture);
-    }
+        layers[i] = materialTexture(source->layerTextures[i]);
+    const auto normal = materialTexture(source->materialDetail.normalTexture);
     const auto worldToTerrain=glm::inverse(glm::translate(glm::mat4(1), d->transform.position) *
                                            glm::mat4_cast(d->transform.rotation));
     renderer.BeginTerrainMaterial({}, layers, source->layerColours, worldToTerrain,

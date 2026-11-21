@@ -50,6 +50,9 @@ const RuntimeTerrainStatus &Runtime::State() const {
 }
 Runtime::Runtime(RuntimeWorld &w, uint64_t id) : world(w), owner(id) {}
 Runtime::~Runtime() {
+    if (auto *resources = world.Resources())
+        for (const auto &id : materialDemand)
+            resources->ReleaseRef(id);
     if (boundPlanet)
         world.UnbindPlanetTerrain(owner, boundPlanet);
     if (navigation)
@@ -481,6 +484,7 @@ bool Runtime::Publish(std::string &error) {
     }
     CommitPresentation();
     source = pending->source;
+    SyncMaterialDemand(true);
     geometryCache = pending->cache;
     baseAsset = pending->baseAsset;
     baseFingerprint = pending->baseFingerprint;

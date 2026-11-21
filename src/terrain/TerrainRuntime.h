@@ -13,6 +13,7 @@
 #include "TerrainStatus.h"
 #include <map>
 #include <memory>
+#include <set>
 #include <unordered_set>
 
 class RuntimeWorld;
@@ -77,6 +78,8 @@ class Runtime {
     std::string baseAsset, baseFingerprint;
     RasterChanges raster;
     mutable RenderPages renderPages;
+    std::set<std::string> materialDemand;
+    bool materialDemandActive = false;
     std::shared_ptr<const HeightLod> lod;
     std::shared_ptr<const NavigationData> navigation;
     bool navigationInstalled = false;
@@ -88,5 +91,6 @@ class Runtime {
     bool ValidateSubmission(const Source &, std::string &) const;
     bool Publish(std::string &);
     void CommitPresentation();
+    void SyncMaterialDemand(bool sourceChanged = false);
 };
 } // namespace TerrainV2
