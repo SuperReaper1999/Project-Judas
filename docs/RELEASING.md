@@ -5,14 +5,12 @@ Source identity is **Judas Engine Alpha v2.0.0** (`2.0.0-alpha.1`).
 [Source notes](ALPHA_V2_0_0_NOTES.md) · [Published packages](https://github.com/SuperReaper1999/Project-Judas/releases) ·
 [Support boundaries](ALPHA_SUPPORT_MATRIX.md).
 
-Verified publication on **2026-11-04** is
-[`v1.2.5-alpha.1`](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.2.5-alpha.1) from
-`a1f363632582da2855b84f9adc79cfc6cf0521fa`.
-[Linux/Windows qualification](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41753879925)
-and [protected publication](https://github.com/SuperReaper1999/Project-Judas/actions/runs/41757770903) passed.
-The published packages and Alpha feed were verified. Native Windows CI
-is functional evidence. Earlier Windows hardware and Android phone
-acceptance keep their recorded scopes.
+Verified publication on **2026-11-21** is
+[`v2.0.0-alpha.1`](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v2.0.0-alpha.1) from
+`bd81d9f29d72bf8a34ced679105a7577b6bb471c`.
+[Candidate qualification](https://github.com/SuperReaper1999/Project-Judas/actions/runs/44953434449)
+and [protected publication](https://github.com/SuperReaper1999/Project-Judas/actions/runs/44957015796) passed.
+The published packages and [Alpha feed](https://github.com/SuperReaper1999/Project-Judas/releases/download/update-manifests/Alpha.json) were verified.
 
 Source identity and publication are separate. The
 [publication record](RELEASE_STATUS.json) is a dated receipt.

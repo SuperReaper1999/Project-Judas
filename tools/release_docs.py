@@ -78,11 +78,9 @@ def summary(root, document):
             f"Verified publication on **{published['published_at'][:10]}** is",
             f"[`{tag}`]({BASE}/releases/tag/{tag}) from",
             f"`{published['source_revision']}`.",
-            f"[Linux/Windows qualification]({BASE}/actions/runs/{published['preparation_run']})",
+            f"[Candidate qualification]({BASE}/actions/runs/{published['preparation_run']})",
             f"and [protected publication]({BASE}/actions/runs/{published['publication_run']}) passed.",
-            'The published packages and Alpha feed were verified. Native Windows CI',
-            'is functional evidence. Earlier Windows hardware and Android phone',
-            'acceptance keep their recorded scopes.',
+            f"The published packages and [Alpha feed]({BASE}/releases/download/update-manifests/Alpha.json) were verified.",
         ]
     lines += [
         '',
