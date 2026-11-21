@@ -36,12 +36,20 @@ class Promotion(unittest.TestCase):
     def setUp(self):
         self.repository = 'owner/engine'
         self.revision = 'a'*40
-        self.run = dict(head_sha=self.revision, conclusion='success',
+        self.run = dict(head_sha=self.revision, status='completed', conclusion='success',
                         head_repository={'full_name': self.repository},
                         head_branch='Experimental', event='workflow_dispatch',
                         path='.github/workflows/linux-release-candidate.yml')
         self.jobs = [dict(name=n, status='completed', conclusion='success')
                      for n in ('linux',)]
+        self.jobs[0]['steps'] = [dict(name=step, status='completed', conclusion='success')
+                                 for step in promotion.REQUIRED_STEPS]
+
+    def test_old_open_gl_only_or_skipped_dual_backend_step_is_not_proof(self):
+        self.assertFalse(self.accepted(jobs=[{**self.jobs[0], 'steps': []}]))
+        jobs = copy.deepcopy(self.jobs)
+        jobs[0]['steps'][1]['conclusion'] = 'skipped'
+        self.assertFalse(self.accepted(jobs=jobs))
 
     def accepted(self, run=None, jobs=None):
         return promotion.qualifies(self.run if run is None else run, self.jobs if jobs is None else jobs,
@@ -80,6 +88,15 @@ class Routing(unittest.TestCase):
         self.assertEqual(workflow.count('python3 tools/package_source.py'),1)
         self.assertNotIn('--allow-untracked',workflow)
         self.assertIn('git diff --exit-code HEAD',workflow)
+
+    def test_alpha_candidate_uses_dual_backend_and_all_proof_steps(self):
+        workflow=(ROOT/'.github/workflows/linux-release-candidate.yml').read_text(encoding='utf-8')
+        for step in promotion.REQUIRED_STEPS:
+            self.assertIn('- name: '+step+'\n', workflow)
+        for fragment in ('-DJUDAS_VULKAN=ON','build/linux-vulkan-sdk',
+                         'test "$CANDIDATE" = "$GITHUB_SHA"', '--vulkan --alpha-v2',
+                         '--tmpfs "$GITHUB_WORKSPACE"', 'linux-sdk.tar.gz.sha256'):
+            self.assertIn(fragment,workflow)
 
     def test_native_and_unknown_inputs_still_require_native_validation(self):
         ignored = path_patterns('prealpha.yml', 'paths-ignore')

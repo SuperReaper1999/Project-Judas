@@ -20,16 +20,93 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.dont_write_bytecode=True
 
 
+def qualify_alpha_v2(sdk, work, env, run):
+    """Exercise the packaged, skinned groom project and a live API round trip."""
+    project = work/'hair-project'
+    shutil.copytree(sdk/'projects/hair_fur_lab', project)
+    project_file = project/'hair_fur_lab.judasproj'
+    for backend in ('opengl', 'vulkan'):
+        editor_env = dict(env, JUDAS_GRAPHICS=backend, JUDAS_VULKAN_VALIDATION='1',
+                         JUDAS_EDITOR_AUTOTEST=str(work/f'hair-editor-{backend}'),
+                         JUDAS_EDITOR_AUTOTEST_SELECT='31',
+                         XDG_CONFIG_HOME=str(work/f'hair-config-{backend}'))
+        name = f'hair-editor-{backend}'
+        run(name, [sdk/'judas_editor', project_file], editor_env, vulkan_graphics=backend=='vulkan')
+        log = (work/(name+'.log')).read_text(errors='replace')
+        if 'undo restores: IDENTICAL' not in log or 'after play/stop is IDENTICAL' not in log:
+            raise ValueError(f'{backend} groom editor did not complete undo and Play/Stop')
+
+    script = project/'Assets/scripts/showcase.js'
+    source = script.read_text(encoding='utf-8')
+    if source.count('export default class {') != 1:
+        raise ValueError('Hair lab switch probe requires a single showcase class')
+    script.write_text(source.replace('export default class {', 'class Showcase {') + r'''
+import {settings, ui} from 'judas';
+Showcase.prototype.update = function () {
+    const state = settings.read();
+    if (!state || state.backendLocked) return;
+    if (!this.switchStage && this.state.elapsed >= 0.15) {
+        if (state.activeBackend !== 'opengl' || !state.liveBackendSwitch)
+            throw new Error('Packaged runtime did not offer a live OpenGL to Vulkan switch');
+        this.marker = {elapsed: this.state.elapsed};
+        this.switchStage = 'to-vulkan';
+        settings.switchBackend('vulkan');
+    } else if (this.switchStage === 'to-vulkan' && state.backendTransition === 'completed') {
+        if (state.activeBackend !== 'vulkan' || !this.marker)
+            throw new Error('Vulkan did not retain the showcase instance');
+        this.switchStage = 'to-opengl';
+        settings.switchBackend('opengl');
+    } else if (this.switchStage === 'to-opengl' && state.backendTransition === 'completed') {
+        if (state.activeBackend !== 'opengl' || !world.entity('31')?.valid ||
+            this.state.elapsed < this.marker.elapsed)
+            throw new Error('OpenGL did not restore the same groom scene and script');
+        console.log('ALPHA_V2_ROUNDTRIP_OK');
+        ui.quit();
+    } else if (this.switchStage && state.backendError) {
+        throw new Error(state.backendError);
+    }
+};
+export default Showcase;
+''', encoding='utf-8')
+    package = work/'hair-export'
+    run('hair-export', [sdk/'judas_export', project_file, package, sdk/'judas'])
+    moved = work/'hair-relocated'
+    package.rename(moved)
+    exe = moved/'judas'
+    with exe.open('rb') as exported, (sdk/'judas').open('rb') as packaged:
+        if hashlib.file_digest(exported, 'sha256').digest() != hashlib.file_digest(packaged, 'sha256').digest():
+            raise ValueError('Hair export runtime differs from the candidate SDK')
+    # Explicit backend launches exercise the same standalone archive that is
+    # then run without a launch override for the in-process switch.
+    for backend in ('opengl', 'vulkan'):
+        image = work/f'hair-{backend}.png'
+        harness = work/f'hair-{backend}.test'
+        harness.write_text(f'FRAMES 95\nSCREENSHOT 85 {image}\n', encoding='utf-8')
+        run(f'hair-runtime-{backend}', [exe, moved/'game.judasproj'],
+            dict(env, JUDAS_GRAPHICS=backend, JUDAS_VULKAN_VALIDATION='1', JUDAS_TEST_SCRIPT=str(harness)),
+            vulkan_graphics=backend=='vulkan')
+        if not image.is_file() or 'SCRIPT STOPPED' in (work/f'hair-runtime-{backend}.log').read_text(errors='replace'):
+            raise ValueError(f'{backend} relocated groom scene did not render')
+    run('hair-live-backend-switch', [exe, moved/'game.judasproj'],
+        dict(env, JUDAS_VULKAN_VALIDATION='1', XDG_DATA_HOME=str(work/'switch-user')), vulkan_graphics=True)
+    log = (work/'hair-live-backend-switch.log').read_text(errors='replace')
+    if 'ALPHA_V2_ROUNDTRIP_OK' not in log or 'SCRIPT STOPPED' in log:
+        raise ValueError('Packaged runtime did not complete OpenGL → Vulkan → OpenGL')
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--sdk',type=Path,required=True);p.add_argument('--work',type=Path,required=True)
     p.add_argument('--rootfs',type=Path);p.add_argument('--mesa',type=Path)
     p.add_argument('--vulkan', action='store_true', help='Exercise the native Linux Vulkan SDK with validation enabled')
+    p.add_argument('--alpha-v2', action='store_true', help='Exercise the packaged V2 groom editor, export and live backend switch')
     a=p.parse_args();sdk=a.sdk.resolve();work=a.work.resolve();work.mkdir(exist_ok=False,parents=True)
     windows=os.name=='nt';ext='.exe' if windows else '';rows=[]
     identity=json.loads((sdk/'BUILD_INFO.json').read_text())
     if a.vulkan and (windows or a.rootfs or not identity.get('vulkan')):
         p.error('--vulkan requires a Vulkan-enabled SDK on a native Linux host')
+    if a.alpha_v2 and not a.vulkan:
+        p.error('--alpha-v2 requires both compiled backends and --vulkan')
     spec=importlib.util.spec_from_file_location('baseline',ROOT/'tools/build_linux_baseline.py');baseline=importlib.util.module_from_spec(spec);spec.loader.exec_module(baseline)
     shutil.copytree(ROOT/'tests/fixtures/rendering',work/'fixtures')
     shutil.copyfile(ROOT/'scripts/qualify_sdk_workflows.py',work/'tool-workflows.py')
@@ -109,7 +186,10 @@ def main():
             run('relocated-'+name,[launch/('judas'+ext),launch/'game.judasproj'],
                 dict(graphics_env,JUDAS_TEST_SCRIPT=str(driver/'smoke.test')),vulkan_graphics=a.vulkan)
         if not (driver/'moved.png').is_file():raise ValueError('Relocated game did not render a frame')
-    (work/'COMPLETE.json').write_text(json.dumps({'passed':True,'build':identity,'sourceOnlyMounted':False,'packageOnlyNamespaces':bool(a.rootfs),'softwareGraphics':bool(a.rootfs or a.mesa),'hardwareAcceptance':False,'operations':len(rows)},indent=2)+'\n')
+    if a.alpha_v2:
+        qualify_alpha_v2(sdk, work, base_env, run)
+        run('sdk-verify-after-alpha-v2',[py, sdk/'tools/package_sdk.py','verify',sdk])
+    (work/'COMPLETE.json').write_text(json.dumps({'passed':True,'build':identity,'sourceOnlyMounted':False,'packageOnlyNamespaces':bool(a.rootfs),'softwareGraphics':bool(a.rootfs or a.mesa),'hardwareAcceptance':False,'operations':len(rows),'alphaV2':a.alpha_v2},indent=2)+'\n')
     print('SDK workflows passed:',work)
 
 if __name__=='__main__':main()

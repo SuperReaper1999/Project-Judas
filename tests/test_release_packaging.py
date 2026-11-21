@@ -23,13 +23,21 @@ sys.path.insert(0,str(ROOT/'scripts'))
 import qualify_m100
 
 
-def sdk(path,platform):
+def sdk(path,platform,vulkan=True):
     path.mkdir();(path/'packaging').mkdir()
     version=json.loads((ROOT/'engine-version.json').read_text())
     build=dict(**version,channel='Alpha',build_id='fixture-only',source_revision='a'*40,
         source_tree='b'*40,source_dirty=False,source_fingerprint='c'*64,source_untracked_count=0,
         source_untracked_fingerprint=hashlib.sha256(b'').hexdigest(),source_origin='git',
-        platform=platform,architecture='x86_64',configuration='Release',compiler='fixture',compiler_version='fixture')
+        platform=platform,architecture='x86_64',configuration='Release',compiler='fixture',compiler_version='fixture',vulkan=vulkan)
+    if vulkan:
+        notices=path/package_sdk.VULKAN_NOTICES
+        notices.mkdir(parents=True)
+        components={name:{'version':'1','source':name,'licence':name+'.txt'}
+                    for name in ('glslang','spirv-tools')}
+        for value in components.values():
+            (notices/value['licence']).write_text('Fixture licence text')
+        (notices/'PROVENANCE.json').write_text(json.dumps({'schema':1,'components':components}))
     (path/'engine-version.json').write_text(json.dumps(version));(path/'BUILD_INFO.json').write_text(json.dumps(build))
     (path/('judas.exe' if platform=='Windows' else 'judas')).write_text('Fixture, not a native executable')
     (path/'packaging/sdk-inventory.json').write_text(json.dumps(dict(schema=1,tools=['judas'],windows_tools=[],files=['engine-version.json'],directories=[],current_markdown='docs')))
@@ -200,7 +208,7 @@ class Packaging(unittest.TestCase):
         source=self.root/'source.tar.gz'
         payload=b'fixture source file'
         inventory=json.dumps({'schema':1,'files':[{'path':'engine-version.json','sha256':hashlib.sha256(payload).hexdigest()}]}).encode()
-        info=json.dumps({'source_dirty':False,'revision':'a'*40,'tree':'b'*40,'source_fingerprint':'c'*64,'source_files_sha256':hashlib.sha256(inventory).hexdigest()}).encode()
+        info=json.dumps({'source_dirty':False,'channel':'Alpha','revision':'a'*40,'tree':'b'*40,'source_fingerprint':'c'*64,'source_files_sha256':hashlib.sha256(inventory).hexdigest()}).encode()
         with tarfile.open(source,'w:gz') as tar:
             for name,data in [('engine-version.json',payload),('JUDAS_SOURCE_FILES.json',inventory),('JUDAS_SOURCE_INFO.json',info)]:
                 entry=tarfile.TarInfo(name);entry.size=len(data);tar.addfile(entry,io.BytesIO(data))
@@ -229,6 +237,13 @@ class Packaging(unittest.TestCase):
         sdk(self.root/'windows', 'Windows')
         self.args.linux_sdk = self.root/'windows'
         with self.assertRaisesRegex(ValueError, 'Expected a Linux x86-64 SDK'):
+            prepare_release.prepare(self.args)
+        self.assertFalse(self.args.output.exists())
+
+    def test_opengl_only_sdk_cannot_be_prepared_as_alpha_v2(self):
+        sdk(self.root/'opengl-only','Linux',vulkan=False)
+        self.args.linux_sdk=self.root/'opengl-only'
+        with self.assertRaisesRegex(ValueError,'requires a dual-backend Linux SDK'):
             prepare_release.prepare(self.args)
         self.assertFalse(self.args.output.exists())
 

@@ -44,13 +44,24 @@ def main():
     p.add_argument('--accepted-commit',required=True);a=p.parse_args()
     with tempfile.TemporaryDirectory(prefix='judas-release-assemble-') as tmp:
         root=Path(tmp)
-        extract(one(a.inputs,'linux-sdk.tar.gz'),root)
+        archive=one(a.inputs,'linux-sdk.tar.gz')
+        if one(a.inputs,'linux-sdk.tar.gz.sha256').read_text().split() != [prepare_release.sha(archive), archive.name]:
+            raise ValueError('SDK intermediate archive checksum mismatch')
+        extract(archive,root)
         sdk=root/'linux-sdk';identity=json.loads((sdk/'BUILD_INFO.json').read_text())
         if identity['source_revision']!=a.accepted_commit:raise ValueError('CI SDK revision differs from approval')
         gates=[p for p in a.inputs.rglob('RESULTS.json') if p.parent.name=='release-qualification']
-        if len(gates)!=1 or json.loads(gates[0].read_text()).get('passed') is not True:raise ValueError('Missing successful coordinated qualification')
-        workflows=one(a.inputs,'COMPLETE.json')
-        if json.loads(workflows.read_text()).get('passed') is not True:raise ValueError('SDK workflow qualification failed')
+        if len(gates)!=1:raise ValueError('Missing successful coordinated qualification')
+        coordinated=json.loads(gates[0].read_text())
+        if coordinated.get('passed') is not True or coordinated.get('build') != identity:
+            raise ValueError('Coordinated qualification does not match the packaged SDK')
+        workflows=json.loads(one(a.inputs,'COMPLETE.json').read_text())
+        if (workflows.get('passed') is not True or workflows.get('sourceHidden') is not True
+                or identity.get('channel') != 'Alpha' or identity.get('vulkan') is not True
+                or any(workflows.get(backend,{}).get('passed') is not True
+                       or workflows[backend].get('build') != identity for backend in ('opengl','vulkan'))
+                or workflows['vulkan'].get('alphaV2') is not True):
+            raise ValueError('Missing source-hidden dual-backend Alpha V2 qualification for these SDK bytes')
         source=one(a.inputs,'source.tar.gz')
         with tarfile.open(source) as tar:epoch=tar.getmembers()[0].mtime
         q=root/'QUALIFICATION.json'

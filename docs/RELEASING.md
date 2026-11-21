@@ -64,8 +64,12 @@ version probes. Positive/negative script and collision controls are included.
 
 The **Prepare Linux release candidate** workflow has read-only repository
 permissions. It builds the SDK and source archive for the exact Experimental
-commit. Windows is unsupported and excluded from official preparation and
-publication. Use the same exact artifacts for human review and publication.
+tip. For Alpha V2, dispatch it with the exact SHA and `channel=Alpha`. It
+requires `JUDAS_VULKAN=ON`, verifies the Alpha identity and compiled Vulkan
+flag, and runs the full native suite. It also exercises the relocated SDK with
+the source checkout hidden, including live OpenGL → Vulkan → OpenGL in the
+packaged Hair and Fur Lab. Use those exact archives for review and publication.
+Windows remains unsupported and excluded from official preparation and publication.
 
 ## 3. Prepare local candidate artifacts
 
@@ -118,7 +122,9 @@ known limits and human checklist. Stop for final approval.
    identities. Interrupted draft/upload failures remain diagnosable; do not
    bypass guards or clobber the existing release to force a retry.
 
-Before explicit publication approval, none of steps 1–7 is authorized merely by a passing build.
+Source promotion requires separate operator acceptance of the exact qualified
+commit. Publication and channel-feed changes require explicit publication
+approval.
 The publication scripts contain no installer, project updater or version-control
 synchronization for developers. Offline users continue using their installed SDK.
 

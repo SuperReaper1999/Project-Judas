@@ -38,8 +38,9 @@ def verify_source_archive(path, identity):
         info_bytes=info_file.read(16385);files_bytes=files_file.read(16*1024*1024+1)
         if len(info_bytes)>16384 or len(files_bytes)>16*1024*1024:raise ValueError('Source provenance exceeds bounds')
         info=json.loads(info_bytes);inventory=json.loads(files_bytes)
-        if info.get('source_dirty') is not False or any(info.get(key)!=identity[field] for key,field in
-            [('revision','source_revision'),('tree','source_tree'),('source_fingerprint','source_fingerprint')]):
+        if (info.get('source_dirty') is not False or info.get('channel') != identity['channel'] or
+            any(info.get(key)!=identity[field] for key,field in
+                [('revision','source_revision'),('tree','source_tree'),('source_fingerprint','source_fingerprint')])):
             raise ValueError('Source archive embedded identity differs from SDK')
         if hashlib.sha256(files_bytes).hexdigest()!=info.get('source_files_sha256') or inventory.get('schema')!=1:
             raise ValueError('Source archive inventory is invalid')
@@ -71,6 +72,8 @@ def prepare(args):
     canonical = json.loads((sdk/'engine-version.json').read_text())
     if any(first[key] != canonical[key] for key in ('version','maturity','release_name')):
         raise ValueError('Official release identity differs from authoritative engine-version.json')
+    if first['channel']=='Alpha' and first['version'].startswith('2.') and first.get('vulkan') is not True:
+        raise ValueError('Alpha V2 distribution requires a dual-backend Linux SDK')
     qualification=json.loads(args.qualification.read_text())
     if qualification.get('source_revision')!=first['source_revision'] or qualification.get('passed') is not True:
         raise ValueError('Exact-candidate successful qualification receipt required')

@@ -36,20 +36,30 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--build',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
     p.add_argument('--jobs',type=int,default=1);p.add_argument('--configuration',default='Release')
+    p.add_argument('--require-alpha-v2',action='store_true',help='Require Release Alpha V2 with both Linux graphics backends')
     a=p.parse_args();a.build=a.build.resolve();output=a.output.resolve();output.mkdir(parents=True,exist_ok=False)
     manifest=json.loads((ROOT/'tools/validation/suites.json').read_text())
     tests=qualification_tests(manifest)
     targets=sorted({t['target'] for t in tests}|set(EXTRA));records=[]
+    identity=None
+    def receipt(complete=False):
+        (output/'RESULTS.json').write_text(json.dumps({'passed':complete and all(r['exit']==0 for r in records),
+            'build':identity,'checks':records,'knownFindings':manifest['known_findings'],'humanAcceptance':False},indent=2)+'\n')
+
     def run(name,cmd):
         with (output/(name+'.log')).open('w',encoding='utf-8') as f:
             environment=dict(os.environ, JUDAS_ENGINE_ROOT=str(ROOT))
             child=subprocess.run(list(map(str,cmd)),cwd=(output if name.startswith("judas_") else ROOT),env=environment,stdout=f,stderr=subprocess.STDOUT)
         records.append({'name':name,'command':list(map(str,cmd)),'exit':child.returncode})
-        (output/'RESULTS.json').write_text(json.dumps({'passed':all(r['exit']==0 for r in records),'checks':records,'knownFindings':manifest['known_findings'],'humanAcceptance':False},indent=2)+'\n')
+        receipt()
         if child.returncode:raise RuntimeError(name+' failed: '+str(output/(name+'.log')))
     run('build',['cmake','--build',a.build,'--config',a.configuration,'--parallel',str(a.jobs),'--target','judas',*targets])
     build=a.build/a.configuration if os.name=='nt' and (a.build/a.configuration).is_dir() else a.build
     identity=json.loads(subprocess.check_output([str(build/('judas.exe' if os.name=='nt' else 'judas')), '--build-info-json'],text=True))
+    if a.require_alpha_v2 and any(identity.get(key) != value for key,value in {
+            'version':'2.0.0-alpha.1','maturity':'alpha','release_name':'Judas Engine Alpha v2.0.0',
+            'channel':'Alpha','configuration':'Release','platform':'Linux','source_dirty':False,'vulkan':True}.items()):
+        raise ValueError('Alpha V2 qualification requires a clean dual-backend Linux Release build')
     native=[sys.executable,ROOT/'scripts/prealpha_validate.py','--build-dir',build,'--output',output/'gates','--timeout','180','--expected-channel',identity['channel']]
     for test in tests:native+=['--test',test['name']]
     run('native-gates',native)
@@ -70,6 +80,7 @@ def main():
     run('python-controls',[sys.executable,'-m','unittest','discover','-s',ROOT/'tests','-p','test_*.py','-v'])
     run('identity-controls',[sys.executable,ROOT/'scripts/prealpha_build_identity_checks.py','--output',output/'identity.json'])
     run('packaging-controls',[sys.executable,ROOT/'scripts/prealpha_packaging_checks.py','--output',output/'packaging.json'])
+    receipt(complete=True)
     print('M100 coordinated qualification passed; known limitations remain classified separately')
 
 if __name__=='__main__':main()

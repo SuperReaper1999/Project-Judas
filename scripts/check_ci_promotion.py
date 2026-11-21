@@ -10,18 +10,31 @@ import re
 import subprocess
 import sys
 
+REQUIRED_STEPS = (
+    'Verify exact Experimental checkout',
+    'Verify exact Alpha V2 dual-backend SDK',
+    'Complete Linux qualification',
+    'Vulkan release runtime and synchronization',
+    'Source-hidden SDK authoring and relocated exports on both backends',
+    'Pack qualified SDK and tracked source as immutable CI artifacts',
+    'Upload exact Alpha V2 candidate',
+)
+
 
 def qualifies(run, jobs, repository, revision):
-    if (run.get('head_sha') != revision or run.get('conclusion') != 'success'
+    if (run.get('head_sha') != revision or run.get('status') != 'completed' or run.get('conclusion') != 'success'
             or (run.get('head_repository') or {}).get('full_name') != repository
             or run.get('head_branch') != 'Experimental'):
         return False
     workflow = run.get('path')
     if workflow != '.github/workflows/linux-release-candidate.yml' or run.get('event') not in ('push', 'workflow_dispatch'):
         return False
-    return (len(jobs) == 1 and jobs[0].get('name') == 'linux'
-            and jobs[0].get('status') == 'completed'
-            and jobs[0].get('conclusion') == 'success')
+    if (len(jobs) != 1 or jobs[0].get('name') != 'linux'
+            or jobs[0].get('status') != 'completed' or jobs[0].get('conclusion') != 'success'):
+        return False
+    successful = {step.get('name') for step in jobs[0].get('steps', [])
+                  if step.get('status') == 'completed' and step.get('conclusion') == 'success'}
+    return all(step in successful for step in REQUIRED_STEPS)
 
 
 def api(path):

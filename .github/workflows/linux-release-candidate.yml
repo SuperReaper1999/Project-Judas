@@ -10,10 +10,10 @@ on:
         required: true
         type: string
       channel:
-        description: Private candidate channel (not a publication)
+        description: Private Alpha candidate (not a publication)
         required: true
         type: choice
-        options: [Alpha, Experimental, Beta, Stable]
+        options: [Alpha]
         default: Alpha
 permissions:
   contents: read
@@ -27,7 +27,9 @@ jobs:
     timeout-minutes: 90
     env:
       CANDIDATE: ${{ inputs.candidate || github.sha }}
-      CHANNEL: ${{ inputs.channel || 'Alpha' }}
+      CHANNEL: Alpha
+      SDL_VIDEODRIVER: x11
+      VK_LAYER_ENABLES: VK_VALIDATION_FEATURE_ENABLE_SYNCHRONIZATION_VALIDATION_EXT
       SDL_AUDIODRIVER: dummy
       LIBGL_ALWAYS_SOFTWARE: '1'
       PYTHONDONTWRITEBYTECODE: '1'
@@ -41,6 +43,11 @@ jobs:
         with:
           ref: ${{ inputs.candidate || github.sha }}
           persist-credentials: false
+      - name: Verify exact Experimental checkout
+        run: |
+          test "$CANDIDATE" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$CANDIDATE"
+          test -z "$(git status --porcelain)"
       - name: Verify release and status documentation before building
         run: python3 tools/release_docs.py
       - name: Snapshot exact tracked source before qualification
@@ -55,7 +62,10 @@ jobs:
       - name: Install Linux build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build g++ ccache libsdl2-dev libglm-dev xvfb xauth libgl1-mesa-dri
+          sudo apt-get install -y cmake ninja-build g++ ccache libsdl2-dev libglm-dev xvfb xauth libgl1-mesa-dri mesa-vulkan-drivers libvulkan-dev glslang-dev glslang-tools spirv-tools vulkan-validationlayers bubblewrap
+          icd=$(dpkg-query -L mesa-vulkan-drivers | grep '/lvp_icd[^/]*\.json$')
+          test -f "$icd"
+          echo "VK_DRIVER_FILES=$icd" >> "$GITHUB_ENV"
           npm ci --ignore-scripts --prefix tools/verification
       - name: Identify Linux compiler
         id: compiler
@@ -77,36 +87,92 @@ jobs:
       - name: Configure exact Linux release candidate
         run: |
           ccache --zero-stats
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL="$CHANNEL" -DJUDAS_ENABLE_VALIDATION=ON -DJUDAS_SDK_RELEASE=ON -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+          python3 tools/vulkan/debian_compiler_notices.py "$RUNNER_TEMP/vulkan-notices"
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL="$CHANNEL" -DJUDAS_ENABLE_VALIDATION=ON -DJUDAS_SDK_RELEASE=ON -DJUDAS_VULKAN=ON -DJUDAS_VULKAN_PACKAGE_METADATA="$RUNNER_TEMP/vulkan-notices" -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
       - name: Build Linux SDK
         run: |
           cmake --build build --target judas_linux_sdk -j2
+      - name: Verify exact Alpha V2 dual-backend SDK
+        run: |
+          sdk="$RUNNER_TEMP/linux-sdk"
+          mv build/linux-vulkan-sdk "$sdk"
+          jq -e --arg sha "$CANDIDATE" '
+            .source_revision == $sha and .source_dirty == false and .channel == "Alpha" and
+            .version == "2.0.0-alpha.1" and .maturity == "alpha" and
+            .release_name == "Judas Engine Alpha v2.0.0" and .vulkan == true
+          ' "$sdk/BUILD_INFO.json"
+          "$sdk/judas" --build-info-json | jq -e --slurpfile expected "$sdk/BUILD_INFO.json" '. == $expected[0]'
+          cmp "$sdk/judas" build/judas
+          cmp "$sdk/judas_editor" build/judas_editor
+          python3 "$sdk/tools/package_sdk.py" verify "$sdk"
+          python3 "$sdk/tools/inspect_sdk.py" "$sdk" --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output "$RUNNER_TEMP/prepared/SDK_ABI.json"
       - name: Complete Linux qualification
         run: |
-          xvfb-run -a python3 scripts/qualify_m100.py --build build --output .cache/release-qualification --jobs 2
-      - name: Linux SDK authoring and relocated exports
+          xvfb-run -a python3 scripts/qualify_m100.py --build build --output .cache/release-qualification --jobs 2 --require-alpha-v2
+      - name: Vulkan release runtime and synchronization
         run: |
-          xvfb-run -a python3 scripts/qualify_sdk.py --sdk build/linux-sdk --work .cache/release-sdk-work
-      - name: Linux API and ABI qualification
+          xvfb-run -a python3 scripts/prealpha_validate.py --build-dir build --expected-channel Alpha \
+            --graphics-backend vulkan --graphics-profile modern --output .cache/release-vulkan-gates \
+            --test renderer-v2-submission --test renderer-shadow-reuse --test shadow-sampling \
+            --test render-cameras --test editor-v2-detached-viewports --test terrain-v2-transition \
+            --test particle-gpu-resident --test lighting-lists \
+            --test basic-water-preview --test water-visuals --test runtime-ui \
+            --test game-settings --test graphics-context-lifecycle --test hair-groom
+      - name: Source-hidden SDK authoring and relocated exports on both backends
         run: |
-          node scripts/check_judasjs_api.mjs
-          python3 tools/inspect_sdk.py build/linux-sdk --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output .cache/release-sdk-platform.json
+          driver="$RUNNER_TEMP/driver"
+          mkdir -p "$driver"/{scripts,tools,tests/fixtures} "$RUNNER_TEMP"/{candidate-home,release-sdk-work}
+          cp scripts/qualify_sdk{,_workflows}.py "$driver/scripts/"
+          cp tools/build_linux_baseline.py "$driver/tools/"
+          cp -a tests/fixtures/rendering "$driver/tests/fixtures/"
+          xvfb-run -a sudo --preserve-env=DISPLAY,XAUTHORITY,SDL_VIDEODRIVER,LIBGL_ALWAYS_SOFTWARE,VK_DRIVER_FILES,VK_LAYER_ENABLES,GITHUB_WORKSPACE,RUNNER_TEMP \
+            bwrap --ro-bind / / --dev /dev --proc /proc --tmpfs "$GITHUB_WORKSPACE" \
+              --bind "$RUNNER_TEMP/candidate-home" "$RUNNER_TEMP/candidate-home" \
+              --bind "$RUNNER_TEMP/release-sdk-work" "$RUNNER_TEMP/release-sdk-work" \
+              --setenv HOME "$RUNNER_TEMP/candidate-home" --setenv XDG_DATA_HOME "$RUNNER_TEMP/candidate-home/data" \
+              --setenv XDG_CACHE_HOME "$RUNNER_TEMP/candidate-home/cache" --chdir "$RUNNER_TEMP" -- \
+              setpriv --reuid "$(id -u)" --regid "$(id -g)" --init-groups bash -euc '
+                test ! -e "$GITHUB_WORKSPACE/engine-version.json"
+                sdk="$RUNNER_TEMP/linux-sdk"
+                work="$RUNNER_TEMP/release-sdk-work"
+                driver="$RUNNER_TEMP/driver/scripts/qualify_sdk.py"
+                VK_DRIVER_FILES=/dev/null python3 "$driver" --sdk "$sdk" --work "$work/opengl"
+                python3 "$driver" --sdk "$sdk" --work "$work/vulkan" --vulkan --alpha-v2
+              '
+          jq -s -e '.[0].passed and .[1].passed and .[0].build == .[1].build and .[1].alphaV2' \
+            "$RUNNER_TEMP/release-sdk-work/"{opengl,vulkan}/COMPLETE.json
+          jq -s '{passed:true, sourceHidden:true, opengl:.[0], vulkan:.[1]}' \
+            "$RUNNER_TEMP/release-sdk-work/"{opengl,vulkan}/COMPLETE.json > "$RUNNER_TEMP/prepared/COMPLETE.json"
+      - name: Linux API qualification
+        run: node scripts/check_judasjs_api.mjs
       - name: Linux compiler cache statistics
         if: always()
         run: ccache --show-stats
       - name: Pack qualified SDK and tracked source as immutable CI artifacts
         run: |
           git diff --exit-code HEAD
-          tar -C build -czf "$RUNNER_TEMP/prepared/linux-sdk.tar.gz" linux-sdk
-      - uses: actions/upload-artifact@v7
+          cmp "$RUNNER_TEMP/linux-sdk/judas" build/judas
+          PYTHONPATH=tools python3 - <<'PYCODE'
+          import json, os
+          from pathlib import Path
+          from prepare_release import verify_source_archive
+          root = Path(os.environ['RUNNER_TEMP'])
+          verify_source_archive(root/'prepared/source.tar.gz', json.loads((root/'linux-sdk/BUILD_INFO.json').read_text()))
+          PYCODE
+          tar --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner -C "$RUNNER_TEMP" -cf - linux-sdk \
+            | gzip -n > "$RUNNER_TEMP/prepared/linux-sdk.tar.gz"
+          cd "$RUNNER_TEMP/prepared"
+          sha256sum --check source.tar.gz.sha256
+          sha256sum linux-sdk.tar.gz > linux-sdk.tar.gz.sha256
+      - name: Upload exact Alpha V2 candidate
+        uses: actions/upload-artifact@v7
         with:
           name: candidate-Linux-${{ inputs.candidate || github.sha }}-${{ inputs.channel || 'Alpha' }}
           path: |
             ${{ runner.temp }}/prepared/
             .cache/release-qualification/
-            .cache/release-sdk-work/RESULTS.json
-            .cache/release-sdk-work/COMPLETE.json
-            .cache/release-sdk-platform.json
+            .cache/release-vulkan-gates/RESULTS.json
+            ${{ runner.temp }}/release-sdk-work/*/RESULTS.json
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 14
@@ -116,7 +182,9 @@ jobs:
           name: candidate-Linux-failure-${{ inputs.candidate || github.sha }}
           path: |
             .cache/release-qualification/
-            .cache/release-sdk-work/
+            .cache/release-vulkan-gates/
+            ${{ runner.temp }}/release-sdk-work/*/*.log
+            ${{ runner.temp }}/release-sdk-work/*/RESULTS.json
             build/Testing/Temporary/
           include-hidden-files: true
           retention-days: 14

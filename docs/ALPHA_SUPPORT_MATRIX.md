@@ -20,7 +20,7 @@ qualification to every device or imply main promotion/publication.
 
 | Target | Development scope | Boundary |
 | --- | --- | --- |
-| Native Linux x86-64 | Only officially supported development and distribution platform for the engine, editor and SDK. Ubuntu 24.04 is the reference build. | Host-native SDKs inherit the host ABI. Other distributions and devices need their own checks. |
+| Native Linux x86-64 | Only officially supported development and distribution platform. Alpha V2 release SDK candidates include OpenGL by default and Vulkan by explicit selection. Ubuntu 24.04 is the reference build. | Vulkan needs a usable loader and driver. Host-native SDKs inherit the host ABI. Other distributions and devices need their own checks. |
 | Windows x64 MSVC or MinGW | **Unsupported.** Existing build instructions and historical packages are available for independent use. | Official Windows maintenance, qualification and distribution have ended. See [Windows policy](WINDOWS.md#platform-support-and-executable-trust). |
 | Portable GL / GLES3 | Capability-selected fallback code; portable controls on the tested desktop | Code-path testing is not every GLES/Android device certification |
 | Android | Optional game runtime/APK workflow | Complete JDK/NDK/SDK/device required; no current snapshot device qualification; no Android editor |
@@ -49,6 +49,12 @@ is neither withdrawn nor inherited by this changed source. See [Windows](WINDOWS
   universal GPU residency and arbitrary per-mip streaming are not supplied.
 - CPU particle fallback and portable graphics remain valid policies. Required-GPU
   authoring must fail meaningfully when unavailable rather than silently weakening it.
+- Linux Vulkan uses the shared renderer. The explicit native mesh experiment
+  remains opt-in and outside release qualification. Live backend switching is
+  supported for standalone games within the [settings contract](judasjs/settings.md).
+- Hair and fur uses fitted patches, bone sockets and bounded guide collision.
+  Human visual acceptance remains pending. The GTX 970 crowd benchmark
+  missed the 120 FPS p99 target. [Hair and fur limits](HAIR_AND_FUR.md)
 - Basic Water/swimming are default-enabled prescribed effects. Advanced Fluids
   uses one conservative game-water backend, default-off project opt-in in every
   V2 channel. It is not PBF or a hidden microscopic research backend.
