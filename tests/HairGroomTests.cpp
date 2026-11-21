@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <chrono>
 #include <cmath>
+#include <cstdlib>
 #include <filesystem>
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
@@ -105,12 +106,14 @@ void Numerics() {
 int main(int argc,char** argv) {
     Numerics();
     const auto out=std::filesystem::absolute(argc>1?argv[1]:".cache/hair-test");
+    const auto* engineRoot=std::getenv("JUDAS_ENGINE_ROOT");
+    const auto source=engineRoot&&*engineRoot?std::filesystem::path(engineRoot):std::filesystem::current_path();
     std::filesystem::create_directories(out);
     std::string error;
     Project project;
     Scene scene;
     EngineHost host;
-    if(!project.Load("projects/hair_fur_lab/hair_fur_lab.judasproj",error)||
+    if(!project.Load(source/"projects/hair_fur_lab/hair_fur_lab.judasproj",error)||
        !LoadSceneFromFile(project.StartupScenePath(),scene,error)||
        !host.Init("Hair and fur validation",480,320,false,error)) {
         std::cerr<<error<<'\n';return 1;
