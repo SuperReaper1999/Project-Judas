@@ -196,6 +196,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `GridWater.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](water.md) |
 | `GridWater.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](water.md) |
 | `GridWater.impulse` | `gridWaterImpulse` | [declaration](../judas.d.ts) | [reference](water.md) |
+| `GridWater.setSimulationSuspended` | `gridWaterSetSimulationSuspended` | [declaration](../judas.d.ts) | [reference](water.md) |
 | `GridWater.state` | `gridWaterState` | [declaration](../judas.d.ts) | [reference](water.md) |
 | `GridWater.valid` | `gridWaterExists` | [declaration](../judas.d.ts) | [reference](water.md) |
 | `Joint` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |

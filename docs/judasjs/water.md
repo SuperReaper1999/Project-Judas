@@ -55,6 +55,13 @@ buffers (not every temporary or renderer allocation). Timings refer to the last
 completed step. Neither querying nor rendering advances the simulation. A paused
 region's `error` is its own failure diagnostic; normal game pause is separate.
 
+`setSimulationSuspended(true)` requests idle suspension from authoritative
+`fixedUpdate`. The grid and surface remain available for queries and rendering.
+Overlapping moving bodies and explicit water mutations still run the solver.
+Clear the request when the region becomes relevant. `state.simulationSuspended`
+reports the last solver boundary, with zero step timings while suspended.
+Reapply activity policy after loading. Saves retain the fluid state.
+
 ```js
 import { world } from 'judas';
 

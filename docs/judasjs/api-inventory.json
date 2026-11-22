@@ -1201,6 +1201,11 @@
       "maximum": 3
     },
     {
+      "symbol": "GridWater.setSimulationSuspended",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
       "symbol": "Joint.configure",
       "minimum": 1,
       "maximum": 1
@@ -4197,6 +4202,17 @@
         "gridWaterImpulse"
       ],
       "type": "docs/judas.d.ts:GridWater.impulse",
+      "reference": "docs/judasjs/water.md"
+    },
+    {
+      "symbol": "GridWater.setSimulationSuspended",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "gridWaterSetSimulationSuspended"
+      ],
+      "type": "docs/judas.d.ts:GridWater.setSimulationSuspended",
       "reference": "docs/judasjs/water.md"
     },
     {
@@ -8090,6 +8106,7 @@
     "gridWaterExists",
     "gridWaterImpulse",
     "gridWaterOwners",
+    "gridWaterSetSimulationSuspended",
     "gridWaterState",
     "hasTag",
     "held",
