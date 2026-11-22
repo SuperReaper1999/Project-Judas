@@ -478,7 +478,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         if(o.characterMotor)m_characterOwners.insert(o.id);
         if(o.powertrain){std::string error;if(!ValidatePowertrainSettings(*o.powertrain,error))return fail(o,error);}
         if(o.wheel){std::string error;if(!ValidateWheelSettings(*o.wheel,error))return fail(o,error);if(o.body||o.characterMotor||o.ragdoll||o.deformable||o.socket||o.transform.scale!=glm::vec3(1))return fail(o,"wheel owns visual placement; no other motion producer or non-unit scale is allowed");}
-        m_entityCategories[o.id]={o.tags,o.tags,o.renderLayer,{}};
+        m_entityCategories[o.id]={o.tags,o.tags,o.renderLayer,false,{}};
         const glm::vec3 position = o.transform.position;
         const glm::quat rotation = glm::normalize(o.transform.rotation);
 
@@ -517,6 +517,9 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
                     sb.halfExtents = b.halfExtents;
                     sb.radius = b.radius;
                     m_staticBodies.push_back(sb);
+                    auto& categories = m_entityCategories.at(o.id);
+                    categories.body = bodyHandle;
+                    categories.staticPose = true;
                 }
             } else {
                 if (b.shape == SceneShape::Mesh) return fail(o, "a body cannot use the mesh shape");
@@ -1016,6 +1019,8 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
         for(auto& b:m_staticBodies)if(b.id==id)m_physics.DestroyBody(b.handle);
         const auto eraseId=[id](auto& values){values.erase(std::remove_if(values.begin(),values.end(),[id](const auto& v){return v.id==id;}),values.end());};
         eraseId(m_staticBodies);eraseId(m_staticRenderables);eraseId(m_staticLights);
+        if (auto categories = m_entityCategories.find(id); categories != m_entityCategories.end())
+            categories->second.staticPose = false;
     }
     ShutdownParticleEmitter(id);
     m_particleEmitters.erase(std::remove_if(m_particleEmitters.begin(),m_particleEmitters.end(),[&](const auto& e){return e.id==id;}),m_particleEmitters.end());
@@ -1243,20 +1248,24 @@ EntityId RuntimeWorld::SpawnPrefab(const AssetId& asset,const SceneTransform& pl
 SceneTransform RuntimeWorld::PresentedTransform(SceneObjectId id,const SceneTransform& fallback,float alpha) const {
     return ResolveTransform(id,fallback,alpha,true);
 }
+SceneTransform RuntimeWorld::PresentedTransform(const SceneObject& definition, float alpha) const {
+    return ResolveTransform(definition.id, definition.transform, alpha, true, &definition);
+}
 SceneTransform RuntimeWorld::SimulationTransform(SceneObjectId id,const SceneTransform& fallback) const {
     return ResolveTransform(id,fallback,1,false);
 }
-SceneTransform RuntimeWorld::ResolveTransform(SceneObjectId id,const SceneTransform& fallback,float alpha,bool remotePresentation) const {
+SceneTransform RuntimeWorld::ResolveTransform(SceneObjectId id,const SceneTransform& fallback,float alpha,bool remotePresentation,
+                                             const SceneObject* definition) const {
     if(remotePresentation&&m_network){auto t=fallback;if(m_network->Presentation(id,t))return t;}
     if(auto wheel=m_wheels.find(id);wheel!=m_wheels.end()&&wheel->second.state.available){
         const auto& v=wheel->second;auto t=fallback;const float fraction=std::clamp(alpha,0.f,1.f);
         t.position=glm::mix(v.previous.center,v.state.center,fraction);t.rotation=glm::normalize(glm::slerp(v.previous.rotation,v.state.rotation,fraction));return t;
     }
-    if(const auto* d=RuntimeDefinition(id);d&&d->socket&&d->socket->enabled){
+    if (const auto* d = definition ? definition : RuntimeDefinition(id); d && d->socket && d->socket->enabled) {
         const auto& socket=*d->socket;auto it=m_animationInstances.find(socket.target);
         if(it!=m_animationInstances.end()&&it->second.asset){const auto& s=it->second.asset->skeleton;int n=FindSkeletonJoint(s,socket.joint);
             if(n>=0&&size_t(n)<it->second.finalPose.local.size())if(const auto* target=RuntimeDefinition(socket.target)){
-                auto root=ResolveTransform(socket.target,target->transform,alpha,remotePresentation);auto model=glm::translate(glm::mat4(1),root.position)*glm::mat4_cast(root.rotation)*glm::scale(glm::mat4(1),root.scale);auto matrix=model*ResolveJointMatrix(s,PresentedAnimationPose(socket.target,alpha),n);JointTransform joint;std::string error;
+                auto root=ResolveTransform(socket.target,target->transform,alpha,remotePresentation,target);auto model=glm::translate(glm::mat4(1),root.position)*glm::mat4_cast(root.rotation)*glm::scale(glm::mat4(1),root.scale);auto matrix=model*ResolveJointMatrix(s,PresentedAnimationPose(socket.target,alpha),n);JointTransform joint;std::string error;
                 if(DecomposeRigidPose(matrix,joint,error)){SceneTransform t;t.position=joint.translation+joint.rotation*(joint.scale*socket.offset.position);t.rotation=glm::normalize(joint.rotation*socket.offset.rotation);t.scale=joint.scale*socket.offset.scale;return t;}
             }
         }
@@ -1274,20 +1283,29 @@ SceneTransform RuntimeWorld::ResolveTransform(SceneObjectId id,const SceneTransf
         t.rotation=glm::normalize(glm::slerp(c.previous.rotation,c.motor.orientation,alpha));return t;
     }
 
-    if(const auto* e=FindEntity(id))if(e->slot!=std::numeric_limits<std::size_t>::max()){
+    const auto* e = FindEntity(id);
+    if(e&&e->slot!=std::numeric_limits<std::size_t>::max()){
         const auto& body=m_dynamicBodies[e->slot];auto t=fallback;
         t.position=body.GetPresentedPosition(alpha);t.rotation=body.GetPresentedOrientation(alpha);return t;
     }
     // Physical children are independent ordinary bodies; hierarchy is not a
     // hidden constraint. Body-free visual/audio/light/camera children follow.
-    for(const auto& b:m_staticBodies)if(b.id==id){auto t=fallback;const auto pose=m_physics.GetTransform(b.handle);t.position=pose.position;t.rotation=pose.rotation;return t;}
+    // The indexed handle selects the live solver pose without scanning owners.
+    if (const auto categories = m_entityCategories.find(id);
+        categories != m_entityCategories.end() && categories->second.staticPose) {
+        auto t = fallback;
+        const auto pose = m_physics.GetTransform(categories->second.body);
+        t.position = pose.position;
+        t.rotation = pose.rotation;
+        return t;
+    }
     const auto* local=m_hierarchy.Find(id);
     if(local&&local->parent){
         const auto* parent=m_hierarchy.Find(local->parent);
         if(parent){auto p=ResolveTransform(parent->id,parent->transform,alpha,remotePresentation);auto t=local->transform;
             t.position=p.position+p.rotation*(p.scale*t.position);t.rotation=glm::normalize(p.rotation*t.rotation);t.scale=p.scale*t.scale;return t;}
     }
-    if(const auto* e=FindEntity(id)){auto t=fallback;t.position=e->state.position;t.rotation=e->state.rotation;return t;}
+    if(e){auto t=fallback;t.position=e->state.position;t.rotation=e->state.rotation;return t;}
     return local?local->transform:fallback;
 }
 

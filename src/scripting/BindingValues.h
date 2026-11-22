@@ -34,6 +34,7 @@ inline bool ReadVec(JSContext *c, JSValueConst o, glm::vec3 &v) {
 #include <initializer_list>
 
 namespace ScriptBindingValues {
+SceneObjectId ReadEntityId(JSContext *, JSValueConst);
 JSValue Vec(JSContext *, glm::vec3);
 bool KnownOptions(JSContext *, JSValueConst, std::initializer_list<const char *>);
 bool ReadCameraLens(JSContext *, JSValueConst, CameraLens &);

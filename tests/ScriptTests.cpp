@@ -232,6 +232,60 @@ export default class {
     auto& owner=staleScene.CreateObject("handle owner");owner.scripts.push_back({1,stale.id,true,"{}"});auto& target=staleScene.CreateObject("target");target.body=SceneBodyComponent{};target.body->motion=SceneBodyMotion::Dynamic;
     RuntimeWorld staleWorld;staleWorld.Build(staleScene,&resources,error);staleWorld.UpdateScripts(&input,.01f);staleWorld.DestroyEntity(2);staleWorld.UpdateScripts(&input,.01f);
     Check(staleWorld.Scripts()->Diagnostics().size()==1&&staleWorld.Scripts()->Diagnostics()[0].message.find("stale or invalid entity")!=std::string::npos,"retained JS wrapper rejects destroyed native entity");staleWorld.Destroy();
+    std::ofstream(root/"Assets/transform-bindings.js") << R"JS(
+import {world} from 'judas';
+export default class {
+    constructor() { this.target = world.entity('  +2'); }
+    update() {
+        const invalid = ['2x', '2\0', '18446744073709551616', ''].every(id => !world.entity(id)?.valid);
+        const valid = this.target.valid;
+        let hidden = false;
+        try { this.target.transform; } catch (error) { hidden = error instanceof ReferenceError; }
+        if (!valid) { this.state = {invalid, valid, hidden}; return; }
+        const original = this.target.transform;
+        original.position.x = 999;
+        const target = this.target.transform;
+        const child = world.entity('3').transform;
+        this.state = {invalid, valid, position: target.position.x, child: child.position.x};
+    }
+})JS";
+    AssetRecord transformBinding;
+    Check(db.Track(fs::absolute(root/"Assets/transform-bindings.js").string(),transformBinding,error),
+          "track transform binding fixture");
+    Scene transformScene;
+    transformScene.CreateObject("transform reader").scripts={{1,transformBinding.id,true,"{}"}};
+    auto& anchor=transformScene.CreateObject("static parent");
+    anchor.body=SceneBodyComponent{};
+    anchor.body->motion=SceneBodyMotion::Static;
+    anchor.transform.position={2,0,0};
+    auto& attached=transformScene.CreateObject("visual child");
+    attached.parent=2;
+    attached.transform.position={1,0,0};
+    RuntimeWorld transformWorld;
+    if (transformWorld.Build(transformScene,&resources,error)) {
+        const auto observed = [&] {
+            transformWorld.UpdateScripts(&input,.01f);
+            const auto states = transformWorld.Scripts()->Capture();
+            return states.empty() ? std::string{} : states.front().json;
+        };
+        Check(observed()==R"({"invalid":true,"valid":true,"position":2,"child":3})",
+              "entity ID coercion and detached transform values preserve static parent placement");
+        auto placement=transformWorld.RuntimeDefinition(2)->transform;
+        placement.position.x=5;
+        Check(transformWorld.SetRuntimeTransform(2,placement)&&
+              observed()==R"({"invalid":true,"valid":true,"position":5,"child":6})",
+              "immediate static body move is observed through its visual child");
+        transformWorld.HideRegion({2,3});
+        Check(observed()==R"({"invalid":true,"valid":false,"hidden":true})",
+              "retained entity wrappers reject a transform read while the region is hidden");
+        transformWorld.PublishRegion({2,3});
+        Check(transformWorld.SetRuntimeMotionType(2,SceneBodyMotion::Kinematic,true,error)&&
+              observed()==R"({"invalid":true,"valid":true,"position":5,"child":6})",
+              "republished entity resolves current body placement after gaining a moving slot");
+        transformWorld.Destroy();
+    } else {
+        Check(false,"build transform binding fixture");
+    }
     std::ofstream(root/"Assets/order.js")<<"let count=0;export default class {constructor(){this.state={};}start(){this.state.order=++count;}update(){}}";
     AssetRecord ordered;db.Track(fs::absolute(root/"Assets/order.js").string(),ordered,error);Scene orderScene;auto& orderObject=orderScene.CreateObject("ordered slots");orderObject.scripts={{2,ordered.id,true,"{}"},{1,ordered.id,true,"{}"}};
     RuntimeWorld orderWorld;orderWorld.Build(orderScene,&resources,error);orderWorld.UpdateScripts(&input,.01f);auto orderedStates=orderWorld.Scripts()->Capture();

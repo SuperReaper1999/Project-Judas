@@ -42,16 +42,7 @@ JSValue HandleAnimation(BindingContext &context, const std::string &op, int argc
         return ok;
     };
 
-    EntityId id = 0;
-    try {
-        auto text = String(c, arg(1));
-        size_t end;
-        id = std::stoull(text, &end);
-        if (end != text.size())
-            id = 0;
-    } catch (...) {
-        id = 0;
-    }
+    const EntityId id = ReadEntityId(c, arg(1));
     const auto *definition = world.RuntimeDefinition(id);
     if (!definition)
         return JS_ThrowReferenceError(c, "stale or invalid entity %llu", (unsigned long long)id);

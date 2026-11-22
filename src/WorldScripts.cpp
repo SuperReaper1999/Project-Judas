@@ -147,6 +147,7 @@ bool RuntimeWorld::SetRuntimeMotionType(EntityId id,SceneBodyMotion motion,bool 
         m_extraEntities.erase(std::remove_if(m_extraEntities.begin(),m_extraEntities.end(),[id](const auto& e){return e.id==id;}),m_extraEntities.end());
         m_entities.push_back(std::move(retained));m_entityIndexVersion=~0u;
         m_staticBodies.erase(std::remove_if(m_staticBodies.begin(),m_staticBodies.end(),[id](const auto& b){return b.id==id;}),m_staticBodies.end());
+        m_entityCategories.at(id).staticPose = false;
         m_staticRenderables.erase(std::remove_if(m_staticRenderables.begin(),m_staticRenderables.end(),[id](const auto& r){return r.id==id;}),m_staticRenderables.end());
         record=FindEntity(id);
     }

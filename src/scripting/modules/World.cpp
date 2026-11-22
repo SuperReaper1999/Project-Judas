@@ -647,16 +647,7 @@ JSValue HandleWorld(BindingContext &context, const std::string &op, int argc, JS
         return JS_NewString(c, std::to_string(id).c_str());
     }
 
-    EntityId id = 0;
-    try {
-        auto text = String(c, arg(1));
-        size_t end;
-        id = std::stoull(text, &end);
-        if (end != text.size())
-            id = 0;
-    } catch (...) {
-        id = 0;
-    }
+    const EntityId id = ReadEntityId(c, arg(1));
     const auto *definition = world.RuntimeDefinition(id);
     if (op == "valid")
         return JS_NewBool(c, definition != nullptr);
@@ -683,7 +674,7 @@ JSValue HandleWorld(BindingContext &context, const std::string &op, int argc, JS
 
     if (op == "transform" || op == "presentedTransform") {
         auto t = world.PresentedTransform(
-            id, definition->transform,
+            *definition,
             op == "presentedTransform" && s->inPresentation ? s->presentationAlpha : 1);
         if (op == "transform" && world.NetworkClient()) {
             EntityPhysicalState physical;
@@ -702,7 +693,7 @@ JSValue HandleWorld(BindingContext &context, const std::string &op, int argc, JS
     }
 
     if (op == "setTransform") {
-        auto t = world.PresentedTransform(id, definition->transform, 1);
+        auto t = world.PresentedTransform(*definition, 1);
         if (!readTransform(arg(2), t) || !world.SetRuntimeTransform(id, t))
             return JS_ThrowTypeError(c, "invalid transform");
         return JS_TRUE;

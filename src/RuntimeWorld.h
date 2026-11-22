@@ -591,6 +591,8 @@ public:
     EntityId CreateEntity(const SceneObject& definition, const EntityPhysicalState* state,
                           std::string* outError = nullptr);
     SceneTransform PresentedTransform(SceneObjectId id, const SceneTransform& fallback, float alpha) const;
+    // Reuse a live definition resolved during this owner-thread call.
+    SceneTransform PresentedTransform(const SceneObject& definition, float alpha) const;
     SceneTransform SimulationTransform(SceneObjectId id,const SceneTransform& fallback) const;
     struct PrefabScriptInit {SceneObjectId source=0;uint64_t slot=0;std::string properties,state="null";};
     struct PrefabSpawnOptions {std::optional<glm::vec3> velocity,angularVelocity;std::vector<PrefabScriptInit> scripts;};
@@ -642,7 +644,8 @@ public:
     void SetCompositionFingerprint(const std::string& hash) { m_baselineFingerprint=hash;m_composed=true; }
     bool IsComposed() const { return m_composed; }
 private:
-    SceneTransform ResolveTransform(SceneObjectId,const SceneTransform&,float alpha,bool remotePresentation) const;
+    SceneTransform ResolveTransform(SceneObjectId,const SceneTransform&,float alpha,bool remotePresentation,
+                                    const SceneObject* definition = nullptr) const;
     bool SetRuntimePlacement(EntityId,const SceneTransform&,bool includePrivate);
     friend class WorldPersistence;
     friend class RuntimeTerrain;
@@ -670,7 +673,12 @@ private:
     bool ValidateVisualAssets(const SceneObject& o, std::string& outError) const;
     void RebuildCelestialParticipants();
 
-    struct EntityCategories {CategoryMask tags=0, authoredTags=0;unsigned renderLayer=0;BodyHandle body;};
+    struct EntityCategories {
+        CategoryMask tags = 0, authoredTags = 0;
+        unsigned renderLayer = 0;
+        bool staticPose = false;
+        BodyHandle body;
+    };
     ProjectClassification m_categories;
     std::unique_ptr<RuntimeTerrain> m_runtimeTerrain;
     std::unique_ptr<NavigationSystem> m_navigation;
