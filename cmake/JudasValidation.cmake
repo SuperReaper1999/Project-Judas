@@ -53,10 +53,19 @@ if(JUDAS_ENABLE_VALIDATION)
             string(JSON group GET "${judas_suites}" tests ${index} groups ${group_index})
             list(APPEND labels ${group})
         endforeach()
+        set(case_timeout_args "")
+        set(ctest_timeout 150)
+        if(name STREQUAL "profiler-application")
+            # Twelve full rendering trials plus a timed capture can exceed the
+            # standard watchdog on software graphics. Each trial still checks
+            # the original fixed-step count and deterministic state.
+            set(case_timeout_args --timeout 180)
+            set(ctest_timeout 210)
+        endif()
         add_test(NAME prealpha.${name}
             COMMAND ${Python3_EXECUTABLE} "${CMAKE_SOURCE_DIR}/scripts/prealpha_validate.py"
                 --build-dir "$<TARGET_FILE_DIR:judas>" --test ${name}
-                --expected-channel "${JUDAS_ID_channel}")
+                --expected-channel "${JUDAS_ID_channel}" ${case_timeout_args})
         string(JSON release_only ERROR_VARIABLE release_error GET "${judas_suites}" tests ${index} releaseOnly)
         if(release_error OR NOT release_only)
             list(APPEND labels routine)
@@ -68,7 +77,7 @@ if(JUDAS_ENABLE_VALIDATION)
             set(serial FALSE)
         endif()
         set_tests_properties(prealpha.${name} PROPERTIES
-            LABELS "${labels}" RUN_SERIAL ${serial} TIMEOUT 150)
+            LABELS "${labels}" RUN_SERIAL ${serial} TIMEOUT ${ctest_timeout})
     endforeach()
     list(REMOVE_DUPLICATES judas_gate_targets)
     add_custom_target(judas_prealpha_tests DEPENDS ${judas_gate_targets})

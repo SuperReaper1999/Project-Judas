@@ -81,9 +81,13 @@ class ValidationRegistrationTests(unittest.TestCase):
         for entry in entries:
             case = tests['prealpha.' + entry['name']]
             self.assertEqual(Path(case['command'][1]).resolve(), (ROOT / 'scripts/prealpha_validate.py').resolve())
-            self.assertEqual(case['command'][2:],
-                             ['--build-dir', case['command'][3], '--test', entry['name'],
-                              '--expected-channel', channel])
+            command = ['--build-dir', case['command'][3], '--test', entry['name'],
+                       '--expected-channel', channel]
+            timeout = 150.0
+            if entry['name'] == 'profiler-application':
+                command += ['--timeout', '180']
+                timeout = 210.0
+            self.assertEqual(case['command'][2:], command)
             properties = {item['name']: item['value'] for item in case['properties']}
             labels = ['prealpha', *entry['groups']]
             if not entry.get('releaseOnly', False):
@@ -91,7 +95,7 @@ class ValidationRegistrationTests(unittest.TestCase):
             self.assertNotIn('SKIP_RETURN_CODE', properties)
             self.assertEqual(properties['LABELS'], sorted(labels))
             self.assertEqual(properties.get('RUN_SERIAL', False), not entry.get('parallel', False))
-            self.assertEqual(properties['TIMEOUT'], 150.0)
+            self.assertEqual(properties['TIMEOUT'], timeout)
         for name in tooling:
             command = tests[name]['command']
             self.assertIn('unittest', command)
