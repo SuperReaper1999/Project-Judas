@@ -200,7 +200,9 @@ bool InDecorativeRange(const SceneRenderComponent& render, const glm::vec3& posi
 
 struct PresentedObject {
     SceneTransform pose;
-    const std::vector<glm::mat4>* skin;
+    const std::vector<glm::mat4>* skin = nullptr;
+    unsigned layer = 0;
+    bool visible = false;
 };
 struct PresentedObjects {
     std::vector<std::optional<PresentedObject>> statics, dynamics;
@@ -208,9 +210,18 @@ struct PresentedObjects {
 
 template<class SamplePose>
 PresentedObject SampleObject(const RuntimeWorld& world, SceneObjectId id, float alpha,
-                             std::optional<PresentedObject>* slot, SamplePose samplePose) {
+                             std::optional<PresentedObject>* slot, bool staticObject,
+                             SamplePose samplePose) {
     if (slot && *slot) return **slot;
-    PresentedObject result{samplePose(), world.AnimationSkin(id, alpha)};
+    PresentedObject result;
+    const auto* definition = world.RuntimeDefinition(id);
+    if (definition && definition->renderVisible &&
+        (!definition->render || definition->render->visible) &&
+        (!staticObject || (!definition->deformable && !world.HasRuntimeTerrain(id)))) {
+        result = {samplePose(), world.AnimationSkin(id, alpha), world.RenderLayerOf(id), true};
+    }
+    // The owner and its layer are fixed for this presentation sample. The
+    // receiving view still owns distance, frustum, resource and LOD tests.
     if (slot) *slot = result;
     return result;
 }
@@ -228,13 +239,13 @@ static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, float alph
     const auto& statics = world.StaticRenderables();
     for (std::size_t i = 0; i < statics.size(); ++i) {
         const auto& s = statics[i];
-        if(!world.IsPublished(s.id)||!world.RenderVisible(s.id)||world.RuntimeDefinition(s.id)->deformable||world.HasRuntimeTerrain(s.id))continue;
         if(IsDecoration(s.render)&&!KeepOptionalVisual(s.id,quality.decorativeDensity))continue;
-        r.SetRenderLayer(world.RenderLayerOf(s.id));
-        const auto [t, skin] = SampleObject(world, s.id, alpha, objects ? &objects->statics[i] : nullptr, [&] {
+        const auto [t, skin, layer, visible] = SampleObject(world, s.id, alpha, objects ? &objects->statics[i] : nullptr, true, [&] {
             return world.PresentedTransform(s.id, {s.position, s.rotation, s.scale}, alpha);
         });
+        if(!visible)continue;
         if(!InDecorativeRange(s.render,t.position,eye,quality.decorativeDistanceScale))continue;
+        r.SetRenderLayer(layer);
         ShadowMeshBindings* reuse = prepared && s.render.shape == SceneShape::Mesh && !s.render.textureCamera &&
                                     s.render.hiddenParts.empty() && (!skin || skin->empty()) ? &(*prepared)[i] : nullptr;
         DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f,
@@ -251,24 +262,19 @@ static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, float alph
     }
     world.DrawPhysicalBalances(r);
     r.SetMaterialBindings({});
-
-    r.SetMaterialBindings({});
-    r.SetMaterialBindings({});
     r.SetRenderLayer(0);
-
-
-
     const std::vector<DynamicBody>& bodies = world.DynamicBodies();
     const std::vector<RuntimeWorld::DynamicVisual>& visuals = world.DynamicVisuals();
     for (std::size_t i = 0; i < bodies.size(); ++i) {
         const RuntimeWorld::DynamicVisual& v = visuals[i];
-        r.SetRenderLayer(world.RenderLayerOf(v.id));
-        if (!v.hasRender||!world.IsPublished(v.id)||!world.RenderVisible(v.id)) continue;
+        if (!v.hasRender) continue;
         if(IsDecoration(v.render)&&!KeepOptionalVisual(v.id,quality.decorativeDensity))continue;
-        const auto [pose, skin] = SampleObject(world, v.id, alpha, objects ? &objects->dynamics[i] : nullptr, [&] {
+        const auto [pose, skin, layer, visible] = SampleObject(world, v.id, alpha, objects ? &objects->dynamics[i] : nullptr, false, [&] {
             return PresentedBody(world, v.id, bodies[i], alpha, v.scale);
         });
+        if(!visible)continue;
         if(!InDecorativeRange(v.render,pose.position,eye,quality.decorativeDistanceScale))continue;
+        r.SetRenderLayer(layer);
         const glm::vec3 position=pose.position;
         const glm::quat rotation=pose.rotation;
         if (v.render.shape == SceneShape::Compound) {
