@@ -49,9 +49,13 @@ void Grid::ClassifyAir() {
             componentVolume[root(i)] += gas[i];
     const double minimumVolume = voxel * settings_.minimumReservoirCells;
     std::vector<std::map<int, double>> children(previous.size());
-    for (int i = 0; i < count; ++i)
-        if (gas[i] > 0 && cells_[i].air >= 0)
-            children[cells_[i].air][root(i)] += gas[i];
+    for (int i = 0; i < count; ++i) {
+        const int old = cells_[i].air;
+        // Atmospheric reservoirs do not retain sub-resolution daughters.
+        // Their mass transfers still use the separate overlap pass below.
+        if (gas[i] > 0 && old >= 0 && !previous[old].atmosphere)
+            children[old][root(i)] += gas[i];
+    }
     for (int k = 0; k < int(previous.size()); ++k)
         if (!previous[k].atmosphere && !children[k].empty()) {
             int anchor = children[k].begin()->first;

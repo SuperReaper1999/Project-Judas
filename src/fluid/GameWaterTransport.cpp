@@ -75,17 +75,24 @@ void Grid::Transport(float dt) {
             outgoing[q >= 0 ? face.a : face.b] += std::abs(q);
             incoming[q >= 0 ? face.b : face.a] += std::abs(q);
         }
+        // Every face incident to a cell uses the same inventory and capacity
+        // limits. Convert the reductions once per cell without changing the
+        // face accumulation order or when the limiter terminates.
+        for (std::size_t i = 0; i < cells_.size(); ++i) {
+            const auto &cell = cells_[i];
+            const double out = outgoing[i];
+            incoming[i] =
+                std::max(0., double(cell.capacity) -
+                                 (gasReserve_.empty() ? 0 : gasReserve_[i]) - cell.water + out) /
+                std::max(incoming[i], 1e-30);
+            outgoing[i] = cell.water / std::max(out, 1e-30);
+        }
         bool changed = false;
         for (std::size_t f = 0; f < faces_.size(); ++f) {
             auto face = faces_[f];
             double &q = transfer[f];
             int donor = q >= 0 ? face.a : face.b, receiver = q >= 0 ? face.b : face.a;
-            double scale =
-                std::min({1., cells_[donor].water / std::max(outgoing[donor], 1e-30),
-                          std::max(0., double(cells_[receiver].capacity) -
-                                           (gasReserve_.empty() ? 0 : gasReserve_[receiver]) -
-                                           cells_[receiver].water + outgoing[receiver]) /
-                              std::max(incoming[receiver], 1e-30)});
+            double scale = std::min({1., outgoing[donor], incoming[receiver]});
             changed |= scale < 1. - 1e-10;
             q *= scale;
         }
