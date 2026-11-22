@@ -31,6 +31,8 @@ public:
     ~ScriptSystem();
     ScriptSystem(const ScriptSystem&)=delete;
     void Synchronize(const std::vector<SceneObject>& objects);
+    void SynchronizeRuntime();
+    void InvalidateRuntimeSchedule();
     std::optional<std::vector<SceneObjectId>> DeclaredReferences(SceneObjectId,const SceneScriptSlot&)const;
     // Latest active presentation camera, for project-authored pointing UI.
     void SetView(const glm::mat4& view);

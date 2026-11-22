@@ -168,6 +168,7 @@ void ScriptSystem::Stop() {
     if (m->debug && m->debug->inside)
         throw std::logic_error("Stop requires a callback boundary");
     JS_SetExecutionHook(m->rt, nullptr, nullptr);
+    InvalidateRuntimeSchedule();
     m->Stop();
 }
 std::optional<std::vector<SceneObjectId>>
@@ -178,11 +179,31 @@ ScriptSystem::DeclaredReferences(SceneObjectId id, const SceneScriptSlot &slot) 
         return {};
     return it->second.fault ? std::vector<SceneObjectId>{} : it->second.entityReferences;
 }
+void ScriptSystem::InvalidateRuntimeSchedule() {
+    ++m->runtimeScheduleRevision;
+    m->runtimeOrder.reset();
+}
+
+void ScriptSystem::SynchronizeRuntime() {
+    m->CheckThread();
+    const auto revision = m->runtimeScheduleRevision;
+    if (m->reconciledRuntimeRevision == revision) {
+        JUDAS_PROFILE_COUNTER("Script instances", double(m->instances.size()),
+                              ProfileCounterMode::Latest);
+        return;
+    }
+    Synchronize(m->world->ScriptSlots());
+    // Constructors and destroy callbacks can mutate the world. Remember the
+    // input revision, so those changes reconcile at the next phase boundary.
+    m->reconciledRuntimeRevision = revision;
+}
+
 void ScriptSystem::Synchronize(const std::vector<SceneObject> &objects) {
     JUDAS_PROFILE_SCOPE("Script synchronization");
     JUDAS_PROFILE_COUNTER("Script instances", double(m->instances.size()),
                           ProfileCounterMode::Latest);
     m->CheckThread();
+    m->reconciledRuntimeRevision.reset();
     std::set<std::pair<SceneObjectId, uint64_t>> alive;
     for (const auto &object : objects)
         for (const auto &slot : object.scripts)
@@ -298,6 +319,7 @@ void ScriptSystem::Synchronize(const std::vector<SceneObject> &objects) {
 }
 void ScriptSystem::RemoveEntities(const std::vector<SceneObjectId> &ids) {
     m->CheckThread();
+    InvalidateRuntimeSchedule();
     std::set<SceneObjectId> gone(ids.begin(), ids.end());
     for (auto it = m->instances.begin(); it != m->instances.end();)
         if (gone.count(it->first.first)) {
@@ -321,7 +343,8 @@ void ScriptSystem::Start(const InputSystem* input) {
     m->CheckThread();m->input=input;m->delta=0;m->fixed=false;
     // Snapshot authored order: a callback may add/remove an entity. Newly
     // attached scripts join the next preparation pass, exactly once.
-    for(auto key:m->world->ScriptKeys()){
+    const auto keys = m->RuntimeKeys();
+    for(auto key:*keys){
         auto it=m->instances.find(key);
         if(it==m->instances.end()||!m->world->RuntimeDefinition(key.first))continue;
         auto& instance=it->second;
@@ -335,14 +358,17 @@ void ScriptSystem::Frame(const InputSystem *input, float dt) {
     m->delta = dt;
     m->fixed = false;
     std::vector<std::pair<SceneObjectId, uint64_t>> order;
-    for (const auto &entry : m->instances)
-        order.push_back(entry.first);
     // Slot order follows authored vector order, not numeric slot identity.
     if (m->world) {
-        order.clear();
-        for (auto key : m->world->ScriptKeys())
+        const auto keys = m->RuntimeKeys();
+        order.reserve(keys->size());
+        for (auto key : *keys)
             if (m->instances.count(key))
                 order.push_back(key);
+    } else {
+        order.reserve(m->instances.size());
+        for (const auto &entry : m->instances)
+            order.push_back(entry.first);
     }
     for (auto key : order) {
         auto it = m->instances.find(key);
@@ -362,8 +388,10 @@ void ScriptSystem::Fixed(const InputSystem *input, float dt) {
     m->input = input;
     m->delta = dt;
     m->fixed = true;
-    auto keys = m->world ? m->world->ScriptKeys() : std::vector<std::pair<EntityId, uint64_t>>{};
-    for (auto key : keys) {
+    if (!m->world)
+        return;
+    const auto keys = m->RuntimeKeys();
+    for (auto key : *keys) {
         auto it = m->instances.find(key);
         if (it == m->instances.end() || !m->world->RuntimeDefinition(key.first))
             continue;
@@ -431,7 +459,8 @@ void ScriptSystem::UIFrame(const InputSystem *input, float dt) {
     m->delta = dt;
     m->fixed = false;
     m->inUI = true;
-    for (auto key : m->world->ScriptKeys()) {
+    const auto keys = m->RuntimeKeys();
+    for (auto key : *keys) {
         auto it = m->instances.find(key);
         if (it == m->instances.end() || !m->world->RuntimeDefinition(key.first))
             continue;
@@ -456,8 +485,9 @@ void ScriptSystem::UIEvents(const InputSystem *input, float dt) {
         return;
     }
     auto events = m->world->UI().TakeEvents();
-    for (const auto &event : events)
-        for (auto key : m->world->ScriptKeys()) {
+    for (const auto &event : events) {
+        const auto keys = m->RuntimeKeys();
+        for (auto key : *keys) {
             auto it = m->instances.find(key);
             if (it == m->instances.end() || it->second.fault ||
                 !m->world->RuntimeDefinition(key.first))
@@ -515,6 +545,7 @@ void ScriptSystem::UIEvents(const InputSystem *input, float dt) {
             }
             JS_FreeValue(m->ctx, fn);
         }
+    }
     m->inUI = false;
 }
 
@@ -635,7 +666,8 @@ void ScriptSystem::ShiftOrigin(glm::dvec3 delta) {
     // The chart is completely published before notification. This callback is
     // for explicitly owned script caches; arbitrary JSON is never guessed to
     // be a position. Physics intent remains confined to fixedUpdate.
-    for (auto key : m->world->ScriptKeys()) {
+    const auto keys = m->RuntimeKeys();
+    for (auto key : *keys) {
         auto it = m->instances.find(key);
         if (it == m->instances.end() || !it->second.started || it->second.fault ||
             !m->world->RuntimeDefinition(key.first))
@@ -682,7 +714,8 @@ void ScriptSystem::Presentation(const InputSystem *input, float dt, float alpha)
     m->fixed = false;
     m->presentationAlpha = std::clamp(alpha, 0.f, 1.f);
     m->inPresentation = true;
-    for (auto key : m->world->ScriptKeys()) {
+    const auto keys = m->RuntimeKeys();
+    for (auto key : *keys) {
         auto it = m->instances.find(key);
         if (it == m->instances.end() || !m->world->RuntimeDefinition(key.first))
             continue;

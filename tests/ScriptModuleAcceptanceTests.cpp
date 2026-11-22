@@ -248,6 +248,21 @@ int main() {
           !world.PresentationCameras().front().settings.enabled,
           "a property accessor can make a nested camera call during Audio validation");
     Check(world.Scripts()->Diagnostics().empty(), "handled validation errors do not fault the owner slot");
+    const auto ownerId = owner.id;
+    const auto copiedSlots = world.MetadataStats().scriptSlotsCopied;
+    world.UpdateScripts(nullptr, 1.f / 60);
+    world.FixedScripts(nullptr, 1.f / 60);
+    Check(world.MetadataStats().scriptSlotsCopied == copiedSlots,
+          "unchanged phases reuse the published script schedule");
+    world.HideRegion({ownerId});
+    world.FixedScripts(nullptr, 1.f / 60);
+    Check(world.Scripts()->InspectPhase(ownerId, 1) == ScriptInstancePhase::Absent,
+          "hiding a scripted owner retires its slot before the next phase");
+    world.PublishRegion({ownerId});
+    world.FixedScripts(nullptr, 1.f / 60);
+    Check(world.Scripts()->InspectPhase(ownerId, 1) == ScriptInstancePhase::Running &&
+          HasTrue(capture(), "known") && world.MetadataStats().scriptSlotsCopied > copiedSlots,
+          "republishing a scripted owner reconciles its slot before fixedUpdate");
     world.Destroy();
     Check(!world.Scripts(), "normal world teardown retires the scripting session");
     CheckUI(root,assets,resources);

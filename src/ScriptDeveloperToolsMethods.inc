@@ -40,7 +40,7 @@ bool ScriptSystem::Reload(bool preserveState,std::string& error){
     RemoveEntities(owners);m=std::move(replacement);
     if(handler){SetDebugger(std::move(handler));SetBreakpoints(std::move(points));}
     if(!Restore(states,error,false))return false;
-    Synchronize(m->world->ScriptSlots());
+    SynchronizeRuntime();
     return true;
 }
 

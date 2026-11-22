@@ -67,6 +67,16 @@ struct ScriptSystem::Impl : ScriptBindings::RuntimeServices {
         bool profileRegistered = false;
     };
     std::map<std::pair<SceneObjectId, std::uint64_t>, Instance> instances;
+    using RuntimeOrder = std::vector<std::pair<SceneObjectId, std::uint64_t>>;
+    std::shared_ptr<const RuntimeOrder> runtimeOrder;
+    std::uint64_t runtimeScheduleRevision = 0;
+    std::optional<std::uint64_t> reconciledRuntimeRevision;
+
+    std::shared_ptr<const RuntimeOrder> RuntimeKeys() {
+        if (!runtimeOrder)
+            runtimeOrder = std::make_shared<const RuntimeOrder>(world->ScriptKeys());
+        return runtimeOrder;
+    }
     std::map<std::string, JSModuleDef *> modules;
     std::vector<ScriptDiagnostic> diagnostics;
     ScriptBindings::BindingStates bindingStates;

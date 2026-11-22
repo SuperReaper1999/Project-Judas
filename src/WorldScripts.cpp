@@ -163,7 +163,7 @@ bool RuntimeWorld::SetRuntimeMotionType(EntityId id,SceneBodyMotion motion,bool 
 void RuntimeWorld::StartScripts(const InputSystem* input){
     if(!m_scripts){if(!m_hasScripts)return;m_scripts=std::make_unique<ScriptSystem>(this,m_assets?m_assets->Assets():nullptr);}
     for(auto id:m_characterOwners)RuntimeCharacter(id);
-    m_scripts->Synchronize(ScriptSlots());m_scripts->Start(input);
+    m_scripts->SynchronizeRuntime();m_scripts->Start(input);
 }
 void RuntimeWorld::UpdateScripts(const InputSystem* input,float dt){
     if(!m_scripts){if(!m_hasScripts)return;
@@ -171,7 +171,7 @@ void RuntimeWorld::UpdateScripts(const InputSystem* input,float dt){
     // Frame/start callbacks may query other motors before any fixed update.
     // Registration publishes geometry; it does not advance their simulation.
     for(auto id:m_characterOwners)RuntimeCharacter(id);
-    m_scripts->Synchronize(ScriptSlots());m_scripts->Frame(input,dt);
+    m_scripts->SynchronizeRuntime();m_scripts->Frame(input,dt);
 }
 void RuntimeWorld::FixedScripts(const InputSystem* input,float dt){
     // Register authored motor geometry before this step, including its first one.
@@ -179,7 +179,7 @@ void RuntimeWorld::FixedScripts(const InputSystem* input,float dt){
     SynchronizeJoints();
     if(!m_scripts){if(!m_hasScripts)return;
         m_scripts=std::make_unique<ScriptSystem>(this,m_assets?m_assets->Assets():nullptr);}
-    if(m_scripts){m_scripts->Synchronize(ScriptSlots());m_scripts->Fixed(input,dt);}
+    if(m_scripts){m_scripts->SynchronizeRuntime();m_scripts->Fixed(input,dt);}
 }
 
 bool RuntimeWorld::RestoreScriptState(const std::vector<ScriptStateRecord>& records,std::string& error,bool resume){
@@ -191,7 +191,7 @@ bool RuntimeWorld::RestoreScriptState(const std::vector<ScriptStateRecord>& reco
 void RuntimeWorld::UpdateUIScripts(InputSystem* input,float dt){
     if(!m_scripts){if(!m_hasScripts)return;m_scripts=std::make_unique<ScriptSystem>(this,m_assets?m_assets->Assets():nullptr);}
     for(auto id:m_characterOwners)RuntimeCharacter(id);
-    bool wasPaused=m_ui&&m_ui->Paused();m_scripts->Synchronize(ScriptSlots());m_scripts->UIFrame(input,dt);
+    bool wasPaused=m_ui&&m_ui->Paused();m_scripts->SynchronizeRuntime();m_scripts->UIFrame(input,dt);
     if(input&&!wasPaused&&m_ui&&m_ui->Paused())input->ConsumeBindings({"pause"});
 }
 void RuntimeWorld::DispatchUIEvents(const InputSystem* input,float dt){if(m_scripts)m_scripts->UIEvents(input,dt);}
@@ -219,7 +219,7 @@ void RuntimeWorld::DispatchPhysicsEvents(const InputSystem* input,float dt){
         if(event.phase!=PhysicsWorld::TouchPhase::Exit){if(aa.first)nextArticulation[event.a.id]=aa;if(bb.first)nextArticulation[event.b.id]=bb;}
         if(event.phase!=PhysicsWorld::TouchPhase::Exit){next[event.a.id]=a;next[event.b.id]=b;}
     }
-    if(m_scripts){m_scripts->Synchronize(ScriptSlots());
+    if(m_scripts){m_scripts->SynchronizeRuntime();
         for(const auto& d:deliveries){m_scripts->PhysicsEvent(d.a,d.b,d.event,false,d.a,d.aa.second,d.bb.first,d.bb.second);m_scripts->PhysicsEvent(d.b,d.a,d.event,true,d.b,d.bb.second,d.aa.first,d.aa.second);
             // Forward the existing per-body-pair observation only on explicit
             // owner subscription. Internal self contacts do not call the same

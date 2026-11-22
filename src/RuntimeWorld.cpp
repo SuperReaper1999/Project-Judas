@@ -471,7 +471,10 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         }
         m_scriptDefinitions[o.id]=o;
         if(!RegisterWeather(o,outError))return fail(o,outError);
-        if(!o.scripts.empty())m_scriptOwners.insert(o.id);
+        if(!o.scripts.empty()) {
+            m_scriptOwners.insert(o.id);
+            if(m_scripts)m_scripts->InvalidateRuntimeSchedule();
+        }
         if(o.characterMotor)m_characterOwners.insert(o.id);
         if(o.powertrain){std::string error;if(!ValidatePowertrainSettings(*o.powertrain,error))return fail(o,error);}
         if(o.wheel){std::string error;if(!ValidateWheelSettings(*o.wheel,error))return fail(o,error);if(o.body||o.characterMotor||o.ragdoll||o.deformable||o.socket||o.transform.scale!=glm::vec3(1))return fail(o,"wheel owns visual placement; no other motion producer or non-unit scale is allowed");}
@@ -1024,6 +1027,7 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     RemoveHair(id);
     m_navigationOwners.erase(id);
     e->lifecycle = EntityLifecycle::Destroyed;
+    if(m_scripts&&m_scriptOwners.count(id))m_scripts->InvalidateRuntimeSchedule();
     if (m_cameraRenderer) for (auto& camera : m_renderCameras) {
         if (camera.id == id) { m_cameraRenderer->DestroyRenderTarget(camera.target); camera.target = {}; }
     }
