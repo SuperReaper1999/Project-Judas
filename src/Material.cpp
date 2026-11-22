@@ -99,7 +99,8 @@ MaterialSlot ResolveRenderMaterial(const SceneRenderComponent& render,unsigned s
  auto apply=[&](const MaterialSlot& v){if(v.useSource||!v.asset.empty())result.asset=v.asset;result.overrides=ComposeMaterialOverrides(result.overrides,v.overrides);};
  if(slot<render.materials.size())apply(render.materials[slot]);
  if(auto it=render.partMaterials.find(part);it!=render.partMaterials.end())apply(it->second);
- for(const auto& key:{std::string("*"),std::string("#")+std::to_string(slot),part})if(!key.empty())if(auto it=render.runtimeMaterials.find(key);it!=render.runtimeMaterials.end())apply(it->second);
+ if(!render.runtimeMaterials.empty())
+  for(const auto& key:{std::string("*"),std::string("#")+std::to_string(slot),part})if(!key.empty())if(auto it=render.runtimeMaterials.find(key);it!=render.runtimeMaterials.end())apply(it->second);
  return result;
 }
 bool ValidateAppearance(const SceneSettings& s,std::string& error){

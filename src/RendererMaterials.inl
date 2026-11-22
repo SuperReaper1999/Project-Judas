@@ -46,7 +46,9 @@ MaterialHandle Renderer::CreateMaterial(const MaterialDefinition& definition){
  // Retaining them here would copy megabytes in ApplyMaterialOverride on every
  // draw. The GPU material only needs uploaded handles and lightweight settings.
  for(auto& map:m.definition.maps)std::vector<uint8_t>().swap(map.encodedImage);
- MaterialHandle handle;if(m_freeMaterials.empty()){handle.id=unsigned(m_materials.size());m_materials.push_back(std::move(m));}else{handle.id=m_freeMaterials.back();m_freeMaterials.pop_back();m.generation=m_materials[handle.id].generation;handle.generation=m.generation;m_materials[handle.id]=std::move(m);}return handle;
+ MaterialHandle handle;if(m_freeMaterials.empty()){handle.id=unsigned(m_materials.size());m_materials.push_back(std::move(m));}else{handle.id=m_freeMaterials.back();m_freeMaterials.pop_back();m.generation=m_materials[handle.id].generation;handle.generation=m.generation;m_materials[handle.id]=std::move(m);}
+ if(m_render->trackShadowResources)++m_shadowResourceRevision;
+ return handle;
 }
 bool Renderer::UploadMeshMap(MeshHandle mesh,const MeshData& data,size_t material,size_t map){
  JUDAS_PROFILE_SCOPE("Mesh texture upload unit");
@@ -63,7 +65,7 @@ bool Renderer::UploadMeshMap(MeshHandle mesh,const MeshData& data,size_t materia
  glSamplerParameteri(m.samplers[map],GL_TEXTURE_WRAP_S,s.wrapS);glSamplerParameteri(m.samplers[map],GL_TEXTURE_WRAP_T,s.wrapT);
  glSamplerParameteri(m.samplers[map],GL_TEXTURE_MIN_FILTER,s.minFilter);glSamplerParameteri(m.samplers[map],GL_TEXTURE_MAG_FILTER,s.magFilter);return true;
 }
-void Renderer::DestroyMaterial(MaterialHandle handle){if(!ValidMaterial(handle))return;auto& m=m_materials[handle.id];for(size_t i=0;i<m.textures.size();++i)ReleaseMaterialImage(m.textures[i],m.imageKeys[i]);for(auto s:m.samplers)if(s)glDeleteSamplers(1,&s);auto generation=m.generation;m={};m.generation=generation;if(generation!=0xFFFFFFFFu){++m.generation;m_freeMaterials.push_back(handle.id);}}
+void Renderer::DestroyMaterial(MaterialHandle handle){if(!ValidMaterial(handle))return;auto& m=m_materials[handle.id];for(size_t i=0;i<m.textures.size();++i)ReleaseMaterialImage(m.textures[i],m.imageKeys[i]);for(auto s:m.samplers)if(s)glDeleteSamplers(1,&s);auto generation=m.generation;m={};m.generation=generation;if(generation!=0xFFFFFFFFu){++m.generation;m_freeMaterials.push_back(handle.id);}if(m_render->trackShadowResources)++m_shadowResourceRevision;}
 
 GLuint Renderer::MaterialMapSampler(const GpuMaterial* material, unsigned map,
                                     TextureHandle texture, bool eligible) {

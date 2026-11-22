@@ -71,6 +71,12 @@ building a caster key. A continuously moving caster can similarly make its
 own chart ineligible before static keys are serialized. An exact observation
 after motion stops re-establishes reuse.
 
+Within a presentation sample, cascades also share cooked streaming bounds
+and ready mesh material bindings. Each cascade still evaluates visibility,
+requests its visible resources and chooses its LOD. A resource revision
+change invalidates the prepared bindings, and pending materials keep their
+normal resolution path.
+
 Authored Terrain V2 previews, planets, deformables, networked worlds,
 camera-textured casters, active ragdolls and unknown compound presentations
 still use conservative redraw. Camera-textured casters retain this policy

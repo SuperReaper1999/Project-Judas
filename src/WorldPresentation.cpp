@@ -26,6 +26,11 @@
 #include "render/PresentedObjects.h"
 
 std::vector<MaterialBinding> BuildRenderMaterialBindings(ResourceManager* resources,const SceneRenderComponent& render,const std::vector<MeshPrimitive>* derivedParts) {
+    // An absent binding already inherits the mesh primitive's source
+    // material. Avoid allocating a default record for every primitive.
+    if (render.materials.empty() && render.partMaterials.empty() &&
+        render.runtimeMaterials.empty() && MaterialOverrideEmpty(render.instanceOverrides))
+        return {};
     const auto* parts=derivedParts?derivedParts:resources?resources->TryGetModelParts(render.meshAsset):nullptr;
     const size_t count=parts&&!parts->empty()?parts->size():1;
     std::vector<MaterialBinding> bindings;bindings.reserve(count);
@@ -62,13 +67,17 @@ const glm::vec3 kFailedPlaceholderColor(0.95f, 0.15f, 0.85f);
 struct ShadowMeshBindings {
     MeshHandle mesh;
     std::vector<MaterialBinding> bindings;
+    std::uint64_t resourceRevision = 0;
+    std::optional<VisualBounds> demandBounds;
 };
 
-bool HasShadowBindingDependencies(const std::vector<MaterialBinding>& bindings) {
-    return std::any_of(bindings.begin(), bindings.end(), [](const MaterialBinding& binding) {
-        return binding.explicitAsset || binding.handle.IsValid() || binding.failed ||
-               std::any_of(binding.overrides.textures.begin(), binding.overrides.textures.end(),
-                           [](const auto& asset) { return asset && !asset->empty(); });
+bool ShadowBindingsReady(const std::vector<MaterialBinding>& bindings) {
+    return std::all_of(bindings.begin(), bindings.end(), [](const MaterialBinding& binding) {
+        if (binding.explicitAsset && !binding.handle.IsValid()) return false;
+        for (unsigned map = 0; map < binding.textures.size(); ++map)
+            if (binding.overrides.textures[map] && !binding.overrides.textures[map]->empty() &&
+                !binding.textures[map].IsValid()) return false;
+        return true;
     });
 }
 
@@ -84,8 +93,17 @@ void DrawMeshOrPlaceholder(Renderer& r, ResourceManager* resources, const SceneR
                            ShadowMeshBindings* prepared = nullptr) {
     r.SetMeshLodMultiplier(render.lodMultiplier);
     if(resources&&resources->VisualStreaming()&&r.AcceptsCurrentLayer()){
-        auto matrix=glm::translate(glm::mat4(1),position)*glm::mat4_cast(rotation)*glm::scale(glm::mat4(1),scale);
-        if(!r.IsVisible(TransformBounds(resources->VisualMeshBounds(render.meshAsset),matrix)))return;
+        // The cooked demand bound and sampled transform belong to the view's
+        // presentation sample. Each cascade still tests its own frustum.
+        const auto bounds = [&] {
+            if (prepared && prepared->demandBounds) return *prepared->demandBounds;
+            const auto matrix = glm::translate(glm::mat4(1),position) *
+                                glm::mat4_cast(rotation) * glm::scale(glm::mat4(1),scale);
+            auto sampled = TransformBounds(resources->VisualMeshBounds(render.meshAsset),matrix);
+            if (prepared) prepared->demandBounds = sampled;
+            return sampled;
+        }();
+        if(!r.IsVisible(bounds))return;
         resources->DemandVisual(render.meshAsset);resources->DemandVisual(render.textureAsset);
     }
     const auto draw = [&](MeshHandle mesh) {
@@ -95,19 +113,24 @@ void DrawMeshOrPlaceholder(Renderer& r, ResourceManager* resources, const SceneR
     if (prepared && prepared->mesh.IsValid()) {
         // Visit the resource every chart and reuse only the same ready generation.
         const MeshHandle mesh = resources->TryGetMesh(render.meshAsset);
-        if (mesh.id == prepared->mesh.id && mesh.generation == prepared->mesh.generation) {
+        if (mesh.id == prepared->mesh.id && mesh.generation == prepared->mesh.generation &&
+            prepared->resourceRevision == r.ShadowResourceRevision()) {
             r.SetMaterialBindings(prepared->bindings);
             draw(mesh);
             return;
         }
-        *prepared = {};
+        prepared->mesh = {};
+        prepared->bindings.clear();
     }
     auto bindings = BuildRenderMaterialBindings(resources, render);
     r.SetMaterialBindings(bindings);
     const MeshHandle mesh = resources ? resources->TryGetMesh(render.meshAsset) : MeshHandle{};
     if (mesh.IsValid()) {
-        if (prepared && !HasShadowBindingDependencies(bindings) && r.SupportsStaticOpaqueShadowReuse(mesh, bindings))
-            *prepared = {mesh, std::move(bindings)};
+        if (prepared && ShadowBindingsReady(bindings)) {
+            prepared->mesh = mesh;
+            prepared->bindings = std::move(bindings);
+            prepared->resourceRevision = r.ShadowResourceRevision();
+        }
         draw(mesh);
         return;
     }
@@ -222,8 +245,8 @@ static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, float alph
         if(!visible)continue;
         if(!InDecorativeRange(s.render,t.position,eye,quality.decorativeDistanceScale))continue;
         r.SetRenderLayer(layer);
-        ShadowMeshBindings* reuse = prepared && s.render.shape == SceneShape::Mesh && !s.render.textureCamera &&
-                                    s.render.hiddenParts.empty() && (!skin || skin->empty()) ? &(*prepared)[i] : nullptr;
+        ShadowMeshBindings* reuse = prepared && s.render.shape == SceneShape::Mesh && !s.render.textureCamera
+                                  ? &(*prepared)[i] : nullptr;
         DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f,
                        world.CameraTexture(s.render.textureCamera), skin, s.id, reuse);
     }
@@ -264,7 +287,10 @@ static void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, float alph
             }
             continue;
         }
-        DrawRenderable(r, world.Resources(), v.render, position, rotation, v.scale, 1.0f, world.CameraTexture(v.render.textureCamera),skin,v.id);
+        auto* reuse = prepared && v.render.shape == SceneShape::Mesh && !v.render.textureCamera
+                     ? &(*prepared)[statics.size() + i] : nullptr;
+        DrawRenderable(r, world.Resources(), v.render, position, rotation, v.scale, 1.0f,
+                       world.CameraTexture(v.render.textureCamera), skin, v.id, reuse);
     }
 
     r.SetMaterialBindings({});
@@ -495,7 +521,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             unshadowedLightPass();
             return;
         }
-        const bool reuse = settings.sunEnabled && world.Resources() && !world.Resources()->VisualStreaming();
+        const bool reuse = settings.sunEnabled && world.Resources();
         // One view's chart production borrows bindings from one presentation sample.
         // Culling, LOD and actual submissions still belong to each chart.
         std::vector<ShadowMeshBindings> prepared;
@@ -504,7 +530,8 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
                 if(!shadowScene)shadowScene.emplace(JudasLighting::RuntimeShadowScene(world,alpha,&presentedObjects));
                 return *shadowScene;
             },[&]{
-            if (reuse && prepared.empty()) prepared.resize(world.StaticRenderables().size());
+            if (reuse && prepared.empty())
+                prepared.resize(world.StaticRenderables().size() + world.DynamicBodies().size());
             DrawWorldGeometry(renderer,world,alpha,WorldDrawOptions{},&presentedObjects,reuse ? &prepared : nullptr);
         });
     };
