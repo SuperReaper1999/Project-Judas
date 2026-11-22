@@ -287,7 +287,16 @@ definition size, growing from 8 to 32, 128 and 256 candidates produced
 0.107, 0.378, 1.484 and 3.067 ms per evaluation. Those values include native
 validation, scoring, diagnostic construction and result JSON. JavaScript
 candidate generation, pathfinding and world calls are outside that benchmark.
-In a separate native lifecycle control, a four-action definition took about
+
+An interleaved follow-up on the same host retained the diagnostic output
+while eliminating copies of immutable definitions and decision rows. Native
+median due-tick time fell from 110 to 77 µs with 4 actions, 2 considerations
+and 8 candidates, and from 3.07 to 2.49 ms with 256 candidates. In the
+script-bridge benchmark, median steps fell from 1.49 to 1.40 ms at 100
+active agents and from 7.71 to 7.16 ms at 500 active agents. These runs
+measure fixed script work and exclude rendering and movement.
+
+In a separate baseline lifecycle control, a four-action definition took about
 0.036 ms to construct, 0.055 ms to restore and 0.007 ms to retire. At 64
 actions those costs were about 0.53, 0.71 and 0.10 ms. These samples time one
 fresh C++ agent and an already captured snapshot. VM setup, disk reads,
@@ -322,13 +331,12 @@ result, and avoid a second inspection and conversion.
 
 ### Next measured engine opportunities
 
-1. **Reduce due-tick encoding and state copying.** Native evaluation currently
-   stages a full `Impl` copy for transactional failure, builds per-consideration
-   diagnostic JSON, dumps that result and parses it back into JS. Keep
-   definitions immutable and stage just the mutable decision transaction.
-   Evaluate a typed representation or deferred diagnostic materialization
-   against the same scores, ordering, inspection API and save bytes. This is
-   the strongest AI-specific candidate for large active populations.
+1. **Reduce due-tick encoding.** Native evaluation shares the immutable
+   definition, stages mutable decision inputs, and serializes the new
+   diagnostic rows without deep-copying them for the reply. The script bridge
+   still parses that reply into JS. A typed internal representation is worth
+   evaluating for large active populations. Preserve scores, ordering,
+   inspection and save bytes when comparing implementations.
 2. **Bound broadphase candidate work.** `AISenses.maxCandidates` limits work
    after the broadphase has materialized matches. It is not a traversal limit.
    Profile dense fields before proposing a bounded world-query collector or

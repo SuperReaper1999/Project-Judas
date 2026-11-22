@@ -158,8 +158,20 @@ double NormalizeInput(double x, double minimum, double maximum) {
 } // namespace
 
 struct UtilityAgent::Impl {
-    Json definition;
-    std::map<std::string, Json> actions;
+    struct Definition {
+        const Json data;
+        std::map<std::string, const Json*> actions;
+
+        explicit Definition(Json value) : data(std::move(value)) {
+            for (const auto& action : data.at("actions"))
+                actions.emplace(action.at("id").get<std::string>(), &action);
+        }
+        // Action pointers refer to the array owned by this definition.
+        Definition(const Definition&) = delete;
+        Definition& operator=(const Definition&) = delete;
+    };
+
+    std::shared_ptr<const Definition> definition;
     std::map<std::string, double> cooldowns;
     Json selected = nullptr;
     Json diagnostics = Json::array();
@@ -168,14 +180,20 @@ struct UtilityAgent::Impl {
     bool changed = false, evaluated = false;
     std::string reason = "not evaluated", status = "idle";
 
-    explicit Impl(Json value) : definition(std::move(value)) {
-        until = definition.at("initialDelay");
-        for (const auto& action : definition.at("actions")) {
-            const auto id = action.at("id").get<std::string>();
-            actions.emplace(id, action);
-            cooldowns.emplace(id, 0);
-        }
+    explicit Impl(std::shared_ptr<const Definition> value) : definition(std::move(value)) {
+        until = definition->data.at("initialDelay");
+        for (const auto& action : definition->actions)
+            cooldowns.emplace(action.first, 0);
     }
+
+    struct PendingDecision {};
+    // A due tick replaces its diagnostics and transition details. Stage only
+    // the authoritative inputs so an exception leaves the live decision intact.
+    Impl(const Impl& live, PendingDecision)
+        : definition(live.definition), cooldowns(live.cooldowns), selected(live.selected),
+          elapsed(live.elapsed), until(live.until), age(live.age) {}
+
+    const Json& Action(const std::string& id) const { return *definition->actions.at(id); }
 
     Json SnapshotFields() const {
         return Json{{"version", 1}, {"definition", nullptr}, {"elapsed", elapsed},
@@ -185,8 +203,8 @@ struct UtilityAgent::Impl {
 
     Json Inspect(bool detailed = true) const {
         double commitment = 0;
-        if (!selected.is_null()) commitment = std::max(0., actions.at(selected.at("action").get<std::string>()).at("minCommitment").get<double>() - age);
-        Json result = {{"name", definition.at("name")}, {"elapsed", elapsed}, {"untilEvaluation", until},
+        if (!selected.is_null()) commitment = std::max(0., Action(selected.at("action").get<std::string>()).at("minCommitment").get<double>() - age);
+        Json result = {{"name", definition->data.at("name")}, {"elapsed", elapsed}, {"untilEvaluation", until},
             {"commitmentRemaining", commitment}, {"selected", selected}, {"previous", previous},
             {"reason", reason}, {"status", status}, {"evaluated", evaluated}, {"changed", changed},
             {"cooldowns", cooldowns}};
@@ -197,7 +215,7 @@ struct UtilityAgent::Impl {
     void Release() {
         if (!selected.is_null()) {
             const auto id = selected.at("action").get<std::string>();
-            cooldowns.at(id) = actions.at(id).at("cooldown").get<double>();
+            cooldowns.at(id) = Action(id).at("cooldown").get<double>();
         }
         selected = nullptr;
         age = 0;
@@ -211,7 +229,7 @@ struct UtilityAgent::Impl {
             Keys(candidate, {"action", "target", "facts", "eligible", "reason"});
             Require(candidate.contains("action"), "candidate action required");
             const auto id = Text(candidate.at("action"), "candidate action");
-            Require(actions.count(id) != 0, "unknown candidate action '" + id + "'");
+            Require(definition->actions.count(id) != 0, "unknown candidate action '" + id + "'");
             const auto target = candidate.contains("target") ? Text(candidate.at("target"), "target", true, 256) : "";
             Require(identities.emplace(id, target).second, "duplicate action/target candidate");
             const Json empty = Json::object();
@@ -223,7 +241,7 @@ struct UtilityAgent::Impl {
             }
             bool eligible = Boolean(candidate, "eligible", true);
             std::string why = candidate.contains("reason") ? Text(candidate.at("reason"), "reason", true, 512) : "";
-            const auto& action = actions.at(id);
+            const auto& action = Action(id);
             if (!eligible && why.empty()) why = "developer eligibility rejected";
             if (cooldowns.at(id) > 0) { eligible = false; why = "cooldown"; }
             for (const auto& required : action.at("requiredFacts")) {
@@ -286,7 +304,7 @@ struct UtilityAgent::Impl {
     void Tick(double dt, const Json& input) {
         AdvanceTime(dt);
         if (until > 0) return;
-        const double interval = definition.at("interval");
+        const double interval = definition->data.at("interval");
         until = interval - std::fmod(-until, interval);
         evaluated = true;
         diagnostics = Candidates(input);
@@ -298,10 +316,10 @@ struct UtilityAgent::Impl {
             if (Same(candidate, selected)) current = &candidate;
         }
         if (current && best && !Same(*best, selected)) {
-            const auto& action = actions.at(selected.at("action").get<std::string>());
+            const auto& action = Action(selected.at("action").get<std::string>());
             if (!action.at("interruptible").get<bool>()) { best = current; reason = "current action is not interruptible"; }
             else if (age < action.at("minCommitment").get<double>()) { best = current; reason = "minimum commitment"; }
-            else if (best->at("score").get<double>() <= current->at("score").get<double>() + definition.at("switchAdvantage").get<double>()) {
+            else if (best->at("score").get<double>() <= current->at("score").get<double>() + definition->data.at("switchAdvantage").get<double>()) {
                 best = current; reason = "switch advantage not reached";
             } else reason = "higher utility";
         } else if (!current && !selected.is_null()) reason = "current candidate missing or ineligible";
@@ -320,7 +338,8 @@ struct UtilityAgent::Impl {
 };
 
 UtilityAgent::UtilityAgent(const std::string& definitionJson)
-    : m(std::make_unique<Impl>(Normalize(Parse(definitionJson, 131072)))) {}
+    : m(std::make_unique<Impl>(
+          std::make_shared<const Impl::Definition>(Normalize(Parse(definitionJson, 131072))))) {}
 UtilityAgent::~UtilityAgent() = default;
 std::string UtilityAgent::NormalizeDefinition(const std::string& definitionJson) {
     return Normalize(Parse(definitionJson, 131072)).dump();
@@ -339,9 +358,15 @@ std::string UtilityAgent::Tick(double dt, const std::string& candidatesJson) {
         m->AdvanceTime(dt);
         return m->Inspect(false).dump();
     }
-    Impl next = *m;
+    Impl next(*m, Impl::PendingDecision{});
     next.Tick(dt, candidates);
-    const auto result = next.Inspect().dump();
+    // The reply and later inspection expose the same rows. Serialize them in
+    // place and publish only after the reply has been built successfully.
+    auto inspection = next.Inspect(false);
+    auto& rows = inspection["candidates"];
+    rows.swap(next.diagnostics);
+    auto result = inspection.dump();
+    rows.swap(next.diagnostics);
     *m = std::move(next);
     return result;
 }
@@ -357,21 +382,21 @@ void UtilityAgent::Finish(const std::string& status) {
 std::string UtilityAgent::Inspect() const { return m->Inspect().dump(); }
 std::string UtilityAgent::Snapshot() const {
     auto snapshot = m->SnapshotFields();
-    snapshot["definition"] = m->definition;
+    snapshot["definition"] = m->definition->data;
     return snapshot.dump();
 }
 std::string UtilityAgent::SnapshotWithoutDefinition() const { return m->SnapshotFields().dump(); }
-std::string UtilityAgent::SnapshotDefinition() const { return m->definition.dump(); }
+std::string UtilityAgent::SnapshotDefinition() const { return m->definition->data.dump(); }
 void UtilityAgent::Restore(const std::string& snapshotJson) {
     const auto value = Parse(snapshotJson);
     Keys(value, {"version", "definition", "elapsed", "untilEvaluation", "activeAge", "selected", "status", "cooldowns"});
     for (const char* key : {"version", "definition", "elapsed", "untilEvaluation", "activeAge", "selected", "status", "cooldowns"})
         Require(value.contains(key), std::string("snapshot missing ") + key);
     Require(value.at("version").is_number_integer() && value.at("version") == 1, "unsupported snapshot version");
-    Require(value.at("definition") == m->definition, "snapshot definition is incompatible");
+    Require(value.at("definition") == m->definition->data, "snapshot definition is incompatible");
     Impl next(m->definition);
     next.elapsed = Number(value.at("elapsed"), "elapsed", 0);
-    next.until = Number(value.at("untilEvaluation"), "untilEvaluation", 0, m->definition.at("interval"));
+    next.until = Number(value.at("untilEvaluation"), "untilEvaluation", 0, m->definition->data.at("interval"));
     next.age = Number(value.at("activeAge"), "activeAge", 0, next.elapsed);
     next.selected = value.at("selected");
     if (!next.selected.is_null()) {
@@ -379,15 +404,15 @@ void UtilityAgent::Restore(const std::string& snapshotJson) {
         Require(next.selected.contains("action") && next.selected.contains("target"), "selected action/target required");
         const auto id = Text(next.selected.at("action"), "selected action");
         Text(next.selected.at("target"), "selected target", true, 256);
-        Require(next.actions.count(id) != 0, "unknown selected action");
+        Require(next.definition->actions.count(id) != 0, "unknown selected action");
     } else Require(next.age == 0, "idle snapshot cannot have active age");
     next.status = Text(value.at("status"), "status");
     Require(next.selected.is_null() ? (next.status == "idle" || next.status == "success" || next.status == "failure" || next.status == "cancelled") : next.status == "running",
             "snapshot action/status mismatch");
-    Require(value.at("cooldowns").is_object() && value.at("cooldowns").size() == next.actions.size(), "snapshot cooldown identities mismatch");
+    Require(value.at("cooldowns").is_object() && value.at("cooldowns").size() == next.definition->actions.size(), "snapshot cooldown identities mismatch");
     for (auto& pair : next.cooldowns) {
         Require(value.at("cooldowns").contains(pair.first), "snapshot cooldown missing action");
-        pair.second = Number(value.at("cooldowns").at(pair.first), "cooldown", 0, next.actions.at(pair.first).at("cooldown"));
+        pair.second = Number(value.at("cooldowns").at(pair.first), "cooldown", 0, next.Action(pair.first).at("cooldown"));
     }
     if (!next.selected.is_null()) Require(next.cooldowns.at(next.selected.at("action").get<std::string>()) == 0, "active action cannot be cooling down");
     next.reason = "restored; observations refresh at next evaluation";

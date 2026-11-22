@@ -48,9 +48,14 @@ void Decisions() {
     Check(Action(result) == "eat" && result.at("changed") == true, "need and target select an actual action");
     Check(result.at("selected").at("target") == "table", "target identity retained");
     Near(result.at("candidates")[0].at("score"), .8, "linear score known answer");
+    const auto evaluatedRows = result.at("candidates");
+    Check(Json::parse(agent.Inspect()).at("candidates") == evaluatedRows,
+          "inspection retains the complete diagnostic rows returned by the decision");
     Check(!agent.Due(.1), "cadence avoids unnecessary candidate generation");
     result = Tick(agent, .1, Json::array());
     Check(result.at("evaluated") == false && Action(result) == "eat", "running action survives skipped evaluation");
+    Check(Json::parse(agent.Inspect()).at("candidates") == evaluatedRows,
+          "skipped ticks preserve the previous diagnostic rows");
     result = Tick(agent, .1, Candidates(.1, .9));
     Check(Action(result) == "eat" && result.at("reason") == "minimum commitment", "commitment prevents immediate thrashing");
     result = Tick(agent, .4, Candidates(.5, .55));
@@ -144,6 +149,7 @@ void ValidationAndPersistence() {
     UtilityAgent agent(definition.dump());
     Tick(agent, 0, Candidates(.8, .2));
     const auto state = agent.Snapshot();
+    const auto inspection = agent.Inspect();
     for (const auto dt : {-1., 61., std::numeric_limits<double>::infinity(), std::numeric_limits<double>::quiet_NaN()}) {
         Reject([&]{agent.Tick(dt, "[]");}, "invalid time rejected");
         Reject([&]{agent.Due(dt);}, "invalid Due time rejected");
@@ -152,6 +158,7 @@ void ValidationAndPersistence() {
     for (auto malformed : {"not JSON", "[", "null", "{}", "[{\"action\":\"missing\"}]", "[{\"action\":\"eat\",\"facts\":{\"hunger\":null}}]", "[{\"action\":\"eat\",\"facts\":{\"hunger\":1e400}}]", "[{\"action\":\"eat\",\"eligible\":1}]", "[{\"action\":\"eat\",\"target\":22}]"}) {
         Reject([&]{agent.Tick(.2, malformed);}, "malformed observation rejected");
         Check(agent.Snapshot() == state, "failed Tick publication is transactional");
+        Check(agent.Inspect() == inspection, "failed Tick preserves the last decision and diagnostics");
     }
     auto duplicate = Candidates(.8, .2); duplicate.push_back(duplicate[0]);
     Reject([&]{agent.Tick(.2, duplicate.dump());}, "duplicate action/target rejected");
