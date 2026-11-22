@@ -118,8 +118,10 @@ void Renderer::DrawTerrainGrid(TextureHandle heights, unsigned cells, glm::vec4 
     if (!IsVisible(TransformBounds(bounds, frame)))
         return;
     auto &grid = m_terrainGrids[{cells, cellsZ}];
-    if (!grid.IsValid())
+    if (!grid.IsValid()) {
+        ScopedTerrainResources resources(*this);
         grid = CreateMesh(TerrainV2::HeightGrid(cells, cellsZ));
+    }
     m_terrainGrid = true;
     m_terrainPreparedPage = preparedPage;
     m_terrainHeights = heights;

@@ -136,6 +136,7 @@ RenderPage BuildRenderPage(const Source &source, const RenderPageKey &key, bool 
     return result;
 }
 void RenderPages::Release(Renderer &renderer, GpuTerrainPage &page) {
+    const Renderer::ScopedTerrainResources resources(renderer);
     renderer.DestroyTexture(page.heights);
     auto weight = weights.find(page.weightKey);
     if (weight != weights.end() && !--weight->second.references) {
@@ -216,6 +217,7 @@ RenderPages::Acquire(Renderer &renderer, const Source &source, const RenderPageK
     }
     if (ownWeights && !weights.count(materialKey) && image.weights.levels.empty())
         image = BuildRenderPage(source, key);
+    const Renderer::ScopedTerrainResources resources(renderer);
     GpuTerrainPage page;
     page.weightKey = materialKey;
     page.used = ++clock;

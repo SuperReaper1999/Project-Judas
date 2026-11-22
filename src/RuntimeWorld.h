@@ -414,6 +414,9 @@ public:
     bool RuntimeTerrainBusy(EntityId id)const{auto* status=m_runtimeTerrain?m_runtimeTerrain->Status(id):nullptr;return status&&status->busy;}
     bool HasRuntimeTerrain(EntityId id)const{return m_runtimeTerrain&&m_runtimeTerrain->Has(id);}
     void DrawRuntimeTerrain(Renderer& renderer)const{if(m_runtimeTerrain)m_runtimeTerrain->Draw(renderer);}
+    void AppendTerrainShadowCasters(std::vector<JudasLighting::ShadowCaster>& casters)const{
+        if(m_runtimeTerrain)m_runtimeTerrain->AppendShadowCasters(casters);
+    }
     bool HasRuntimeLandscapes()const{return m_runtimeTerrain&&m_runtimeTerrain->HasLandscapes();}
     void PrepareRuntimeTerrain(const std::vector<PlanetView>& views,float seconds=0,float visualBias=1)const{if(m_runtimeTerrain)m_runtimeTerrain->PrepareViews(views,m_settings.worldOrigin,seconds,visualBias);}
     void AdvanceRuntimeTerrain(){if(m_runtimeTerrain)m_runtimeTerrain->Advance();}

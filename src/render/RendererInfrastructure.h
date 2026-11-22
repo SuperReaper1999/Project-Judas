@@ -55,6 +55,6 @@ struct RendererInfrastructure {
     SkinnedBoundsCache skinnedBounds;
     JudasLighting::LightLists lightLists;
     bool lightStorageReady=false,lightStorageUnavailable=false,lightStorageVariant=false;
-    bool persistentUploads=true, orderedInstances=false;
+    bool persistentUploads=true, orderedInstances=false, trackShadowResources=true;
 };
 } // namespace JudasRender

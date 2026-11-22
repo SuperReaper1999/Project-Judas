@@ -8,6 +8,7 @@ struct CollisionAsset;
 #include "terrain/TerrainStatus.h"
 namespace TerrainV2 { struct Source; struct SurfaceBrush; struct SolidSnapshot; struct PreparedAsset; class Runtime; }
 struct PlanetView;
+namespace JudasLighting { struct ShadowCaster; }
 // Optional world-owned mutable instances. Workers own immutable copies only.
 // Pending work never replaces the last committed collision/navigation/mesh.
 class RuntimeTerrain {
@@ -33,6 +34,7 @@ public:
  bool Has(uint64_t)const;bool ReadyToSave()const;
  void ReleaseGraphics();
  void Advance();void Remove(uint64_t);void Draw(Renderer&)const;
+ void AppendShadowCasters(std::vector<JudasLighting::ShadowCaster>&)const;
  bool Wait(uint64_t,std::string&);
  bool Capture(uint64_t,std::string&,std::string&)const;
  bool Restore(uint64_t,const std::string&,std::string&,bool asynchronous=false);

@@ -20,6 +20,7 @@ class RuntimeWorld;
 struct CollisionAsset;
 struct SceneObject;
 struct PlanetView;
+namespace JudasLighting { struct ShadowCaster; }
 namespace TerrainV2 {
 // World-thread owner. Jobs capture immutable source/results, never this object
 // or a live world. The existing RuntimeTerrain participant owns its lifetime,
@@ -36,6 +37,7 @@ class Runtime {
     void Advance();
     void Wait();
     void Draw(Renderer &) const;
+    void AppendShadowCasters(std::vector<JudasLighting::ShadowCaster> &) const;
     bool Capture(std::string &, std::string &) const;
     bool Restore(const std::string &, std::string &, bool asynchronous);
     const RuntimeTerrainStatus &State() const;
@@ -84,7 +86,22 @@ class Runtime {
     std::shared_ptr<const NavigationData> navigation;
     bool navigationInstalled = false;
     LodTransition drawPatches;
+    // A committed source incarnation and bounded finest-chunk edit stamps.
+    uint64_t shadowSourceRevision = 0, shadowEditRevision = 0;
+    std::vector<uint64_t> shadowSampleRevisions, shadowMeshRevisions;
+    struct GridDraw {
+        RenderPageKey key;
+        VisualBounds bounds;
+        glm::vec3 position;
+        glm::vec2 coverage;
+        unsigned cells, cellsZ, firstX, firstZ;
+        float stride, width, depth, minimum, maximum;
+    };
     const SceneObject *Definition() const;
+    const SceneObject *DrawDefinition() const;
+    template<class Grid, class Mesh>
+    void VisitDraws(const SceneObject &, Grid, Mesh) const;
+    uint64_t ShadowPageRevision(const GridDraw &) const;
     BodyHandle Seed() const;
     bool Submit(std::shared_ptr<const Source>, std::vector<ChunkKey>, std::string &,
                 bool replaceAll = false);

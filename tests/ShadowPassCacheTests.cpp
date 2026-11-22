@@ -2,9 +2,11 @@
 #include "RuntimeWorld.h"
 #include "ScreenshotWriter.h"
 #include "WorldPresentation.h"
+#include "WorldGraphicsState.h"
 #include "ShadowTransforms.h"
 #include "render/ShadowPassCache.h"
 #include "lighting/ShadowSystem.h"
+#include "terrain/TerrainBrush.h"
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -120,6 +122,19 @@ void Pure() {
     Check(!cache.Remember(changed), "non-finite colour projections cannot qualify LOD-dependent reuse");
     cache.Clear();
     Check(!cache.Matches(key), "explicit clear retires every physical slot");
+    cache.BeginCasterSnapshot();
+    const auto token=cache.CasterToken("caster A");
+    Check(token && cache.CasterToken("caster A")==token && cache.CasterToken("caster B")!=token,
+          "compact caster tokens still compare exact content");
+    Check(!cache.CasterToken(std::string(8*1024*1024+1,'a')),
+          "an oversized caster fails closed to a redraw");
+    cache.BeginCasterSnapshot();
+    cache.BeginCasterSnapshot();
+    Check(cache.CasterToken(std::string(8*1024*1024,'z')) && cache.CasterToken("caster A")==0,
+          "old caster bytes can be reclaimed without exceeding the live budget");
+    cache.BeginCasterSnapshot();
+    cache.BeginCasterSnapshot();
+    Check(cache.CasterToken("caster A")!=token,"retired token numbers never alias old chart keys");
     ShadowPassCache nextFrame;
     Check(!nextFrame.Matches(key), "a new render sample cannot inherit last frame's moving casters");
 }
@@ -446,6 +461,156 @@ void Native(const std::filesystem::path &output) {
           "restoring default quality recovers exact pixels with the same simulation clock");
     world.Destroy();
 }
+void TerrainCacheContracts() {
+    EngineHost host;
+    std::string error;
+    if (!host.Init("Terrain directional shadow-cache contracts", 160, 128, false, error)) {
+        Check(false, error.c_str());
+        return;
+    }
+    Scene scene;
+    scene.Settings().sunEnabled=true;
+    scene.Settings().sunDirection=glm::normalize(glm::vec3(.15f,1,.08f));
+    auto terrainOwner=[&](float x) {
+        auto& owner=scene.CreateObject("Runtime heightfield");
+        owner.body=SceneBodyComponent{};
+        owner.render=SceneRenderComponent{};
+        owner.transform.position.x=x;
+        return owner.id;
+    };
+    const auto near=terrainOwner(0), far=terrainOwner(85);
+    auto& body=scene.CreateObject("Moving caster");
+    body.body=SceneBodyComponent{};
+    body.body->motion=SceneBodyMotion::Dynamic;
+    body.render=SceneRenderComponent{};
+    body.transform.position={80,2,0};
+    const auto bodyId=body.id;
+    const auto bodyPose=body.transform;
+    RuntimeWorld world;
+    auto makeTerrain=[&](SceneObjectId owner) {
+        return world.LiveTerrain().CreateLandscape(owner,TerrainV2::Create(17,17,.5f),error) &&
+               world.LiveTerrain().Wait(owner,error);
+    };
+    if (!world.Build(scene,&host.Resources(),error) || !makeTerrain(near)) {
+        Check(false,error.c_str());
+        return;
+    }
+    const auto projection=glm::perspective(glm::radians(60.f),160.f/128,.1f,150.f);
+    auto eye=glm::vec3(0,9,10);
+    auto frame=[&](bool reuse) {
+        Reuse(reuse);
+        auto& renderer=host.GetRenderer();
+        renderer.ResetStats();
+        const auto view=glm::lookAt(eye,eye+glm::vec3(0,-.6f,-1),glm::vec3(0,1,0));
+        RenderWorldFrame(renderer,160,128,world,view,projection,eye,1);
+        std::vector<unsigned char> pixels;
+        renderer.CaptureFrame(160,128,pixels);
+        return pixels;
+    };
+    const auto reused=[&](unsigned redraws) {
+        const auto& stats=host.GetRenderer().Stats();
+        return stats.shadowPasses==redraws && stats.reusedShadowPasses==3-redraws;
+    };
+    frame(true);
+    auto single=frame(true);
+    Check(reused(0) && !single.empty() && frame(false)==single,
+          "one stationary terrain reuses three charts with exact pixels");
+    Check(makeTerrain(far),"publish a second terrain in the far cascade");
+    frame(true);
+    const auto both=frame(true);
+    Check(reused(0),"two unchanged landscapes reuse all directional depth");
+
+    TerrainV2::SurfaceBrush sculpt;
+    sculpt.kind=TerrainV2::SurfaceBrush::Kind::Raise;
+    sculpt.radius=1.8f;
+    sculpt.strength=1.f;
+    Check(world.LiveTerrain().Surface(far,{85,0,0},sculpt,error) && world.LiveTerrain().Wait(far,error),
+          "publish a height edit on the remote landscape");
+    const auto edited=frame(true);
+    Check(reused(1),"remote terrain edit redraws only its intersecting cascade");
+    frame(true);
+    Check(reused(0),"terrain page allocation on edit cannot invalidate unrelated depth");
+    Check(frame(false)==edited,"height edit cache matches a forced redraw exactly");
+    frame(true);
+
+    auto paint=sculpt;
+    paint.kind=TerrainV2::SurfaceBrush::Kind::Paint;
+    paint.layer=1;
+    Check(world.LiveTerrain().Surface(far,{85,0,0},paint,error) && world.LiveTerrain().Wait(far,error),
+          "publish a terrain material edit");
+    frame(true);
+    Check(reused(1),"remote terrain paint preserves the other two depth charts");
+    const auto painted=frame(true);
+    Check(reused(0) && frame(false)==painted,"settled paint and cached depth match a full redraw");
+
+    auto appearance=world.Settings();
+    const auto originalDirection=appearance.sunDirection;
+    for(unsigned index=1;index<=3;++index) {
+        appearance.sunDirection=glm::normalize(originalDirection+glm::vec3(index*.0005f,0,0));
+        Check(world.SetAppearance(appearance),"advance the sun over static terrain");
+        const auto rotating=frame(true);
+        Check(reused(3) && frame(false)==rotating,
+              "a rotating sun over static terrain redraws all exact projections");
+    }
+    frame(true);
+    auto moved=bodyPose;
+    moved.position={5,2,0};
+    Check(world.SetRuntimeTransform(bodyId,moved),"move a caster from the far into the near cascade");
+    const auto entered=frame(true);
+    Check(reused(3) && entered!=both && frame(false)==entered,
+          "caster entering nested cascades redraws each affected chart without changing pixels");
+    frame(true);
+    for(unsigned index=1;index<=4;++index) {
+        appearance.sunDirection=glm::normalize(originalDirection+glm::vec3(.002f+index*.0004f,0,0));
+        Check(world.SetAppearance(appearance),"publish current continuous sunlight direction");
+        moved.position.x+=.12f;
+        world.SetRuntimeTransform(bodyId,moved);
+        const auto rotating=frame(true);
+        Check(reused(3) && frame(false)==rotating,
+              "continuous sun and caster motion use the exact current projection");
+    }
+    frame(true);
+    frame(true);
+    frame(true);
+    Check(reused(0),"sun and caster stopped on an exact projection become cacheable");
+    eye.x+=1;
+    const auto walked=frame(true);
+    Check(reused(3) && frame(false)==walked,"camera travel redraws the changed stabilized charts");
+
+    frame(true);
+    world.LiveTerrain().Remove(far);
+    frame(true);
+    Check(reused(1),"retiring remote terrain leaves two exact charts reusable");
+    Check(makeTerrain(far),"republish a terrain with the same entity identity");
+    frame(true);
+    Check(reused(1),"replacement cannot inherit the previous terrain generation");
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    const auto before=frame(false);
+    const bool startedOnVulkan=host.GetWindow().UsesVulkan();
+    const auto clock=world.SimulationTimeSeconds();
+    for(const bool useVulkan:startedOnVulkan?std::vector<bool>{false,true}:std::vector<bool>{false}) {
+        WorldGraphicsState state;
+        if(!world.CaptureGraphicsState(state,error) ||
+           !world.ReleaseWorldGraphics(host.GetRenderer(),error) ||
+           !host.Resources().DetachGraphics(error) ||
+           !host.RebuildDesktopGraphics("Recreated terrain shadow charts",160,128,false,useVulkan,error) ||
+           !world.RestoreGraphicsState(state,host.GraphicsCaps(),error)) {
+            Check(false,error.c_str());
+            return;
+        }
+        const auto first=frame(true);
+        Check(reused(3),"new graphics context redraws every directional chart");
+        const auto second=frame(true);
+        Check(reused(0) && first==second && frame(false)==second,
+              "recreated shadow charts reuse exact depth on the active backend");
+        if(useVulkan==startedOnVulkan)
+            Check(before==second,"returning to the original backend restores the exact terrain image");
+        Check(clock==world.SimulationTimeSeconds(),"graphics reconstruction leaves the fixed clock untouched");
+    }
+#endif
+    Check(glGetError()==GL_NO_ERROR,"terrain shadow-cache controls finish without graphics errors");
+    world.Destroy();
+}
 } // namespace
 int main(int argc, char **argv) {
     Pure();
@@ -454,6 +619,7 @@ int main(int argc, char **argv) {
         const auto output = argc > 1 ? std::filesystem::path(argv[1]) : std::filesystem::path(".cache/shadow-reuse");
         EmitterContracts(output / "emitters");
         Native(output);
+        TerrainCacheContracts();
     }
     std::printf("Shadow pass cache: %u checks, %u failures\n", checks, failures);
     return failures ? 1 : 0;

@@ -56,12 +56,25 @@ for spots, trading memory for simple stable source ownership. Cache observations
 are limited to 256 KiB per physical layer; oversized keys redraw. The pool is
 independent of ordinary material/resource budgets.
 
-Terrain, planets, deformables, networked worlds, camera-textured casters and
-unknown compound presentations conservatively redraw instead of risking stale
-maps. This preserves current rendering, but does not provide fine-grained reuse
-for every specialized owner. Camera-textured casters retain this safeguard even
-when the referenced camera is dormant. Dense scenes can therefore remain
-expensive; this is visible in the stress measurement below.
+Published Runtime Terrain V2 reuses exact depth when the light projection
+and relevant draw inputs are unchanged. Each chart compares intersecting
+terrain pages with their committed sample or cave-mesh revisions, owner
+transform and render state, and the active LOD selection and fade. Tile uploads
+and eviction leave other charts reusable. A paint edit may conservatively
+invalidate intersecting pages. Terrain-heavy caster sets use compact tokens
+interned against exact bytes, within a separately bounded renderer budget.
+
+The renderer keeps the existing directional projection for every frame.
+A rotating sun redraws charts whose matrices change. When every directional
+projection changed and there are no selected local lights, the renderer skips
+building a caster key. A continuously moving caster can similarly make its
+own chart ineligible before static keys are serialized. An exact observation
+after motion stops re-establishes reuse.
+
+Authored Terrain V2 previews, planets, deformables, networked worlds,
+camera-textured casters, active ragdolls and unknown compound presentations
+still use conservative redraw. Camera-textured casters retain this policy
+when the referenced camera is dormant.
 
 Native area emitters/LTC are deferred. Grouped point/spot sources are available
 but are not represented as true area lights. Dedicated water optics and unlit

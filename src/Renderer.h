@@ -31,6 +31,7 @@
 namespace JudasRender {class ShadowPassCache;struct RendererInfrastructure;struct MeshInstance;}
 namespace JudasParticles {class GpuParticles;}
 namespace JudasWater {struct SurfaceField;}
+namespace TerrainV2 {class RenderPages;}
 
 struct WeatherSample;
 struct WeatherShelterGrid;
@@ -163,6 +164,7 @@ public:
     const glm::mat4& ProjectionMatrix()const{return m_projection;}
     void SetBasicWaterVolumes(const std::vector<BasicWaterInstance>& waters);
     void SetCullingEnabled(bool enabled){m_cullingEnabled=enabled;}
+    bool CullingEnabled()const{return m_cullingEnabled;}
     void SetRenderMask(CategoryMask mask){m_renderMask=mask;}
     void SetRenderLayer(unsigned layer){m_renderLayer=layer;}
     bool AllowsLayer(unsigned layer)const{return (m_renderMask&CategoryBit(layer))!=0;}
@@ -221,6 +223,7 @@ public:
     JudasRender::ShadowPassCache& ShadowCache();
     std::uint64_t ShadowResourceRevision()const{return m_shadowResourceRevision;}
     bool HasViewDependentMeshLods() const;
+    VisualBounds ShadowSkinnedMeshBounds(MeshHandle, const std::vector<glm::mat4>&);
     bool SupportsStaticOpaqueShadowReuse(MeshHandle, const std::vector<MaterialBinding>&);
     bool ReuseShadowChart(int slot,const glm::mat4&);
 
@@ -520,6 +523,19 @@ private:
         TextureHandle colourView;
     };
 
+    // Transient GPU pages have their own exact Terrain V2 caster revisions.
+    // Residency/eviction alone does not change the depth they produce.
+    friend class TerrainV2::RenderPages;
+    class ScopedTerrainResources {
+    public:
+        explicit ScopedTerrainResources(Renderer&);
+        ~ScopedTerrainResources();
+        ScopedTerrainResources(const ScopedTerrainResources&)=delete;
+        ScopedTerrainResources& operator=(const ScopedTerrainResources&)=delete;
+    private:
+        Renderer& renderer;
+        bool previous;
+    };
     void TraceResourceOperation(ResourceTracePoint point, unsigned int handle = 0, std::size_t bytes = 0) const;
     ResourceTrace m_resourceTrace;
     mutable std::uint64_t m_shadowResourceRevision=0;

@@ -23,6 +23,7 @@
 #include "ShadowTransforms.h"
 #include "PlanetTerrain.h"
 #include "lighting/ShadowSystem.h"
+#include "render/PresentedObjects.h"
 
 std::vector<MaterialBinding> BuildRenderMaterialBindings(ResourceManager* resources,const SceneRenderComponent& render,const std::vector<MeshPrimitive>* derivedParts) {
     const auto* parts=derivedParts?derivedParts:resources?resources->TryGetModelParts(render.meshAsset):nullptr;
@@ -198,33 +199,8 @@ bool InDecorativeRange(const SceneRenderComponent& render, const glm::vec3& posi
     return glm::dot(delta,delta)<=distance*distance;
 }
 
-struct PresentedObject {
-    SceneTransform pose;
-    const std::vector<glm::mat4>* skin = nullptr;
-    unsigned layer = 0;
-    bool visible = false;
-};
-struct PresentedObjects {
-    std::vector<std::optional<PresentedObject>> statics, dynamics;
-};
-
-template<class SamplePose>
-PresentedObject SampleObject(const RuntimeWorld& world, SceneObjectId id, float alpha,
-                             std::optional<PresentedObject>* slot, bool staticObject,
-                             SamplePose samplePose) {
-    if (slot && *slot) return **slot;
-    PresentedObject result;
-    const auto* definition = world.RuntimeDefinition(id);
-    if (definition && definition->renderVisible &&
-        (!definition->render || definition->render->visible) &&
-        (!staticObject || (!definition->deformable && !world.HasRuntimeTerrain(id)))) {
-        result = {samplePose(), world.AnimationSkin(id, alpha), world.RenderLayerOf(id), true};
-    }
-    // The owner and its layer are fixed for this presentation sample. The
-    // receiving view still owns distance, frustum, resource and LOD tests.
-    if (slot) *slot = result;
-    return result;
-}
+using JudasRender::PresentedObjects;
+using JudasRender::SampleObject;
 
 }
 
@@ -519,12 +495,15 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             unshadowedLightPass();
             return;
         }
-        if (!shadowScene) shadowScene.emplace(JudasLighting::RuntimeShadowScene(world,alpha));
         const bool reuse = settings.sunEnabled && world.Resources() && !world.Resources()->VisualStreaming();
         // One view's chart production borrows bindings from one presentation sample.
         // Culling, LOD and actual submissions still belong to each chart.
         std::vector<ShadowMeshBindings> prepared;
-        JudasLighting::PrepareShadows(renderer,settings,lights,*shadowScene,[&]{
+        JudasLighting::PrepareRuntimeShadows(renderer,settings,lights,world.HasRuntimeLandscapes(),
+            [&]() -> const JudasLighting::ShadowScene& {
+                if(!shadowScene)shadowScene.emplace(JudasLighting::RuntimeShadowScene(world,alpha,&presentedObjects));
+                return *shadowScene;
+            },[&]{
             if (reuse && prepared.empty()) prepared.resize(world.StaticRenderables().size());
             DrawWorldGeometry(renderer,world,alpha,WorldDrawOptions{},&presentedObjects,reuse ? &prepared : nullptr);
         });

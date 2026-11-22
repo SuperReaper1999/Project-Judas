@@ -80,6 +80,9 @@ bool RuntimeTerrain::Surface(uint64_t id,glm::vec3 point,const TerrainV2::Surfac
 void RuntimeTerrain::Advance(){for(auto& [_,r]:records)r.landscape->Advance();}
 void RuntimeTerrain::Remove(uint64_t id){records.erase(id);}
 void RuntimeTerrain::Draw(Renderer& renderer)const{for(auto& [_,r]:records)r.landscape->Draw(renderer);}
+void RuntimeTerrain::AppendShadowCasters(std::vector<JudasLighting::ShadowCaster>& casters)const{
+ for(const auto& [_,record]:records)record.landscape->AppendShadowCasters(casters);
+}
 bool RuntimeTerrain::Capture(uint64_t id,std::string& out,std::string& error)const{
  out.clear();const auto i=records.find(id);
  return i==records.end()||i->second.landscape->Capture(out,error);

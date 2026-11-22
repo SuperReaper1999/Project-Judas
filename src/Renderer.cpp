@@ -480,8 +480,15 @@ bool Renderer::Init() {
     return InitNativeMeshPass();
 }
 
+Renderer::ScopedTerrainResources::ScopedTerrainResources(Renderer& owner)
+    : renderer(owner), previous(owner.m_render->trackShadowResources) {
+    renderer.m_render->trackShadowResources=false;
+}
+Renderer::ScopedTerrainResources::~ScopedTerrainResources() {
+    renderer.m_render->trackShadowResources=previous;
+}
 void Renderer::TraceResourceOperation(ResourceTracePoint point, unsigned int handle, std::size_t bytes) const {
-    ++m_shadowResourceRevision;
+    if(m_render->trackShadowResources)++m_shadowResourceRevision;
     if (!m_resourceTrace) return;
     ResourceTraceEvent event{point, {}, {}};
     event.handle = handle;
@@ -953,6 +960,13 @@ Renderer::GpuMesh* Renderer::GetMesh(MeshHandle handle) {
         return nullptr;
     }
     return &m_meshes[handle.id];
+}
+
+VisualBounds Renderer::ShadowSkinnedMeshBounds(MeshHandle handle, const std::vector<glm::mat4>& skin) {
+    const auto *mesh = GetMesh(handle);
+    if (!mesh || !mesh->bounds.Valid() || skin.size() != mesh->restSkin.size())
+        return {};
+    return m_render->skinnedBounds.Resolve(mesh->bounds, skin);
 }
 
 void Renderer::DestroyMesh(MeshHandle handle) {
