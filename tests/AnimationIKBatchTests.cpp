@@ -22,7 +22,13 @@ bool SamePose(const SkeletalPose& a,const SkeletalPose& b){
      std::memcmp(&x.scale,&y.scale,3*sizeof(float)))return false;
  }return true;
 }
-struct Endpoint {SkeletalPose reference,solved,final;FullBodyIKResult ik;float clock;std::string error;};
+struct Endpoint {
+ SkeletalPose reference,solved,final;
+ FullBodyIKResult ik;
+ float clock;
+ std::string error;
+ std::vector<glm::mat4> skin, previousWorld, recentWorld;
+};
 }
 int main(int argc,char** argv){
  const auto root=argc>1?std::filesystem::path(argv[1]):std::filesystem::current_path();
@@ -57,6 +63,7 @@ int main(int argc,char** argv){
  std::vector<std::vector<Endpoint>> reference;
  for(unsigned lanes:{1u,2u,4u}){
   SDL_setenv("JUDAS_ANIMATION_LANES",std::to_string(lanes).c_str(),1);
+  SDL_setenv("JUDAS_ANIMATION_PARALLEL_PUBLICATION",lanes==1?"0":"1",1);
   RuntimeWorld world;Check(world.Build(scene,&host.Resources(),error),"world with independent, socket and nested child actors");
   world.UpdateAnimations(0);host.Resources().WaitForAll();world.UpdateAnimations(0);
   for(int i=0;i<40;++i){auto* a=world.RuntimeAnimation(100+i);if(!a||!a->asset){std::puts("missing performer");return 1;}
@@ -73,14 +80,17 @@ int main(int argc,char** argv){
    if(step%2)for(int i=0;i<40;i+=3)world.AdvanceAnimation(100+i,1.f/60,error);
    world.PrepareAnimationReferences(1.f/60);world.UpdateAnimations(1.f/60);
    std::vector<Endpoint> endpoints;
-   for(int i=0;i<40;++i){auto* a=world.RuntimeAnimation(100+i);Endpoint e{a->referencePose,a->solvedReferencePose,a->finalPose,a->fullBodyIK->result,a->playback.time,a->error};
+   for(int i=0;i<40;++i){auto* a=world.RuntimeAnimation(100+i);Endpoint e{a->referencePose,a->solvedReferencePose,a->finalPose,a->fullBodyIK->result,a->playback.time,a->error,a->skin,a->previousWorld,a->recentWorld};
     if(lanes>1){const auto& r=reference[step][i];exact&=SamePose(e.reference,r.reference)&&SamePose(e.solved,r.solved)&&SamePose(e.final,r.final)&&e.clock==r.clock&&e.error==r.error&&e.ik.iterations==r.ik.iterations&&e.ik.converged==r.ik.converged&&e.ik.targets.size()==r.ik.targets.size();
+     exact &= e.skin == r.skin && e.previousWorld == r.previousWorld && e.recentWorld == r.recentWorld;
      for(size_t k=0;k<e.ik.targets.size()&&k<r.ik.targets.size();++k)exact&=e.ik.targets[k].status==r.ik.targets[k].status&&e.ik.targets[k].positionError==r.ik.targets[k].positionError;
     }endpoints.push_back(std::move(e));
    }if(lanes==1)reference.push_back(std::move(endpoints));
   }
-  Check(exact,"batched full-body IK preserves exact poses, clocks, residuals and parent/socket dependencies");world.Destroy();
+  Check(exact,"batched IK and palette preparation preserve exact poses, clocks, residuals and world histories");world.Destroy();
  }
- SDL_setenv("JUDAS_ANIMATION_LANES","4",1);host.Shutdown();
+ SDL_setenv("JUDAS_ANIMATION_LANES","4",1);
+ SDL_setenv("JUDAS_ANIMATION_PARALLEL_PUBLICATION","1",1);
+ host.Shutdown();
  std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;
 }

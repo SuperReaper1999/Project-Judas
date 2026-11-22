@@ -153,6 +153,47 @@ void RuntimeWorld::PrepareAnimationReferences(float dt){
 }
 void RuntimeWorld::UpdateAnimations(float dt) {
  JUDAS_PROFILE_SCOPE("Animation instances");
+ struct PosePublication {
+  AnimationInstance* instance;
+  glm::mat4 model;
+  std::vector<glm::mat4> skin, world;
+ };
+ std::vector<PosePublication> publications;
+ const auto* parallel = std::getenv("JUDAS_ANIMATION_PARALLEL_PUBLICATION");
+ const bool enabled = !parallel || parallel[0] != '0' || parallel[1] != '\0';
+ auto* jobs = enabled && dt > 0 && m_animationOwners.size() >= 8 && m_assets
+              ? m_assets->Jobs() : nullptr;
+ constexpr std::size_t batchLimit = 32;
+ std::size_t joints = 0;
+ const auto resolve = [](PosePublication& publication) {
+  const auto& instance = *publication.instance;
+  const auto& skeleton = instance.asset->skeleton;
+  publication.world = ResolveJointMatrices(skeleton, instance.finalPose);
+  publication.skin = ResolveSkinMatricesFromGlobals(skeleton, publication.world);
+  for (auto& matrix : publication.world) matrix = publication.model * matrix;
+ };
+ const auto publish = [dt](PosePublication& publication) {
+  auto& instance = *publication.instance;
+  instance.previousWorld = std::move(instance.recentWorld);
+  instance.skin = std::move(publication.skin);
+  instance.recentWorld = std::move(publication.world);
+  instance.motionDt = dt;
+ };
+ const auto flush = [&] {
+  // Transform and attachment dependencies are sampled in owner order.
+  // Workers read resolved poses and write only their own palette arrays.
+  if (jobs && publications.size() >= 8 && joints >= 512) {
+   const auto work = jobs->ParallelFor(publications.size(), 3, 2,
+       [&](std::size_t i) { resolve(publications[i]); }, "Animation palette preparation");
+   JUDAS_PROFILE_COUNTER("Animation helper palettes", double(work.workerItems), ProfileCounterMode::Sum);
+  } else {
+   for (auto& publication : publications) resolve(publication);
+  }
+  for (auto& publication : publications) publish(publication);
+  publications.clear();
+  joints = 0;
+ };
+ if (jobs) publications.reserve(std::min(batchLimit, m_animationOwners.size()));
  for (auto id : m_animationOwners) {
   const auto* definition = RuntimeDefinition(id);
   if (!definition) { m_animationInstances.erase(id); continue; }
@@ -162,19 +203,23 @@ void RuntimeWorld::UpdateAnimations(float dt) {
   // hierarchy once, retaining the original owner order and all IK decisions.
   ResolveAnimationPose(*instance, (instance->preparedM70 || instance->scriptAdvanced) ? 0 : dt, dt <= 0);
   if (dt > 0) {
-   instance->previousWorld = instance->recentWorld;
    const auto transform = PresentedTransform(id, definition->transform, 1);
    const auto model = glm::translate(glm::mat4(1), transform.position) *
                       glm::mat4_cast(transform.rotation) * glm::scale(glm::mat4(1), transform.scale);
-   auto globals = ResolveJointMatrices(instance->asset->skeleton, instance->finalPose);
-   instance->skin = ResolveSkinMatricesFromGlobals(instance->asset->skeleton, globals);
-   for (auto& matrix : globals) matrix = model * matrix;
-   instance->recentWorld = std::move(globals);
-   instance->motionDt = dt;
+   PosePublication publication{instance, model, {}, {}};
+   if (jobs) {
+    joints += instance->finalPose.local.size();
+    publications.push_back(std::move(publication));
+    if (publications.size() == batchLimit) flush();
+   } else {
+    resolve(publication);
+    publish(publication);
+   }
   }
   if (instance->scriptAdvanced) instance->preparedM70 = true;
   instance->scriptAdvanced = false;
  }
+ if (!publications.empty()) flush();
 }
 bool RuntimeWorld::AdvanceAnimation(EntityId id,float seconds,std::string& error){
  const auto* definition=RuntimeDefinition(id);if(!definition||!definition->animation||!definition->animation->enabled){error="animation component is disabled or unavailable";return false;}
