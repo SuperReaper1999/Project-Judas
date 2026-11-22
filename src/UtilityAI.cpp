@@ -177,6 +177,12 @@ struct UtilityAgent::Impl {
         }
     }
 
+    Json SnapshotFields() const {
+        return Json{{"version", 1}, {"definition", nullptr}, {"elapsed", elapsed},
+                    {"untilEvaluation", until}, {"activeAge", age}, {"selected", selected},
+                    {"status", status}, {"cooldowns", cooldowns}};
+    }
+
     Json Inspect(bool detailed = true) const {
         double commitment = 0;
         if (!selected.is_null()) commitment = std::max(0., actions.at(selected.at("action").get<std::string>()).at("minCommitment").get<double>() - age);
@@ -350,10 +356,12 @@ void UtilityAgent::Finish(const std::string& status) {
 }
 std::string UtilityAgent::Inspect() const { return m->Inspect().dump(); }
 std::string UtilityAgent::Snapshot() const {
-    return Json{{"version", 1}, {"definition", m->definition}, {"elapsed", m->elapsed},
-        {"untilEvaluation", m->until}, {"activeAge", m->age}, {"selected", m->selected},
-        {"status", m->status}, {"cooldowns", m->cooldowns}}.dump();
+    auto snapshot = m->SnapshotFields();
+    snapshot["definition"] = m->definition;
+    return snapshot.dump();
 }
+std::string UtilityAgent::SnapshotWithoutDefinition() const { return m->SnapshotFields().dump(); }
+std::string UtilityAgent::SnapshotDefinition() const { return m->definition.dump(); }
 void UtilityAgent::Restore(const std::string& snapshotJson) {
     const auto value = Parse(snapshotJson);
     Keys(value, {"version", "definition", "elapsed", "untilEvaluation", "activeAge", "selected", "status", "cooldowns"});

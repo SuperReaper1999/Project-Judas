@@ -50,7 +50,15 @@ export default class {
  fixedUpdate(dt){this.brain.tick(dt,()=>{this.state.sensors++;return [
  {action:'eat',target:'meal',facts:{hunger:.8}},
  {action:'hide',target:'cover',facts:{danger:.2}}];});
- this.state.saved=this.brain.snapshot();this.state.chosen=this.brain.inspection.selected;}
+ const saved=this.brain.snapshot(), editable=this.brain.snapshot();
+ editable.definition.actions[0].considerations[0].fact='changed by caller';
+ editable.cooldowns.eat=42;
+ const later=this.brain.snapshot();
+ this.state.snapshotIsolation=Object.getPrototypeOf(later.definition)===Object.prototype
+  && saved.definition!==later.definition && saved.cooldowns!==later.cooldowns
+  && JSON.stringify(saved)===JSON.stringify(later)
+  && Object.keys(later).join(',')==='activeAge,cooldowns,definition,elapsed,selected,status,untilEvaluation,version';
+ this.state.saved=saved;this.state.chosen=this.brain.inspection.selected;}
 }
 )JS";
     AssetDatabase assets;assets.Scan(root.string(),(root/"Assets").string());
@@ -77,6 +85,7 @@ export default class {
     const auto values=J::parse(state[0].json);std::cout<<"STATE "<<values.dump()<<'\n';
     Check(values.value("disposed",false),"disposal from action start leaves no running result or dangling owner");
     Check(values.value("completed",false),"update-to-finish returns the actual completed outcome");
+    Check(values.value("snapshotIsolation",false),"AI snapshots preserve own key order and return independent mutable data");
     Check(values.value("coercions",-1)==0&&values.value("rejected",0)==2,"coercion cannot dispose a native agent during a borrowed call");
     Check(values.at("chosen").at("action")=="eat"&&values.at("chosen").at("target")=="meal","real native choice retains target identity");
     Check(values.at("sensors").get<int>()==2,"lazy sensing cadence survives ordinary and restored ticks");

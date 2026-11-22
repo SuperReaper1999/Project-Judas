@@ -5,6 +5,7 @@
 #include <map>
 #include <stdexcept>
 #include <cmath>
+#include <vector>
 
 using ScriptBindingValues::String;
 struct ScriptUtilityAI::Impl {
@@ -14,13 +15,17 @@ struct ScriptUtilityAI::Impl {
         std::string name;
         std::unique_ptr<UtilityAgent> agent;
         JSValue retire;
+        std::vector<uint8_t> snapshotDefinition;
+        bool triedSnapshotDefinition = false;
     };
     JSContext* context;
     std::uint64_t next = 1;
+    std::size_t snapshotDefinitionBytes = 0;
     std::map<std::string, Entry> entries;
     explicit Impl(JSContext* c) : context(c) {}
     ~Impl() { for (auto& entry : entries) JS_FreeValue(context, entry.second.retire); }
     std::string Cleanup(Entry& entry) {
+        snapshotDefinitionBytes -= entry.snapshotDefinition.size();
         auto result = JS_Call(context, entry.retire, JS_UNDEFINED, 0, nullptr);
         std::string error;
         if (JS_IsException(result)) {
@@ -55,7 +60,7 @@ JSValue ScriptUtilityAI::Dispatch(const std::string& op, int argc, JSValueConst*
             auto agent = std::make_unique<UtilityAgent>(String(c, arg(1)));
             const auto handle = std::to_string(m->next++);
             const auto callback = JS_DupValue(c, arg(3));
-            try { m->entries.emplace(handle, Impl::Entry{owner, slot, name, std::move(agent), callback}); }
+            try { m->entries.emplace(handle, Impl::Entry{owner, slot, name, std::move(agent), callback, {}}); }
             catch (...) { JS_FreeValue(c, callback); throw; }
             return JS_NewString(c, handle.c_str());
         }
@@ -74,7 +79,41 @@ JSValue ScriptUtilityAI::Dispatch(const std::string& op, int argc, JSValueConst*
             return parsed(agent.Tick(dt, String(c, arg(3))));
         }
         if (op == "aiInspect") return parsed(agent.Inspect());
-        if (op == "aiSnapshot") return parsed(agent.Snapshot());
+        if (op == "aiSnapshot") {
+            auto& entry = found->second;
+            auto& bytes = entry.snapshotDefinition;
+            constexpr std::size_t cacheBudget = 2 * 1024 * 1024;
+            if (!entry.triedSnapshotDefinition && m->snapshotDefinitionBytes < cacheBudget) {
+                auto definition = parsed(agent.SnapshotDefinition());
+                if (JS_IsException(definition)) return definition;
+                std::size_t length = 0;
+                auto freeBuffer = [c](uint8_t* value) { js_free(c, value); };
+                std::unique_ptr<uint8_t, decltype(freeBuffer)> buffer(
+                    JS_WriteObject(c, &length, definition, 0), freeBuffer);
+                JS_FreeValue(c, definition);
+                if (!buffer) return JS_EXCEPTION;
+                if (length <= cacheBudget - m->snapshotDefinitionBytes) {
+                    bytes.assign(buffer.get(), buffer.get() + length);
+                    m->snapshotDefinitionBytes += length;
+                }
+                entry.triedSnapshotDefinition = true;
+            }
+            if (bytes.empty()) return parsed(agent.Snapshot());
+            auto result = parsed(agent.SnapshotWithoutDefinition());
+            if (JS_IsException(result)) return result;
+            // Read only our own VM's data-only encoding. Fresh plain objects
+            // preserve the mutability and isolation of each returned snapshot.
+            auto definition = JS_ReadObject(c, bytes.data(), bytes.size(), 0);
+            if (JS_IsException(definition)) {
+                JS_FreeValue(c, result);
+                return definition;
+            }
+            if (JS_SetPropertyStr(c, result, "definition", definition) < 0) {
+                JS_FreeValue(c, result);
+                return JS_EXCEPTION;
+            }
+            return result;
+        }
         if (op == "aiRestore") {
             if (!JS_IsString(arg(2))) throw std::invalid_argument("AI snapshot JSON required");
             agent.Restore(String(c, arg(2)));

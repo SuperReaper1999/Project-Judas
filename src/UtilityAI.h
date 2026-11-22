@@ -21,6 +21,9 @@ public:
     std::string Tick(double dt, const std::string& candidatesJson);
     void Finish(const std::string& status); // success, failure or cancelled
     std::string Snapshot() const;
+    // The script VM can clone the immutable definition independently.
+    std::string SnapshotWithoutDefinition() const;
+    std::string SnapshotDefinition() const;
     void Restore(const std::string& snapshotJson);
     std::string Inspect() const;
 
