@@ -116,6 +116,41 @@ int main(int argc, char **argv) {
           "particle lattice limit");
     ProjectSettings enabled = disabled;
     enabled.advancedFluidDynamics = true;
+    {
+        auto inactive = Pool();
+        for (const char *name : {"Float", "Sink", "Swimmer"})
+            inactive.Find(Named(inactive, name))->transform.position.x = 30;
+        RuntimeWorld distant;
+        distant.ConfigureProject(enabled);
+        if (!distant.Build(inactive, nullptr, error)) {
+            Check(false, "build distant-water activity fixture: " + error);
+            return 1;
+        }
+        auto &water = *distant.GridWater();
+        const auto id = Named(inactive, "Water");
+        const auto before = water.Find(id)->Quantity();
+        Check(water.SetSimulationSuspended(id, true), "valid water accepts idle suspension");
+        for (int tick = 0; tick < 8; ++tick)
+            distant.UpdateGridWater(1.f / 60);
+        Check(water.SimulationSuspended(id) && water.Stats(id).totalMs == 0 &&
+                  water.Find(id)->Quantity() == before,
+              "idle water skips the solver and retains exact quantity");
+        auto capsule = distant.Physics().CreateQueryCapsule(.3f, .5f, {{0, 1, 0}, {1, 0, 0, 0}});
+        Check(capsule.IsValid(), "publish a character query capsule in the pool");
+        distant.UpdateGridWater(1.f / 60);
+        Check(!water.SimulationSuspended(id) && water.Stats(id).totalMs > 0,
+              "a nearby motor overrides a pending idle request before fluid coupling");
+        distant.Physics().ResetBody(capsule, {30, 1, 0}, {1, 0, 0, 0});
+        distant.UpdateGridWater(1.f / 60);
+        Check(water.SimulationSuspended(id), "empty pool sleeps again after the motor leaves");
+        Check(water.AddImpulse(id, {0, 1, 0}, {10, 0, 0}, 1), "apply impulse to an idle pool");
+        distant.UpdateGridWater(1.f / 60);
+        Check(!water.SimulationSuspended(id), "an explicit impulse receives an authoritative water step");
+        Check(water.SetSimulationSuspended(id, false), "clear idle request on return");
+        distant.UpdateGridWater(1.f / 60);
+        Check(!water.SimulationSuspended(id) && water.Stats(id).totalMs > 0,
+              "an explicit resume advances a region even before a body enters");
+    }
     RuntimeWorld source;
     source.ConfigureProject(enabled);
 

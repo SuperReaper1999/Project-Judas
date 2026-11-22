@@ -132,6 +132,23 @@ bool WorldSystem::Step(float seconds, std::string &error) {
         auto &region = *owner;
         if (region.paused || !world_.IsPublished(id) || !world_.RuntimeDefinition(id))
             continue;
+        region.suspended = false;
+        if (region.suspendRequested && !region.wakeForMutation) {
+            const auto [lo, hi] = region.WorldBounds(region.grid);
+            const auto &physics = world_.Physics();
+            physics.QueryBodiesInAabbInto(lo, hi, region.activityBodies);
+            const bool occupied = std::any_of(region.activityBodies.begin(), region.activityBodies.end(),
+                [&](BodyHandle body) {
+                    return physics.IsDynamicBody(body) || physics.IsKinematicBody(body) ||
+                           physics.IsQueryOnlyBody(body);
+                });
+            if (!occupied) {
+                region.suspended = true;
+                region.runtimeMs = region.preparationMs = region.couplingMs = 0;
+                continue;
+            }
+        }
+        region.wakeForMutation = false;
         // Reused staging arrays make failed updates transactional. Both buffer
         // owners retain capacity; this is not a fresh graph allocation per tick.
         const auto begin = std::chrono::steady_clock::now();
@@ -213,12 +230,24 @@ bool WorldSystem::SetPaused(std::uint64_t id, bool paused) {
         }
     return true;
 }
+bool WorldSystem::SetSimulationSuspended(std::uint64_t id, bool suspended) {
+    auto it = regions_.find(id);
+    if (it == regions_.end())
+        return false;
+    it->second->suspendRequested = suspended;
+    return true;
+}
+bool WorldSystem::SimulationSuspended(std::uint64_t id) const {
+    auto it = regions_.find(id);
+    return it != regions_.end() && it->second->suspended;
+}
 bool WorldSystem::AddImpulse(std::uint64_t id, glm::vec3 point, glm::vec3 impulse, float radius) {
     auto it = regions_.find(id);
     if (it == regions_.end() || !std::isfinite(glm::dot(point, point)) ||
         !std::isfinite(glm::dot(impulse, impulse)) || !std::isfinite(radius) || radius < 0)
         return false;
     it->second->grid.AddImpulse(point, impulse, radius);
+    it->second->wakeForMutation = true;
     return true;
 }
 WorldSystem::RuntimeStats WorldSystem::Stats(std::uint64_t id) const {
@@ -237,8 +266,10 @@ double WorldSystem::ChangeWater(std::uint64_t id, glm::vec3 point, float radius,
         return 0;
     auto &region = *it->second;
     const double result = region.grid.ChangeWater(point, radius, cubicMetres);
-    if (result != 0)
+    if (result != 0) {
         ++region.revision;
+        region.wakeForMutation = true;
+    }
     return result;
 }
 } // namespace JudasWater

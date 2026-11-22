@@ -105,9 +105,7 @@ std::vector<SolidBox> ReadBodySolids(const PhysicsWorld &physics, BodyHandle han
     return result;
 }
 
-bool WorldSystem::Region::PrepareGeometry(RuntimeWorld &world, Grid &target,
-                                          std::vector<SolidBox> &solids,
-                                          std::vector<BodyHandle> &moving, std::string &error) {
+std::pair<glm::vec3, glm::vec3> WorldSystem::Region::WorldBounds(const Grid &target) const {
     const auto &c = target.Configuration();
     glm::vec3 lo(1e30f), hi(-1e30f);
     for (int z : {0, 1})
@@ -117,6 +115,14 @@ bool WorldSystem::Region::PrepareGeometry(RuntimeWorld &world, Grid &target,
                 lo = glm::min(lo, p);
                 hi = glm::max(hi, p);
             }
+    return {lo, hi};
+}
+
+bool WorldSystem::Region::PrepareGeometry(RuntimeWorld &world, Grid &target,
+                                          std::vector<SolidBox> &solids,
+                                          std::vector<BodyHandle> &moving, std::string &error) {
+    const auto &c = target.Configuration();
+    const auto [lo, hi] = WorldBounds(target);
     std::vector<StaticGeometry> current;
     auto terrain = world.HasRuntimeLandscapes() ? world.LiveTerrain().Solids(lo, hi)
                                                : std::vector<TerrainV2::SolidSnapshot>{};

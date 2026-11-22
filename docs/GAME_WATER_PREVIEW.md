@@ -1,5 +1,14 @@
 # Game Water authoring and runtime workflow
 
+An authoritative fixed-update script can request idle simulation suspension
+with `entity.gridWater.setSimulationSuspended(true)`. The current water
+state and surface remain resident. An overlapping dynamic, kinematic or
+query-only body, or an explicit impulse or volume change, forces a solver
+step. Clear the request before the player approaches a region. The request
+is runtime policy and scripts should reapply it after loading. A save still
+stores the exact fluid state, and `state.simulationSuspended` reports whether
+the last solver boundary skipped work.
+
 **V2 source preview on Experimental; project opt-in in every build channel.** Grid Water V2 now
 uses normal Fluid Volume scene components, RuntimeWorld, JudasJS, CharacterMotor,
 editor authoring, Renderer V2 and the regular save/export workflow. Main,

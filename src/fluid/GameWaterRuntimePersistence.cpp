@@ -53,6 +53,8 @@ void WorldSystem::Persist(SaveArchive &archive) {
             region.terrains.clear();
             region.pendingTerrains.clear();
             region.paused = saved.paused;
+            region.suspendRequested = region.suspended = region.wakeForMutation = false;
+            region.runtimeMs = region.preparationMs = region.couplingMs = 0;
             ++region.revision;
         }
         error_.clear();

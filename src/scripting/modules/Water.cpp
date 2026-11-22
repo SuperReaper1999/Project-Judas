@@ -62,6 +62,7 @@ JSValue HandleWater(BindingContext &context, const std::string &op, int argc, JS
             okay = JS_SetPropertyStr(js, result, name, value) >= 0;
         };
         const auto &stats = grid->Stats();
+        const bool suspended = system->SimulationSuspended(id);
         const auto &settings = grid->Configuration();
         const auto runtime = system->Stats(id);
         double stored = 0, air = grid->ExteriorAirMass();
@@ -78,17 +79,18 @@ JSValue HandleWater(BindingContext &context, const std::string &op, int argc, JS
                                   {"density", settings.density},
                                   {"cellSize", settings.cellSize},
                                   {"simulationMs", runtime.totalMs},
-                                  {"solverMs", stats.milliseconds},
+                                  {"solverMs", suspended ? 0 : stats.milliseconds},
                                   {"preparationMs", runtime.preparationMs},
                                   {"couplingMs", runtime.couplingMs},
                                   {"geometryBakes", double(runtime.geometryBakes)},
-                                  {"pressureMs", stats.pressureMs},
+                                  {"pressureMs", suspended ? 0 : stats.pressureMs},
                                   {"pressureResidual", stats.pressureResidual},
                                   {"pressureIterations", double(stats.iterations)},
                                   {"bytes", double(runtime.bytes)}})
             set(value.first, JS_NewFloat64(js, value.second));
         set("cells", Vec(js, glm::vec3(settings.cells)));
         set("paused", JS_NewBool(js, system->Paused(id)));
+        set("simulationSuspended", JS_NewBool(js, suspended));
         set("error", JS_NewString(js, runtime.error.c_str()));
         if (!okay) {
             JS_FreeValue(js, result);
@@ -102,6 +104,11 @@ JSValue HandleWater(BindingContext &context, const std::string &op, int argc, JS
     if (!context.fixed || context.inPresentation || context.stopping || world.NetworkClient())
         return JS_ThrowTypeError(
             js, "grid-water changes require fixedUpdate in an authoritative world");
+    if (op == "gridWaterSetSimulationSuspended") {
+        if (!JS_IsBool(arg(2)))
+            return JS_ThrowTypeError(js, "grid-water suspension requires a boolean");
+        return JS_NewBool(js, system->SetSimulationSuspended(id, JS_ToBool(js, arg(2)) != 0));
+    }
     glm::vec3 point;
     double radius = 0;
     if (!ReadVec(js, arg(2), point) || !std::isfinite(glm::dot(point, point)))
@@ -130,7 +137,7 @@ JSValue HandleWater(BindingContext &context, const std::string &op, int argc, JS
 void RegisterWaterBindings(BindingRegistry &registry) {
     registry.Add("Water",
                  {"gridWaterOwners", "gridWaterExists", "gridWaterState", "gridWaterImpulse",
-                  "gridWaterChange"},
+                  "gridWaterChange", "gridWaterSetSimulationSuspended"},
                  HandleWater);
 }
 } // namespace ScriptBindings

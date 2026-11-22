@@ -374,12 +374,14 @@ declare module "judas" {
     storedDisplacement:number; airMass:number; density:number; cellSize:number; cells:Vec3;
     simulationMs:number; solverMs:number; preparationMs:number; couplingMs:number; geometryBakes:number;
     pressureMs:number; pressureResidual:number; pressureIterations:number;
-    bytes:number; paused:boolean; error:string;
+    bytes:number; paused:boolean; simulationSuspended:boolean; error:string;
   }
   export class GridWater {
     constructor(id:EntityId); id:EntityId;
     readonly valid:boolean;
     readonly state:GridWaterState|null;
+    /** fixedUpdate only. Request idle suspension. Bodies and water mutations still wake it. */
+    setSimulationSuspended(suspended:boolean):boolean;
     /** fixedUpdate only. Radius 0 uses the local default; momentum is kg m/s. */
     impulse(point:Vec3,momentum:Vec3,radius?:number):boolean;
     /** fixedUpdate only. Signed m3; returns the actually accepted signed quantity. */

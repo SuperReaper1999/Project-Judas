@@ -29,6 +29,8 @@ class WorldSystem {
     std::vector<std::uint64_t> Owners() const;
     bool Paused(std::uint64_t) const;
     bool SetPaused(std::uint64_t, bool);
+    bool SetSimulationSuspended(std::uint64_t, bool);
+    bool SimulationSuspended(std::uint64_t) const;
     bool AddImpulse(std::uint64_t, glm::vec3, glm::vec3, float radius);
     double ChangeWater(std::uint64_t, glm::vec3, float radius, double cubicMetres);
     struct RuntimeStats {

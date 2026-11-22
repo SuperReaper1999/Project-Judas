@@ -5,6 +5,9 @@ export class GridWater {
     constructor(id) { this.id = String(id); }
     get valid() { return call("gridWaterExists", this.id); }
     get state() { return call("gridWaterState", this.id); }
+    setSimulationSuspended(suspended) {
+        return call("gridWaterSetSimulationSuspended", this.id, suspended);
+    }
     impulse(point, momentum, radius = 0) {
         return call("gridWaterImpulse", this.id, point, momentum, radius);
     }

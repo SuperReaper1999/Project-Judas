@@ -11,11 +11,14 @@ struct WorldSystem::Region {
     SceneFluidVolumeComponent authored;
     Grid grid, staging;
     bool paused = false;
+    bool suspendRequested = false, suspended = false, wakeForMutation = false;
     std::string error;
     double runtimeMs = 0, preparationMs = 0, couplingMs = 0;
     unsigned geometryBakes = 0;
     std::vector<glm::vec3> gravitySignature;
     bool RefreshGravity(RuntimeWorld &, Grid &, std::string &);
+    std::pair<glm::vec3, glm::vec3> WorldBounds(const Grid &) const;
+    std::vector<BodyHandle> activityBodies;
     struct StaticGeometry {
         BodyHandle handle;
         Shape shape;
